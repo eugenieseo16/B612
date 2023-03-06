@@ -19,11 +19,11 @@ public class Friends extends  BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int friendId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "member_id")
     private Members friendRequestMemberId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "member_id")
     private Members friendResponseMemberId;
