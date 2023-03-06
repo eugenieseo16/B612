@@ -1,9 +1,9 @@
 package com.god.b612.entity;
 
+import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Entity;
@@ -19,12 +19,12 @@ public class Planets {
     @Id
     private int planetNftId;
 
-    @NonNull
+    @NotNull
     @ColumnDefault("0")
     private int planetLikesCount;
 
     @Builder
-    public Planets(int planetNftId, int planetLikesCount){
+    public Planets(int planetNftId, int planetLikesCount) {
         this.planetNftId = planetNftId;
         this.planetLikesCount = planetLikesCount;
     }

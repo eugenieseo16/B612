@@ -21,7 +21,7 @@ public class PlantedFlowers {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="planet_nft_id")
+    @JoinColumn(name = "planet_nft_id")
     private Planets planetNftId;
 
     @NotNull
@@ -34,7 +34,7 @@ public class PlantedFlowers {
     private int flowerLocationZ;
 
     @Builder
-    public PlantedFlowers(int flowerNftId, Planets planetNftId, int flowerLocationX, int flowerLocationY, int flowerLocationZ){
+    public PlantedFlowers(int flowerNftId, Planets planetNftId, int flowerLocationX, int flowerLocationY, int flowerLocationZ) {
         this.flowerNftId = flowerNftId;
         this.planetNftId = planetNftId;
         this.flowerLocationX = flowerLocationX;
