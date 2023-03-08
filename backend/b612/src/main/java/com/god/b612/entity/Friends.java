@@ -17,15 +17,16 @@ import javax.persistence.*;
 public class Friends extends  BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "friend_id")
     private int friendId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(referencedColumnName = "member_id", name = "friend_request_member_id")
     private Members friendRequestMemberId;
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(referencedColumnName = "member_id", name = "friend_response_member_id")
     private Members friendResponseMemberId;
 
     @NotNull
