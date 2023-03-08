@@ -20,12 +20,12 @@ public class PersonalBoards extends BaseEntity {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(referencedColumnName = "member_id", name = "personal_board_owner_id")
     private Members personalBoardOwnerId;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(referencedColumnName = "member_id", name = "personal_board_writer_id")
     private Members personalBoardWriterId;
 
     @NotNull

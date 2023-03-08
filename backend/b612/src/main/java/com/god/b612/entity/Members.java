@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "members")
-public class Members extends BaseEntity {
+public class Members {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

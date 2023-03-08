@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "flowers")
 public class Flowers {
     @Id
+    @Column(name = "flower_nft_id")
     private int flowerNftId;
 
     private boolean flowerPlanted;
