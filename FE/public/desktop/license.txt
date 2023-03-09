@@ -1,0 +1,11 @@
+Model Information:
+* title:	Apple Desktop
+* source:	https://sketchfab.com/3d-models/apple-desktop-09e39508a9a34d4e8f9ffbbf7189aaa4
+* author:	Davide Specchi (https://sketchfab.com/Davide.Specchi)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Apple Desktop" (https://sketchfab.com/3d-models/apple-desktop-09e39508a9a34d4e8f9ffbbf7189aaa4) by Davide Specchi (https://sketchfab.com/Davide.Specchi) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
