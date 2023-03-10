@@ -17,16 +17,7 @@ function UserProfile() {
         height: '100vh',
       }}
     >
-      <button
-        onClick={() => console.log('hello')}
-        style={{
-          position: 'absolute',
-          zIndex: 9,
-        }}
-      >
-        테스트버튼
-      </button>
-      <MotionConfig transition={{ duration: 2 }}>
+      <MotionConfig transition={{ duration: 1 }}>
         <MotionCanvas
           style={{
             width: '100%',

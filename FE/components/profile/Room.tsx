@@ -7,17 +7,11 @@ import { Vector3, DoubleSide, Box3 } from 'three';
 
 const CAMERA_POS = [
   { x: 6, y: 3, z: 8 },
-  { x: 6, y: 3, z: 8 },
   { x: 0, y: 2, z: 3 }, //desktop
   { x: 2.7, y: 1.5, z: 1 }, //globe
   { x: 3.5, y: 0.15, z: 1 }, //flower
 ];
 const CAMERA_ANGLE = [
-  {
-    rotateX: -0.358,
-    rotateY: 0.612,
-    rotateZ: 0.212,
-  },
   {
     rotateX: -0.358,
     rotateY: 0.612,
@@ -41,8 +35,10 @@ const CAMERA_ANGLE = [
   },
 ];
 
-function Room() {
-  const [index, setIndex] = useState(0);
+function Room({ index, setIndex }: any) {
+  // const [index, setIndex] = useRecoilState(roomIndexAtom);
+  // const [index, setIndex] = useState(0);
+
   const [deskHeight, setDeskHeight] = useState(0);
   const desk = useGLTF('/desk/scene.gltf');
   const desktop = useGLTF('/desktop/scene.gltf');
@@ -124,12 +120,6 @@ function Room() {
     mroot.position.x += 1.5;
   }, [deskHeight, globe]);
 
-  useThree(({ camera }) => {
-    console.log('Here');
-    console.log(camera.rotation);
-  });
-
-  console.log(index + 1);
   return (
     <>
       <ambientLight />
@@ -147,17 +137,17 @@ function Room() {
       <group
         position={[0, -1, 0]}
         rotation={[0, degToRad(90), 0]}
-        onClick={() => setIndex(1)}
+        onClick={() => setIndex(0)}
       >
         <primitive object={desk.scene} scale={2} />
       </group>
-      <group onClick={() => setIndex(2)}>
+      <group onClick={() => setIndex(1)}>
         <primitive object={desktop.scene} scale={0.5} />
       </group>
-      <group onClick={() => setIndex(3)}>
+      <group onClick={() => setIndex(2)}>
         <primitive object={globe.scene} scale={0.018} />
       </group>
-      <group onClick={() => setIndex(4)}>
+      <group onClick={() => setIndex(3)}>
         <primitive object={flowerPot.scene} scale={0.5} />
       </group>
     </>
