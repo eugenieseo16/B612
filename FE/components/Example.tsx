@@ -1,23 +1,40 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useRecoilValue } from 'recoil';
+import userAtom from 'store/userAtom';
 import { usePlanetTokenContract } from './contracts/planetToken';
+import { useSsafyToken } from './contracts/ssafyToken';
 
-const account = '0x96714BD2760d8FF4C10a913F18FB9b2541577937';
 function Example() {
+  const user = useRecoilValue(userAtom);
   const [myPlanetLength, setMyPlanetLength] = useState(0);
+  const [ssafy, setSsafy] = useState(0);
+  const [total, setTotal] = useState(0);
   const planetTokenContract = usePlanetTokenContract();
+  const ssafyToken = useSsafyToken();
 
   const getTokens = useCallback(async () => {
+    if (!user) return;
     const balanceLength = await planetTokenContract.methods
-      .balanceOf(account)
+      .balanceOf(user)
       .call();
     setMyPlanetLength(balanceLength);
-  }, [planetTokenContract]);
+    const temp = await ssafyToken.methods.balanceOf(user).call();
+    const total = await ssafyToken.methods.totalSupply().call();
+    setSsafy(temp);
+    setTotal(total);
+  }, [planetTokenContract, ssafyToken, user]);
 
   useEffect(() => {
     if (planetTokenContract) getTokens();
   }, [planetTokenContract, getTokens]);
 
-  return <div>나의 planet Token : {myPlanetLength} </div>;
+  return (
+    <div>
+      <h2>나의 planet Token : {myPlanetLength}</h2>
+      <h3>내가 가진 SSAFY 코인 : {ssafy}</h3>
+      <h3>총 발급된 SSAFY 코인 : {total}</h3>
+    </div>
+  );
 }
 
 export default Example;
