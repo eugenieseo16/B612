@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -35,12 +36,22 @@ public class Members {
     @JoinColumn(referencedColumnName = "tier_id", name = "member_tier_id")
     private Tiers memberTierId;
 
+    @NotNull
+    @ColumnDefault("0")
+    private int memberHighestScore;
+
+    @NotNull
+    @ColumnDefault("0")
+    private int memberCurrentScore;
+
     @Builder
-    public Members(int memberId, String memberNickname, String memberAddress, String memberImage, Tiers memberTierId) {
+    public Members(int memberId, String memberNickname, String memberAddress, String memberImage, Tiers memberTierId, int memberHighestScore, int memberCurrentScore) {
         this.memberId = memberId;
         this.memberNickname = memberNickname;
         this.memberAddress = memberAddress;
         this.memberImage = memberImage;
         this.memberTierId = memberTierId;
+        this.memberHighestScore = memberHighestScore;
+        this.memberCurrentScore = memberCurrentScore;
     }
 }
