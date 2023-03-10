@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "members")
-public class Members {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,14 +27,13 @@ public class Members {
     @NotNull
     private String memberAddress;
 
-    @NotNull
     private String memberImage;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(referencedColumnName = "tier_id", name = "member_tier_id")
-    private Tiers memberTierId;
+    private Tier memberTierId;
 
     @NotNull
     @ColumnDefault("0")
@@ -45,7 +44,7 @@ public class Members {
     private int memberCurrentScore;
 
     @Builder
-    public Members(int memberId, String memberNickname, String memberAddress, String memberImage, Tiers memberTierId, int memberHighestScore, int memberCurrentScore) {
+    public Member(int memberId, String memberNickname, String memberAddress, String memberImage, Tier memberTierId, int memberHighestScore, int memberCurrentScore) {
         this.memberId = memberId;
         this.memberNickname = memberNickname;
         this.memberAddress = memberAddress;

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "likes")
-public class Likes {
+public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "like_id")
@@ -21,15 +21,15 @@ public class Likes {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(referencedColumnName = "planet_nft_id", name = "like_planet_nft_id")
-    private Planets likePlanetNftId;
+    private Planet likePlanetNftId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(referencedColumnName = "member_id", name = "like_member_id")
-    private Members likeMemberId;
+    private Member likeMemberId;
 
     @Builder
-    public Likes(Planets likePlanetNftId, Members likeMemberId){
+    public Like(Planet likePlanetNftId, Member likeMemberId){
         this.likePlanetNftId = likePlanetNftId;
         this.likeMemberId = likeMemberId;
     }

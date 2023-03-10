@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name="tiers")
-public class Tiers {
+public class Tier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Tiers {
     private String tierName;
 
     @Builder
-    public Tiers(String tierName) {
+    public Tier(String tierName) {
         this.tierName = tierName;
     }
 
