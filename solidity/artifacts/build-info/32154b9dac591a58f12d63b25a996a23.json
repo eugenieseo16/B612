@@ -1,0 +1,71 @@
+{
+	"id": "32154b9dac591a58f12d63b25a996a23",
+	"_format": "hh-sol-build-info-1",
+	"solcVersion": "0.8.18",
+	"solcLongVersion": "0.8.18+commit.87f61d96",
+	"input": {
+		"language": "Solidity",
+		"sources": {
+			"SaleRoseToken.sol": {
+				"content": "// // SPDX-License-Identifier: MIT\r\n\r\n// pragma solidity ^0.8.0;\r\n\r\n// import \"MintRoseToken.sol\";\r\n\r\n// contract SaleRoseToken {\r\n//     MintRoseToken public mintRoseTokenAddress;\r\n\r\n//     constructor (address _mintRoseTokenAddress) {\r\n//         mintRoseTokenAddress = MintRoseToken(_mintRoseTokenAddress);\r\n//     }\r\n\r\n//     mapping(uint256 => uint256) public rosePrices; // 가격 매핑\r\n\r\n//     uint256[] public onSaleRoseTokenArray;\r\n\r\n//     function setForSaleRoseToken(uint256 _roseTokenId, uint256 _price) public { // 판매 등록 \r\n//         address roseTokenOwner = mintRoseTokenAddress.ownerOf(_roseTokenId);\r\n\r\n//         require(roseTokenOwner == msg.sender, \"Caller is not Rose token owner.\");\r\n//         require(_price > 0, \"Price is zero or lower.\");\r\n//         require(rosePrices[_roseTokenId] == 0, \"This Rose token is already on sale.\");\r\n//         require(mintRoseTokenAddress.isApprovedForAll(roseTokenOwner, address(this)), \"Rose token owner did not approve token.\");\r\n\r\n//         rosePrices[_roseTokenId] = _price;\r\n\r\n//         onSaleRoseTokenArray.push(_roseTokenId);\r\n//     }\r\n\r\n//     function purchaseRoseToken(uint256 _roseTokenId) public payable { // 구매 \r\n//         uint256 price = rosePrices[_roseTokenId];\r\n//         address roseTokenOwner = mintRoseTokenAddress.ownerOf(_roseTokenId);\r\n\r\n//         require(price > 0, \"Rose token not sale.\");\r\n//         require(price <= msg.value, \"Caller sent lower than price.\");\r\n//         require(roseTokenOwner != msg.sender, \"Caller is Rose token owner.\");\r\n\r\n//         payable(roseTokenOwner).transfer(msg.value);\r\n//         mintRoseTokenAddress.safeTransferFrom(roseTokenOwner, msg.sender, _roseTokenId);\r\n\r\n//         rosePrices[_roseTokenId] = 0;\r\n\r\n//         // 판매중인 토큰 배열 수정 \r\n//         for(uint256 i = 0; i < onSaleRoseTokenArray.length; i++) {\r\n//             if(rosePrices[onSaleRoseTokenArray[i]] == 0) {\r\n//                 onSaleRoseTokenArray[i] = onSaleRoseTokenArray[onSaleRoseTokenArray.length - 1];\r\n//                 onSaleRoseTokenArray.pop();\r\n//             }\r\n//         }\r\n\r\n//         // 판매/구매 로그에 추가\r\n//         uint lastNode = findLastNode(_roseTokenId);\r\n//         uint256 nextAddress = uint256(keccak256(abi.encodePacked(_roseTokenId, price, roseTokenOwner, msg.sender, block.timestamp)));\r\n//         SharedLibraries.RoseSalesLog memory roseSalesLog = SharedLibraries.RoseSalesLog(price, roseTokenOwner, msg.sender, block.timestamp, nextAddress);\r\n//         roseSalesMap[lastNode] = roseSalesLog;\r\n//         roseSalesCntMap[_roseTokenId]++;\r\n\r\n//     }\r\n\r\n//     // 판매/구매 로그에서 마지막 노드 찾기 \r\n//     function findLastNode(uint256 _roseTokenId) view public returns (uint256) {\r\n//         uint nextAddress = roseSalesMap[_roseTokenId];\r\n//         while(roseSalesMap[nextAddress] != 0) {\r\n//             nextAddress = roseSalesMap[nextAddress].next;\r\n//         }\r\n//         return nextAddress;\r\n//     }\r\n\r\n//     function getOnSaleRoseTokenArray() view public returns (uint256[] memory) {\r\n//         return onSaleRoseTokenArray;\r\n//     }\r\n\r\n    \r\n//     function getOnSaleRoseTokenArrayLength() view public returns (uint256) {\r\n//         return onSaleRoseTokenArray.length;\r\n//     }\r\n\r\n//     function getRoseTokenPrice(uint256 _roseTokenId) view public returns (uint256) {\r\n//         return rosePrices[_roseTokenId];\r\n//     }\r\n// }"
+			}
+		},
+		"settings": {
+			"optimizer": {
+				"enabled": false,
+				"runs": 200
+			},
+			"outputSelection": {
+				"*": {
+					"": [
+						"ast"
+					],
+					"*": [
+						"abi",
+						"metadata",
+						"devdoc",
+						"userdoc",
+						"storageLayout",
+						"evm.legacyAssembly",
+						"evm.bytecode",
+						"evm.deployedBytecode",
+						"evm.methodIdentifiers",
+						"evm.gasEstimates",
+						"evm.assembly"
+					]
+				}
+			}
+		}
+	},
+	"output": {
+		"errors": [
+			{
+				"component": "general",
+				"errorCode": "3420",
+				"formattedMessage": "Warning: Source file does not specify required compiler version! Consider adding \"pragma solidity ^0.8.18;\"\n--> SaleRoseToken.sol\n\n",
+				"message": "Source file does not specify required compiler version! Consider adding \"pragma solidity ^0.8.18;\"",
+				"severity": "warning",
+				"sourceLocation": {
+					"end": -1,
+					"file": "SaleRoseToken.sol",
+					"start": -1
+				},
+				"type": "Warning"
+			}
+		],
+		"sources": {
+			"SaleRoseToken.sol": {
+				"ast": {
+					"absolutePath": "SaleRoseToken.sol",
+					"exportedSymbols": {},
+					"id": 1,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [],
+					"src": "3435:0:0"
+				},
+				"id": 0
+			}
+		}
+	}
+}
