@@ -21,7 +21,6 @@ public class PlantedFlowers {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JoinColumn(name = "planet_nft_id")
     @JoinColumn(referencedColumnName = "planet_nft_id", name = "planet_nft_id")
     private Planets planetNftId;
 

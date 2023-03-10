@@ -20,13 +20,11 @@ public class Likes {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JoinColumn(name = "planet_id")
     @JoinColumn(referencedColumnName = "planet_nft_id", name = "like_planet_nft_id")
     private Planets likePlanetNftId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JoinColumn(name = "member_id")
     @JoinColumn(referencedColumnName = "member_id", name = "like_member_id")
     private Members likeMemberId;
 

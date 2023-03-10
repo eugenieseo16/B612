@@ -4,6 +4,8 @@ import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -27,11 +29,18 @@ public class Members {
     @NotNull
     private String memberImage;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(referencedColumnName = "tier_id", name = "member_tier_id")
+    private Tiers memberTierId;
+
     @Builder
-    public Members(int memberId, String memberNickname, String memberAddress, String memberImage) {
+    public Members(int memberId, String memberNickname, String memberAddress, String memberImage, Tiers memberTierId) {
         this.memberId = memberId;
         this.memberNickname = memberNickname;
         this.memberAddress = memberAddress;
         this.memberImage = memberImage;
+        this.memberTierId = memberTierId;
     }
 }

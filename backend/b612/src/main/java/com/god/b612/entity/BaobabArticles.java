@@ -17,7 +17,6 @@ public class BaobabArticles extends BaseEntity{
     private int baobabArticleId;
 
     @ManyToOne
-//    @JoinColumn(name = "member_id")
     @JoinColumn(referencedColumnName = "member_id", name = "baobab_article_member_id")
     private Members baobabArticleMemberId;
 
