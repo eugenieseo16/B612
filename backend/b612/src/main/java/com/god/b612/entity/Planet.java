@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @NoArgsConstructor
 @Table(name = "planets")
-public class Planets {
+public class Planet {
 
     @Id
     @Column(name = "planet_nft_id")
@@ -26,7 +26,7 @@ public class Planets {
     private int planetLikesCount;
 
     @Builder
-    public Planets(int planetNftId, int planetLikesCount) {
+    public Planet(int planetNftId, int planetLikesCount) {
         this.planetNftId = planetNftId;
         this.planetLikesCount = planetLikesCount;
     }

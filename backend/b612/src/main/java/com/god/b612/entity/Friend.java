@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "friends")
-public class Friends extends  BaseEntity {
+public class Friend extends  BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "friend_id")
@@ -23,18 +23,18 @@ public class Friends extends  BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(referencedColumnName = "member_id", name = "friend_request_member_id")
-    private Members friendRequestMemberId;
+    private Member friendRequestMemberId;
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(referencedColumnName = "member_id", name = "friend_response_member_id")
-    private Members friendResponseMemberId;
+    private Member friendResponseMemberId;
 
     @NotNull
     @ColumnDefault("0")
     private byte friendAccepted;
 
     @Builder
-    public Friends(int friendId, Members friendRequestMemberId, Members friendResponseMemberId, byte friendAccepted) {
+    public Friend(int friendId, Member friendRequestMemberId, Member friendResponseMemberId, byte friendAccepted) {
         this.friendId = friendId;
         this.friendRequestMemberId = friendRequestMemberId;
         this.friendResponseMemberId = friendResponseMemberId;

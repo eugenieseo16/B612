@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "plantedFlowers")
-public class PlantedFlowers {
+public class PlantedFlower {
 
     @Id
     private int flowerNftId;
@@ -22,7 +22,7 @@ public class PlantedFlowers {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(referencedColumnName = "planet_nft_id", name = "planet_nft_id")
-    private Planets planetNftId;
+    private Planet planetNftId;
 
     @NotNull
     private int flowerLocationX;
@@ -34,7 +34,7 @@ public class PlantedFlowers {
     private int flowerLocationZ;
 
     @Builder
-    public PlantedFlowers(int flowerNftId, Planets planetNftId, int flowerLocationX, int flowerLocationY, int flowerLocationZ) {
+    public PlantedFlower(int flowerNftId, Planet planetNftId, int flowerLocationX, int flowerLocationY, int flowerLocationZ) {
         this.flowerNftId = flowerNftId;
         this.planetNftId = planetNftId;
         this.flowerLocationX = flowerLocationX;
