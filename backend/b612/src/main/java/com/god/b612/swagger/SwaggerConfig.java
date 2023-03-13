@@ -17,6 +17,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("B612 Spring Boot REST API")
+                .version("1.0.0")
+                .description("신과함께 머무르다.")
+                .build();
+    }
+
     public Docket getDocket(String groupName, Predicate<String> predicate) {
 //		List<ResponseMessage> responseMessages = new ArrayList<ResponseMessage>();
 //		responseMessages.add(new ResponseMessageBuilder().code(200).message("OK !!!").build());
@@ -30,26 +38,37 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public Docket restAPI() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.god.b612"))
-                .paths(PathSelectors.any())
-                .build();
+    public Docket memberApi() {
+        return getDocket("회원", Predicates.or(PathSelectors.regex("/member.*")));
     }
 
     @Bean
-    public Docket userApi() {
-        return getDocket("회원", Predicates.or(PathSelectors.regex("/controller.*")));
+    public Docket flowerApi() {
+        return getDocket("꽃", Predicates.or(PathSelectors.regex("/flower.*")));
     }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("B612 Spring Boot REST API")
-                .version("1.0.0")
-                .description("신과함께 머무르다.")
-                .build();
+    @Bean
+    public Docket baobabApi() {
+        return getDocket("바오밥 게시판", Predicates.or(PathSelectors.regex("/baobab.*")));
     }
+
+    @Bean
+    public Docket boardApi() {
+        return getDocket("방명록", Predicates.or(PathSelectors.regex("/board.*")));
+    }
+
+    @Bean
+    public Docket planetApi() {
+        return getDocket("행성", Predicates.or(PathSelectors.regex("/planet.*")));
+    }
+
+    @Bean
+    public Docket friendApi() {
+        return getDocket("친구", Predicates.or(PathSelectors.regex("/friend.*")));
+    }
+
+
+
+
 }
 
