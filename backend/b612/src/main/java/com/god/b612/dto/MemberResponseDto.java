@@ -24,10 +24,10 @@ public class MemberResponseDto {
 
     @Builder
     public MemberResponseDto(String memberAddress, String memberNickname, String memberImage, String memberTierName, int memberCurrentScore){
-        memberAddress=this.memberAddress;
-        memberNickname=this.memberNickname;
-        memberImage=this.memberImage;
-        memberTierName=this.memberTierName;
-        memberCurrentScore=this.memberCurrentScore;
+        this.memberAddress=memberAddress;
+        this.memberNickname=memberNickname;
+        this.memberImage=memberImage;
+        this.memberTierName=memberTierName;
+        this.memberCurrentScore=memberCurrentScore;
     }
 }

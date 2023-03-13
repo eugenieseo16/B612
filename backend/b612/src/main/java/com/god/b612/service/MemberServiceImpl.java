@@ -2,6 +2,7 @@ package com.god.b612.service;
 
 import com.god.b612.dto.MemberResponseDto;
 import com.god.b612.entity.Member;
+import com.god.b612.entity.Tier;
 import com.god.b612.repository.MemberCustomRepository;
 import com.god.b612.repository.MemberRepository;
 import com.god.b612.repository.TierRepository;
@@ -30,20 +31,24 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberResponseDto MembersLoginOrRegist(String memberAddress){
         Member member=memberRepository.findMemberByMemberAddress(memberAddress);
-        MemberResponseDto memberResponseDto;
+
         if(member==null){
             member=Member.builder()
                     .memberAddress(memberAddress)
                     .memberNickname(memberCustomRepository.makeRandomNickName())
                     .memberImage(null)
-                    .memberTierId(tierRepository.findTierByTierId(0))
+                    .memberTierId(tierRepository.findTierByTierId(1))
                     .memberCurrentScore(0)
                     .memberHighestScore(0)
                     .build();
 
+            MemberResponseDto memberResponseDto=memberCustomRepository.createMemberResponseDtoByEntity(member);
             memberRepository.save(member);
+
+            return memberResponseDto;
+
         }
-        memberResponseDto=memberCustomRepository.createMemberResponseDtoByEntity(member);
+        MemberResponseDto memberResponseDto=memberCustomRepository.createMemberResponseDtoByEntity(member);
         return memberResponseDto;
     }
 

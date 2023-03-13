@@ -6,7 +6,6 @@ import com.god.b612.entity.Member;
 public interface MemberCustomRepository {
     MemberResponseDto createMemberResponseDtoByEntity(Member member);
 
-
     public String makeRandomNickName();
 
 }

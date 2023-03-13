@@ -5,9 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 
-    public String makeRandomNickName();
-
     Member findMemberByMemberAddress(String memberAddress);
 
-    int findTopByMemberIdOrderByMemberIdDesc();
+    Member findTopByOrderByMemberIdDesc();
 }

@@ -22,8 +22,9 @@ public class Tier {
     private String tierName;
 
     @Builder
-    public Tier(String tierName) {
+    public Tier(String tierName,int tierId) {
         this.tierName = tierName;
+        this.tierId=tierId;
     }
 
 }
