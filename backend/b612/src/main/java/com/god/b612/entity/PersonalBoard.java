@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "personal_boards")
-public class PersonalBoards extends BaseEntity {
+public class PersonalBoard extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int personalBoardId;
@@ -21,19 +21,19 @@ public class PersonalBoards extends BaseEntity {
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(referencedColumnName = "member_id", name = "personal_board_owner_id")
-    private Members personalBoardOwnerId;
+    private Member personalBoardOwnerId;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(referencedColumnName = "member_id", name = "personal_board_writer_id")
-    private Members personalBoardWriterId;
+    private Member personalBoardWriterId;
 
     @NotNull
     @Column(name = "personal_board_content")
     private String personalBoardContent;
 
     @Builder
-    public PersonalBoards(int personalBoardId, Members personalBoardOwnerId, Members personalBoardWriterId, String personalBoardContent){
+    public PersonalBoard(int personalBoardId, Member personalBoardOwnerId, Member personalBoardWriterId, String personalBoardContent){
         this.personalBoardId=personalBoardId;
         this.personalBoardOwnerId=personalBoardOwnerId;
         this.personalBoardWriterId=personalBoardWriterId;

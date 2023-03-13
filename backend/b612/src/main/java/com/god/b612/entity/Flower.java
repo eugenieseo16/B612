@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "flowers")
-public class Flowers {
+public class Flower {
     @Id
     @Column(name = "flower_nft_id")
     private int flowerNftId;
@@ -18,7 +18,7 @@ public class Flowers {
     private boolean flowerPlanted;
 
     @Builder
-    public Flowers(int flowerNftId, boolean flowerPlanted){
+    public Flower(int flowerNftId, boolean flowerPlanted){
         this.flowerNftId=flowerNftId;
         this.flowerPlanted=flowerPlanted;
     }
