@@ -35,7 +35,8 @@ function UserProfile() {
       <MotionConfig transition={{ duration: 0.5 }}>
         <MotionCanvas
           style={{
-            width: '70%',
+            width: 'calc(100% - 20rem)',
+            minWidth: '70%',
             height: '100%',
           }}
         >
@@ -60,7 +61,8 @@ function UserProfile() {
           right: '0',
           top: 0,
           padding: '0 1rem',
-          width: '30%',
+          width: '20rem',
+          maxWidth: '30%',
           height: '100vh',
           background: '#fff',
         }}
@@ -82,9 +84,11 @@ function UserProfile() {
         </List>
         {roomIndex}
       </div>
+
       <Modal
         sx={{
-          width: '70%',
+          minWidth: '70%',
+          width: 'calc(100% - 20rem)',
           background: 'rgba(0,0,0,0.2)',
           display: 'flex',
           justifyContent: 'center',
@@ -95,19 +99,12 @@ function UserProfile() {
         onClose={() => setRoomIndex(0)}
         onClick={() => setRoomIndex(0)}
       >
-        <Fade
-          in={roomIndex > 0}
-          timeout={500}
+        <div
           onClick={e => e.stopPropagation()}
+          style={{ width: '80%', height: '80%' }}
         >
-          <motion.div
-            style={{ width: '80%', height: '80%' }}
-            animate={roomIndex > 0 ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            {roomIndex === 3 && <FlowersModal />}
-          </motion.div>
-        </Fade>
+          {roomIndex === 3 && <FlowersModal />}
+        </div>
       </Modal>
     </div>
   );
