@@ -5,12 +5,71 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-
+h1 {
+  font-family: 'MYCHEW';
+  font-size: 2.5rem;
+  color: #394666;
+}
+h2 {
+  font-family: 'MYCHEW';
+  font-size: 2rem;
+  color: #394666;
+}
+h3 {
+  font-family: 'TMONEY';
+  font-size: 1.6rem;
+  color: #394666;
+}
+h4 {
+  font-family: 'TMONEY';
+  font-size: 1.3rem;
+  color: #394666;
+}
+h5 {
+  font-family: 'CAFE24';
+  font-size: 1.6rem;
+  color: #394666;
+}
+h6 {
+  font-family: 'CAFE24';
+  font-size: 1.3rem;
+  color: #394666;
+}
+span,
+p {
+  font-family: 'DX어린왕자';
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #29334d;
+}
 a {
-  color: inherit;
-  text-decoration: none;
+  font-family: 'DX어린왕자';
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #4a5980;
 }
 
 * {
   box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'CAFE24';
+  src: url('../assets/fonts/Cafe24클래식.ttf');
+}
+
+@font-face {
+  font-family: 'DX어린왕자';
+  src: url('../assets/fonts/DX어린왕자.ttf');
+}
+
+@font-face {
+  font-family: 'MYCHEW';
+  src: url('../assets/fonts/마이쮸.ttf');
+}
+
+@font-face {
+  font-family: 'TMONEY';
+  src: url('../assets/fonts/티머니둥근바람.ttf');
 }
