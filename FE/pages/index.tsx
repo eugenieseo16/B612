@@ -11,6 +11,9 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Link href={`/profile`}>myProfile</Link>
+      <div>
+        <Link href={`/square`}>광장으로 이동</Link>
+      </div>
       <Example />
       {user.length == 0 ? <MetaMaskLogin /> : <h1>{user}</h1>}
 
