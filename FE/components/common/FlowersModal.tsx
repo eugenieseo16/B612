@@ -51,8 +51,10 @@ function FlowersModal() {
       </div>
       <CenterBox>
         <Canvas
+          shadows
           camera={{
-            position: [0, 5, 7],
+            position: [0, 7, 10],
+            rotation: [0, 1, 1],
           }}
           style={{
             width: '25vw',
@@ -61,8 +63,6 @@ function FlowersModal() {
             borderRadius: '1rem',
           }}
         >
-          <ambientLight intensity={0.2} />
-          <spotLight position={[0, 5, 0]} />
           <FlowerThree type={type} />
         </Canvas>
       </CenterBox>
