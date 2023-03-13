@@ -1,6 +1,7 @@
 package com.god.b612.controller;
 
 import com.god.b612.dto.MemberResponseDto;
+import com.god.b612.model.BaseResponseBody;
 import com.god.b612.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,13 +31,26 @@ public class MemberController {
     @Transactional
     @ApiOperation(value = "회원가입 하고 로그인 하거나, 로그인 한다.", notes = "해당 주소로 가입이 되어있다면 유저 정보를 보내주고, 가입되어있지 않다면 유저를 가입 시킨 후 정보를 보내준다.")
     @PostMapping()
-    public ResponseEntity<MemberResponseDto> loginOrRegist(@RequestBody @ApiParam(value = "회원 주소", required = true) String memberAddress){
+    public ResponseEntity<?> loginOrRegist(@RequestBody @ApiParam(value = "회원 주소", required = true) String memberAddress){
         MemberResponseDto memberResponseDto=memberService.MembersLoginOrRegist(memberAddress);
+        BaseResponseBody baseResponseBody= null;
         if(memberResponseDto!=null){
-            return new ResponseEntity<MemberResponseDto>(memberResponseDto, HttpStatus.OK);
+            baseResponseBody= BaseResponseBody.builder()
+                    .message("success")
+                    .statusCode(200)
+                    .responseData(memberResponseDto)
+                    .build();
+
+            return ResponseEntity.status(200).body(baseResponseBody);
         }
         else{
-            return new ResponseEntity<MemberResponseDto>(memberResponseDto, HttpStatus.NO_CONTENT);
+            baseResponseBody= BaseResponseBody.builder()
+                    .message("fail")
+                    .statusCode(400)
+                    .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
         }
     }
+
 }
