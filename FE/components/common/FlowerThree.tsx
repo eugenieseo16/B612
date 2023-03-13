@@ -1,32 +1,64 @@
-import { OrbitControls, useGLTF } from '@react-three/drei';
-import React, { useEffect } from 'react';
+import {
+  Center,
+  Environment,
+  OrbitControls,
+  Shadow,
+  useGLTF,
+} from '@react-three/drei';
+import React, { useEffect, useState } from 'react';
 import { Box3, Vector3 } from 'three';
-import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { degToRad } from 'three/src/math/MathUtils';
 
+const GLTF_URL = [
+  'mario_flower/scene.gltf',
+  'glowing_flower/scene.gltf',
+  'dinosaur/scene.gltf',
+];
+
 function FlowerThree({ type }: { type: number }) {
-  const flower = useGLTF('/mario_flower/scene.gltf');
-  const flowerClone = SkeletonUtils.clone(flower.scene);
-
+  const grass = useGLTF('/grass/scene.gltf');
   useEffect(() => {
-    const bbox = new Box3().setFromObject(flowerClone);
-    const cent = bbox.getCenter(new Vector3());
-
-    flowerClone.position.x += flowerClone.position.x - cent.x;
-    flowerClone.position.y += flowerClone.position.y - cent.y;
-    flowerClone.position.z += flowerClone.position.z - cent.z;
-  }, [flowerClone]);
-
-  // const clone = SkeletonUtils.clone(gltf.scene);
+    grass.scene.traverse(node => (node.receiveShadow = true));
+  }, [grass]);
 
   return (
     <>
-      <OrbitControls />
-      <group scale={0.5} rotation={[0, degToRad(-120), 0]}>
-        <primitive object={flowerClone} />
+      <ambientLight intensity={0.1} />
+      <spotLight castShadow position={[-7, 8, 5]} intensity={1} />
+
+      <OrbitControls enableZoom={false} maxPolarAngle={degToRad(90)} />
+      <Environment background files={'/sky.hdr'} />
+      <Shadow />
+
+      <group scale={3} position={[0, -4, 0]}>
+        <primitive object={grass.scene} />
       </group>
+
+      <Flower type={type} />
     </>
   );
 }
 
 export default FlowerThree;
+
+function Flower({ type }: { type: number }) {
+  const [height, setHeight] = useState(0);
+
+  const flower = useGLTF(GLTF_URL[type]);
+
+  useEffect(() => {
+    flower.scene.traverse(node => {
+      node.castShadow = true;
+    });
+    const bbox = new Box3().setFromObject(flower.scene);
+    setHeight(bbox.getSize(new Vector3()).y);
+  }, [flower]);
+
+  return (
+    <Center position={[0, height / 2 - 4, 0]}>
+      <group>
+        <primitive object={flower.scene} />
+      </group>
+    </Center>
+  );
+}
