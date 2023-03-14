@@ -1,15 +1,19 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { PerspectiveCamera } from '@react-three/drei';
+// import { PerspectiveCamera } from '@react-three/drei';
 import { Stars } from '@react-three/drei';
 
 function Square() {
   return (
     <div>
       <Canvas>
-        <ambientLight />
+        <ambientLight intensity={0.1} />
+        <directionalLight color="navy" position={[0, 0, 5]} />
+        <mesh>
+          <boxGeometry />
+          <meshStandardMaterial />
+        </mesh>
 
-        <PerspectiveCamera makeDefault fov={75} position={[0, 0, 5]} />
         <Stars />
       </Canvas>
     </div>
