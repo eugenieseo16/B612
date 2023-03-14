@@ -17,6 +17,23 @@ contract MintPlanetToken is ERC721Enumerable {
         uint createdAt; // 구매 시점 
     }
 
+    struct PlanetSalesLog {
+        uint256 planetPrice; // 판매된 가격
+        address planetSeller; // 판매자
+        address planetBuyer; // 구매자
+        uint soldAt; // 판매 시점 
+        uint next; // 다음 노드 주소 저장 
+    }
+
+    mapping(uint256 => PlanetTokenData) public b612AddressMap;
+    mapping(uint256 => PlanetSalesLog) public planetSalesMap; // 행성 아이디와 판매 로그
+    mapping(uint256 => uint256) public planetSalesCntMap; // 행성 아이디와 판매 로그 개수 저장 
+
+    mapping(uint256 => uint256) public planetPrices; // 가격 매핑
+
+    uint256[] public onSalePlanetTokenArray; // 판매중인 행성 배열 
+
+
     string[] one = [unicode"당당한 ", unicode"웅장한 ", unicode"아름다운 ", unicode"쾌적한 ", unicode"완벽한 ", unicode"노란 ", unicode"청량한 ", unicode"담백한 ", unicode"긴박한 ",
      unicode"차분한 ", unicode"깨끗한 ", unicode"군더더기 없는 ", unicode"무서운 ", unicode"경쾌한 ", unicode"분명한 ", unicode"느릿느릿한 ", unicode"달콤한 ", unicode"짜릿한 ", 
      unicode"강렬한 ", unicode"유쾌한 ", unicode"건강한 ", unicode"성숙한 ", unicode"눈부신 ", unicode"화려한 ", unicode"파란 ", unicode"놀라운 ", unicode"정확한 ", unicode"빨간 ", 
@@ -56,8 +73,6 @@ contract MintPlanetToken is ERC721Enumerable {
 
     string[] planetName = [unicode"퍼렁별", unicode"웃음별", unicode"달콤별", unicode"평평별", unicode"초코별", unicode"지구별", unicode"하나별", unicode"사랑별"];
 
-    mapping(uint256 => PlanetTokenData) public b612AddressMap;
-
     function mintPlanetToken(uint256 planetPrice) public {
         uint256 planetTokenId = totalSupply() + 1;
         uint256 planetAddress = planetTokenId;
@@ -79,6 +94,12 @@ contract MintPlanetToken is ERC721Enumerable {
         PlanetTokenData memory planetTokenData = PlanetTokenData(planetTokenId, planetAddress, planetPrice, planetColor, planetType, name, block.timestamp);
 
         b612AddressMap[planetTokenId] = planetTokenData;
+
+         // 로그에 초기 정보 추가
+        length = uint256(keccak256(abi.encodePacked(planetTokenId, planetPrice, msg.sender, msg.sender, block.timestamp)));
+        PlanetSalesLog memory planetSalesLog = PlanetSalesLog(planetPrice, msg.sender, msg.sender, block.timestamp, length);
+        planetSalesMap[planetTokenId] = planetSalesLog;
+        planetSalesCntMap[planetTokenId] = 1;
 
         _mint(msg.sender, planetTokenId);
     }
@@ -126,9 +147,20 @@ contract MintPlanetToken is ERC721Enumerable {
         return planetTokenData;
     }
 
-    mapping(uint256 => uint256) public planetPrices; // 가격 매핑
+    function getPlanetSalesLog(uint256 _planetTokenId) view public returns (PlanetSalesLog[] memory) {
+        uint256 length = planetSalesCntMap[_planetTokenId];
+        PlanetSalesLog[] memory planetSalesLog = new PlanetSalesLog[](length);
+        uint nextAddress = planetSalesMap[_planetTokenId].next;
+        planetSalesLog[0] = planetSalesMap[_planetTokenId];
+        uint idx = 1;
+        while(planetSalesMap[nextAddress].next > 0){
+            planetSalesLog[idx] = planetSalesMap[nextAddress];
+            idx++;
+            nextAddress = planetSalesMap[nextAddress].next;
+        }
+        return planetSalesLog;
+    }
 
-    uint256[] public onSalePlanetTokenArray;
 
     function setForSalePlanetToken(uint256 _planetTokenId, uint256 _price) public { // 판매 등록 
         address planetTokenOwner = ownerOf(_planetTokenId);
@@ -145,14 +177,14 @@ contract MintPlanetToken is ERC721Enumerable {
 
     function purchasePlanetToken(uint256 _planetTokenId) public payable { // 구매 
         uint256 price = planetPrices[_planetTokenId];
-        address planetTokenOnwer = ownerOf(_planetTokenId);
+        address planetTokenOwner = ownerOf(_planetTokenId);
 
         require(price > 0, "planet token not sale.");
         require(price <= msg.value, "Caller sent lower than price.");
-        require(planetTokenOnwer != msg.sender, "Caller is planet token owner.");
+        require(planetTokenOwner != msg.sender, "Caller is planet token owner.");
 
-        payable(planetTokenOnwer).transfer(msg.value);
-        this.safeTransferFrom(planetTokenOnwer, msg.sender, _planetTokenId);
+        payable(planetTokenOwner).transfer(msg.value);
+        this.safeTransferFrom(planetTokenOwner, msg.sender, _planetTokenId);
 
         planetPrices[_planetTokenId] = 0;
 
@@ -162,6 +194,23 @@ contract MintPlanetToken is ERC721Enumerable {
                 onSalePlanetTokenArray.pop();
             }
         }
+        
+        // 판매/구매 로그에 추가
+        uint lastNode = findLastNode(_planetTokenId);
+        uint nextAddress = uint256(keccak256(abi.encodePacked(_planetTokenId, price, planetTokenOwner, msg.sender, block.timestamp)));
+        PlanetSalesLog memory planetSalesLog = PlanetSalesLog(price, planetTokenOwner, msg.sender, block.timestamp, nextAddress);
+        planetSalesMap[lastNode] = planetSalesLog;
+        planetSalesCntMap[_planetTokenId]++;
+
+    }
+    
+    // 판매/구매 로그에서 마지막 노드 찾기 
+    function findLastNode(uint256 _planetTokenId) view public returns (uint256) {
+        uint nextAddress = planetSalesMap[_planetTokenId].next;
+        while(planetSalesMap[nextAddress].next != 0) {
+            nextAddress = planetSalesMap[nextAddress].next;
+        }
+        return nextAddress;
     }
 
     function getOnSalePlanetTokenArray() view public returns (uint256[] memory) {
