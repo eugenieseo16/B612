@@ -34,7 +34,7 @@ function FlowerThree({ type }: { type: number }) {
         <primitive object={grass.scene} />
       </group>
 
-      <Flower type={type} />
+      {type >= 0 && <Flower type={type} />}
     </>
   );
 }

@@ -1,5 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import {
+  Center,
+  Environment,
+  Lightformer,
+  OrbitControls,
+  Stars,
+  useGLTF,
+} from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { LayoutCamera } from 'framer-motion-3d';
 import { degToRad } from 'three/src/math/MathUtils';
@@ -35,95 +42,41 @@ const CAMERA_ANGLE = [
   },
 ];
 
-function Room({ index, setIndex }: any) {
+function Room({ index }: any) {
   // const [index, setIndex] = useRecoilState(roomIndexAtom);
   // const [index, setIndex] = useState(0);
 
   const [deskHeight, setDeskHeight] = useState(0);
+  const [desktopHeight, setDesktopHeight] = useState(0);
+  const [globeHeight, setGlobeHeight] = useState(0);
+  const [flowerpotHeight, setFlowerpotHeight] = useState(0);
+
   const desk = useGLTF('/desk/scene.gltf');
   const desktop = useGLTF('/desktop/scene.gltf');
   const globe = useGLTF('/globe/scene.gltf');
   const flowerPot = useGLTF('/flower_pot/scene.gltf');
-  useEffect(() => {
-    var mroot = flowerPot.scene;
-    var bbox = new Box3().setFromObject(mroot);
-    var cent = bbox.getCenter(new Vector3());
-    var size = bbox.getSize(new Vector3());
-    var maxAxis = Math.max(size.x, size.y, size.z);
-    mroot.scale.multiplyScalar(1.0 / maxAxis);
-    bbox.setFromObject(mroot);
-    bbox.getCenter(cent);
-    bbox.getSize(size);
-    //Reposition to 0,halfY,0
-    mroot.position.copy(cent).multiplyScalar(-1);
-    mroot.position.y -= 2;
-    mroot.position.y += size.y * 0.5;
-    mroot.position.x += 2.5;
-  }, [flowerPot]);
 
   useEffect(() => {
-    var mroot = desk.scene;
-    var bbox = new Box3().setFromObject(mroot);
-    var cent = bbox.getCenter(new Vector3());
-    var size = bbox.getSize(new Vector3());
-    var maxAxis = Math.max(size.x, size.y, size.z);
-    mroot.scale.multiplyScalar(4.0 / maxAxis);
-    bbox.setFromObject(mroot);
-    bbox.getCenter(cent);
-    bbox.getSize(size);
-    //Reposition to 0,halfY,0
-    mroot.position.copy(cent).multiplyScalar(-1);
-    mroot.position.y += size.y * 0.5;
-
-    mroot.position.y -= 2;
-    setDeskHeight(size.y);
+    const bbox = new Box3().setFromObject(desk.scene);
+    setDeskHeight(bbox.getSize(new Vector3()).y);
   }, [desk]);
-
   useEffect(() => {
-    if (deskHeight === 0) return;
-    var mroot = desktop.scene;
-    var bbox = new Box3().setFromObject(mroot);
-    var cent = bbox.getCenter(new Vector3());
-    var size = bbox.getSize(new Vector3());
-    var maxAxis = Math.max(size.x, size.y, size.z);
-    mroot.scale.multiplyScalar(2.0 / maxAxis);
-    bbox.setFromObject(mroot);
-    bbox.getCenter(cent);
-    bbox.getSize(size);
-    //Reposition to 0,halfY,0
-    mroot.position.copy(cent).multiplyScalar(-1);
-    // mroot.position.y -= size.y * 0.5;
-    mroot.position.y += size.y * 0.5;
-
-    mroot.position.y += deskHeight - 2;
-  }, [deskHeight, desktop]);
-
+    const bbox = new Box3().setFromObject(desktop.scene);
+    setDesktopHeight(bbox.getSize(new Vector3()).y);
+  }, [desktop]);
   useEffect(() => {
-    if (deskHeight === 0) return;
-    var mroot = globe.scene;
-    var bbox = new Box3().setFromObject(mroot);
-    var cent = bbox.getCenter(new Vector3());
-    var size = bbox.getSize(new Vector3());
-    var maxAxis = Math.max(size.x, size.y, size.z);
-    mroot.scale.multiplyScalar(1.0 / maxAxis);
-    bbox.setFromObject(mroot);
-    bbox.getCenter(cent);
-    bbox.getSize(size);
-    //Reposition to 0,halfY,0
-    mroot.position.copy(cent).multiplyScalar(-1);
-    // mroot.position.y -= size.y * 0.5;
-    mroot.position.y += size.y * 0.5;
-
-    mroot.position.y -= 2;
-    mroot.position.y += deskHeight;
-    mroot.position.z -= 0.5;
-    mroot.position.x += 1.5;
-  }, [deskHeight, globe]);
+    const bbox = new Box3().setFromObject(globe.scene);
+    setGlobeHeight(bbox.getSize(new Vector3()).y);
+  }, [globe]);
+  useEffect(() => {
+    const bbox = new Box3().setFromObject(flowerPot.scene);
+    setFlowerpotHeight(bbox.getSize(new Vector3()).y);
+  }, [flowerPot]);
 
   return (
     <>
       <ambientLight />
-      {/* <OrbitControls /> */}
+      <OrbitControls />
       <LayoutCamera
         animate={{
           ...CAMERA_POS[index],
@@ -134,22 +87,32 @@ function Room({ index, setIndex }: any) {
         <meshStandardMaterial side={DoubleSide} />
         <planeGeometry args={[10, 20]} />
       </mesh>
-      <group
-        position={[0, -1, 0]}
+
+      <Center
+        position={[0, deskHeight / 2 - 2, 0]}
         rotation={[0, degToRad(90), 0]}
-        onClick={() => setIndex(0)}
       >
-        <primitive object={desk.scene} scale={2} />
-      </group>
-      <group onClick={() => setIndex(1)}>
-        <primitive object={desktop.scene} scale={0.5} />
-      </group>
-      <group onClick={() => setIndex(2)}>
-        <primitive object={globe.scene} scale={0.018} />
-      </group>
-      <group onClick={() => setIndex(3)}>
-        <primitive object={flowerPot.scene} scale={0.5} />
-      </group>
+        <group>
+          <primitive object={desk.scene} scale={2} />
+        </group>
+      </Center>
+
+      <Center position={[0, desktopHeight / 2 - 2 + deskHeight, 0]}>
+        <group>
+          <primitive object={desktop.scene} scale={0.5} />
+        </group>
+      </Center>
+
+      <Center position={[1, globeHeight / 2 - 2 + deskHeight, 0]}>
+        <group>
+          <primitive object={globe.scene} scale={0.02} />
+        </group>
+      </Center>
+      <Center position={[3, flowerpotHeight / 2 - 2, 1]}>
+        <group>
+          <primitive object={flowerPot.scene} scale={0.5} />
+        </group>
+      </Center>
     </>
   );
 }
