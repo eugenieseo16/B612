@@ -4,5 +4,7 @@ import com.god.b612.dto.MemberResponseDto;
 import com.god.b612.entity.Member;
 
 public interface MemberService {
-    public MemberResponseDto MembersLoginOrRegist(String memberAddress);
+    public MemberResponseDto membersLoginOrRegist(String memberAddress);
+
+    public MemberResponseDto memberSelectById(int memberId);
 }
