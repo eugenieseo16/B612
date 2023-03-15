@@ -1,8 +1,27 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 // import { PerspectiveCamera } from '@react-three/drei';
-import { Stars } from '@react-three/drei';
-import AnimatedBox from '@components/square/AnimatedBox';
+import { OrbitControls, Stars, Stats, useTexture } from '@react-three/drei';
+import Lights from '@components/square/Lights';
+
+const TextureSpheres = () => {
+  const map = useTexture('../textures/aerial_rocks_04_diff_1k.png');
+  const normalMap = useTexture('../textures/aerial_rocks_04_nor_gl_1k.png');
+  const roughnessMap = useTexture('../textures/aerial_rocks_04_rough_1k.png');
+
+  return (
+    <>
+      <mesh scale={[0.5, 0.5, 0.5]} position={[0, 1, 0]} castShadow>
+        <sphereGeometry />
+        <meshStandardMaterial
+          map={map}
+          normalMap={normalMap}
+          roughnessMap={roughnessMap}
+        />
+      </mesh>
+    </>
+  );
+};
 
 function Square() {
   const styles = {
@@ -12,17 +31,25 @@ function Square() {
     },
   } as const;
 
+  // 개발중일때 , true 상태관리와 helper를 키고,끌수 있도록 함
+  const testing = true;
+
   return (
     <div style={styles.container}>
-      <Canvas>
+      <Canvas shadows>
+        {/*testing = true : 왼쪽상단에 상태를 보여준다, helper 킨다 */}
+        {testing ? <Stats /> : null}
+        {testing ? <axesHelper args={[2]} /> : null}
+        {testing ? <gridHelper args={[10, 10]} /> : null}
+        <OrbitControls />
         <Stars />
-        <ambientLight intensity={0.1} />
-        <directionalLight color="navy" position={[0, 0, 5]} />
-        {/* <mesh>
-          <boxGeometry />
-          <meshStandardMaterial />
-        </mesh> */}
-        <AnimatedBox />
+
+        <TextureSpheres />
+        <Lights />
+        <mesh rotation-x={Math.PI * -0.5} receiveShadow>
+          <planeBufferGeometry args={[5, 5]} />
+          <meshStandardMaterial color={'#458745'} />
+        </mesh>
       </Canvas>
     </div>
   );
