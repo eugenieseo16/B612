@@ -30,8 +30,8 @@ function NavBar() {
           <h2 className={pathname === '/' ? 'selected' : 'default'}>홈</h2>
         </Link>
 
-        <Link href={`/ranking`} id="link-item">
-          <h2 className={pathname === '/ranking' ? 'selected' : 'default'}>
+        <Link href={`/rankings`} id="link-item">
+          <h2 className={pathname === '/rankings' ? 'selected' : 'default'}>
             명예의 전당
           </h2>
         </Link>
