@@ -986,11 +986,11 @@
 			]
 		},
 		"PlanetToken.sol": {
-			"keccak256": "0x6ee6a3f92b541a3f9baaacda2ad80cd2ad10a1895c03b4ee4247b664ec5091aa",
+			"keccak256": "0xa7a14e520ee68644ed0d6fcb5e79db5b27510b97e84e8ff99f0cfcf3d4492aae",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9f7bd76b5c951b60162fa49e6aa2aaa64dedd3d8c89a2baf3005a511725548ab",
-				"dweb:/ipfs/QmQu3fYwQyAhN77TqYAB73p5TGhkNoqrg2neHzPry7htPT"
+				"bzz-raw://63133a106bad860838df8996021e4eda33d0bc50fb5ed031a6f0b629c2ca7119",
+				"dweb:/ipfs/QmeR9vBL132esBJw35h4Yzja5MoTxkVoUkLoTsQKBP8f28"
 			]
 		}
 	},
