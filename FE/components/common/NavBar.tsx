@@ -1,13 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
-import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
+import Badge from '@mui/material/Badge';
 import { Container } from '../common/NavBarEmotion';
 
 function NavBar() {
+  const router = useRouter();
+  const pathname = router.asPath;
+
   return (
     <Container>
       <div className="logo-container">
@@ -23,20 +27,32 @@ function NavBar() {
 
       <div className="menu-container">
         <Link href={`/`} id="link-item">
-          <h2>홈</h2>
+          <h2 className={pathname === '/' ? 'selected' : 'default'}>홈</h2>
         </Link>
 
         <Link href={`/ranking`} id="link-item">
-          <h2>명예의 전당</h2>
+          <h2 className={pathname === '/ranking' ? 'selected' : 'default'}>
+            명예의 전당
+          </h2>
         </Link>
 
         <Link href={`/store`} id="link-item">
-          <h2>상점</h2>
+          <h2 className={pathname === '/store' ? 'selected' : 'default'}>
+            상점
+          </h2>
         </Link>
 
         <div className="icon-container">
-          <NotificationsNoneIcon sx={{ fontSize: '30px' }} id="icon-item" />
+          <Badge badgeContent={4} color="error">
+            <NotificationsNoneIcon sx={{ fontSize: '30px' }} id="icon-item" />
+          </Badge>
+
+          {/* 비회원일시 */}
           <AccountCircleIcon sx={{ fontSize: '30px' }} id="icon-item" />
+
+          {/* 회원일시 */}
+          {/* 회원 프로필 이미지 설정 */}
+          {/* 경로도 /profile/로 연결해주기 */}
         </div>
       </div>
     </Container>

@@ -4,20 +4,28 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   background-color: #aec5ff;
-  height: 70px;
   justify-content: space-between;
-  padding: 0rem 2rem;
+  padding: 2rem 2rem;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  height: 5rem;
 
   #link-item {
     padding: 15px;
     color: white;
     text-decoration-line: none;
     text-decoration: none;
+    .selected {
+      color: #394666;
+      opacity: 80%;
+      /* text-decoration: underline; */
+    }
+    .default {
+      color: #394666;
+    }
   }
 
   .logo-container {
@@ -39,9 +47,9 @@ export const Container = styled.div`
     .icon-container {
       margin-left: 15px;
       display: flex;
-      color: #394666;
       #icon-item {
-        margin-left: 15px;
+        color: #394666;
+        margin-left: 20px;
       }
     }
   }
