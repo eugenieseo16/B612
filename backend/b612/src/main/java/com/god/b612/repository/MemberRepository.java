@@ -8,4 +8,6 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     Member findMemberByMemberAddress(String memberAddress);
 
     Member findTopByOrderByMemberIdDesc();
+
+    Member findMemberByMemberId(int memberId);
 }
