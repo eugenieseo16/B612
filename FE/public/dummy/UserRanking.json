@@ -1,0 +1,76 @@
+{
+  "content": {
+    "members": [
+      {
+        "memberId": 1,
+        "totalCount": 932,
+        "memberProfileImage": "https://i.pinimg.com/564x/27/b2/b0/27b2b077e6f67b5e9bfa037aafd77f97.jpg",
+        "memberName": "용감한 장미241",
+        "memberClass": "The Aviator"
+      },
+      {
+        "memberId": 2,
+        "totalCount": 834,
+        "memberProfileImage": "https://i.pinimg.com/736x/d7/10/d9/d710d97ea114188297e805cbd7dbcb6e.jpg",
+        "memberName": "호기심 많은 행성21",
+        "memberClass": "The Aviator"
+      },
+      {
+        "memberId": 3,
+        "totalCount": 812,
+        "memberProfileImage": "https://i.pinimg.com/564x/34/92/51/3492510b80e247d20dda35dce8169fc6.jpg",
+        "memberName": "온순한 소행성15",
+        "memberClass": "The Beloved"
+      },
+      {
+        "memberId": 4,
+        "totalCount": 722,
+        "memberProfileImage": "https://i.pinimg.com/564x/75/77/94/7577942550c5bf05be04fdefa7ff7a90.jpg",
+        "memberName": "꿈꾸는 바오밥나무99",
+        "memberClass": "The Aviator"
+      },
+      {
+        "memberId": 5,
+        "totalCount": 721,
+        "memberProfileImage": "https://i.pinimg.com/736x/0a/29/cf/0a29cf3fa7d826eb28ce10ad3b72221c.jpg",
+        "memberName": "작은 뱀192",
+        "memberClass": "The Beloved"
+      },
+      {
+        "memberId": 6,
+        "totalCount": 600,
+        "memberProfileImage": "https://i.pinimg.com/564x/e7/5c/61/e75c61d7dee31bf7dbfd168276391aa8.jpg",
+        "memberName": "장난스러운 램프11",
+        "memberClass": "The Businessman"
+      },
+      {
+        "memberId": 7,
+        "totalCount": 443,
+        "memberProfileImage": "http://www.irobotnews.com/news/photo/202302/30766_66430_946.jpg",
+        "memberName": "꿈꾸는 여우1",
+        "memberClass": "The Businessman"
+      },
+      {
+        "memberId": 8,
+        "totalCount": 344,
+        "memberProfileImage": "https://i.pinimg.com/236x/1c/cf/f0/1ccff0a256a5dfd24bf32782326582f7.jpg",
+        "memberName": "현명한 달92",
+        "memberClass": "The Shepard"
+      },
+      {
+        "memberId": 9,
+        "totalCount": 122,
+        "memberProfileImage": "https://blog.kakaocdn.net/dn/nlbr8/btrGCDbmOkw/iUd7cGJ4hvsduHrUxcNnyK/img.jpg",
+        "memberName": "방랑하는 소행성91",
+        "memberClass": "The Shepard"
+      },
+      {
+        "memberId": 10,
+        "totalCount": 120,
+        "memberProfileImage": "https://i.pinimg.com/236x/94/9f/e4/949fe4c386e73067b767ad3bd7766ad1.jpg",
+        "memberName": "온순한 장미110",
+        "memberClass": "The Guide"
+      }
+    ]
+  }
+}

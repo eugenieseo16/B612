@@ -3,8 +3,10 @@ import styled from '@emotion/styled';
 export const ButtonContainer = styled.div`
   background-color: #bd95f4;
   border-radius: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
-  height: 50px;
+  height: 90px;
   width: 21rem;
 
   display: flex;
@@ -30,5 +32,15 @@ export const ButtonContainer = styled.div`
   .default {
     background-color: transparent;
     width: 10rem;
+  }
+`;
+
+export const RankingDataContainer = styled.div`
+  padding-top: 20px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
