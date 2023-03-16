@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
 
 
     @Override
-    public MemberResponseDto MembersLoginOrRegist(String memberAddress){
+    public MemberResponseDto membersLoginOrRegist(String memberAddress){
         Member member=memberRepository.findMemberByMemberAddress(memberAddress);
 
         if(member==null){
@@ -48,6 +48,13 @@ public class MemberServiceImpl implements MemberService {
             return memberResponseDto;
 
         }
+        MemberResponseDto memberResponseDto=memberCustomRepository.createMemberResponseDtoByEntity(member);
+        return memberResponseDto;
+    }
+
+    @Override
+    public MemberResponseDto memberSelectById(int memberId) {
+        Member member=memberRepository.findMemberByMemberId(memberId);
         MemberResponseDto memberResponseDto=memberCustomRepository.createMemberResponseDtoByEntity(member);
         return memberResponseDto;
     }
