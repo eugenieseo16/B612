@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stars, Stats, useTexture } from '@react-three/drei';
 import Lights from '@components/square/Lights';
 import Ground from '@components/square/Ground';
+import { TetrisModel } from '@components/square/Tetris';
 
 const TextureSpheres = () => {
   const map = useTexture('../textures/aerial_rocks_04_diff_1k.png');
@@ -45,6 +46,7 @@ function Square() {
         <OrbitControls />
         <Stars />
         <Ground />
+        <TetrisModel />
         <TextureSpheres />
         <Lights />
       </Canvas>
