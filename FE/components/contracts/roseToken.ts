@@ -1,5 +1,5 @@
 import { AbiItem } from 'web3-utils';
-import web3 from '.';
+import useWeb3 from '.';
 
 const roseTokenAbi: AbiItem[] = [
   {
@@ -702,11 +702,13 @@ const saleRoseTokenAbi: AbiItem[] = [
 const roseTokenAddress = '0xd9145CCE52D386f254917e481eB44e9943F39138';
 const saleRoseTokenAddress = '0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8';
 
-export const roseTokenContract = new web3.eth.Contract(
-  roseTokenAbi,
-  roseTokenAddress
-);
-export const salePlanetTokenContract = new web3.eth.Contract(
-  saleRoseTokenAbi,
-  saleRoseTokenAddress
-);
+export const useRoseTokenContract = () => {
+  const web3 = useWeb3();
+  if (web3) return new web3.eth.Contract(roseTokenAbi, roseTokenAddress);
+  return null;
+};
+export const useSalePlanetTokenContract = () => {
+  const web3 = useWeb3();
+  if (web3) new web3.eth.Contract(saleRoseTokenAbi, saleRoseTokenAddress);
+  return null;
+};

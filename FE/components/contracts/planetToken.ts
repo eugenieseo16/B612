@@ -777,5 +777,7 @@ export const usePlanetTokenContract = () => {
 
 export const usePlanetSaleTokenContract = () => {
   const web3 = useWeb3();
-  return new web3.eth.Contract(salePlanetTokenAbi, salePlanetTokenAddress);
+  if (web3)
+    return new web3.eth.Contract(salePlanetTokenAbi, salePlanetTokenAddress);
+  return null;
 };

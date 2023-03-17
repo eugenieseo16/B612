@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import { Canvas } from '@react-three/fiber';
 import UserAvatar from '@components/profile/UserAvatar';
 import Room from '@components/profile/Room';
@@ -7,8 +6,6 @@ import { MotionCanvas } from 'framer-motion-3d';
 import { MotionConfig } from 'framer-motion';
 
 function UserProfile() {
-  const router = useRouter();
-  const { userId } = router.query;
   return (
     <div
       style={{

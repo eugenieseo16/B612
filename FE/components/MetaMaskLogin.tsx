@@ -1,10 +1,10 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 import Web3 from 'web3';
 
 function MetaMaskLogin() {
-  const [account, setAccount] = useRecoilState(userAtom);
+  const account = useRecoilValue(userAtom);
 
   const handleNetwork = async () => {
     const chainId = 31221; // ssafy mainnet 주소
@@ -39,10 +39,9 @@ function MetaMaskLogin() {
   };
   const handleLogin = async () => {
     if (window.ethereum) {
-      const accounts = await window.ethereum.request({
+      await window.ethereum.request({
         method: 'eth_requestAccounts',
       });
-      if (window.ethereum.networkVersion == 31221) setAccount(accounts[0]);
     } else {
       alert('Install Metamask!');
     }
@@ -54,7 +53,7 @@ function MetaMaskLogin() {
         handleNetwork();
         handleLogin();
       }}
-      disabled={account.length > 0}
+      disabled={Boolean(account)}
     >
       MetaMaskLogin
     </button>

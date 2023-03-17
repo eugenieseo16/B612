@@ -1,31 +1,40 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { OrbitControls, useGLTF } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
+import React, { useEffect, useState, useRef } from 'react';
+import {
+  BakeShadows,
+  Center,
+  Stars,
+  useAnimations,
+  useGLTF,
+  useHelper,
+} from '@react-three/drei';
 import { LayoutCamera } from 'framer-motion-3d';
 import { degToRad } from 'three/src/math/MathUtils';
-import { Vector3, DoubleSide, Box3 } from 'three';
+import { Box3, DirectionalLightHelper, Vector3 } from 'three';
 
 const CAMERA_POS = [
-  { x: 6, y: 3, z: 8 },
-  { x: 0, y: 2, z: 3 }, //desktop
-  { x: 2.7, y: 1.5, z: 1 }, //globe
-  { x: 3.5, y: 0.15, z: 1 }, //flower
+  { x: 420, y: 300, z: 420 }, //home
+  { x: -40, y: 0, z: -54 }, //desktop
+  { x: 10, y: 20, z: -80 }, //window
+  { x: 27, y: 1.5, z: 1 }, //
+  { x: 3.5, y: 0.15, z: 1 }, //
+  { x: 300, y: 300, z: 300 }, //
 ];
+
 const CAMERA_ANGLE = [
   {
-    rotateX: -0.358,
-    rotateY: 0.612,
-    rotateZ: 0.212,
+    rotateX: -0.6202494859828216,
+    rotateY: 0.6830590914963978,
+    rotateZ: 0.4235479439953271,
   },
   {
-    rotateX: -0.4491756441212029,
-    rotateY: -0.0039304318172268,
-    rotateZ: -0.0018946133233827865,
+    rotateY: 1.5707963267948966, //desktop view
+    rotateX: 0,
+    rotateZ: 0,
   },
   {
-    rotateX: -0.6878955697533992,
-    rotateY: 0.5546003102322192,
-    rotateZ: 0.40842930922314513,
+    rotateX: 0,
+    rotateY: 0,
+    rotateZ: 0,
   },
   {
     //flowerPot
@@ -35,121 +44,91 @@ const CAMERA_ANGLE = [
   },
 ];
 
-function Room({ index, setIndex }: any) {
-  // const [index, setIndex] = useRecoilState(roomIndexAtom);
-  // const [index, setIndex] = useState(0);
+function Room({ index }: any) {
+  const ref = useRef<any>();
+  const lightRef = useRef<any>();
+  const room = useGLTF('/room.glb');
+  const avatar = useGLTF('/avatar/FZCR_080.glb');
+  const { actions } = useAnimations(avatar.animations, ref);
 
-  const [deskHeight, setDeskHeight] = useState(0);
-  const desk = useGLTF('/desk/scene.gltf');
-  const desktop = useGLTF('/desktop/scene.gltf');
-  const globe = useGLTF('/globe/scene.gltf');
-  const flowerPot = useGLTF('/flower_pot/scene.gltf');
+  useHelper(lightRef, DirectionalLightHelper);
+  const [height, setHeight] = useState(0);
+  const [avatarHeight, setAvatarHeight] = useState(0);
+  const [animationName, setAnimationName] = useState('idle_01');
   useEffect(() => {
-    var mroot = flowerPot.scene;
-    var bbox = new Box3().setFromObject(mroot);
-    var cent = bbox.getCenter(new Vector3());
-    var size = bbox.getSize(new Vector3());
-    var maxAxis = Math.max(size.x, size.y, size.z);
-    mroot.scale.multiplyScalar(1.0 / maxAxis);
-    bbox.setFromObject(mroot);
-    bbox.getCenter(cent);
-    bbox.getSize(size);
-    //Reposition to 0,halfY,0
-    mroot.position.copy(cent).multiplyScalar(-1);
-    mroot.position.y -= 2;
-    mroot.position.y += size.y * 0.5;
-    mroot.position.x += 2.5;
-  }, [flowerPot]);
+    const bbox = new Box3().setFromObject(room.scene);
+    setHeight(bbox.getSize(new Vector3()).y);
+  }, [room]);
 
   useEffect(() => {
-    var mroot = desk.scene;
-    var bbox = new Box3().setFromObject(mroot);
-    var cent = bbox.getCenter(new Vector3());
-    var size = bbox.getSize(new Vector3());
-    var maxAxis = Math.max(size.x, size.y, size.z);
-    mroot.scale.multiplyScalar(4.0 / maxAxis);
-    bbox.setFromObject(mroot);
-    bbox.getCenter(cent);
-    bbox.getSize(size);
-    //Reposition to 0,halfY,0
-    mroot.position.copy(cent).multiplyScalar(-1);
-    mroot.position.y += size.y * 0.5;
-
-    mroot.position.y -= 2;
-    setDeskHeight(size.y);
-  }, [desk]);
+    actions[animationName]?.reset().fadeIn(0.5).play();
+  }, [animationName, actions]);
 
   useEffect(() => {
-    if (deskHeight === 0) return;
-    var mroot = desktop.scene;
-    var bbox = new Box3().setFromObject(mroot);
-    var cent = bbox.getCenter(new Vector3());
-    var size = bbox.getSize(new Vector3());
-    var maxAxis = Math.max(size.x, size.y, size.z);
-    mroot.scale.multiplyScalar(2.0 / maxAxis);
-    bbox.setFromObject(mroot);
-    bbox.getCenter(cent);
-    bbox.getSize(size);
-    //Reposition to 0,halfY,0
-    mroot.position.copy(cent).multiplyScalar(-1);
-    // mroot.position.y -= size.y * 0.5;
-    mroot.position.y += size.y * 0.5;
-
-    mroot.position.y += deskHeight - 2;
-  }, [deskHeight, desktop]);
+    const bbox = new Box3().setFromObject(avatar.scene);
+    setAvatarHeight(bbox.getSize(new Vector3()).y);
+  }, [avatar]);
 
   useEffect(() => {
-    if (deskHeight === 0) return;
-    var mroot = globe.scene;
-    var bbox = new Box3().setFromObject(mroot);
-    var cent = bbox.getCenter(new Vector3());
-    var size = bbox.getSize(new Vector3());
-    var maxAxis = Math.max(size.x, size.y, size.z);
-    mroot.scale.multiplyScalar(1.0 / maxAxis);
-    bbox.setFromObject(mroot);
-    bbox.getCenter(cent);
-    bbox.getSize(size);
-    //Reposition to 0,halfY,0
-    mroot.position.copy(cent).multiplyScalar(-1);
-    // mroot.position.y -= size.y * 0.5;
-    mroot.position.y += size.y * 0.5;
+    const time = animationName === 'idle_01' ? 4000 : 1400;
+    const id = setInterval(() => {
+      if (animationName === 'idle_01') {
+        actions['idle_01']?.fadeOut(0.5);
+        setAnimationName('hi');
+      } else {
+        actions['hi']?.fadeOut(0.5);
+        setAnimationName('idle_01');
+      }
+    }, time);
+    return () => clearInterval(id);
+  }, [animationName]);
 
-    mroot.position.y -= 2;
-    mroot.position.y += deskHeight;
-    mroot.position.z -= 0.5;
-    mroot.position.x += 1.5;
-  }, [deskHeight, globe]);
+  // useFrame(({ camera }) => {
+  //   camera.lookAt(CAMERA_LOOK_AT[index]);
+  //   console.log('ROTATION', camera.rotation);
+  // });
 
   return (
     <>
-      <ambientLight />
-      {/* <OrbitControls /> */}
+      <Stars radius={300} factor={15} depth={100} />
       <LayoutCamera
         animate={{
           ...CAMERA_POS[index],
           ...CAMERA_ANGLE[index],
         }}
       />
-      <mesh position={[0, -2, 0]} rotation={[degToRad(90), 0, 0]}>
-        <meshStandardMaterial side={DoubleSide} />
-        <planeGeometry args={[10, 20]} />
-      </mesh>
-      <group
-        position={[0, -1, 0]}
-        rotation={[0, degToRad(90), 0]}
-        onClick={() => setIndex(0)}
+      <color attach="background" args={['#252530']} />
+      <ambientLight intensity={0.1} />
+      <spotLight
+        intensity={0.6}
+        position={[100, 100, 100]}
+        penumbra={0.5}
+        shadow-mapSize={[64, 64]}
+        shadow-bias={-0.000001}
+      />
+      <directionalLight
+        ref={lightRef}
+        position={[100, 100, 250]}
+        intensity={0.8}
+      />
+
+      <Center position={[0, 0, 0]}>
+        <group>
+          <primitive object={room.scene} />
+        </group>
+      </Center>
+
+      <Center
+        top
+        scale={100}
+        position={[0, -height / 2 + avatarHeight * 25, 0]}
+        rotation={[0, degToRad(-135), 0]}
       >
-        <primitive object={desk.scene} scale={2} />
-      </group>
-      <group onClick={() => setIndex(1)}>
-        <primitive object={desktop.scene} scale={0.5} />
-      </group>
-      <group onClick={() => setIndex(2)}>
-        <primitive object={globe.scene} scale={0.018} />
-      </group>
-      <group onClick={() => setIndex(3)}>
-        <primitive object={flowerPot.scene} scale={0.5} />
-      </group>
+        <group ref={ref}>
+          <primitive object={avatar.scene} />
+        </group>
+      </Center>
+      <BakeShadows />
     </>
   );
 }
