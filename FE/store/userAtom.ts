@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
-const userAtom = atom({
+const userAtom = atom<IUser | null>({
   key: 'userAtom',
-  default: '',
+  default: null,
 });
 
 export default userAtom;
