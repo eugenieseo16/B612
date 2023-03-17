@@ -44,14 +44,6 @@ const CAMERA_ANGLE = [
   },
 ];
 
-const CAMERA_LOOK_AT = [
-  new Vector3(),
-  new Vector3(-110, 0, -54),
-  new Vector3(10, 20, -130),
-  new Vector3(),
-  new Vector3(),
-];
-
 function Room({ index }: any) {
   const ref = useRef<any>();
   const lightRef = useRef<any>();
