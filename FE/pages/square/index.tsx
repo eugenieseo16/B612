@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 // import { PerspectiveCamera } from '@react-three/drei';
 import { OrbitControls, Stars, Stats, useTexture } from '@react-three/drei';
 import Lights from '@components/square/Lights';
+import Ground from '@components/square/Ground';
 
 const TextureSpheres = () => {
   const map = useTexture('../textures/aerial_rocks_04_diff_1k.png');
@@ -43,13 +44,9 @@ function Square() {
         {testing ? <gridHelper args={[10, 10]} /> : null}
         <OrbitControls />
         <Stars />
-
+        <Ground />
         <TextureSpheres />
         <Lights />
-        <mesh rotation-x={Math.PI * -0.5} receiveShadow>
-          <planeBufferGeometry args={[5, 5]} />
-          <meshStandardMaterial color={'#458745'} />
-        </mesh>
       </Canvas>
     </div>
   );
