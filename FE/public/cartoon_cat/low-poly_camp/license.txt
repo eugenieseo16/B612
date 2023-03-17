@@ -1,0 +1,11 @@
+Model Information:
+* title:	Low-Poly Camp
+* source:	https://sketchfab.com/3d-models/low-poly-camp-89e49bc8542a4e519dae276e022f1dfa
+* author:	odilia (https://sketchfab.com/odilia)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Low-Poly Camp" (https://sketchfab.com/3d-models/low-poly-camp-89e49bc8542a4e519dae276e022f1dfa) by odilia (https://sketchfab.com/odilia) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

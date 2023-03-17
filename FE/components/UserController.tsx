@@ -1,16 +1,26 @@
 import React, { useEffect } from 'react';
 import userAtom from 'store/userAtom';
 import { useSetRecoilState } from 'recoil';
-
+import axios from 'axios';
+const config = { headers: { 'Content-Type': 'application/json' } };
 function UserController() {
   const setUser = useSetRecoilState(userAtom);
 
   useEffect(() => {
     // eslint-disable-next-line
     const handleAccount = async () => {
-      let newUser = await window.ethereum?.selectedAddress;
-      if (!newUser || window.ethereum.networkVersion != 31221) newUser = '';
-      setUser(newUser);
+      const memberAddress = await window.ethereum?.selectedAddress;
+      if (!memberAddress || window.ethereum.networkVersion != 31221) {
+        setUser(null);
+      } else {
+        const { data } = await axios.post(
+          'http://70.12.246.39:8080/member',
+          { memberAddress },
+          config
+        );
+        console.log(data.responseData.memberAddress);
+        setUser(data.responseData);
+      }
     };
 
     handleAccount();

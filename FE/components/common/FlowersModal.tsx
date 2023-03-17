@@ -12,13 +12,13 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 // HTMLDivElement, HTMLMotionProps<'div'>;
 const MY_FLOWERS = [0, 1, 2, 1, 1, 1, 1];
 
 function FlowersModal() {
-  const [type, setType] = useState(0);
+  const [type, setType] = useState(-1);
   return (
     <Container>
       <div style={{ overflowY: 'scroll', padding: '0 1rem 0 0' }}>
@@ -52,10 +52,6 @@ function FlowersModal() {
       <CenterBox>
         <Canvas
           shadows
-          camera={{
-            position: [0, 7, 10],
-            rotation: [0, 1, 1],
-          }}
           style={{
             width: '25vw',
             height: '25vw',
@@ -63,7 +59,9 @@ function FlowersModal() {
             borderRadius: '1rem',
           }}
         >
-          <FlowerThree type={type} />
+          <Suspense fallback={null}>
+            <FlowerThree type={type} />
+          </Suspense>
         </Canvas>
       </CenterBox>
     </Container>
