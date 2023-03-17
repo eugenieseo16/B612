@@ -15,7 +15,7 @@ const Home: NextPage = () => {
         <Link href={`/square`}>광장으로 이동</Link>
       </div>
       <Example />
-      {user.length == 0 ? <MetaMaskLogin /> : <h1>{user}</h1>}
+      {!Boolean(user) ? <MetaMaskLogin /> : <h1>{user?.memberNickname}</h1>}
 
       <h1>Heading1 폰트 테스트 - MYCHEW</h1>
       <h2>Heading2 폰트 테스트 - MYCHEW</h2>
