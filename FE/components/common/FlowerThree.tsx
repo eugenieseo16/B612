@@ -6,7 +6,7 @@ import {
   useGLTF,
 } from '@react-three/drei';
 import React, { useEffect, useState } from 'react';
-import { Box3, Vector3 } from 'three';
+import { Box3, DoubleSide, Vector3 } from 'three';
 import { degToRad } from 'three/src/math/MathUtils';
 
 const GLTF_URL = [
@@ -16,23 +16,27 @@ const GLTF_URL = [
 ];
 
 function FlowerThree({ type }: { type: number }) {
-  const grass = useGLTF('/grass/scene.gltf');
-  useEffect(() => {
-    grass.scene.traverse(node => (node.receiveShadow = true));
-  }, [grass]);
+  // const grass = useGLTF('/grass/scene.gltf');
+  // useEffect(() => {
+  //   grass.scene.traverse(node => (node.receiveShadow = true));
+  // }, [grass]);
 
   return (
     <>
       <ambientLight intensity={0.1} />
-      <spotLight castShadow position={[-7, 8, 5]} intensity={1} />
+      <spotLight castShadow position={[-5, 10, 3]} intensity={1.5} />
 
-      <OrbitControls enableZoom={false} maxPolarAngle={degToRad(90)} />
+      <OrbitControls />
       <Environment background files={'/sky.hdr'} />
-      <Shadow />
+      <mesh receiveShadow rotation={[degToRad(90), 0, 0]}>
+        <planeGeometry args={[30, 30]} />
+        <meshStandardMaterial side={DoubleSide} />
+      </mesh>
 
-      <group scale={3} position={[0, -4, 0]}>
+      {/* 
+      <group scale={3}>
         <primitive object={grass.scene} />
-      </group>
+      </group> */}
 
       {type >= 0 && <Flower type={type} />}
     </>
@@ -55,10 +59,8 @@ function Flower({ type }: { type: number }) {
   }, [flower]);
 
   return (
-    <Center position={[0, height / 2 - 4, 0]}>
-      <group>
-        <primitive object={flower.scene} />
-      </group>
+    <Center top>
+      <primitive object={flower.scene} />
     </Center>
   );
 }

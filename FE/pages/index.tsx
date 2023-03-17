@@ -12,7 +12,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <Link href={`/profile`}>myProfile</Link>
       <Example />
-      {user.length == 0 ? <MetaMaskLogin /> : <h1>{user}</h1>}
+      {!Boolean(user) ? <MetaMaskLogin /> : <h1>{user?.memberNickname}</h1>}
 
       <h1>Heading1 폰트 테스트 - MYCHEW</h1>
       <h2>Heading2 폰트 테스트 - MYCHEW</h2>
