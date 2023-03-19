@@ -1,43 +1,37 @@
 import styled from '@emotion/styled';
 
-export const RankingContainer = styled.div`
-  background-color: white;
-  border-radius: 30px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+export const TableItem = styled.tr`
+  // background-color: white;
+  // border-radius: 30px;
+  height: 5rem;
 
-  padding: 0rem 3rem;
-  width: 100vh;
-  height: 80px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  .rank {
-    padding: 1rem 0rem;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 
   .planet {
+    display: flex;
+    align-items: center;
+    h6 {
+      padding-left: 10px;
+    }
   }
 
   .member-info {
     display: flex;
     align-items: center;
-    img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
     p {
-      padding: 0px 10px;
+      padding-left: 10px;
     }
-  }
-
-  .class {
   }
 
   .likes {
     display: flex;
+    align-items: center;
+    #icon-item {
+      color: #fb6f92;
+    }
   }
 `;

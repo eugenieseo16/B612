@@ -20,7 +20,7 @@ function ToggleButton() {
           }}
           className={selected === 'user' ? 'selected' : 'default'}
         >
-          <h4>사용자 랭킹</h4>
+          <h6>사용자 랭킹</h6>
         </button>
         <button
           onClick={() => {
@@ -28,7 +28,7 @@ function ToggleButton() {
           }}
           className={selected === 'planet' ? 'selected' : 'default'}
         >
-          <h4>행성 랭킹</h4>
+          <h6>행성 랭킹</h6>
         </button>
       </ButtonContainer>
 

@@ -134,44 +134,45 @@ body {
 }
 h1 {
   font-family: 'MYCHEW';
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: #394666;
 }
 h2 {
   font-family: 'MYCHEW';
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #394666;
 }
 h3 {
-  font-family: 'MAYO';
-  font-size: 1.6rem;
+  font-family: 'MYCHEW';
+  font-size: 1.5rem;
   color: #394666;
 }
 h4 {
   font-family: 'MAYO';
-  font-size: 1.3rem;
+  font-size: 3rem;
   color: #394666;
 }
 h5 {
-  font-family: 'CAFE24';
-  font-size: 1.6rem;
+  font-family: 'MAYO';
+  font-size: 2.5rem;
   color: #394666;
 }
 h6 {
-  font-family: 'CAFE24';
-  font-size: 1.3rem;
+  font-family: 'MAYO';
+  font-size: 1.5rem;
+  font-weight: bold;
   color: #394666;
 }
 span,
 p {
   font-family: 'WILD-MAYO';
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
   color: #29334d;
 }
 a {
   font-family: 'WILD-MAYO';
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   /* font-weight: bold; */
   text-decoration: underline;
   color: #4a5980;
@@ -182,21 +183,16 @@ a {
 }
 
 @font-face {
-  font-family: 'CAFE24';
-  src: url('../assets/fonts/Cafe24클래식.ttf');
-}
-
-@font-face {
   font-family: 'WILD-MAYO';
   src: url('../assets/fonts/거친둘기마요.ttf');
 }
 
 @font-face {
-  font-family: 'MYCHEW';
-  src: url('../assets/fonts/마이쮸.ttf');
+  font-family: 'MAYO';
+  src: url('../assets/fonts/둘기마요.ttf');
 }
 
 @font-face {
-  font-family: 'MAYO';
-  src: url('../assets/fonts/둘기마요.ttf');
+  font-family: 'MYCHEW';
+  src: url('../assets/fonts/마이쮸.ttf');
 }

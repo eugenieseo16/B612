@@ -6,7 +6,7 @@ export const ButtonContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
 
-  height: 90px;
+  height: 4rem;
   width: 21rem;
 
   display: flex;

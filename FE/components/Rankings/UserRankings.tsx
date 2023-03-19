@@ -1,7 +1,7 @@
 import React from 'react';
 
 import userRankings from '../../public/dummy/UserRanking.json';
-import { RankingContainer } from '../Rankings/RankingsEmotion';
+import { TableItem } from '../Rankings/RankingsEmotion';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
@@ -10,29 +10,42 @@ function UserRankings() {
 
   return (
     <div>
-      <div>
-        {data?.map((rank: any, i: number) => (
-          <RankingContainer key={i}>
-            <div className="rank">
-              <h3>{i + 1}</h3>
-            </div>
+      <table width="1000">
+        <th>
+          <p>순위</p>
+        </th>
+        <th>
+          <p>사용자</p>
+        </th>
+        <th>
+          <p>계급</p>
+        </th>
+        <th>
+          <p>좋아요</p>
+        </th>
 
-            <div className="member-info">
+        {data?.map((rank: any, i: number) => (
+          <TableItem key={i}>
+            <td className="rank">
+              <h2>{i + 1}</h2>
+            </td>
+
+            <td className="member-info">
               <img src={rank.memberProfileImage} alt="" />
               <p>{rank.memberName}</p>
-            </div>
+            </td>
 
-            <div className="class">
+            <td className="class">
               <p>{rank.memberClass}</p>
-            </div>
+            </td>
 
-            <div className="likes">
-              <FavoriteIcon />
-              <h4>{rank.totalCount}</h4>
-            </div>
-          </RankingContainer>
+            <td className="likes">
+              <FavoriteIcon id="icon-item" />
+              <p>{rank.totalCount}</p>
+            </td>
+          </TableItem>
         ))}
-      </div>
+      </table>
     </div>
   );
 }

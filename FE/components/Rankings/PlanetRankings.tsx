@@ -1,7 +1,7 @@
 import React from 'react';
 
 import planetRankings from '../../public/dummy/PlanetRanking.json';
-import { RankingContainer } from '../Rankings/RankingsEmotion';
+import { TableItem } from '../Rankings/RankingsEmotion';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
@@ -10,27 +10,42 @@ function PlanetRankings() {
 
   return (
     <div>
-      {data?.map((rank: any, i: number) => (
-        <RankingContainer key={i}>
-          <div className="rank">
-            <h3>{i + 1}</h3>
-          </div>
+      <table width="1000">
+        <th>
+          <p>순위</p>
+        </th>
+        <th>
+          <p>행성</p>
+        </th>
+        <th>
+          <p>사용자</p>
+        </th>
+        <th>
+          <p>좋아요</p>
+        </th>
 
-          <div className="planet">
-            <h3>{rank.planetName}</h3>
-          </div>
+        {data?.map((rank: any, i: number) => (
+          <TableItem key={i}>
+            <td className="rank">
+              <h2>{i + 1}</h2>
+            </td>
 
-          <div className="member-info">
-            <img src={rank.memberProfileImage} alt="" />
-            <p>{rank.memberName}</p>
-          </div>
+            <td className="planet">
+              <img src={rank.memberProfileImage} alt="" />
+              <h6>{rank.planetName}</h6>
+            </td>
 
-          <div className="likes">
-            <FavoriteIcon />
-            <h4>{rank.totalCount}</h4>
-          </div>
-        </RankingContainer>
-      ))}
+            <td className="member">
+              <p>{rank.memberName}</p>
+            </td>
+
+            <td className="likes">
+              <FavoriteIcon id="icon-item" />
+              <p>{rank.totalCount}</p>
+            </td>
+          </TableItem>
+        ))}
+      </table>
     </div>
   );
 }
