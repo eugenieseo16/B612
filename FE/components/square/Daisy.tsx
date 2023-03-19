@@ -22,7 +22,7 @@ type GLTFResult = GLTF & {
 export function DaisyModel(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/daisy/daisy.glb') as GLTFResult;
   return (
-    <object3D scale={[0.05, 0.05, 0.05]} position={[0, 1, 0]}>
+    <object3D scale={[0.03, 0.03, 0.03]} position={[-3, 0, -3]}>
       <group {...props} dispose={null}>
         <group position={[0, -25.89, 28.93]} rotation={[-Math.PI, 0, 0]}>
           <mesh

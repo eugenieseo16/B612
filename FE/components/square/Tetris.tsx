@@ -95,7 +95,7 @@ export function TetrisModel(props: JSX.IntrinsicElements['group']) {
   ) as GLTFResult;
   const { actions } = useAnimations<GLTFActions>(animations, group);
   return (
-    <object3D scale={[0.4, 0.4, 0.4]}>
+    <object3D position={[10, 0, 10]} scale={[0.2, 0.2, 0.2]}>
       <group ref={group} {...props} dispose={null}>
         <group name="Sketchfab_Scene">
           <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
