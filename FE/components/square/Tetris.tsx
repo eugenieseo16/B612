@@ -10,6 +10,7 @@ import * as THREE from 'three';
 import React, { useRef } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { GLTF } from 'three-stdlib';
+import { Object3D } from 'three';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -94,574 +95,576 @@ export function TetrisModel(props: JSX.IntrinsicElements['group']) {
   ) as GLTFResult;
   const { actions } = useAnimations<GLTFActions>(animations, group);
   return (
-    <group ref={group} {...props} dispose={null}>
-      <group name="Sketchfab_Scene">
-        <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
-          <group
-            name="ae6f8701566a497d8244d390a95521c1fbx"
-            rotation={[Math.PI / 2, 0, 0]}
-          >
-            <group name="Object_2">
-              <group name="RootNode">
-                <group name="LLLLL" position={[0, -10, 0]}>
-                  <mesh
-                    name="LLLLL_L2_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.LLLLL_L2_0.geometry}
-                    material={materials.material}
-                  />
-                </group>
-                <group name="Numeros" position={[0.44, 7.23, 8.69]} scale={0}>
-                  <mesh
-                    name="Numeros_YellowType_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Numeros_YellowType_0.geometry}
-                    material={materials.YellowType}
-                  />
-                </group>
-                <group name="Numeros2">
-                  <mesh
-                    name="Numeros2_YellowType_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Numeros2_YellowType_0.geometry}
-                    material={materials.YellowType}
-                  />
-                </group>
-                <group name="Some">
-                  <group name="padrao14">
+    <object3D scale={[0.4, 0.4, 0.4]}>
+      <group ref={group} {...props} dispose={null}>
+        <group name="Sketchfab_Scene">
+          <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
+            <group
+              name="ae6f8701566a497d8244d390a95521c1fbx"
+              rotation={[Math.PI / 2, 0, 0]}
+            >
+              <group name="Object_2">
+                <group name="RootNode">
+                  <group name="LLLLL" position={[0, -10, 0]}>
                     <mesh
-                      name="padrao14_L2_0"
+                      name="LLLLL_L2_0"
                       castShadow
                       receiveShadow
-                      geometry={nodes.padrao14_L2_0.geometry}
+                      geometry={nodes.LLLLL_L2_0.geometry}
                       material={materials.material}
                     />
                   </group>
-                  <group name="padrao4_1">
+                  <group name="Numeros" position={[0.44, 7.23, 8.69]} scale={0}>
                     <mesh
-                      name="padrao4_Tri1_0_1"
+                      name="Numeros_YellowType_0"
                       castShadow
                       receiveShadow
-                      geometry={nodes.padrao4_Tri1_0_1.geometry}
-                      material={materials.Tri1}
-                    />
-                  </group>
-                  <group name="padrao2_1">
-                    <mesh
-                      name="padrao2_Tri1_0_1"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao2_Tri1_0_1.geometry}
-                      material={materials.Tri1}
-                    />
-                  </group>
-                  <group name="padrao12">
-                    <mesh
-                      name="padrao12_quad_0"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao12_quad_0.geometry}
-                      material={materials.quad}
-                    />
-                  </group>
-                  <group name="padrao3_1">
-                    <mesh
-                      name="padrao3_quad_0_1"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao3_quad_0_1.geometry}
-                      material={materials.quad}
-                    />
-                  </group>
-                  <group name="padrao13">
-                    <mesh
-                      name="padrao13_L2_0"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao13_L2_0.geometry}
-                      material={materials.material}
-                    />
-                  </group>
-                  <group name="padrao_1">
-                    <mesh
-                      name="padrao_Paralelepipedo_0"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao_Paralelepipedo_0.geometry}
-                      material={materials.Paralelepipedo}
-                    />
-                  </group>
-                  <group name="padrao15">
-                    <mesh
-                      name="padrao15_Paralelepipedo_0"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao15_Paralelepipedo_0.geometry}
-                      material={materials.Paralelepipedo}
-                    />
-                  </group>
-                  <group name="padrao16">
-                    <mesh
-                      name="padrao16_Tri1_0"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao16_Tri1_0.geometry}
-                      material={materials.Tri1}
-                    />
-                  </group>
-                  <group name="padrao17">
-                    <mesh
-                      name="padrao17_Tri1_0"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao17_Tri1_0.geometry}
-                      material={materials.Tri1}
-                    />
-                  </group>
-                  <group name="padrao10">
-                    <mesh
-                      name="padrao10_retotexture_0"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao10_retotexture_0.geometry}
-                      material={materials.retotexture}
-                    />
-                  </group>
-                </group>
-                <group name="padrao59">
-                  <mesh
-                    name="padrao59_Tri1_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao59_Tri1_0.geometry}
-                    material={materials.Tri1}
-                  />
-                </group>
-                <group name="padrao52">
-                  <mesh
-                    name="padrao52_Paralelepipedo_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao52_Paralelepipedo_0.geometry}
-                    material={materials.Paralelepipedo}
-                  />
-                </group>
-                <group name="padrao51">
-                  <mesh
-                    name="padrao51_Paralelepipedo_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao51_Paralelepipedo_0.geometry}
-                    material={materials.Paralelepipedo}
-                  />
-                </group>
-                <group name="padrao3">
-                  <mesh
-                    name="padrao3_quad_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao3_quad_0.geometry}
-                    material={materials.quad}
-                  />
-                </group>
-                <group name="padrao46">
-                  <mesh
-                    name="padrao46_quad_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao46_quad_0.geometry}
-                    material={materials.quad}
-                  />
-                </group>
-                <group name="padrao48">
-                  <mesh
-                    name="padrao48_quad_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao48_quad_0.geometry}
-                    material={materials.quad}
-                  />
-                </group>
-                <group name="padrao47">
-                  <mesh
-                    name="padrao47_quad_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao47_quad_0.geometry}
-                    material={materials.quad}
-                  />
-                </group>
-                <group name="padrao44">
-                  <mesh
-                    name="padrao44_Tri1_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao44_Tri1_0.geometry}
-                    material={materials.Tri1}
-                  />
-                </group>
-                <group name="padrao4">
-                  <mesh
-                    name="padrao4_Tri1_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao4_Tri1_0.geometry}
-                    material={materials.Tri1}
-                  />
-                </group>
-                <group name="padrao2">
-                  <mesh
-                    name="padrao2_Tri1_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao2_Tri1_0.geometry}
-                    material={materials.Tri1}
-                  />
-                </group>
-                <group name="padrao5">
-                  <mesh
-                    name="padrao5_Tri1_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao5_Tri1_0.geometry}
-                    material={materials.Tri1}
-                  />
-                </group>
-                <group name="padrao">
-                  <mesh
-                    name="padrao_Tri1_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao_Tri1_0.geometry}
-                    material={materials.Tri1}
-                  />
-                </group>
-                <group name="padrao6">
-                  <mesh
-                    name="padrao6_L2_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao6_L2_0.geometry}
-                    material={materials.material}
-                  />
-                </group>
-                <group name="padrao54">
-                  <mesh
-                    name="padrao54_L2_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao54_L2_0.geometry}
-                    material={materials.material}
-                  />
-                </group>
-                <group name="padrao7">
-                  <mesh
-                    name="padrao7_retotexture_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao7_retotexture_0.geometry}
-                    material={materials.retotexture}
-                  />
-                </group>
-                <group name="LL" position={[0, -10, 0]}>
-                  <mesh
-                    name="LL_L2_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.LL_L2_0.geometry}
-                    material={materials.material}
-                  />
-                </group>
-                <group name="padrao18" position={[0, 2, 0]}>
-                  <mesh
-                    name="padrao18_retotexture_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao18_retotexture_0.geometry}
-                    material={materials.retotexture}
-                  />
-                </group>
-                <group name="LLLL" position={[-0.4, 2.19, 1.12]} scale={0}>
-                  <mesh
-                    name="LLLL_L2_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.LLLL_L2_0.geometry}
-                    material={materials.material}
-                  />
-                </group>
-                <group name="LLL" position={[0, -10, 0]}>
-                  <mesh
-                    name="LLL_L2_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.LLL_L2_0.geometry}
-                    material={materials.material}
-                  />
-                </group>
-                <group name="padrao50">
-                  <mesh
-                    name="padrao50_Paralelepipedo_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao50_Paralelepipedo_0.geometry}
-                    material={materials.Paralelepipedo}
-                  />
-                </group>
-                <group name="padrao49">
-                  <mesh
-                    name="padrao49_Paralelepipedo_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao49_Paralelepipedo_0.geometry}
-                    material={materials.Paralelepipedo}
-                  />
-                </group>
-                <group name="padrao64">
-                  <mesh
-                    name="padrao64_retotexture_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao64_retotexture_0.geometry}
-                    material={materials.retotexture}
-                  />
-                </group>
-                <group name="padrao62">
-                  <mesh
-                    name="padrao62_retotexture_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao62_retotexture_0.geometry}
-                    material={materials.retotexture}
-                  />
-                </group>
-                <group name="padrao63">
-                  <mesh
-                    name="padrao63_retotexture_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao63_retotexture_0.geometry}
-                    material={materials.retotexture}
-                  />
-                </group>
-                <group name="group2" />
-                <group name="padrao60">
-                  <mesh
-                    name="padrao60_Tri1_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao60_Tri1_0.geometry}
-                    material={materials.Tri1}
-                  />
-                </group>
-                <group name="padrao56">
-                  <mesh
-                    name="padrao56_quad_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao56_quad_0.geometry}
-                    material={materials.quad}
-                  />
-                </group>
-                <group name="padrao55">
-                  <mesh
-                    name="padrao55_quad_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao55_quad_0.geometry}
-                    material={materials.quad}
-                  />
-                </group>
-                <group name="padrao58">
-                  <mesh
-                    name="padrao58_Paralelepipedo_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao58_Paralelepipedo_0.geometry}
-                    material={materials.Paralelepipedo}
-                  />
-                </group>
-                <group name="padrao57">
-                  <mesh
-                    name="padrao57_Paralelepipedo_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao57_Paralelepipedo_0.geometry}
-                    material={materials.Paralelepipedo}
-                  />
-                </group>
-                <group name="padrao9">
-                  <mesh
-                    name="padrao9_L2_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao9_L2_0.geometry}
-                    material={materials.material}
-                  />
-                </group>
-                <group name="padrao53">
-                  <mesh
-                    name="padrao53_retotexture_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao53_retotexture_0.geometry}
-                    material={materials.retotexture}
-                  />
-                </group>
-                <group name="Tri2">
-                  <group name="padrao2_2">
-                    <mesh
-                      name="padrao2_Tri1_0_2"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao2_Tri1_0_2.geometry}
-                      material={materials.Tri1}
-                    />
-                  </group>
-                  <group name="padrao4_2">
-                    <mesh
-                      name="padrao4_Tri1_0_2"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao4_Tri1_0_2.geometry}
-                      material={materials.Tri1}
-                    />
-                  </group>
-                  <group name="padrao_2">
-                    <mesh
-                      name="padrao_Tri1_0_1"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao_Tri1_0_1.geometry}
-                      material={materials.Tri1}
-                    />
-                  </group>
-                  <group name="padrao5_1">
-                    <mesh
-                      name="padrao5_Tri1_0_1"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.padrao5_Tri1_0_1.geometry}
-                      material={materials.Tri1}
-                    />
-                  </group>
-                </group>
-                <group name="pPlane1">
-                  <mesh
-                    name="pPlane1_lambert3_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.pPlane1_lambert3_0.geometry}
-                    material={materials.lambert3}
-                  />
-                </group>
-                <group name="left" position={[-1000.25, 2.08, -3.04]}>
-                  <group name="Object_32" />
-                </group>
-                <group name="padrao45">
-                  <mesh
-                    name="padrao45_Tri1_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.padrao45_Tri1_0.geometry}
-                    material={materials.Tri1}
-                  />
-                </group>
-                <group name="transform1" />
-                <group name="transform2" />
-                <group name="Next">
-                  <mesh
-                    name="Next_WhiteBlinn_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Next_WhiteBlinn_0.geometry}
-                    material={materials.WhiteBlinn}
-                  />
-                </group>
-                <group name="transform3" />
-                <group name="transform4" />
-                <group name="transform5" />
-                <group name="Score">
-                  <mesh
-                    name="Score_WhiteBlinn_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Score_WhiteBlinn_0.geometry}
-                    material={materials.WhiteBlinn}
-                  />
-                </group>
-                <group name="transform6" />
-                <group name="transform7" />
-                <group name="typeMesh1">
-                  <mesh
-                    name="typeMesh1_WhiteBlinn_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.typeMesh1_WhiteBlinn_0.geometry}
-                    material={materials.WhiteBlinn}
-                  />
-                </group>
-                <group name="transform8" />
-                <group name="numeberLvl" position={[0, 0, 1.25]}>
-                  <mesh
-                    name="numeberLvl_YellowType_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.numeberLvl_YellowType_0.geometry}
-                    material={materials.YellowType}
-                  />
-                </group>
-                <group name="transform9" />
-                <group name="Reto1" />
-                <group
-                  name="typeMesh2"
-                  position={[0, 3.12, 9.01]}
-                  rotation={[0, -Math.PI / 2, 0]}
-                  scale={[1, 1, 0.16]}
-                >
-                  <mesh
-                    name="typeMesh2_YellowType_0"
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.typeMesh2_YellowType_0.geometry}
-                    material={materials.YellowType}
-                  />
-                </group>
-                <group name="transform10" />
-                <group
-                  name="group4"
-                  position={[0.08, 0, 0]}
-                  scale={[2.59, 1, 1]}
-                >
-                  <group name="TetrisOutline" position={[0.12, 0, 0]}>
-                    <mesh
-                      name="TetrisOutline_WhiteBlinn_0"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.TetrisOutline_WhiteBlinn_0.geometry}
-                      material={materials.WhiteBlinn}
-                    />
-                  </group>
-                  <group name="Tetris1" position={[0.12, 0, 0]}>
-                    <mesh
-                      name="Tetris1_YellowType_0"
-                      castShadow
-                      receiveShadow
-                      geometry={nodes.Tetris1_YellowType_0.geometry}
+                      geometry={nodes.Numeros_YellowType_0.geometry}
                       material={materials.YellowType}
                     />
                   </group>
+                  <group name="Numeros2">
+                    <mesh
+                      name="Numeros2_YellowType_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.Numeros2_YellowType_0.geometry}
+                      material={materials.YellowType}
+                    />
+                  </group>
+                  <group name="Some">
+                    <group name="padrao14">
+                      <mesh
+                        name="padrao14_L2_0"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao14_L2_0.geometry}
+                        material={materials.material}
+                      />
+                    </group>
+                    <group name="padrao4_1">
+                      <mesh
+                        name="padrao4_Tri1_0_1"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao4_Tri1_0_1.geometry}
+                        material={materials.Tri1}
+                      />
+                    </group>
+                    <group name="padrao2_1">
+                      <mesh
+                        name="padrao2_Tri1_0_1"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao2_Tri1_0_1.geometry}
+                        material={materials.Tri1}
+                      />
+                    </group>
+                    <group name="padrao12">
+                      <mesh
+                        name="padrao12_quad_0"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao12_quad_0.geometry}
+                        material={materials.quad}
+                      />
+                    </group>
+                    <group name="padrao3_1">
+                      <mesh
+                        name="padrao3_quad_0_1"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao3_quad_0_1.geometry}
+                        material={materials.quad}
+                      />
+                    </group>
+                    <group name="padrao13">
+                      <mesh
+                        name="padrao13_L2_0"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao13_L2_0.geometry}
+                        material={materials.material}
+                      />
+                    </group>
+                    <group name="padrao_1">
+                      <mesh
+                        name="padrao_Paralelepipedo_0"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao_Paralelepipedo_0.geometry}
+                        material={materials.Paralelepipedo}
+                      />
+                    </group>
+                    <group name="padrao15">
+                      <mesh
+                        name="padrao15_Paralelepipedo_0"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao15_Paralelepipedo_0.geometry}
+                        material={materials.Paralelepipedo}
+                      />
+                    </group>
+                    <group name="padrao16">
+                      <mesh
+                        name="padrao16_Tri1_0"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao16_Tri1_0.geometry}
+                        material={materials.Tri1}
+                      />
+                    </group>
+                    <group name="padrao17">
+                      <mesh
+                        name="padrao17_Tri1_0"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao17_Tri1_0.geometry}
+                        material={materials.Tri1}
+                      />
+                    </group>
+                    <group name="padrao10">
+                      <mesh
+                        name="padrao10_retotexture_0"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao10_retotexture_0.geometry}
+                        material={materials.retotexture}
+                      />
+                    </group>
+                  </group>
+                  <group name="padrao59">
+                    <mesh
+                      name="padrao59_Tri1_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao59_Tri1_0.geometry}
+                      material={materials.Tri1}
+                    />
+                  </group>
+                  <group name="padrao52">
+                    <mesh
+                      name="padrao52_Paralelepipedo_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao52_Paralelepipedo_0.geometry}
+                      material={materials.Paralelepipedo}
+                    />
+                  </group>
+                  <group name="padrao51">
+                    <mesh
+                      name="padrao51_Paralelepipedo_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao51_Paralelepipedo_0.geometry}
+                      material={materials.Paralelepipedo}
+                    />
+                  </group>
+                  <group name="padrao3">
+                    <mesh
+                      name="padrao3_quad_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao3_quad_0.geometry}
+                      material={materials.quad}
+                    />
+                  </group>
+                  <group name="padrao46">
+                    <mesh
+                      name="padrao46_quad_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao46_quad_0.geometry}
+                      material={materials.quad}
+                    />
+                  </group>
+                  <group name="padrao48">
+                    <mesh
+                      name="padrao48_quad_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao48_quad_0.geometry}
+                      material={materials.quad}
+                    />
+                  </group>
+                  <group name="padrao47">
+                    <mesh
+                      name="padrao47_quad_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao47_quad_0.geometry}
+                      material={materials.quad}
+                    />
+                  </group>
+                  <group name="padrao44">
+                    <mesh
+                      name="padrao44_Tri1_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao44_Tri1_0.geometry}
+                      material={materials.Tri1}
+                    />
+                  </group>
+                  <group name="padrao4">
+                    <mesh
+                      name="padrao4_Tri1_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao4_Tri1_0.geometry}
+                      material={materials.Tri1}
+                    />
+                  </group>
+                  <group name="padrao2">
+                    <mesh
+                      name="padrao2_Tri1_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao2_Tri1_0.geometry}
+                      material={materials.Tri1}
+                    />
+                  </group>
+                  <group name="padrao5">
+                    <mesh
+                      name="padrao5_Tri1_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao5_Tri1_0.geometry}
+                      material={materials.Tri1}
+                    />
+                  </group>
+                  <group name="padrao">
+                    <mesh
+                      name="padrao_Tri1_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao_Tri1_0.geometry}
+                      material={materials.Tri1}
+                    />
+                  </group>
+                  <group name="padrao6">
+                    <mesh
+                      name="padrao6_L2_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao6_L2_0.geometry}
+                      material={materials.material}
+                    />
+                  </group>
+                  <group name="padrao54">
+                    <mesh
+                      name="padrao54_L2_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao54_L2_0.geometry}
+                      material={materials.material}
+                    />
+                  </group>
+                  <group name="padrao7">
+                    <mesh
+                      name="padrao7_retotexture_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao7_retotexture_0.geometry}
+                      material={materials.retotexture}
+                    />
+                  </group>
+                  <group name="LL" position={[0, -10, 0]}>
+                    <mesh
+                      name="LL_L2_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.LL_L2_0.geometry}
+                      material={materials.material}
+                    />
+                  </group>
+                  <group name="padrao18" position={[0, 2, 0]}>
+                    <mesh
+                      name="padrao18_retotexture_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao18_retotexture_0.geometry}
+                      material={materials.retotexture}
+                    />
+                  </group>
+                  <group name="LLLL" position={[-0.4, 2.19, 1.12]} scale={0}>
+                    <mesh
+                      name="LLLL_L2_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.LLLL_L2_0.geometry}
+                      material={materials.material}
+                    />
+                  </group>
+                  <group name="LLL" position={[0, -10, 0]}>
+                    <mesh
+                      name="LLL_L2_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.LLL_L2_0.geometry}
+                      material={materials.material}
+                    />
+                  </group>
+                  <group name="padrao50">
+                    <mesh
+                      name="padrao50_Paralelepipedo_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao50_Paralelepipedo_0.geometry}
+                      material={materials.Paralelepipedo}
+                    />
+                  </group>
+                  <group name="padrao49">
+                    <mesh
+                      name="padrao49_Paralelepipedo_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao49_Paralelepipedo_0.geometry}
+                      material={materials.Paralelepipedo}
+                    />
+                  </group>
+                  <group name="padrao64">
+                    <mesh
+                      name="padrao64_retotexture_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao64_retotexture_0.geometry}
+                      material={materials.retotexture}
+                    />
+                  </group>
+                  <group name="padrao62">
+                    <mesh
+                      name="padrao62_retotexture_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao62_retotexture_0.geometry}
+                      material={materials.retotexture}
+                    />
+                  </group>
+                  <group name="padrao63">
+                    <mesh
+                      name="padrao63_retotexture_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao63_retotexture_0.geometry}
+                      material={materials.retotexture}
+                    />
+                  </group>
+                  <group name="group2" />
+                  <group name="padrao60">
+                    <mesh
+                      name="padrao60_Tri1_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao60_Tri1_0.geometry}
+                      material={materials.Tri1}
+                    />
+                  </group>
+                  <group name="padrao56">
+                    <mesh
+                      name="padrao56_quad_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao56_quad_0.geometry}
+                      material={materials.quad}
+                    />
+                  </group>
+                  <group name="padrao55">
+                    <mesh
+                      name="padrao55_quad_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao55_quad_0.geometry}
+                      material={materials.quad}
+                    />
+                  </group>
+                  <group name="padrao58">
+                    <mesh
+                      name="padrao58_Paralelepipedo_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao58_Paralelepipedo_0.geometry}
+                      material={materials.Paralelepipedo}
+                    />
+                  </group>
+                  <group name="padrao57">
+                    <mesh
+                      name="padrao57_Paralelepipedo_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao57_Paralelepipedo_0.geometry}
+                      material={materials.Paralelepipedo}
+                    />
+                  </group>
+                  <group name="padrao9">
+                    <mesh
+                      name="padrao9_L2_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao9_L2_0.geometry}
+                      material={materials.material}
+                    />
+                  </group>
+                  <group name="padrao53">
+                    <mesh
+                      name="padrao53_retotexture_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao53_retotexture_0.geometry}
+                      material={materials.retotexture}
+                    />
+                  </group>
+                  <group name="Tri2">
+                    <group name="padrao2_2">
+                      <mesh
+                        name="padrao2_Tri1_0_2"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao2_Tri1_0_2.geometry}
+                        material={materials.Tri1}
+                      />
+                    </group>
+                    <group name="padrao4_2">
+                      <mesh
+                        name="padrao4_Tri1_0_2"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao4_Tri1_0_2.geometry}
+                        material={materials.Tri1}
+                      />
+                    </group>
+                    <group name="padrao_2">
+                      <mesh
+                        name="padrao_Tri1_0_1"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao_Tri1_0_1.geometry}
+                        material={materials.Tri1}
+                      />
+                    </group>
+                    <group name="padrao5_1">
+                      <mesh
+                        name="padrao5_Tri1_0_1"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.padrao5_Tri1_0_1.geometry}
+                        material={materials.Tri1}
+                      />
+                    </group>
+                  </group>
+                  <group name="pPlane1">
+                    <mesh
+                      name="pPlane1_lambert3_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.pPlane1_lambert3_0.geometry}
+                      material={materials.lambert3}
+                    />
+                  </group>
+                  <group name="left" position={[-1000.25, 2.08, -3.04]}>
+                    <group name="Object_32" />
+                  </group>
+                  <group name="padrao45">
+                    <mesh
+                      name="padrao45_Tri1_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.padrao45_Tri1_0.geometry}
+                      material={materials.Tri1}
+                    />
+                  </group>
+                  <group name="transform1" />
+                  <group name="transform2" />
+                  <group name="Next">
+                    <mesh
+                      name="Next_WhiteBlinn_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.Next_WhiteBlinn_0.geometry}
+                      material={materials.WhiteBlinn}
+                    />
+                  </group>
+                  <group name="transform3" />
+                  <group name="transform4" />
+                  <group name="transform5" />
+                  <group name="Score">
+                    <mesh
+                      name="Score_WhiteBlinn_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.Score_WhiteBlinn_0.geometry}
+                      material={materials.WhiteBlinn}
+                    />
+                  </group>
+                  <group name="transform6" />
+                  <group name="transform7" />
+                  <group name="typeMesh1">
+                    <mesh
+                      name="typeMesh1_WhiteBlinn_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.typeMesh1_WhiteBlinn_0.geometry}
+                      material={materials.WhiteBlinn}
+                    />
+                  </group>
+                  <group name="transform8" />
+                  <group name="numeberLvl" position={[0, 0, 1.25]}>
+                    <mesh
+                      name="numeberLvl_YellowType_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.numeberLvl_YellowType_0.geometry}
+                      material={materials.YellowType}
+                    />
+                  </group>
+                  <group name="transform9" />
+                  <group name="Reto1" />
+                  <group
+                    name="typeMesh2"
+                    position={[0, 3.12, 9.01]}
+                    rotation={[0, -Math.PI / 2, 0]}
+                    scale={[1, 1, 0.16]}
+                  >
+                    <mesh
+                      name="typeMesh2_YellowType_0"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.typeMesh2_YellowType_0.geometry}
+                      material={materials.YellowType}
+                    />
+                  </group>
+                  <group name="transform10" />
+                  <group
+                    name="group4"
+                    position={[0.08, 0, 0]}
+                    scale={[2.59, 1, 1]}
+                  >
+                    <group name="TetrisOutline" position={[0.12, 0, 0]}>
+                      <mesh
+                        name="TetrisOutline_WhiteBlinn_0"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.TetrisOutline_WhiteBlinn_0.geometry}
+                        material={materials.WhiteBlinn}
+                      />
+                    </group>
+                    <group name="Tetris1" position={[0.12, 0, 0]}>
+                      <mesh
+                        name="Tetris1_YellowType_0"
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.Tetris1_YellowType_0.geometry}
+                        material={materials.YellowType}
+                      />
+                    </group>
+                  </group>
+                  <group name="transform11" />
                 </group>
-                <group name="transform11" />
               </group>
             </group>
           </group>
         </group>
       </group>
-    </group>
+    </object3D>
   );
 }
 

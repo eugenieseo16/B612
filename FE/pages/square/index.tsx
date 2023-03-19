@@ -1,10 +1,19 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 // import { PerspectiveCamera } from '@react-three/drei';
-import { OrbitControls, Stars, Stats, useTexture } from '@react-three/drei';
+import {
+  OrbitControls,
+  Stars,
+  Stats,
+  useTexture,
+  useGLTF,
+} from '@react-three/drei';
 import Lights from '@components/square/Lights';
 import Ground from '@components/square/Ground';
 import { TetrisModel } from '@components/square/Tetris';
+import { AppleTreeModel } from '@components/square/Appletree';
+import { DaisyModel } from '@components/square/Daisy';
+import { useAnimation } from 'framer-motion';
 
 const TextureSpheres = () => {
   const map = useTexture('../textures/aerial_rocks_04_diff_1k.png');
@@ -42,13 +51,16 @@ function Square() {
         {/*testing = true : 왼쪽상단에 상태를 보여준다, helper 킨다 */}
         {testing ? <Stats /> : null}
         {testing ? <axesHelper args={[2]} /> : null}
-        {testing ? <gridHelper args={[10, 10]} /> : null}
+        {testing ? <gridHelper args={[30, 30]} /> : null}
         <OrbitControls />
         <Stars />
         <Ground />
-        <TetrisModel />
+        <TetrisModel position={[2, 0, 0]} />
+        <AppleTreeModel position={[-3, 0, 2]} />
+        <DaisyModel position={[1, 0, 2]} />
         <TextureSpheres />
         <Lights />
+        <CatAvatar />
       </Canvas>
     </div>
   );
