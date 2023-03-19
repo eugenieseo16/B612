@@ -20,7 +20,9 @@ const AvatarFinn = () => {
   const { actions } = useAnimations(model.animations, model.scene);
 
   console.log(model);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    actions?.walking?.play();
+  }, []);
 
   return <primitive object={model.scene} />;
 };
