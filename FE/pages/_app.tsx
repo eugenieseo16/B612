@@ -4,6 +4,8 @@ import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
 import UserController from '@components/UserController';
 import Layout from '../components/Layout';
+import React from 'react';
+React.useLayoutEffect = React.useEffect;
 
 declare global {
   interface Window {
