@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Canvas } from '@react-three/fiber';
 // import { PerspectiveCamera } from '@react-three/drei';
 import {
@@ -6,56 +6,15 @@ import {
   Stars,
   Stats,
   // useTexture,
-  useGLTF,
-  useAnimations,
+  // useGLTF,
+  // useAnimations,
 } from '@react-three/drei';
 import Lights from '@components/square/Lights';
 import Ground from '@components/square/Ground';
 import { TetrisModel } from '@components/square/Tetris';
 import { AppleTreeModel } from '@components/square/Appletree';
 import { DaisyModel } from '@components/square/Daisy';
-import { UseInput } from '@components/square/UseInput';
-
-const AvatarFinn = () => {
-  const { forward, backward, left, right, jump, shift } = UseInput();
-  const model = useGLTF('./avatar_finn/avatar_finn.glb');
-  const { actions } = useAnimations(model.animations, model.scene);
-  // 아바타 크기조절
-  model.scene.scale.set(1.2, 1.2, 1.2);
-  // 그림자
-  model.scene.traverse(object => {
-    if (object.isMesh) {
-      object.castShadow = true;
-    }
-  });
-
-  const currentAction = useRef('');
-
-  useEffect(() => {
-    let action = '';
-
-    if (forward || backward || left || right) {
-      action = 'walking';
-      if (shift) {
-        action = 'running';
-      }
-    } else if (jump) {
-      action = 'jumping';
-    } else {
-      action = 'Action';
-    }
-
-    if (currentAction.current != action) {
-      const NextActionToPlay = actions[action];
-      const current = actions[currentAction.current];
-      current?.fadeOut(0.2);
-      NextActionToPlay?.reset().fadeIn(0.2).play();
-      currentAction.current = action;
-    }
-  }, [forward, backward, left, right, jump, shift]);
-
-  return <primitive object={model.scene} />;
-};
+import AvatarFinn from '@components/square/AvatarFinn';
 
 // const TextureSpheres = () => {
 //   const map = useTexture('../textures/aerial_rocks_04_diff_1k.png');
