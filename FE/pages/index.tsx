@@ -9,7 +9,7 @@ import Link from 'next/link';
 const Home: NextPage = () => {
   const user = useRecoilValue(userAtom);
   return (
-    <div className={styles.container}>
+    <div style={{ padding: '10rem' }} className={styles.container}>
       <Link href={`/profile`}>myProfile</Link>
       <div>
         <Link href={`/square`}>광장으로 이동</Link>
