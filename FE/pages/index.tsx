@@ -23,9 +23,9 @@ const Home: NextPage = () => {
       <h4>Heading4 폰트 테스트 - TMONEY</h4>
       <h5>Heading5 폰트 테스트 - TMONEY</h5>
       <h6>Heading6 폰트 테스트 - TMONEY</h6>
-      <span>span tag 폰트 테스트 - LITTLEPRINCE</span>
-      <p>p tag 폰트 테스트 - LITTLEPRINCE</p>
-      <a href="#">a tag 폰트 테스트 - LITTLEPRINCE</a>
+      <span>span tag 폰트 테스트 - KYOBO</span>
+      <p>p tag 폰트 테스트 - KYOBO</p>
+      <a href="#">a tag 폰트 테스트 - KYOBO</a>
     </div>
   );
 };
