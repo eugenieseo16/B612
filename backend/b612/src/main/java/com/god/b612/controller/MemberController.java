@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/member")
 @Api("멤버(유저) api")
@@ -28,8 +30,8 @@ public class MemberController {
     @Transactional
     @ApiOperation(value = "회원가입 하고 로그인 하거나, 로그인 한다.", notes = "해당 주소로 가입이 되어있다면 유저 정보를 보내주고, 가입되어있지 않다면 유저를 가입 시킨 후 정보를 보내준다.")
     @PostMapping()
-    public ResponseEntity<?> loginOrRegist(@RequestBody @ApiParam(value = "회원 주소", required = true) String memberAddress){
-        MemberResponseDto memberResponseDto=memberService.membersLoginOrRegist(memberAddress);
+    public ResponseEntity<?> loginOrRegist(@RequestBody @ApiParam(value = "회원 주소", required = true) Map<String,String> memberAddress){
+        MemberResponseDto memberResponseDto=memberService.membersLoginOrRegist(memberAddress.get("memberAddress"));
         BaseResponseBody baseResponseBody;
         if(memberResponseDto!=null){
             baseResponseBody= BaseResponseBody.builder()
