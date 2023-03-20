@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +50,12 @@ public class FriendController {
 
     @Transactional
     @ApiOperation(value = "member의 친구 목록을 가져옵니다.", notes = "멤버 id를 입력하면, 해당 멤버의 친구목록을 받아옵니다.")
-    @GetMapping("/{memberId}")
-    public ResponseEntity<?>  getFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId){
-        List<MemberResponseDto> memberResponseDtos=friendService.findFriendList(memberId);
+    @GetMapping("/{memberId}/{page}&{size}")
+    public ResponseEntity<?>  getFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId, @ApiParam(value = "Page 번호, 0부터 시작") @PathVariable("page")int page,@PathVariable("size")int size){
+        System.out.println("0");
+        PageRequest pageRequest=PageRequest.of(page,size);
+        System.out.println("5");
+        List<MemberResponseDto> memberResponseDtos=friendService.findFriendList(memberId,pageRequest);
 
         if(memberResponseDtos.size()!=0){
             BaseResponseBody baseResponseBody=
@@ -72,6 +76,62 @@ public class FriendController {
             return ResponseEntity.status(400).body(baseResponseBody);
         }
     }
+
+
+    @Transactional
+    @ApiOperation(value = "member의 수락하지 않은 친구 요청 목록을 가져옵니다.", notes = "멤버 id를 입력하면, 해당 멤버가 허락하지 않은 친구요청들을 받아옵니다.")
+    @GetMapping("/unresponse/{memberId}/{page}&{size}")
+    public ResponseEntity<?>  getUnresponsedFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId, @ApiParam(value = "Page 번호, 0부터 시작") @PathVariable("page")int page,@PathVariable("size")int size){
+        PageRequest pageRequest=PageRequest.of(page,size);
+        List<MemberResponseDto> memberResponseDtos=friendService.findMyUnaccpetedFriendList(memberId,pageRequest);
+
+        if(memberResponseDtos.size()!=0){
+            BaseResponseBody baseResponseBody=
+                    BaseResponseBody.builder()
+                            .message("success")
+                            .statusCode(200)
+                            .responseData(memberResponseDtos)
+                            .build();
+            return ResponseEntity.status(200).body(baseResponseBody);
+        }
+
+        else{
+            BaseResponseBody baseResponseBody= BaseResponseBody.builder()
+                    .message("fail")
+                    .statusCode(400)
+                    .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+    }
+
+    @Transactional
+    @ApiOperation(value = "member가 친구 요청을 보냈지만 수락하지 않은 사람들의 목록을 가져옵니다.", notes = "멤버 id를 입력하면, 해당 멤버가 친구 요청을 보냈지만 수락하지 않은 멤버들을 받아옵니다.")
+    @GetMapping("/request/{memberId}/{page}&{size}")
+    public ResponseEntity<?>  getRequestedFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId, @ApiParam(value = "Page 번호, 0부터 시작") @PathVariable("page")int page,@PathVariable("size")int size){
+        PageRequest pageRequest=PageRequest.of(page,size);
+        List<MemberResponseDto> memberResponseDtos=friendService.findMyRequestedFriendList(memberId,pageRequest);
+
+        if(memberResponseDtos.size()!=0){
+            BaseResponseBody baseResponseBody=
+                    BaseResponseBody.builder()
+                            .message("success")
+                            .statusCode(200)
+                            .responseData(memberResponseDtos)
+                            .build();
+            return ResponseEntity.status(200).body(baseResponseBody);
+        }
+
+        else{
+            BaseResponseBody baseResponseBody= BaseResponseBody.builder()
+                    .message("fail")
+                    .statusCode(400)
+                    .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+    }
+
 
 
     @Transactional

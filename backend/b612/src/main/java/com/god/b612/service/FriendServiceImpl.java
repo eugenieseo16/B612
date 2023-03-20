@@ -11,6 +11,8 @@ import com.god.b612.repository.MemberCustomRepository;
 import com.god.b612.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,14 +84,44 @@ public class FriendServiceImpl implements FriendService{
     }
 
     @Override
-    public List<MemberResponseDto> findFriendList(int memberId) {
+    public List<MemberResponseDto> findFriendList(int memberId, Pageable pageable) {
         Member member=memberRepository.findMemberByMemberId(memberId);
+        System.out.println("1");
+        Page<Friend> friends=friendRepository.findAllByFriendResponseMemberIdAndFriendAcceptedOrderByCreatedTime(member,(byte)1,pageable);
+        System.out.println("2");
         ArrayList<MemberResponseDto> memberResponseDtos=new ArrayList<>();
 
-
-        List<Friend> friends=friendRepository.findAllByFriendResponseMemberIdAndFriendAccepted(member,(byte) 1);
         for(Friend friend: friends){
+            System.out.println("3");
             member=friend.getFriendRequestMemberId();
+            memberResponseDtos.add(memberCustomRepository.createMemberResponseDtoByEntity(member));
+        }
+
+        System.out.println("4");
+        return memberResponseDtos;
+    }
+
+    public List<MemberResponseDto> findMyUnaccpetedFriendList(int memberId, Pageable pageable){
+        Member member=memberRepository.findMemberByMemberId(memberId);
+        Page<Friend> friends=friendRepository.findAllByFriendResponseMemberIdAndFriendAcceptedOrderByCreatedTime(member,(byte)0,pageable);
+        ArrayList<MemberResponseDto> memberResponseDtos=new ArrayList<>();
+
+        for(Friend friend : friends){
+            member=friend.getFriendRequestMemberId();
+            memberResponseDtos.add(memberCustomRepository.createMemberResponseDtoByEntity(member));
+        }
+
+        return memberResponseDtos;
+    }
+
+    @Override
+    public List<MemberResponseDto> findMyRequestedFriendList(int memberId, Pageable pageable){
+        Member member=memberRepository.findMemberByMemberId(memberId);
+        Page<Friend> friends=friendRepository.findAllByFriendRequestMemberIdAndFriendAcceptedOrderByCreatedTime(member,(byte)0,pageable);
+        ArrayList<MemberResponseDto> memberResponseDtos=new ArrayList<>();
+
+        for(Friend friend : friends){
+            member=friend.getFriendResponseMemberId();
             memberResponseDtos.add(memberCustomRepository.createMemberResponseDtoByEntity(member));
         }
 
