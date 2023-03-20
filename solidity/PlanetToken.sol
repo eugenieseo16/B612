@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 contract MintPlanetToken is ERC721Enumerable {
-    constructor() ERC721("h662Animals", "HAS") {}
+    constructor() ERC721("find your b612", "b612") {}
 
     struct PlanetTokenData {
         uint256 planetTokenId; // 행성 아이디
