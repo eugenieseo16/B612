@@ -73,3 +73,7 @@ a {
   font-family: 'TMONEY';
   src: url('../assets/fonts/티머니둥근바람.ttf');
 }
+@font-face {
+  font-family: 'Pixel';
+  src: url('../assets/fonts/pixelFont.woff');
+}
