@@ -43,8 +43,24 @@ public class FriendServiceImpl implements FriendService{
             if(friend.getFriendRequestMemberId().getMemberId()==friendRequestDto.getFriendResponseMemberId()){
                 //리스트에서 내게 요청을 건사람과 내가 요청을 한사람이 일치할 경우 둘 서로 친구요청을 했으므로
                 //친구 요청을 수락시킨다.
+                returnFriend=Friend.builder()
+                        .friendId(returnFriend.getFriendId())
+                        .friendAccepted((byte)1)
+                        .friendRequestMemberId(returnFriend.getFriendRequestMemberId())
+                        .friendResponseMemberId(returnFriend.getFriendResponseMemberId())
+                        .build();
+
+                friend=Friend.builder()
+                        .friendId(friend.getFriendId())
+                        .friendAccepted((byte) 1)
+                        .friendResponseMemberId(friend.getFriendResponseMemberId())
+                        .friendRequestMemberId(friend.getFriendRequestMemberId())
+                        .build();
+
                 returnFriend.setFriendAccepted((byte) 1);
                 friend.setFriendAccepted((byte) 1);
+
+                friendRepository.save(friend);
                 break;
             }
         }
