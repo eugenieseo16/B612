@@ -30,12 +30,20 @@ function Example() {
     if (planetTokenContract) getTokens();
   }, [planetTokenContract, getTokens]);
 
+  const transfer = async () => {
+    const address = '0xAb774058E62827C56e5511e77380B0910edB1D08';
+    const data = await ssafyToken.methods
+      .transfer(address, 1)
+      .send({ from: user?.memberAddress });
+    console.log(data);
+  };
   return (
     <div>
       <h1>{user?.memberNickname}</h1>
       <h2>내가 가진 SSAFY 코인 : {ssafy}</h2>
       <h2>나의 planet Token : {myPlanetLength}</h2>
       <h3>총 발급된 SSAFY 코인 : {total}</h3>
+      <button onClick={transfer}>이령이한테 토큰보내기</button>
     </div>
   );
 }
