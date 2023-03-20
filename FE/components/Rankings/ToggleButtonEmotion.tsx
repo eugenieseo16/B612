@@ -6,7 +6,7 @@ export const ButtonContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
 
-  height: 4rem;
+  height: 4.5rem;
   width: 21rem;
 
   display: flex;
@@ -22,7 +22,6 @@ export const ButtonContainer = styled.div`
   }
 
   .selected {
-    color: pink;
     background-color: white;
     border-radius: 30px;
     height: 2.2rem;
@@ -36,6 +35,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const RankingDataContainer = styled.div`
+  width: 70%;
   padding-top: 20px;
   -ms-overflow-style: none;
   scrollbar-width: none;

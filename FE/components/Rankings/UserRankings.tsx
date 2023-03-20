@@ -1,7 +1,7 @@
 import React from 'react';
 
 import userRankings from '../../public/dummy/UserRanking.json';
-import { TableItem } from '../Rankings/RankingsEmotion';
+import { RankingTable, TableItem } from '../Rankings/RankingsEmotion';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
@@ -10,17 +10,17 @@ function UserRankings() {
 
   return (
     <div>
-      <table width="1000">
-        <th>
+      <RankingTable>
+        <th className="rank">
           <p>순위</p>
         </th>
-        <th>
+        <th className="member-name">
           <p>사용자</p>
         </th>
-        <th>
+        <th className="class">
           <p>계급</p>
         </th>
-        <th>
+        <th className="likes">
           <p>좋아요</p>
         </th>
 
@@ -45,7 +45,7 @@ function UserRankings() {
             </td>
           </TableItem>
         ))}
-      </table>
+      </RankingTable>
     </div>
   );
 }

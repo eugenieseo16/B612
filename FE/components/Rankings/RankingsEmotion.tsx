@@ -1,9 +1,37 @@
 import styled from '@emotion/styled';
 
+export const RankingTable = styled.table`
+  width: 100%;
+
+  .rank {
+    width: 10%;
+  }
+
+  .planet {
+    width: 40%;
+  }
+
+  .member {
+    width: 30%;
+  }
+
+  .member-name {
+    width: 40%;
+  }
+
+  .class {
+    width: 30%;
+  }
+
+  .likes {
+    width: 10%;
+  }
+`;
+
 export const TableItem = styled.tr`
-  // background-color: white;
-  // border-radius: 30px;
   height: 5rem;
+
+  vertical-align: middle;
 
   img {
     width: 40px;
@@ -11,7 +39,14 @@ export const TableItem = styled.tr`
     border-radius: 50%;
   }
 
+  .rank {
+    text-align: center;
+  }
+
   .planet {
+    margin-left: 30px;
+    width: 95%;
+
     display: flex;
     align-items: center;
     h6 {
@@ -19,7 +54,16 @@ export const TableItem = styled.tr`
     }
   }
 
+  .member {
+    text-align: center;
+  }
+
+  .class {
+    text-align: center;
+  }
+
   .member-info {
+    margin-left: 30px;
     display: flex;
     align-items: center;
     p {
