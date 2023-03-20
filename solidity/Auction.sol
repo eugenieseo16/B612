@@ -25,6 +25,9 @@ contract Auction {
 
     event HighestBidIncreased(address bidder, uint amount);
     event AuctionEnded(address winner, uint amount);
+    event CurrentBid(address bidderAddress, uint bid);
+    event HighestBid(uint highestBid);
+    event HighestBidder(address highestBidder);
 
     error AuctionAlreadyEnded();
     error BidNotHighEnough(uint highestBid);
@@ -41,8 +44,8 @@ contract Auction {
     ) {
         beneficiary = beneficiaryAddress;
         auctionEndTime = block.timestamp + biddingTime;
-        lowestPrice = lowPrice * (1e18); // 판매자가 설정한 최저가 
-        highestPrice = highPrice * (1e18); // 판매자가 설정한 최고가 
+        lowestPrice = lowPrice; // 판매자가 설정한 최저가 
+        highestPrice = highPrice; // 판매자가 설정한 최고가 
     }
 
     function bid() external payable { // 입찰
@@ -79,14 +82,17 @@ contract Auction {
             ret = highestBid;
         else
             ret = pendingReturns[bidderAddress];
+        emit CurrentBid(bidderAddress, ret);
         return ret;
     }
 
     function getHighestBid() external returns (uint) {
+        emit HighestBid(highestBid);
         return highestBid;
     }
 
     function getHighestBidder() external returns (address) {
+        emit HighestBidder(highestBidder);
         return highestBidder;
     }
 
@@ -108,13 +114,11 @@ contract Auction {
 
     /// Withdraw a bid that was overbid.
     function withdrawAll() external returns (bool) {
-        uint nextAddress = bidMap[0].next;
+        uint nextAddress = 0;
         while(bidMap[nextAddress].bidderAddress != address(0)) {
             uint amount = pendingReturns[bidMap[nextAddress].bidderAddress];
             if (amount > 0) {
                 pendingReturns[bidMap[nextAddress].bidderAddress] = 0;
-
-
                 if (!payable(bidMap[nextAddress].bidderAddress).send(amount)) {
                     pendingReturns[bidMap[nextAddress].bidderAddress] = amount;
                     return false;
@@ -122,7 +126,6 @@ contract Auction {
             }
             nextAddress = bidMap[nextAddress].next;
         }
-        
         return true;
     }
 
