@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface FriendRepository extends JpaRepository<Friend, Integer> {
+
+    Friend findFriendByFriendId(int friendId);
     List<Friend> findAllByFriendResponseMemberId(Member member);
 
     Friend findTopByFriendRequestMemberIdAndFriendResponseMemberId(Member requestMember,Member responseMember);
@@ -16,5 +18,7 @@ public interface FriendRepository extends JpaRepository<Friend, Integer> {
     Page<Friend> findAllByFriendResponseMemberIdAndFriendAcceptedOrderByCreatedTime(Member member,byte accepted, Pageable pageable);
 
     Page<Friend> findAllByFriendRequestMemberIdAndFriendAcceptedOrderByCreatedTime(Member member,byte accepted, Pageable pageable);
+
+    void deleteByFriendId(int id);
 
 }

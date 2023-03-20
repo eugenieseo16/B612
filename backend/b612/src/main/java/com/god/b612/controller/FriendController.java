@@ -36,6 +36,17 @@ public class FriendController {
     public ResponseEntity<?> makeFriendRequest(@RequestBody @ApiParam(value = "친구 요청 생성 Dto 입력", required = true)FriendRequestDto friendRequestDto){
         Friend friend = friendService.registFriend(friendRequestDto);
 
+        if(friend==null){
+            BaseResponseBody baseResponseBody=
+                    BaseResponseBody.builder()
+                            .message("fail")
+                            .statusCode(400)
+                            .build();
+
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+
 
         BaseResponseBody baseResponseBody=
                 BaseResponseBody.builder()
@@ -47,6 +58,59 @@ public class FriendController {
         friendRepository.save(friend);
         return ResponseEntity.status(200).body(baseResponseBody);
     }
+
+    @Transactional
+    @ApiOperation(value = "친구 삭제 or 친구 요청 거절", notes = "친구와 친구를 끊거나 친구 요청을 거절함")
+    @DeleteMapping("/{myId}&{requestId}")
+    public ResponseEntity<?> deleteFriend(@ApiParam(value = "내 id 입력", required = true)@PathVariable("myId") int myId,@ApiParam(value = "친구를 요청한 사람 혹은 친구의 멤버 아이디 입력", required = true)@PathVariable("requestId") int friendMemberId){
+        if(friendService.deleteFriend(myId,friendMemberId)){
+            BaseResponseBody baseResponseBody=
+                    BaseResponseBody.builder()
+                            .message("success")
+                            .statusCode(200)
+                            .build();
+
+            return ResponseEntity.status(200).body(baseResponseBody);
+        }
+        else{
+            BaseResponseBody baseResponseBody=
+                    BaseResponseBody.builder()
+                            .message("fail")
+                            .statusCode(400)
+                            .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+    }
+
+
+    @Transactional
+    @ApiOperation(value = "친구 요청 수락", notes = "친구요청 수락")
+    @GetMapping("/accept/{myId}&{requestId}")
+    public ResponseEntity<?> acceptFriendRequest(@ApiParam(value = "내 id 입력", required = true)@PathVariable("myId") int myId,@ApiParam(value = "친구를 요청한 사람 아이디 입력", required = true)@PathVariable("requestId") int requestId){
+
+        if(friendService.acceptFriend(myId,requestId)){
+            BaseResponseBody baseResponseBody=
+                    BaseResponseBody.builder()
+                            .message("success")
+                            .statusCode(200)
+                            .build();
+
+            return ResponseEntity.status(200).body(baseResponseBody);
+        }
+
+        else{
+            BaseResponseBody baseResponseBody=
+                    BaseResponseBody.builder()
+                            .message("fail")
+                            .statusCode(400)
+                            .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+
+    }
+
 
     @Transactional
     @ApiOperation(value = "member의 친구 목록을 가져옵니다.", notes = "멤버 id를 입력하면, 해당 멤버의 친구목록을 받아옵니다.")

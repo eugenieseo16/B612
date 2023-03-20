@@ -37,6 +37,11 @@ public class FriendServiceImpl implements FriendService{
     public Friend registFriend(FriendRequestDto friendRequestDto){
         Friend returnFriend=friendCustomRepository.makeFriendEntity(friendRequestDto);
 
+        if(null!=friendRepository.findTopByFriendRequestMemberIdAndFriendResponseMemberId(returnFriend.getFriendRequestMemberId(),returnFriend.getFriendResponseMemberId())){
+            return null;
+        }
+
+
         List<Friend> friends= friendRepository.findAllByFriendResponseMemberId(returnFriend.getFriendRequestMemberId());
         //이번 친구 요청에서 리퀘스트를 한 사람에게 친구를 요청한 모든 사람들을 List로 불러온다.
 
@@ -69,6 +74,32 @@ public class FriendServiceImpl implements FriendService{
         return returnFriend;
     }
 
+    @Override
+    public boolean acceptFriend(int myId,int friendId){
+        Member me = memberRepository.findMemberByMemberId(myId);
+        Member friend=memberRepository.findMemberByMemberId(friendId);
+        Friend friendEntity=friendRepository.findTopByFriendRequestMemberIdAndFriendResponseMemberId(friend,me);
+        if(friendEntity==null){
+            return false;
+        }
+        Friend accpted=Friend.builder()
+                .friendAccepted((byte)1)
+                .friendRequestMemberId(me)
+                .friendResponseMemberId(friend)
+                .build();
+        friendRepository.save(accpted);
+
+        friendEntity=Friend.builder()
+                .friendId(friendId)
+                .friendRequestMemberId(friend)
+                .friendResponseMemberId(me)
+                .friendAccepted((byte) 1)
+                .build();
+
+        friendRepository.save(friendEntity);
+
+        return true;
+    }
 
     public FriendResponseDto findFriend(int requestId, int responseId){
         Member requestMember=memberRepository.findMemberByMemberId(requestId);
@@ -86,18 +117,13 @@ public class FriendServiceImpl implements FriendService{
     @Override
     public List<MemberResponseDto> findFriendList(int memberId, Pageable pageable) {
         Member member=memberRepository.findMemberByMemberId(memberId);
-        System.out.println("1");
         Page<Friend> friends=friendRepository.findAllByFriendResponseMemberIdAndFriendAcceptedOrderByCreatedTime(member,(byte)1,pageable);
-        System.out.println("2");
         ArrayList<MemberResponseDto> memberResponseDtos=new ArrayList<>();
 
         for(Friend friend: friends){
-            System.out.println("3");
             member=friend.getFriendRequestMemberId();
             memberResponseDtos.add(memberCustomRepository.createMemberResponseDtoByEntity(member));
         }
-
-        System.out.println("4");
         return memberResponseDtos;
     }
 
@@ -126,5 +152,25 @@ public class FriendServiceImpl implements FriendService{
         }
 
         return memberResponseDtos;
+    }
+
+    public boolean deleteFriend(int myId, int friendId){
+        Member me=memberRepository.findMemberByMemberId(myId);
+        Member friend=memberRepository.findMemberByMemberId(friendId);
+        Friend friend1=friendRepository.findTopByFriendRequestMemberIdAndFriendResponseMemberId(me,friend);
+        Friend friend2=friendRepository.findTopByFriendRequestMemberIdAndFriendResponseMemberId(friend,me);
+
+        if(friend1==null&friend2==null){
+            return false;
+        }
+
+        if(friend1!=null)
+        {
+            friendRepository.deleteByFriendId(friend1.getFriendId());
+        }
+        if(friend2!=null){
+            friendRepository.deleteByFriendId(friend2.getFriendId());
+        }
+        return true;
     }
 }
