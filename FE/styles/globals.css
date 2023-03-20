@@ -84,7 +84,7 @@ video {
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
+  /* font: inherit; */
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -129,8 +129,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
 }
 h1 {
   font-family: 'MYCHEW';
@@ -173,12 +173,12 @@ p {
 a {
   font-family: 'WILD-MAYO';
   font-size: 1.3rem;
-  /* font-weight: bold; */
   text-decoration: underline;
   color: #4a5980;
 }
 
 * {
+  font-family: 'WILD-MAYO';
   box-sizing: border-box;
 }
 
