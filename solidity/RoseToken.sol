@@ -29,7 +29,12 @@ contract RoseToken is ERC721Enumerable {
     mapping(uint256 => uint256) public rosePrices; // 가격 매핑
 
     uint256[] public onSaleRoseTokenArray; // 판매중인 장미꽃 배열 
-
+    
+    event GetRoseTokens(RoseTokenData[]);
+    event GetRoseSalesLog(RoseSalesLog[]);
+    event GetOnSaleRoseTokenArray(uint256[]);
+    event GetOnSaleRoseTokenArrayLength(uint256);
+    event GetRoseTokenPrice(uint256);
 
     function mintRoseToken(uint rosePrice) public {
         uint256 roseTokenId = totalSupply() + 1;
@@ -57,7 +62,33 @@ contract RoseToken is ERC721Enumerable {
         _mint(msg.sender, roseTokenId);
     }
 
-    function getRoseTokens(address _roseTokenOwner) view public returns (RoseTokenData[] memory) {
+    function mint10RoseTokens(uint rosePrice) public {
+        for(int i=0;i<10;i++) {
+            uint256 roseTokenId = totalSupply() + 1;
+            uint256 tmp = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, roseTokenId))) % 1000 + 1;
+            uint256 roseType;
+            if(tmp<=3) { // 황금 장미꽃 
+                roseType = 1;
+            } else if(tmp<=33) { // 장미꽃 
+                roseType = 2;
+            } else if(tmp<=333) { // 해바라기 3, 민들레 4, 무궁화 5, 벚꽃 6
+                roseType = tmp%4+3;
+            } else { // 잡초 
+                roseType = 10;
+            }
+            uint roseColor = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, roseTokenId))) % 16777215;
+            RoseTokenData memory roseTokenData = RoseTokenData(roseTokenId, rosePrice, roseColor, roseType, block.timestamp);
+            b612RoseMap[roseTokenId] = roseTokenData;
+            // 로그에 초기 정보 추가
+            uint next = uint256(keccak256(abi.encodePacked(roseTokenId, rosePrice, msg.sender, msg.sender, block.timestamp)));
+            RoseSalesLog memory roseSalesLog = RoseSalesLog(rosePrice, msg.sender, msg.sender, block.timestamp, next);
+            roseSalesMap[roseTokenId] = roseSalesLog;
+            roseSalesCntMap[roseTokenId] = 1;
+            _mint(msg.sender, roseTokenId);
+        }
+    }
+
+    function getRoseTokens(address _roseTokenOwner) public returns (RoseTokenData[] memory) {
         uint256 balanceLength = balanceOf(_roseTokenOwner);
 
         require(balanceLength != 0, "Owner did not have token.");
@@ -74,10 +105,11 @@ contract RoseToken is ERC721Enumerable {
             roseTokenData[i] = RoseTokenData(roseTokenId, rosePrice, roseColor, roseType, createdAt);
         }
 
+        emit GetRoseTokens(roseTokenData);
         return roseTokenData;
     }
 
-    function getOnSaleRose() view public returns (RoseTokenData[] memory) {
+    function getOnSaleRose() public returns (RoseTokenData[] memory) {
         uint256[] memory saleArray=getOnSaleRoseTokenArray();
         uint256 length = saleArray.length;
 
@@ -96,7 +128,7 @@ contract RoseToken is ERC721Enumerable {
         return roseTokenData;
     }
 
-    function getRoseSalesLog(uint256 _roseTokenId) view public returns (RoseSalesLog[] memory) {
+    function getRoseSalesLog(uint256 _roseTokenId) public returns (RoseSalesLog[] memory) {
         uint256 length = roseSalesCntMap[_roseTokenId];
         RoseSalesLog[] memory roseSalesLog = new RoseSalesLog[](length);
         uint nextAddress = roseSalesMap[_roseTokenId].next;
@@ -107,6 +139,7 @@ contract RoseToken is ERC721Enumerable {
             idx++;
             nextAddress = roseSalesMap[nextAddress].next;
         }
+        emit GetRoseSalesLog(roseSalesLog);
         return roseSalesLog;
     }
 
@@ -162,11 +195,13 @@ contract RoseToken is ERC721Enumerable {
         return nextAddress;
     }
 
-    function getOnSaleRoseTokenArray() view public returns (uint256[] memory) {
+    function getOnSaleRoseTokenArray() public returns (uint256[] memory) {
+        emit GetOnSaleRoseTokenArray(onSaleRoseTokenArray);
         return onSaleRoseTokenArray;
     }
 
-    function getOnSaleRoseTokenArrayLength() view public returns (uint256) {
+    function getOnSaleRoseTokenArrayLength() public returns (uint256) {
+        emit GetOnSaleRoseTokenArrayLength(onSaleRoseTokenArray.length);
         return onSaleRoseTokenArray.length;
     }
 

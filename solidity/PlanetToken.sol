@@ -33,6 +33,11 @@ contract MintPlanetToken is ERC721Enumerable {
 
     uint256[] public onSalePlanetTokenArray; // 판매중인 행성 배열 
 
+    event GetPlanetTokens(PlanetTokenData[]);
+    event GetPlanetSalesLog(PlanetSalesLog[]);
+    event GetOnSalePlanetTokenArray(uint256[]);
+    event GetOnSalePlanetTokenArrayLength(uint256);
+    event GetPlanetTokenPrice(uint256);
 
     string[] one = [unicode"당당한 ", unicode"웅장한 ", unicode"아름다운 ", unicode"쾌적한 ", unicode"완벽한 ", unicode"노란 ", unicode"청량한 ", unicode"담백한 ", unicode"긴박한 ",
      unicode"차분한 ", unicode"깨끗한 ", unicode"군더더기 없는 ", unicode"무서운 ", unicode"경쾌한 ", unicode"분명한 ", unicode"느릿느릿한 ", unicode"달콤한 ", unicode"짜릿한 ", 
@@ -104,7 +109,41 @@ contract MintPlanetToken is ERC721Enumerable {
         _mint(msg.sender, planetTokenId);
     }
 
-    function getPlanetTokens(address _planetTokenOwner) view public returns (PlanetTokenData[] memory) {
+    function mint10PlanetTokens(uint256 planetPrice) public {
+        for(int i=0;i<10;i++){
+            uint256 planetTokenId = totalSupply() + 1;
+            uint256 planetAddress = planetTokenId;
+            uint length = one.length;
+            uint randomOne = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, planetTokenId))) % length;
+            length = two.length;
+            uint randomTwo = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, planetTokenId))) % length;
+            length = three.length;
+            uint randomThree = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, planetTokenId))) % length;
+            uint planetNameLength = planetName.length;
+            uint randomPlanetName = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, planetTokenId))) % planetNameLength;
+            string memory name;
+            name = string.concat(one[randomOne], two[randomTwo]);
+            name = string.concat(name, unicode"처럼 ");
+            name = string.concat(name, three[randomThree]);
+            name = string.concat(name, planetName[randomPlanetName]);
+            PlanetTokenData memory planetTokenData = PlanetTokenData(planetTokenId, planetAddress, planetPrice, 
+            uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, planetTokenId))) % 16777215,
+            uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, planetTokenId))) % 10, 
+            name, block.timestamp);
+
+            b612AddressMap[planetTokenId] = planetTokenData;
+
+            // 로그에 초기 정보 추가
+            length = uint256(keccak256(abi.encodePacked(planetTokenId, planetPrice, msg.sender, msg.sender, block.timestamp)));
+            PlanetSalesLog memory planetSalesLog = PlanetSalesLog(planetPrice, msg.sender, msg.sender, block.timestamp, length);
+            planetSalesMap[planetTokenId] = planetSalesLog;
+            planetSalesCntMap[planetTokenId] = 1;
+
+            _mint(msg.sender, planetTokenId);
+        }
+    }
+
+    function getPlanetTokens(address _planetTokenOwner) public returns (PlanetTokenData[] memory) {
         uint256 balanceLength = balanceOf(_planetTokenOwner);
 
         require(balanceLength != 0, "Owner did not have token.");
@@ -122,11 +161,11 @@ contract MintPlanetToken is ERC721Enumerable {
 
             planetTokenData[i] = PlanetTokenData(planetTokenId, planetPrice, planetAddress, planetColor, planetType, planetName, createdAt);
         }
-
+        emit GetPlanetTokens(planetTokenData);
         return planetTokenData;
     }
 
-    function getOnSalePlanet() view public returns (PlanetTokenData[] memory) {
+    function getOnSalePlanet() public returns (PlanetTokenData[] memory) {
         uint256[] memory saleArray = getOnSalePlanetTokenArray();
         uint256 length = saleArray.length;
 
@@ -144,10 +183,11 @@ contract MintPlanetToken is ERC721Enumerable {
             planetTokenData[i] = PlanetTokenData(planetTokenId, planetPrice, planetAddress, planetColor, planetType, planetName, createdAt);
         }
 
+        emit GetPlanetTokens(planetTokenData);
         return planetTokenData;
     }
 
-    function getPlanetSalesLog(uint256 _planetTokenId) view public returns (PlanetSalesLog[] memory) {
+    function getPlanetSalesLog(uint256 _planetTokenId) public returns (PlanetSalesLog[] memory) {
         uint256 length = planetSalesCntMap[_planetTokenId];
         PlanetSalesLog[] memory planetSalesLog = new PlanetSalesLog[](length);
         uint nextAddress = planetSalesMap[_planetTokenId].next;
@@ -158,6 +198,8 @@ contract MintPlanetToken is ERC721Enumerable {
             idx++;
             nextAddress = planetSalesMap[nextAddress].next;
         }
+
+        emit GetPlanetSalesLog(planetSalesLog);
         return planetSalesLog;
     }
 
@@ -213,16 +255,18 @@ contract MintPlanetToken is ERC721Enumerable {
         return nextAddress;
     }
 
-    function getOnSalePlanetTokenArray() view public returns (uint256[] memory) {
+    function getOnSalePlanetTokenArray() public returns (uint256[] memory) {
+        emit GetOnSalePlanetTokenArray(onSalePlanetTokenArray);
         return onSalePlanetTokenArray;
     }
 
     
-    function getOnSalePlanetTokenArrayLength() view public returns (uint256) {
+    function getOnSalePlanetTokenArrayLength() public returns (uint256) {
+        emit GetOnSalePlanetTokenArrayLength(onSalePlanetTokenArray.length);
         return onSalePlanetTokenArray.length;
     }
 
-    function getPlanetTokenPrice(uint256 _planetTokenId) view public returns (uint256) {
+    function getPlanetTokenPrice(uint256 _planetTokenId) public returns (uint256) {
         return planetPrices[_planetTokenId];
     }
 }
