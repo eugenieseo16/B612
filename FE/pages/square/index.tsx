@@ -1,6 +1,6 @@
-import React from 'react';
-import { Canvas } from '@react-three/fiber';
-// import { PerspectiveCamera } from '@react-three/drei';
+import React, { useRef } from 'react';
+import { Canvas, useThree } from '@react-three/fiber';
+
 import {
   OrbitControls,
   Stars,
@@ -53,6 +53,7 @@ function Square() {
         {testing ? <Stats /> : null}
         {testing ? <axesHelper args={[2]} /> : null}
         {testing ? <gridHelper args={[30, 30]} /> : null}
+
         <OrbitControls />
         <Stars />
         <Ground />
