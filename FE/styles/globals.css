@@ -134,32 +134,32 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
 }
 h1 {
-  font-family: 'MYCHEW';
+  font-family: 'MAYO';
   font-size: 3rem;
   color: #394666;
 }
 h2 {
-  font-family: 'MYCHEW';
+  font-family: 'MAYO';
   font-size: 2.5rem;
   color: #394666;
 }
 h3 {
-  font-family: 'MYCHEW';
-  font-size: 1.5rem;
+  font-family: 'MAYO';
+  font-size: 2rem;
   color: #394666;
 }
 h4 {
   font-family: 'MAYO';
-  font-size: 3rem;
+  font-size: 1.5rem;
   color: #394666;
 }
 h5 {
-  font-family: 'MAYO';
-  font-size: 2.5rem;
+  font-family: 'WILD-MAYO';
+  font-size: 2rem;
   color: #394666;
 }
 h6 {
-  font-family: 'MAYO';
+  font-family: 'WILD-MAYO';
   font-size: 1.5rem;
   font-weight: bold;
   color: #394666;
@@ -192,11 +192,6 @@ a {
 @font-face {
   font-family: 'MAYO';
   src: url('../assets/fonts/둘기마요.ttf');
-}
-
-@font-face {
-  font-family: 'MYCHEW';
-  src: url('../assets/fonts/마이쮸.ttf');
 }
 
 @font-face {
