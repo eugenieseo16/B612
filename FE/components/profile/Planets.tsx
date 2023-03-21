@@ -4,6 +4,8 @@ import { degToRad } from 'three/src/math/MathUtils';
 
 function Planets({ index }: { index: number }) {
   const [time, setTime] = useState(1);
+  const [selected, setSeleted] = useState(-1);
+
   useEffect(() => {
     const id = setTimeout(() => {
       setTime(time + 1);
@@ -15,7 +17,13 @@ function Planets({ index }: { index: number }) {
     <>
       <motion.group>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(e => (
-          <Planet key={e} index={index} />
+          <Planet
+            selected={selected === e}
+            setSeleted={setSeleted}
+            key={e}
+            index={index}
+            planetId={e}
+          />
         ))}
       </motion.group>
     </>
@@ -28,7 +36,7 @@ function getRandom(min: number, max: number) {
   return Math.random() * (max - min) + min;
 }
 
-function Planet({ index }: { index: number }) {
+function Planet({ index, selected, setSeleted, planetId }: any) {
   const [hover, setHover] = useState(false);
 
   const [y, setY] = useState(5);
@@ -72,7 +80,7 @@ function Planet({ index }: { index: number }) {
           rotateY,
         }}
         transition={{ ease: 'linear', duration: 30 }}
-        onClick={() => setHover(!hover)}
+        onClick={() => setSeleted(planetId)}
         position={[
           getRandom(-200, 200),
           getRandom(-100, 100),
@@ -83,7 +91,7 @@ function Planet({ index }: { index: number }) {
         <motion.meshStandardMaterial
           animate={{
             opacity: index === 2 ? 1 : 0,
-            color: hover ? 'blue' : 'red',
+            color: selected ? 'blue' : 'red',
           }}
           transition={{ duration: 2 }}
         />
