@@ -3,6 +3,8 @@ import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 import Web3 from 'web3';
 
+import { LoginButton } from '../components/MetaMaskLoginEmotion';
+
 function MetaMaskLogin() {
   const account = useRecoilValue(userAtom);
 
@@ -48,15 +50,19 @@ function MetaMaskLogin() {
   };
 
   return (
-    <button
+    <LoginButton
       onClick={() => {
         handleNetwork();
         handleLogin();
       }}
       disabled={Boolean(account)}
     >
-      MetaMaskLogin
-    </button>
+      <img
+        src="https://cdn.iconscout.com/icon/free/png-256/metamask-2728406-2261817.png"
+        alt="metamask login"
+      />
+      <h4>LOGIN</h4>
+    </LoginButton>
   );
 }
 

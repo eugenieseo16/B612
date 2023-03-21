@@ -1,16 +1,23 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import userAtom from 'store/userAtom';
+import { useRecoilValue } from 'recoil';
 
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+import MetaMaskLogin from '@components/MetaMaskLogin';
 
 import Badge from '@mui/material/Badge';
 import { Container } from '../common/NavBarEmotion';
 
 function NavBar() {
   const router = useRouter();
+  const user = useRecoilValue(userAtom);
   const pathname = router.asPath;
+
+  console.log(user);
 
   return (
     <Container>
@@ -21,39 +28,41 @@ function NavBar() {
           id="logo-image"
         />
         <Link href={`/`} id="link-item">
-          <h5>머무르다</h5>
+          <h2>머무르다</h2>
         </Link>
       </div>
 
       <div className="menu-container">
         <Link href={`/`} id="link-item">
-          <h2 className={pathname === '/' ? 'selected' : 'default'}>홈</h2>
+          <h4 className={pathname === '/' ? 'selected' : 'default'}>홈</h4>
         </Link>
 
         <Link href={`/rankings`} id="link-item">
-          <h2 className={pathname === '/rankings' ? 'selected' : 'default'}>
+          <h4 className={pathname === '/rankings' ? 'selected' : 'default'}>
             명예의 전당
-          </h2>
+          </h4>
         </Link>
 
         <Link href={`/store`} id="link-item">
-          <h2 className={pathname === '/store' ? 'selected' : 'default'}>
+          <h4 className={pathname === '/store' ? 'selected' : 'default'}>
             상점
-          </h2>
+          </h4>
         </Link>
 
-        <div className="icon-container">
-          <Badge badgeContent={4} color="error">
-            <NotificationsNoneIcon sx={{ fontSize: '30px' }} id="icon-item" />
-          </Badge>
-
-          {/* 비회원일시 */}
-          <AccountCircleIcon sx={{ fontSize: '30px' }} id="icon-item" />
-
-          {/* 회원일시 */}
-          {/* 회원 프로필 이미지 설정 */}
-          {/* 경로도 /profile/로 연결해주기 */}
-        </div>
+        {!Boolean(user) ? (
+          <div className="icon-container">
+            <MetaMaskLogin />
+          </div>
+        ) : (
+          <div className="icon-container">
+            <Badge badgeContent={4} color="error">
+              <NotificationsNoneIcon sx={{ fontSize: '30px' }} id="icon-item" />
+            </Badge>
+            <Link href={`/profile`}>
+              <AccountCircleIcon sx={{ fontSize: '30px' }} id="icon-item" />
+            </Link>
+          </div>
+        )}
       </div>
     </Container>
   );
