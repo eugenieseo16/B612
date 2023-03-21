@@ -1,99 +1,65 @@
-import React, { useEffect } from 'react';
-import Room from '@components/profile/Room';
+import React from 'react';
 import { MotionCanvas } from 'framer-motion-3d';
-import { MotionConfig, motion } from 'framer-motion';
+import { MotionConfig } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
-import {
-  Modal,
-  Fade,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  ButtonBase,
-} from '@mui/material';
-import FlowersModal from '@components/common/FlowersModal';
+import { Modal, Fade } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
+import FlowersModal from '@components/common/FlowersModal';
 
-const ROOM = ['HOME', 'DESKTOP', 'PLANETS', 'FLOWERS'];
+import { Room, MyCamera, RoomNav, Planets } from '@components/profile/index';
+import ProfileModal from '@components/profile/ProfileModal';
 
 function UserProfile() {
-  const user = useRecoilValue(userAtom);
-  const router = useRouter();
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
 
-  useEffect(() => {
-    if (!Boolean(user)) router.replace('/');
-  }, [user, router]);
+  // useEffect(() => {
+  //   if (!Boolean(user)) router.replace('/');
+  // }, [user, router]);
 
   return (
     <div
       style={{
         width: '100vw',
-        height: '100vh',
+        height: 'calc(100vh - 5rem)',
+        background: '#252530',
       }}
     >
+      <RoomNav />
       <MotionConfig transition={{ duration: 0.8, ease: 'easeInOut' }}>
         <MotionCanvas
-          shadows
           style={{
             width: 'calc(100% - 20rem)',
             minWidth: '70%',
             height: '100%',
           }}
         >
-          <Room index={roomIndex} />
+          <ambientLight intensity={0.1} />
+          <directionalLight position={[100, 100, 250]} intensity={1.1} />
+          <color attach="background" args={['#252530']} />
+          <MyCamera index={roomIndex} />
+          <Planets index={roomIndex} />
+          <Room />
         </MotionCanvas>
       </MotionConfig>
       <Canvas style={{ display: 'none' }}>
         <mesh></mesh>
       </Canvas>
-
-      <div
-        style={{
-          position: 'fixed',
-          right: '0',
-          top: 0,
-          padding: '0 1rem',
-          width: '20rem',
-          maxWidth: '30%',
-          height: '100vh',
-          background: '#fff',
-        }}
-      >
-        <List component="nav" aria-label="mailbox folders">
-          {ROOM.map((text, i) => (
-            <div key={i}>
-              <ButtonBase
-                sx={{ width: '100%' }}
-                onClick={() => setRoomIndex(i)}
-              >
-                <ListItem>
-                  <ListItemText>{text}</ListItemText>
-                </ListItem>
-              </ButtonBase>
-              <Divider />
-            </div>
-          ))}
-        </List>
-        {roomIndex}
-      </div>
-
       <Modal
         sx={{
           minWidth: '70%',
           width: 'calc(100% - 20rem)',
+          marginTop: '5rem',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          overflowY: roomIndex === 1 ? 'scroll' : 'hidden',
         }}
         closeAfterTransition
         hideBackdrop
-        open={roomIndex > 0}
+        open={roomIndex > 0 && roomIndex !== 2}
         onClose={() => setRoomIndex(0)}
         onClick={() => setRoomIndex(0)}
       >
@@ -102,11 +68,7 @@ function UserProfile() {
             <FlowersModal />
           </MyFade>
           <MyFade in={roomIndex === 1}>
-            <div
-              style={{ width: '100%', height: '100%', background: 'tomato' }}
-            >
-              하이하이
-            </div>
+            <ProfileModal />
           </MyFade>
         </>
       </Modal>
@@ -119,15 +81,20 @@ export default UserProfile;
 const MyFade = ({ children, ...rest }: any) => {
   const StyledFade = styled(Fade)`
     position: absolute;
-    top: 10%;
-    left: 10%;
-    width: 80%;
-    height: 80%;
+    top: 2.5%;
+    left: 2.5%;
+    width: 100%;
+    height: 100%;
   `;
 
   return (
-    <StyledFade {...rest} timeout={1200} onClick={e => e.stopPropagation()}>
-      <div style={{ width: '80%', height: '80%' }}>{children}</div>
+    <StyledFade
+      {...rest}
+      timeout={500}
+      onClick={e => e.stopPropagation()}
+      style={{ transitionDelay: 1000 }}
+    >
+      <div style={{ width: '95%', height: '95%' }}>{children}</div>
     </StyledFade>
   );
 };

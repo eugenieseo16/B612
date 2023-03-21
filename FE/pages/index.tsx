@@ -6,26 +6,22 @@ import userAtom from 'store/userAtom';
 import Example from '@components/Example';
 import Link from 'next/link';
 
+import PinkGlowingButton from '@components/common/PinkGlowingButton';
+import BlueGlowingButton from '@components/common/BlueGlowingButton';
+
 const Home: NextPage = () => {
   const user = useRecoilValue(userAtom);
+
   return (
-    <div className={styles.container}>
+    <div style={{ padding: '10rem' }} className={styles.container}>
       <Link href={`/profile`}>myProfile</Link>
       <div>
         <Link href={`/square`}>광장으로 이동</Link>
       </div>
       <Example />
       {!Boolean(user) ? <MetaMaskLogin /> : <h1>{user?.memberNickname}</h1>}
-
-      <h1>Heading1 폰트 테스트 - MYCHEW</h1>
-      <h2>Heading2 폰트 테스트 - MYCHEW</h2>
-      <h3>Heading3 폰트 테스트 - TMONEY</h3>
-      <h4>Heading4 폰트 테스트 - TMONEY</h4>
-      <h5>Heading5 폰트 테스트 - TMONEY</h5>
-      <h6>Heading6 폰트 테스트 - TMONEY</h6>
-      <span>span tag 폰트 테스트 - LITTLEPRINCE</span>
-      <p>p tag 폰트 테스트 - LITTLEPRINCE</p>
-      <a href="#">a tag 폰트 테스트 - LITTLEPRINCE</a>
+      <PinkGlowingButton icon={'item'} />
+      <BlueGlowingButton icon={'friend'} />
     </div>
   );
 };
