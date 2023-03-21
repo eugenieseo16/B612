@@ -3,6 +3,7 @@ import { Canvas, useThree } from '@react-three/fiber';
 
 import {
   OrbitControls,
+  PerspectiveCamera,
   Stars,
   Stats,
   // useTexture,
@@ -48,7 +49,12 @@ function Square() {
 
   return (
     <div style={styles.container}>
-      <Canvas shadows>
+      <Canvas
+        shadows
+        camera={{
+          position: [0, 3, 3],
+        }}
+      >
         {/*testing = true : 왼쪽상단에 상태를 보여준다, helper 킨다 */}
         {testing ? <Stats /> : null}
         {testing ? <axesHelper args={[2]} /> : null}
