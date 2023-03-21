@@ -6,12 +6,14 @@ import { DirectionalLightHelper } from 'three';
 const Lights: React.FC = () => {
   const lightRef = useRef<THREE.DirectionalLight>();
 
-  useHelper(lightRef, DirectionalLightHelper, 5, 'red');
+  // useHelper(lightRef, DirectionalLightHelper, 10, 'red');
   return (
     <>
       <ambientLight intensity={0.1} />
-      <directionalLight ref={lightRef} position={[0, 10, 10]} castShadow />
-      <hemisphereLight args={['#FFECDE', '#5e9c49', 1]} />
+      <directionalLight ref={lightRef} position={[0, 50, 50]} castShadow />
+      <directionalLight ref={lightRef} position={[0, 0, -1]} />
+      <directionalLight ref={lightRef} position={[0, 0, 1]} />
+      <hemisphereLight args={['#FFECDE', '#5e9c49', 0.5]} />
     </>
   );
 };

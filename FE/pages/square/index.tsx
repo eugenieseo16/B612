@@ -3,8 +3,8 @@ import { Canvas, useThree } from '@react-three/fiber';
 
 import {
   OrbitControls,
-  PerspectiveCamera,
-  Stars,
+  // PerspectiveCamera,
+  // Stars,
   Stats,
   // useTexture,
   // useGLTF,
@@ -16,6 +16,7 @@ import { TetrisModel } from '@components/square/Tetris';
 import { AppleTreeModel } from '@components/square/Appletree';
 import { DaisyModel } from '@components/square/Daisy';
 import AvatarFinn from '@components/square/AvatarFinn';
+import Trees from '@components/square/Trees';
 
 // const TextureSpheres = () => {
 //   const map = useTexture('../textures/aerial_rocks_04_diff_1k.png');
@@ -61,7 +62,8 @@ function Square() {
         {testing ? <gridHelper args={[30, 30]} /> : null}
 
         <OrbitControls />
-        <Stars />
+        {/* <Stars /> */}
+
         <Ground />
         <TetrisModel />
         <AppleTreeModel position={[-3, 0, 2]} />
@@ -69,6 +71,7 @@ function Square() {
         {/* <TextureSpheres /> */}
         <Lights />
         <AvatarFinn />
+        <Trees />
       </Canvas>
     </div>
   );

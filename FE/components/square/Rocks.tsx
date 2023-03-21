@@ -7,8 +7,8 @@ const Ground: React.FC = () => {
   return (
     <>
       <mesh rotation-x={Math.PI * -0.5} receiveShadow>
-        <planeBufferGeometry args={[600, 600]} />
-        <meshStandardMaterial color={'#B0C85B'} />
+        <planeBufferGeometry args={[300, 300]} />
+        <meshStandardMaterial color={'#259E26'} />
       </mesh>
     </>
   );
