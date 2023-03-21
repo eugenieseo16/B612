@@ -12,6 +12,8 @@ import javax.persistence.Column;
 @Getter
 @Setter
 public class MemberResponseDto {
+
+    private int memberId;
     private String memberNickname;
 
     private String memberAddress;
@@ -23,7 +25,8 @@ public class MemberResponseDto {
     private int memberCurrentScore;
 
     @Builder
-    public MemberResponseDto(String memberAddress, String memberNickname, String memberImage, String memberTierName, int memberCurrentScore){
+    public MemberResponseDto(int memberId, String memberAddress, String memberNickname, String memberImage, String memberTierName, int memberCurrentScore){
+        this.memberId=memberId;
         this.memberAddress=memberAddress;
         this.memberNickname=memberNickname;
         this.memberImage=memberImage;
