@@ -75,7 +75,7 @@ export const YellowButton = styled.div`
     background-color: rgb(254, 228, 190, 0.7);
     border: solid white 4px;
     border-radius: 12px;
-    box-shadow: 0px 0px 15px 7px #fee4be;
+    box-shadow: 0px 0px 15px 7px #e4cba6;
   }
   .default {
     display: flex;
@@ -87,7 +87,7 @@ export const YellowButton = styled.div`
 
     width: 80px;
     height: 80px;
-    box-shadow: 0px 0px 15px 7px #fee4be;
+    box-shadow: 0px 0px 15px 7px #e4cba6;
   }
 
   img {
