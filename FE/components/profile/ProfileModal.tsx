@@ -10,35 +10,46 @@ import {
 } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 
-import { useRecoilValue } from 'recoil';
-import roomIndexAtom from 'store/profile/roomIndexAtom';
 import defaultImg from 'assets/imgs/cryptoPunk1.png';
+import { useRecoilValue } from 'recoil';
+import userAtom from 'store/userAtom';
 
-function ProfileModal() {
-  const roomIndex = useRecoilValue(roomIndexAtom);
+function ProfileModal({ user }: { user: IUser | null }) {
+  // const me = useRecoilValue(userAtom);
+  const me = {
+    memberAddress: '',
+  };
   return (
     <Container>
       <AvatarContainer>
         <Avatar src={defaultImg.src} sx={{ width: '4rem', height: '4rem' }} />
-        <h1>내이름</h1>
+        <h1>{user?.memberNickname}</h1>
       </AvatarContainer>
-      <p>보유 코인 : 11.12980 GoerliETH</p>
-      <div>
-        <span>충전하러 가기 </span>
-        <a>https://goerlifaucet.com/</a>
-      </div>
+      {me?.memberAddress === user?.memberAddress && (
+        <>
+          <p>보유 코인 : {user?.eth} GoerliETH</p>
+          <div>
+            <span>충전하러 가기 </span>
+            <a>https://goerlifaucet.com/</a>
+          </div>
+        </>
+      )}
 
       <div>
-        <p>받은 친구요청</p>
-        <div style={{ display: 'flex', margin: '1rem 0' }}>
-          <AvatarGroup max={4}>
-            <Avatar alt="Remy Sharp" src={defaultImg.src} />
-            <Avatar alt="Travis Howard" src={defaultImg.src} />
-            <Avatar alt="Cindy Baker" src={defaultImg.src} />
-            <Avatar alt="Agnes Walker" src={defaultImg.src} />
-            <Avatar alt="Trevor Henderson" src={defaultImg.src} />
-          </AvatarGroup>
-        </div>
+        {me?.memberAddress === user?.memberAddress && (
+          <>
+            <p>받은 친구요청</p>
+            <div style={{ display: 'flex', margin: '1rem 0' }}>
+              <AvatarGroup max={4}>
+                <Avatar alt="Remy Sharp" src={defaultImg.src} />
+                <Avatar alt="Travis Howard" src={defaultImg.src} />
+                <Avatar alt="Cindy Baker" src={defaultImg.src} />
+                <Avatar alt="Agnes Walker" src={defaultImg.src} />
+                <Avatar alt="Trevor Henderson" src={defaultImg.src} />
+              </AvatarGroup>
+            </div>
+          </>
+        )}
       </div>
       <div>
         <p>친구목록</p>
