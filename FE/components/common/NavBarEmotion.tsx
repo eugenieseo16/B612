@@ -45,7 +45,7 @@ export const Container = styled.div`
     align-items: center;
 
     .icon-container {
-      margin-left: 15px;
+      margin-left: 2rem;
       display: flex;
       #icon-item {
         color: #394666;
