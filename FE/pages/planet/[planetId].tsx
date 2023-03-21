@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import PlanetDetailCard from '@components/common/Planet/PlanetDetail';
+import PlanetDetailCard from '@components/Planet/PlanetDetail';
 import BlueGlowingButton from '@components/common/BlueGlowingButton';
 import PinkGlowingButton from '@components/common/PinkGlowingButton';
 import PurpleGlowingButton from '@components/common/PurpleGlowingButton';
