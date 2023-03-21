@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 function UserProfile() {
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
   const router = useRouter();
+  const user = useRecoilValue(userAtom);
   // useEffect(() => {
   //   if (!Boolean(user)) router.replace('/');
   // }, [user, router]);
@@ -68,10 +69,10 @@ function UserProfile() {
       >
         <>
           <MyFade in={roomIndex === 3}>
-            <FlowersModal />
+            <FlowersModal user={user} />
           </MyFade>
           <MyFade in={roomIndex === 1}>
-            <ProfileModal />
+            <ProfileModal user={user} />
           </MyFade>
         </>
       </Modal>

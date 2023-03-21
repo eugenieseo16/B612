@@ -32,13 +32,10 @@ function Planets({ index }: { index: number }) {
 
 export default Planets;
 
-function getRandom(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
-
 function Planet({ index, selected, setSeleted, planetId }: any) {
-  const [hover, setHover] = useState(false);
-
+  function getRandom(min: number, max: number) {
+    return Math.random() * (max - min) + min;
+  }
   const [y, setY] = useState(5);
   const [pos, setPos] = useState({
     x: getRandom(-200, 200),
