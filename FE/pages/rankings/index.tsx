@@ -6,7 +6,8 @@ function Rankings() {
   const Container = styled.div`
     display: flex;
     justify-content: center;
-    margin-top: 6rem;
+    /* position: fixed; */
+    /* top: 6rem; */
   `;
   const RankingContainer = styled.div`
     background-color: rgb(222 200 212528 / 0.4);

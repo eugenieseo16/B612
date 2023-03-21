@@ -34,6 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Layout />
       <AnimatePresence mode="wait">
         <motion.div
+          style={{ minHeight: 'calc(100vh - 5rem)' }}
           key={router.route}
           initial="initialState"
           animate="animateState"

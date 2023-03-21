@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import MetaMaskLogin from '@components/MetaMaskLogin';
 import type { NextPage } from 'next';
 import styles from '../styles/Home.module.css';
@@ -42,9 +41,6 @@ const Home: NextPage = () => {
       <h6>h6 태그 입니다 - Heading 6 거친마요 체 (1.5rem)</h6>
       <span>span tag - testtest (1.3rem)</span>
       <p>p tag - 이 글씨체보다 작을 필요가 있을까요?? (1.3rem)</p>
-
-      <table>test</table>
-      <article>test</article>
 
       <FloatingButtons>
         <div className="floating-button-items">
