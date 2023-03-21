@@ -103,6 +103,7 @@ section {
 }
 body {
   line-height: 1;
+  background-color: #ffe0d9;
 }
 ol,
 ul {
@@ -171,6 +172,7 @@ p {
   color: #29334d;
 }
 a {
+  cursor: pointer;
   font-family: 'WILD-MAYO';
   font-size: 1.3rem;
   /* font-weight: bold; */
