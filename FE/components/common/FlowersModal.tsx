@@ -17,7 +17,7 @@ import { Suspense, useState } from 'react';
 // HTMLDivElement, HTMLMotionProps<'div'>;
 const MY_FLOWERS = [0, 1, 2, 1, 1, 1, 1];
 
-function FlowersModal() {
+function FlowersModal({ user }: { user: IUser | null }) {
   const [type, setType] = useState(-1);
   return (
     <Container>
@@ -53,8 +53,8 @@ function FlowersModal() {
         <Canvas
           shadows
           style={{
-            width: '25vw',
-            height: '25vw',
+            width: '100%',
+            height: '100%',
             background: '#888',
             borderRadius: '1rem',
           }}
@@ -80,5 +80,5 @@ const Container = styled.div`
   border: 4px solid white;
 
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 30% 70%;
 `;

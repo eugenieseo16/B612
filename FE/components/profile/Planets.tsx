@@ -32,13 +32,10 @@ function Planets({ index }: { index: number }) {
 
 export default Planets;
 
-function getRandom(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
-
 function Planet({ index, selected, setSeleted, planetId }: any) {
-  const [hover, setHover] = useState(false);
-
+  function getRandom(min: number, max: number) {
+    return Math.random() * (max - min) + min;
+  }
   const [y, setY] = useState(5);
   const [pos, setPos] = useState({
     x: getRandom(-200, 200),
@@ -90,10 +87,10 @@ function Planet({ index, selected, setSeleted, planetId }: any) {
         <boxGeometry args={[32, 32, 32]} />
         <motion.meshStandardMaterial
           animate={{
-            opacity: index === 2 ? 1 : 0,
+            opacity: selected ? 1 : index === 2 ? 0.6 : 0,
             color: selected ? 'blue' : 'red',
           }}
-          transition={{ duration: 2 }}
+          transition={{ duration: 0.5 }}
         />
       </motion.mesh>
     </motion.mesh>
