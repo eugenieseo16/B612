@@ -37,6 +37,7 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository{
     @Override
     public MemberResponseDto createMemberResponseDtoByEntity(Member member) {
         MemberResponseDto memberResponseDto=MemberResponseDto.builder()
+                .memberId(member.getMemberId())
                 .memberAddress(member.getMemberAddress())
                 .memberNickname(member.getMemberNickname())
                 .memberTierName(member.getMemberTierId().getTierName())
