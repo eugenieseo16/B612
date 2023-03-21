@@ -143,7 +143,7 @@ contract MintPlanetToken is ERC721Enumerable {
         }
     }
 
-    function getPlanetTokens(address _planetTokenOwner) public returns (PlanetTokenData[] memory) {
+    function getPlanetTokens(address _planetTokenOwner) view public returns (PlanetTokenData[] memory) {
         uint256 balanceLength = balanceOf(_planetTokenOwner);
 
         require(balanceLength != 0, "Owner did not have token.");
@@ -161,11 +161,11 @@ contract MintPlanetToken is ERC721Enumerable {
 
             planetTokenData[i] = PlanetTokenData(planetTokenId, planetPrice, planetAddress, planetColor, planetType, planetName, createdAt);
         }
-        emit GetPlanetTokens(planetTokenData);
+        // emit GetPlanetTokens(planetTokenData);
         return planetTokenData;
     }
 
-    function getOnSalePlanet() public returns (PlanetTokenData[] memory) {
+    function getOnSalePlanet() view public returns (PlanetTokenData[] memory) {
         uint256[] memory saleArray = getOnSalePlanetTokenArray();
         uint256 length = saleArray.length;
 
@@ -183,11 +183,11 @@ contract MintPlanetToken is ERC721Enumerable {
             planetTokenData[i] = PlanetTokenData(planetTokenId, planetPrice, planetAddress, planetColor, planetType, planetName, createdAt);
         }
 
-        emit GetPlanetTokens(planetTokenData);
+        // emit GetPlanetTokens(planetTokenData);
         return planetTokenData;
     }
 
-    function getPlanetSalesLog(uint256 _planetTokenId) public returns (PlanetSalesLog[] memory) {
+    function getPlanetSalesLog(uint256 _planetTokenId) view public returns (PlanetSalesLog[] memory) {
         uint256 length = planetSalesCntMap[_planetTokenId];
         PlanetSalesLog[] memory planetSalesLog = new PlanetSalesLog[](length);
         uint nextAddress = planetSalesMap[_planetTokenId].next;
@@ -199,7 +199,7 @@ contract MintPlanetToken is ERC721Enumerable {
             nextAddress = planetSalesMap[nextAddress].next;
         }
 
-        emit GetPlanetSalesLog(planetSalesLog);
+        // emit GetPlanetSalesLog(planetSalesLog);
         return planetSalesLog;
     }
 
@@ -255,18 +255,18 @@ contract MintPlanetToken is ERC721Enumerable {
         return nextAddress;
     }
 
-    function getOnSalePlanetTokenArray() public returns (uint256[] memory) {
-        emit GetOnSalePlanetTokenArray(onSalePlanetTokenArray);
+    function getOnSalePlanetTokenArray() view public returns (uint256[] memory) {
+        // emit GetOnSalePlanetTokenArray(onSalePlanetTokenArray);
         return onSalePlanetTokenArray;
     }
 
     
-    function getOnSalePlanetTokenArrayLength() public returns (uint256) {
-        emit GetOnSalePlanetTokenArrayLength(onSalePlanetTokenArray.length);
+    function getOnSalePlanetTokenArrayLength() view public returns (uint256) {
+        // emit GetOnSalePlanetTokenArrayLength(onSalePlanetTokenArray.length);
         return onSalePlanetTokenArray.length;
     }
 
-    function getPlanetTokenPrice(uint256 _planetTokenId) public returns (uint256) {
+    function getPlanetTokenPrice(uint256 _planetTokenId) view public returns (uint256) {
         return planetPrices[_planetTokenId];
     }
 }
