@@ -24,19 +24,18 @@ function UserProfile() {
       style={{
         width: '100vw',
         height: 'calc(100vh - 5rem)',
+        background: '#252530',
       }}
     >
       <RoomNav />
       <MotionConfig transition={{ duration: 0.8, ease: 'easeInOut' }}>
         <MotionCanvas
-          shadows
           style={{
             width: 'calc(100% - 20rem)',
             minWidth: '70%',
             height: '100%',
           }}
         >
-          {/* -0.05972778686325054 0.19427923869943325 0.011544228387675852 */}
           <ambientLight intensity={0.1} />
           <directionalLight position={[100, 100, 250]} intensity={1.1} />
           <color attach="background" args={['#252530']} />
@@ -56,6 +55,7 @@ function UserProfile() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          overflowY: roomIndex === 1 ? 'scroll' : 'hidden',
         }}
         closeAfterTransition
         hideBackdrop
@@ -92,7 +92,7 @@ const MyFade = ({ children, ...rest }: any) => {
       {...rest}
       timeout={500}
       onClick={e => e.stopPropagation()}
-      style={{ transitionDelay: 1300 }}
+      style={{ transitionDelay: 1000 }}
     >
       <div style={{ width: '95%', height: '95%' }}>{children}</div>
     </StyledFade>
