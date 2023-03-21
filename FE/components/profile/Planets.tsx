@@ -90,10 +90,10 @@ function Planet({ index, selected, setSeleted, planetId }: any) {
         <boxGeometry args={[32, 32, 32]} />
         <motion.meshStandardMaterial
           animate={{
-            opacity: index === 2 ? 1 : 0,
+            opacity: selected ? 1 : index === 2 ? 0.6 : 0,
             color: selected ? 'blue' : 'red',
           }}
-          transition={{ duration: 2 }}
+          transition={{ duration: 0.5 }}
         />
       </motion.mesh>
     </motion.mesh>

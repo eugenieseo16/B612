@@ -11,10 +11,11 @@ import FlowersModal from '@components/common/FlowersModal';
 
 import { Room, MyCamera, RoomNav, Planets } from '@components/profile/index';
 import ProfileModal from '@components/profile/ProfileModal';
+import { useRouter } from 'next/router';
 
 function UserProfile() {
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
-
+  const router = useRouter();
   // useEffect(() => {
   //   if (!Boolean(user)) router.replace('/');
   // }, [user, router]);
@@ -59,7 +60,9 @@ function UserProfile() {
         }}
         closeAfterTransition
         hideBackdrop
-        open={roomIndex > 0 && roomIndex !== 2}
+        open={
+          roomIndex > 0 && roomIndex !== 2 && router.pathname === '/profile'
+        }
         onClose={() => setRoomIndex(0)}
         onClick={() => setRoomIndex(0)}
       >

@@ -14,7 +14,7 @@ function UserController() {
         setUser(null);
       } else {
         const { data } = await axios.post(
-          'http://70.12.246.39:8080/member',
+          'http://70.12.247.194:8080/member',
           { memberAddress },
           config
         );
