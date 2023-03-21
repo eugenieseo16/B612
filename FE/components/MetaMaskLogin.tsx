@@ -7,7 +7,7 @@ function MetaMaskLogin() {
   const account = useRecoilValue(userAtom);
 
   const handleNetwork = async () => {
-    const chainId = 31221; // ssafy mainnet 주소
+    const chainId = 5; // ssafy mainnet 주소
     if (window.ethereum?.networkVersion !== chainId) {
       try {
         await window.ethereum.request({
@@ -22,14 +22,14 @@ function MetaMaskLogin() {
             method: 'wallet_addEthereumChain',
             params: [
               {
-                chainName: 'SSAFY Mainnet',
+                chainName: 'Goerli TestNet',
                 chainId: Web3.utils.toHex(chainId),
                 nativeCurrency: {
                   name: 'ssafy_coin',
                   decimals: 18,
-                  symbol: 'SSF',
+                  symbol: 'GoerliETH',
                 },
-                rpcUrls: ['https://rpc.ssafy-blockchain.com'],
+                rpcUrls: ['https://goerli.infura.io/v3/'],
               },
             ],
           });
@@ -44,6 +44,7 @@ function MetaMaskLogin() {
       });
     } else {
       alert('Install Metamask!');
+      window.open('https://metamask.io/download/', 'blank');
     }
   };
 
