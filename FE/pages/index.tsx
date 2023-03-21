@@ -16,8 +16,8 @@ const Home: NextPage = () => {
 
   const FloatingButtons = styled.div`
     position: fixed;
-    bottom: 40px;
-    right: 40px;
+    bottom: 50px;
+    right: 50px;
 
     .floating-button-items {
       padding: 1rem 0rem;
@@ -26,9 +26,18 @@ const Home: NextPage = () => {
 
   return (
     <div>
+      {!Boolean(user) ? (
+        <></>
+      ) : (
+        <h1>{user?.memberNickname + '님, 환영해요!'}</h1>
+      )}
+
       <Link href={`/profile`}>myProfile</Link>
       <div>
         <Link href={`/square`}>광장으로 이동</Link>
+      </div>
+      <div>
+        <Link href={`/planet`}>행성으로 이동</Link>
       </div>
       <Example />
       {!Boolean(user) ? <MetaMaskLogin /> : <h1>{user?.memberNickname}</h1>}
