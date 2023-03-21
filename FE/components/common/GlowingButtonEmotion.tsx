@@ -11,7 +11,7 @@ export const PinkButton = styled.div`
     background-color: rgb(244, 193, 174, 0.7);
     border: solid white 4px;
     border-radius: 12px;
-    filter: drop-shadow(0px 0px 15px #f4c1ae);
+    box-shadow: 0px 0px 15px 7px #f4c1ae;
   }
   .default {
     display: flex;
@@ -23,7 +23,7 @@ export const PinkButton = styled.div`
 
     width: 80px;
     height: 80px;
-    filter: drop-shadow(0px 0px 15px #f4c1ae);
+    box-shadow: 0px 0px 15px 7px #f4c1ae;
   }
 
   img {
@@ -43,7 +43,7 @@ export const PurpleButton = styled.div`
     background-color: rgb(207, 181, 242, 0.7);
     border: solid white 4px;
     border-radius: 12px;
-    filter: drop-shadow(0px 0px 15px #cfb5f2);
+    box-shadow: 0px 0px 15px 7px #cfb5f2;
   }
   .default {
     display: flex;
@@ -55,7 +55,7 @@ export const PurpleButton = styled.div`
 
     width: 80px;
     height: 80px;
-    filter: drop-shadow(0px 0px 15px #cfb5f2);
+    box-shadow: 0px 0px 15px 7px #cfb5f2;
   }
 
   img {
@@ -75,7 +75,7 @@ export const YellowButton = styled.div`
     background-color: rgb(254, 228, 190, 0.7);
     border: solid white 4px;
     border-radius: 12px;
-    filter: drop-shadow(0px 0px 15px #fee4be);
+    box-shadow: 0px 0px 15px 7px #fee4be;
   }
   .default {
     display: flex;
@@ -87,7 +87,7 @@ export const YellowButton = styled.div`
 
     width: 80px;
     height: 80px;
-    filter: drop-shadow(0px 0px 15px #fee4be);
+    box-shadow: 0px 0px 15px 7px #fee4be;
   }
 
   img {
@@ -107,7 +107,7 @@ export const BlueButton = styled.div`
     background-color: rgb(188, 240, 250, 0.7);
     border: solid white 4px;
     border-radius: 12px;
-    filter: drop-shadow(0px 0px 15px #bcf0fa);
+    box-shadow: 0px 0px 15px 7px #bcf0fa;
   }
   .default {
     display: flex;
@@ -119,7 +119,7 @@ export const BlueButton = styled.div`
 
     width: 80px;
     height: 80px;
-    filter: drop-shadow(0px 0px 15px #bcf0fa);
+    box-shadow: 0px 0px 15px 7px #a9d8e0;
   }
 
   img {
