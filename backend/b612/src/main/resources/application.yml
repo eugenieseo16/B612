@@ -35,3 +35,8 @@ logging:
   level:
     com.god.b612: debug
 
+#firebase image storage
+app:
+  firebase-configuration-file: ../java/resources/serviceAccountKey.json
+  firebase-bucket: find-your-b612.appspot.com
+  firebase-image-url: https://storage.googleapis.com/find-your-b612.appspot.com/%s

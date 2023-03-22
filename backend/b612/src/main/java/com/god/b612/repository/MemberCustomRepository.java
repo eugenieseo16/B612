@@ -8,4 +8,6 @@ public interface MemberCustomRepository {
 
     public String makeRandomNickName();
 
+    Boolean updateMember(String url, String nickname, String address);
+
 }

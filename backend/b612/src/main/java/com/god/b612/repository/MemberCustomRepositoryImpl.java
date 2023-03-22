@@ -33,6 +33,11 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository{
         return sb.toString();
     }
 
+//    @Override
+//    public Boolean updateMember(String url, String nickname, String address) {
+//        return null;
+//    }
+
 
     @Override
     public MemberResponseDto createMemberResponseDtoByEntity(Member member) {

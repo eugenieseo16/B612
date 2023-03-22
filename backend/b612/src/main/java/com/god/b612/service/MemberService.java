@@ -7,4 +7,6 @@ public interface MemberService {
     public MemberResponseDto membersLoginOrRegist(String memberAddress);
 
     public MemberResponseDto memberSelectById(int memberId);
+
+    public Boolean updateInfoByAddress(String url, String nickname, String address);
 }

@@ -59,4 +59,11 @@ public class MemberServiceImpl implements MemberService {
         return memberResponseDto;
     }
 
+    @Override
+    public MemberResponseDto updateInfoByAddress(String url, String nickname, String address) {
+        Member member = memberRepository.findMemberByMemberAddress(address);
+
+        return memberRepository.save(Member.builder().memberNickname(nickname).memberImage(url).build();
+    }
+
 }
