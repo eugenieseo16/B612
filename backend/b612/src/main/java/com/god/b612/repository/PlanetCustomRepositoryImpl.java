@@ -41,10 +41,13 @@ public class PlanetCustomRepositoryImpl implements PlanetCustomRepository {
                     .build();
 
         }
-        planetResponseDto = PlanetResponseDto.builder()
-                .planetNftId(planet.getPlanetNftId())
-                .planetLikeCount(planet.getPlanetLikesCount())
-                .build();
+        else{
+            planetResponseDto = PlanetResponseDto.builder()
+                    .planetNftId(planet.getPlanetNftId())
+                    .planetLikeCount(planet.getPlanetLikesCount())
+                    .build();
+        }
+
 
         return planetResponseDto;
     }
