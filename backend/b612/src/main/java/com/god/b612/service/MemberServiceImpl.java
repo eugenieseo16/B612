@@ -42,9 +42,10 @@ public class MemberServiceImpl implements MemberService {
                     .memberHighestScore(0)
                     .build();
 
-            MemberResponseDto memberResponseDto = memberCustomRepository.createMemberResponseDtoByEntity(member);
             memberRepository.save(member);
-
+            Member addedMember = memberRepository.findMemberByMemberAddress(memberAddress);
+            MemberResponseDto memberResponseDto = memberCustomRepository.createMemberResponseDtoByEntity(addedMember);
+            System.out.println(memberResponseDto.toString());
             return memberResponseDto;
 
         }
@@ -55,6 +56,16 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberResponseDto memberSelectById(int memberId) {
         Member member = memberRepository.findMemberByMemberId(memberId);
+        MemberResponseDto memberResponseDto = memberCustomRepository.createMemberResponseDtoByEntity(member);
+        return memberResponseDto;
+    }
+
+    @Override
+    public MemberResponseDto memberSelectByAddress(String memberAddress) {
+        Member member = memberRepository.findMemberByMemberAddress(memberAddress);
+        if(member == null){
+            return null;
+        }
         MemberResponseDto memberResponseDto = memberCustomRepository.createMemberResponseDtoByEntity(member);
         return memberResponseDto;
     }

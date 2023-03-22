@@ -66,6 +66,24 @@ public class MemberController {
 
     }
 
+    @ApiOperation(value = "회원을 회원 지갑 주소로 조회한다.", notes = "회원 지갑주소를 입력하면 회원정보로 응답한다.")
+    @GetMapping("")
+    public ResponseEntity<?> findUserByAddress(@ApiParam(value = "회원 지갑 주소") @RequestParam String memberAddress) {
+        MemberResponseDto memberResponseDto = memberService.memberSelectByAddress(memberAddress);
+        BaseResponseBody baseResponseBody;
+
+        if (memberResponseDto != null) {
+            baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(memberResponseDto).build();
+
+            return ResponseEntity.status(200).body(baseResponseBody);
+        } else {
+            baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+
+    }
+
     @ApiOperation(value = "회원 정보를 수정합니다.", notes = "닉네임과 프로필 사진을 수정할 수 있습니다.")
     @PutMapping("/detail")
     public ResponseEntity<?> updateMemberInfo(@RequestParam("file") MultipartFile file, String changedNickname, String memberAddress) throws IOException, FirebaseAuthException, IOException {
