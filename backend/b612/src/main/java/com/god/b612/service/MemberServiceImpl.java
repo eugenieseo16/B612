@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
@@ -28,12 +27,13 @@ public class MemberServiceImpl implements MemberService {
     private final MemberCustomRepository memberCustomRepository;
 
 
+    @Transactional
     @Override
-    public MemberResponseDto membersLoginOrRegist(String memberAddress){
-        Member member=memberRepository.findMemberByMemberAddress(memberAddress);
+    public MemberResponseDto membersLoginOrRegist(String memberAddress) {
+        Member member = memberRepository.findMemberByMemberAddress(memberAddress);
 
-        if(member==null){
-            member=Member.builder()
+        if (member == null) {
+            member = Member.builder()
                     .memberAddress(memberAddress)
                     .memberNickname(memberCustomRepository.makeRandomNickName())
                     .memberImage(null)
@@ -42,23 +42,24 @@ public class MemberServiceImpl implements MemberService {
                     .memberHighestScore(0)
                     .build();
 
-            MemberResponseDto memberResponseDto=memberCustomRepository.createMemberResponseDtoByEntity(member);
+            MemberResponseDto memberResponseDto = memberCustomRepository.createMemberResponseDtoByEntity(member);
             memberRepository.save(member);
 
             return memberResponseDto;
 
         }
-        MemberResponseDto memberResponseDto=memberCustomRepository.createMemberResponseDtoByEntity(member);
+        MemberResponseDto memberResponseDto = memberCustomRepository.createMemberResponseDtoByEntity(member);
         return memberResponseDto;
     }
 
     @Override
     public MemberResponseDto memberSelectById(int memberId) {
-        Member member=memberRepository.findMemberByMemberId(memberId);
-        MemberResponseDto memberResponseDto=memberCustomRepository.createMemberResponseDtoByEntity(member);
+        Member member = memberRepository.findMemberByMemberId(memberId);
+        MemberResponseDto memberResponseDto = memberCustomRepository.createMemberResponseDtoByEntity(member);
         return memberResponseDto;
     }
 
+    @Transactional
     @Override
     public Boolean updateInfoByAddress(String url, String nickname, String address) {
         return memberCustomRepository.updateMember(url, nickname, address);
