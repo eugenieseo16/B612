@@ -1,9 +1,8 @@
 package com.god.b612.controller;
 
-import com.god.b612.dto.PlanetBuyDto;
-import com.god.b612.dto.PlanetRequestDto;
-import com.god.b612.dto.PlanetResponseDto;
+import com.god.b612.dto.*;
 import com.god.b612.model.BaseResponseBody;
+import com.god.b612.service.FlowerService;
 import com.god.b612.service.PlanetService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +22,9 @@ import java.util.List;
 public class PlanetController {
     @Autowired
     private final PlanetService planetService;
+
+    @Autowired
+    private final FlowerService flowerService;
 
 
     @Transactional
@@ -146,6 +148,23 @@ public class PlanetController {
             return ResponseEntity.status(400).body(baseResponseBody);
         }
 
+    }
+
+
+    @Transactional
+    @ApiOperation(value = "꽃을 특정 행성에 심는다.", notes = "꽃의 nft id, 행성의 nft id, 행성내 꽃의 위치 좌표를 입력해 꽃을 심는다.")
+    @PostMapping("/flower")
+    public ResponseEntity<BaseResponseBody> plantFlower(@RequestBody PlantRequestDto plantRequestDto) {
+        FlowerResponseDto flowerResponseDto = flowerService.plantFlower(plantRequestDto);
+
+        BaseResponseBody baseResponseBody =
+                BaseResponseBody.builder()
+                        .message("success")
+                        .statusCode(200)
+                        .responseData(flowerResponseDto)
+                        .build();
+
+        return ResponseEntity.status(200).body(baseResponseBody);
     }
 
 }

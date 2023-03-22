@@ -25,16 +25,16 @@ public class PlantedFlower {
     private Planet planetNftId;
 
     @NotNull
-    private int flowerLocationX;
+    private double flowerLocationX;
 
     @NotNull
-    private int flowerLocationY;
+    private double flowerLocationY;
 
     @NotNull
-    private int flowerLocationZ;
+    private double flowerLocationZ;
 
     @Builder
-    public PlantedFlower(int flowerNftId, Planet planetNftId, int flowerLocationX, int flowerLocationY, int flowerLocationZ) {
+    public PlantedFlower(int flowerNftId, Planet planetNftId, double flowerLocationX, double flowerLocationY, double flowerLocationZ) {
         this.flowerNftId = flowerNftId;
         this.planetNftId = planetNftId;
         this.flowerLocationX = flowerLocationX;
