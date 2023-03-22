@@ -5,7 +5,7 @@ import Avatar from './Avatar';
 
 function Room() {
   const [height, setHeight] = useState(0);
-  const room = useGLTF('/room.glb');
+  const room = useGLTF('/little-prince.glb');
 
   useEffect(() => {
     const bbox = new Box3().setFromObject(room.scene);
@@ -14,13 +14,12 @@ function Room() {
 
   return (
     <>
-      <Stars radius={300} factor={15} depth={100} />
       <Center position={[0, 0, 0]}>
         <group>
           <primitive object={room.scene} />
         </group>
       </Center>
-      <Avatar y={height} />
+      {/* <Avatar y={height} /> */}
     </>
   );
 }

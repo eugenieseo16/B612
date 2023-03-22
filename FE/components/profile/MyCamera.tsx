@@ -1,7 +1,11 @@
-import { useFrame, useThree } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
 import { LayoutCamera } from 'framer-motion-3d';
+import { useRef, useState } from 'react';
 
 function MyCamera({ index }: any) {
+  const ref = useRef();
+  const [isAnimate, setIsAnimate] = useState(true);
   const CAMERA_POS = [
     { x: [420, 420], y: [300, 300], z: [420, 420] },
     { x: [0, -80], y: [0, -5], z: [0, -54] },
@@ -32,26 +36,22 @@ function MyCamera({ index }: any) {
       rotateZ: 0.455953684691092,
     },
   ];
-  useThree(
-    ({
-      camera: {
-        position: { x, y, z },
-      },
-    }) => {
-      CAMERA_POS.forEach(arr => {
-        if (x === 0 && y === 0 && z === 5) return;
-        arr.x[0] = x;
-        arr.y[0] = y;
-        arr.z[0] = z;
-      });
-    }
-  );
+
   return (
     <>
+      {!isAnimate && (index === 2 || index === 0) && (
+        <OrbitControls target={[0, 0, index === 0 ? 0 : -700]} />
+      )}
       <LayoutCamera
+        ref={ref}
         animate={{
           ...CAMERA_POS[index],
           ...CAMERA_ANGLE[index],
+        }}
+        onAnimationStart={() => setIsAnimate(true)}
+        onAnimationComplete={e => {
+          console.log(e);
+          setIsAnimate(false);
         }}
         transition={{ duration: index === 2 ? 2 : 1 }}
         far={1500}

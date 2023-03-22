@@ -47,16 +47,12 @@ function FlowerThree({ type }: { type: number }) {
 export default FlowerThree;
 
 function Flower({ type }: { type: number }) {
-  const [height, setHeight] = useState(0);
-
   const flower = useGLTF(GLTF_URL[type]);
 
   useEffect(() => {
     flower.scene.traverse(node => {
       node.castShadow = true;
     });
-    const bbox = new Box3().setFromObject(flower.scene);
-    setHeight(bbox.getSize(new Vector3()).y);
   }, [flower]);
 
   return (

@@ -1,66 +1,69 @@
 import styled from '@emotion/styled';
 import { Canvas } from '@react-three/fiber';
 import { colors } from 'styles/colors';
-import { CenterBox, shadowGenerator } from 'styles/utils';
+import { CenterBox, shadowGenerator, simpleShadow } from 'styles/utils';
 import FlowerThree from './FlowerThree';
 import { rgba } from 'emotion-rgba';
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from '@mui/material';
+import { motion } from 'framer-motion';
 import { Suspense, useState } from 'react';
+import { dinosour, glowFlower, marioFlower } from 'assets/img/flowers/index';
+import { Button } from '@mui/material';
 
 // HTMLDivElement, HTMLMotionProps<'div'>;
 const MY_FLOWERS = [0, 1, 2, 1, 1, 1, 1];
+const MY_FLOWERS_MAP = [
+  { type: 0, count: 1 },
+  { type: 1, count: 4 },
+  { type: 2, count: 1 },
+];
+const FLOWER_IMG = [marioFlower, glowFlower, dinosour];
 
 function FlowersModal({ user }: { user: IUser | null }) {
-  const [type, setType] = useState(-1);
+  const [selectedType, setSelectedType] = useState(-1);
   return (
     <Container>
-      <div style={{ overflowY: 'scroll', padding: '0 1rem 0 0' }}>
-        {MY_FLOWERS.map((flowerType, i) => (
-          <Card
-            key={i}
-            sx={{ cursor: 'pointer', marginBottom: '1rem' }}
-            onClick={() => setType(flowerType)}
+      <div
+        style={{
+          overflowY: 'scroll',
+          padding: '0 1rem 0 0',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5rem',
+        }}
+      >
+        {MY_FLOWERS_MAP.map(({ type, count }, i) => (
+          <motion.div
+            animate={{
+              boxShadow: type === selectedType ? simpleShadow : 'none',
+              opacity: type === selectedType ? '1' : '0.6',
+            }}
+            onClick={() => setSelectedType(type)}
+            key={type}
           >
-            <CardMedia
-              component="img"
-              height="140"
-              image="https://cdn.pixabay.com/photo/2013/07/21/13/00/rose-165819__340.jpg"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Share</Button>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
+            <FlowerImgContainer>
+              <img src={FLOWER_IMG[type].src} alt="" />
+              <div>
+                <h6>꽃 종류 입니다아아아 #{type}</h6>
+                <p>소유갯수 : {count}</p>
+                <div>
+                  <Button>팔기</Button>
+                </div>
+              </div>
+            </FlowerImgContainer>
+          </motion.div>
         ))}
       </div>
-      <CenterBox>
+      <CenterBox style={{ paddingLeft: '1rem' }}>
         <Canvas
           shadows
           style={{
             width: '100%',
             height: '100%',
-            background: '#888',
             borderRadius: '1rem',
           }}
         >
           <Suspense fallback={null}>
-            <FlowerThree type={type} />
+            <FlowerThree type={selectedType} />
           </Suspense>
         </Canvas>
       </CenterBox>
@@ -78,7 +81,23 @@ const Container = styled.div`
   border-radius: 8px;
   box-shadow: ${shadowGenerator(colors.purple)};
   border: 4px solid white;
-
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 35% 65%;
+`;
+const FlowerImgContainer = styled.div`
+  width: 100%;
+  background-color: ${colors.blue};
+  img {
+    width: 100%;
+  }
+  div {
+    padding: 1rem;
+    h6 {
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
 `;
