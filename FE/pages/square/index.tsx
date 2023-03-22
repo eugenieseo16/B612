@@ -48,6 +48,7 @@ function Square() {
 
   // 개발중일때 , true 상태관리와 helper를 키고,끌수 있도록 함
   const testing = true;
+  const controlsRef = useRef();
 
   return (
     <div style={styles.container}>
@@ -55,7 +56,7 @@ function Square() {
         style={{ backgroundImage: `url("/sky.png")`, backgroundSize: 'cover' }}
         shadows
         camera={{
-          position: [0, 3, 10],
+          position: [0, 8, 14],
         }}
       >
         {/*testing = true : 왼쪽상단에 상태를 보여준다, helper 킨다 */}
@@ -63,7 +64,7 @@ function Square() {
         {testing ? <axesHelper args={[2]} /> : null}
         {testing ? <gridHelper args={[30, 30]} /> : null}
 
-        <OrbitControls />
+        <OrbitControls ref={controlsRef} minDistance={2} maxDistance={100} />
         {/* <Stars /> */}
 
         <Ground />

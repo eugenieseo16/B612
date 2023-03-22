@@ -20,3 +20,5 @@ const Tetris2 = () => {
 };
 
 export default Tetris2;
+
+// https://jstris.jezevec10.com/?langSwitch=ko

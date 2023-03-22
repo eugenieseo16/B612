@@ -17,7 +17,7 @@ const Lights: React.FC = () => {
         intensity={0.1}
       />
       <directionalLight ref={lightRef} position={[0, 0, -1]} intensity={1.2} />
-      <directionalLight ref={lightRef} position={[0, 0, 1]} intensity={1.2} />
+      <directionalLight ref={lightRef} position={[0, 0, 1]} intensity={1.4} />
       <hemisphereLight args={['##8DDDFD', '#5e9c49', 0.5]} />
     </>
   );
