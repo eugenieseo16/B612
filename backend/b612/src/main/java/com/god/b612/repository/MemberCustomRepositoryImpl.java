@@ -28,6 +28,7 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository{
             settingNumber=foundMember.getMemberId()+1;
             System.out.println(settingNumber);
         }
+        sb.append(" #");
         sb.append(settingNumber);
 
         return sb.toString();
