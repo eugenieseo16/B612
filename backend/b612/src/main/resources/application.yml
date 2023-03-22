@@ -10,12 +10,6 @@ server:
 
 #database
 spring:
-  #  datasource:
-  #    url:
-  #    username:
-  #    password:
-  #    driver-class-name: com.mysql.cj.jdbc.Driver
-  #jpa
   jpa:
     hibernate:
       ddl-auto: update
@@ -29,6 +23,11 @@ spring:
       matching-strategy: ant_path_matcher
   profiles:
     include: secret
+  #image size settings
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
 
 #logging
 logging:
@@ -40,3 +39,4 @@ app:
   firebase-configuration-file: ../java/resources/serviceAccountKey.json
   firebase-bucket: find-your-b612.appspot.com
   firebase-image-url: https://storage.googleapis.com/find-your-b612.appspot.com/%s
+

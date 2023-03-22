@@ -60,10 +60,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponseDto updateInfoByAddress(String url, String nickname, String address) {
-        Member member = memberRepository.findMemberByMemberAddress(address);
-
-        return memberRepository.save(Member.builder().memberNickname(nickname).memberImage(url).build();
+    public Boolean updateInfoByAddress(String url, String nickname, String address) {
+        return memberCustomRepository.updateMember(url, nickname, address);
     }
 
 }

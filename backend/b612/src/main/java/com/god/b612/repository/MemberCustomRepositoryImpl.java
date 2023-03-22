@@ -33,10 +33,21 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository{
         return sb.toString();
     }
 
-//    @Override
-//    public Boolean updateMember(String url, String nickname, String address) {
-//        return null;
-//    }
+    @Override
+    public Boolean updateMember(String url, String nickname, String address) {
+        Member foundMember = memberRepository.findMemberByMemberAddress(address);
+        Member changedMember = Member.builder()
+                .memberId(foundMember.getMemberId())
+                .memberNickname(nickname)
+                .memberAddress(foundMember.getMemberAddress())
+                .memberImage(url)
+                .memberTierId(foundMember.getMemberTierId())
+                .memberHighestScore(foundMember.getMemberHighestScore())
+                .memberCurrentScore(foundMember.getMemberCurrentScore())
+                .build();
+        memberRepository.save(changedMember);
+        return true;
+    }
 
 
     @Override
