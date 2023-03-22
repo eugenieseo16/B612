@@ -6,10 +6,11 @@ function Rankings() {
   const Container = styled.div`
     display: flex;
     justify-content: center;
-    /* position: fixed; */
-    /* top: 6rem; */
   `;
   const RankingContainer = styled.div`
+    position: fixed;
+    top: 11rem;
+
     background-color: rgb(222 200 212528 / 0.4);
     padding-top: 30px;
     padding-bottom: 30px;

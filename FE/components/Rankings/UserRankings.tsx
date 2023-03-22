@@ -1,51 +1,79 @@
-import React from 'react';
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
+import Link from 'next/link';
+
+import { Container } from './RankingsEmotion';
 import userRankings from '../../public/dummy/UserRanking.json';
-import { RankingTable, TableItem } from '../Rankings/RankingsEmotion';
-
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-function UserRankings() {
-  const data = userRankings.content.members;
+export default function BasicTable() {
+  const members = userRankings.content.members;
 
   return (
-    <RankingTable>
-      <th className="rank">
-        <p>순위</p>
-      </th>
-      <th className="member-name">
-        <p>사용자</p>
-      </th>
-      <th className="class">
-        <p>계급</p>
-      </th>
-      <th className="likes">
-        <p>좋아요</p>
-      </th>
-
-      {data?.map((rank: any, i: number) => (
-        <TableItem key={i}>
-          <td className="rank">
-            <h2>{i + 1}</h2>
-          </td>
-
-          <td className="member-info">
-            <img src={rank.memberProfileImage} alt="" />
-            <p>{rank.memberName}</p>
-          </td>
-
-          <td className="class">
-            <p>{rank.memberClass}</p>
-          </td>
-
-          <td className="likes">
-            <FavoriteIcon id="icon-item" />
-            <p>{rank.totalCount}</p>
-          </td>
-        </TableItem>
-      ))}
-    </RankingTable>
+    <Container>
+      <TableContainer>
+        <Table sx={{ minWidth: 650, width: '100%' }}>
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">
+                <p>순위</p>
+              </TableCell>
+              <TableCell align="center">
+                <p>사용자</p>
+              </TableCell>
+              <TableCell align="center">
+                <p>계급</p>
+              </TableCell>
+              <TableCell align="center">
+                <p>좋아요</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {members.map(member => (
+              <TableRow
+                key={member.memberId}
+                sx={
+                  {
+                    // '&:last-child td, &:last-child th': {
+                    // border: 10,
+                    // bgcolor: '#fff',
+                    // borderRadius: '40px',
+                    // },
+                  }
+                }
+              >
+                <TableCell align="center">
+                  <h2>{member.rank}</h2>
+                </TableCell>
+                <TableCell align="left">
+                  <Link href={`/profile/${member.memberId}`} id="link-item">
+                    <div className="member-item">
+                      <img src={member.memberProfileImage} alt="" />
+                      <h6>{member.memberName}</h6>
+                    </div>
+                  </Link>
+                </TableCell>
+                <TableCell align="center">
+                  <p>{member.memberClass}</p>
+                </TableCell>
+                <TableCell align="center">
+                  <div className="like-item">
+                    <FavoriteIcon id="icon-item" />
+                    <p>{member.totalCount}</p>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }
-
-export default UserRankings;
