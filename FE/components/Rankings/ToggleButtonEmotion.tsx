@@ -6,7 +6,7 @@ export const ButtonContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
 
-  height: 4.5rem;
+  height: 6rem;
   width: 21rem;
 
   display: flex;
@@ -35,7 +35,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const RankingDataContainer = styled.div`
-  width: 70%;
+  width: 80%;
   padding-top: 20px;
   -ms-overflow-style: none;
   scrollbar-width: none;
