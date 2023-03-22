@@ -38,31 +38,52 @@ const Trees = () => {
 
   return (
     <group>
-      <object3D scale={[8, 8, 8]} position={[30, 0, 40]}>
-        <primitive object={model.scene.clone()} />
-      </object3D>
-      <object3D scale={[8, 8, 8]} position={[70, 0, 150]}>
+      <object3D scale={[8, 8, 8]} position={[30, 0, 40]} rotation={[0, 0, 0]}>
         <primitive object={model.scene.clone()} />
       </object3D>
       <object3D scale={[8, 8, 8]} position={[110, 0, 43]}>
         <primitive object={model.scene.clone()} />
       </object3D>
-      <object3D scale={[8, 8, 8]} position={[150, 0, 64]}>
-        <primitive object={model.scene.clone()} />
-      </object3D>
-      <object3D scale={[8, 8, 8]} position={[190, 0, 254]}>
-        <primitive object={model.scene.clone()} />
-      </object3D>
       <object3D scale={[8, 8, 8]} position={[20, 0, 140]}>
         <primitive object={model.scene.clone()} />
       </object3D>
-      <object3D scale={[8, 8, 8]} position={[124, 0, 238]}>
-        <primitive object={model.scene.clone()} />
-      </object3D>
-      <object3D scale={[8, 8, 8]} position={[220, 0, 270]}>
-        <primitive object={model.scene.clone()} />
-      </object3D>
       <object3D scale={[8, 8, 8]} position={[130, 0, 20]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-30, 0, 40]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[110, 0, -43]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-20, 0, 10]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-130, 0, 20]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-10, 0, 25]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-21, 0, 45]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-53, 0, -65]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-84, 0, 135]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-14, 0, -120]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-86, 0, -43]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-20, 0, 140]}>
+        <primitive object={model.scene.clone()} />
+      </object3D>
+      <object3D scale={[8, 8, 8]} position={[-130, 0, -20]}>
         <primitive object={model.scene.clone()} />
       </object3D>
     </group>

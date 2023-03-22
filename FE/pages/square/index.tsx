@@ -14,9 +14,10 @@ import Lights from '@components/square/Lights';
 import Ground from '@components/square/Ground';
 import { TetrisModel } from '@components/square/Tetris';
 import { AppleTreeModel } from '@components/square/Appletree';
-import { DaisyModel } from '@components/square/Daisy';
 import AvatarFinn from '@components/square/AvatarFinn';
 import Trees from '@components/square/Trees';
+import Rocks from '@components/square/Rocks';
+import Tetris2 from '@components/square/Tetris2';
 
 // const TextureSpheres = () => {
 //   const map = useTexture('../textures/aerial_rocks_04_diff_1k.png');
@@ -51,9 +52,10 @@ function Square() {
   return (
     <div style={styles.container}>
       <Canvas
+        style={{ backgroundImage: `url("/sky.png")`, backgroundSize: 'cover' }}
         shadows
         camera={{
-          position: [0, 3, 3],
+          position: [0, 3, 10],
         }}
       >
         {/*testing = true : 왼쪽상단에 상태를 보여준다, helper 킨다 */}
@@ -66,12 +68,13 @@ function Square() {
 
         <Ground />
         <TetrisModel />
+        <Tetris2 />
         <AppleTreeModel position={[-3, 0, 2]} />
-        <DaisyModel />
         {/* <TextureSpheres /> */}
         <Lights />
         <AvatarFinn />
         <Trees />
+        <Rocks />
       </Canvas>
     </div>
   );

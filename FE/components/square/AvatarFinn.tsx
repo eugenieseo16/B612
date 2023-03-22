@@ -39,6 +39,7 @@ const directionOffset = ({ forward, backward, left, right }) => {
 const AvatarFinn = () => {
   const { forward, backward, left, right, jump, shift } = UseInput();
   const model = useGLTF('./avatar_finn/avatar_finn.glb');
+
   const { actions } = useAnimations(model.animations, model.scene);
   // 아바타 크기조절
   model.scene.scale.set(1.2, 1.2, 1.2);
