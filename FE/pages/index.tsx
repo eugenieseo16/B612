@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import MetaMaskLogin from '@components/MetaMaskLogin';
 import type { NextPage } from 'next';
 import styles from '../styles/Home.module.css';
@@ -11,8 +12,35 @@ import styled from '@emotion/styled';
 import BlueGlowingButton from '@components/common/BlueGlowingButton';
 import PurpleGlowingButton from '@components/common/PurpleGlowingButton';
 
+import Modal from '@mui/material/Modal';
+
+import FriendsModal from '@components/Planet/FriendsModal';
+import QuestsModal from '@components/Planet/QuestsModal';
+
+const modalStyle = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '70%',
+  height: '70%',
+  bgcolor: '#BCF0FA',
+  border: 'none',
+  borderRadius: 5,
+
+  p: 4,
+};
+
 const Home: NextPage = () => {
   const user = useRecoilValue(userAtom);
+
+  const [openFriends, setOpenFriends] = useState(false);
+  const handleOpenFriends = () => setOpenFriends(true);
+  const handleCloseFriends = () => setOpenFriends(false);
+
+  const [openQuests, setOpenQuests] = useState(false);
+  const handleOpenQuests = () => setOpenQuests(true);
+  const handleCloseQuests = () => setOpenQuests(false);
 
   const FloatingButtons = styled.div`
     position: fixed;
@@ -37,7 +65,7 @@ const Home: NextPage = () => {
         <Link href={`/square`}>광장으로 이동</Link>
       </div>
       <div>
-        <Link href={`/planet`}>행성으로 이동</Link>
+        <Link href={`/planet/1`}>행성으로 이동</Link>
       </div>
       <Example />
       {!Boolean(user) ? <MetaMaskLogin /> : <h1>{user?.memberNickname}</h1>}
@@ -52,13 +80,23 @@ const Home: NextPage = () => {
       <p>p tag - 이 글씨체보다 작을 필요가 있을까요?? (1.3rem)</p>
 
       <FloatingButtons>
-        <div className="floating-button-items">
+        <div className="floating-button-items" onClick={handleOpenFriends}>
           <BlueGlowingButton icon={'friend'} />
         </div>
-        <div className="floating-button-items">
+        <div className="floating-button-items" onClick={handleOpenQuests}>
           <PurpleGlowingButton icon={'quest'} />
         </div>
       </FloatingButtons>
+
+      {/* 친구 목록 조회 */}
+      <Modal open={openFriends} onClose={handleCloseFriends}>
+        <FriendsModal />
+      </Modal>
+
+      {/* 퀘스트 목록 조회 */}
+      <Modal open={openQuests} onClose={handleCloseQuests}>
+        <QuestsModal />
+      </Modal>
     </div>
   );
 };
