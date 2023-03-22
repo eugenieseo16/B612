@@ -37,6 +37,9 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
     @Override
     public Boolean updateMember(String url, String nickname, String address) {
         Member foundMember = memberRepository.findMemberByMemberAddress(address);
+        if(foundMember == null){
+            return false;
+        }
         Member changedMember = Member.builder()
                 .memberId(foundMember.getMemberId())
                 .memberNickname(nickname)
@@ -54,6 +57,7 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
     @Override
     public MemberResponseDto createMemberResponseDtoByEntity(Member member) {
         MemberResponseDto memberResponseDto = MemberResponseDto.builder()
+                .memberId(member.getMemberId())
                 .memberAddress(member.getMemberAddress())
                 .memberNickname(member.getMemberNickname())
                 .memberTierName(member.getMemberTierId().getTierName())
