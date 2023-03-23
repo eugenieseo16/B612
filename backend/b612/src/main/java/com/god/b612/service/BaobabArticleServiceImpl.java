@@ -8,6 +8,8 @@ import com.god.b612.repository.BaobabArticleRepository;
 import com.god.b612.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -53,5 +55,11 @@ public class BaobabArticleServiceImpl implements BaobabArticleService{
     @Override
     public void deleteBaobabArticle(int baobabArticleId) {
         baobabArticleRepository.deleteById(baobabArticleId);
+    }
+
+    @Override
+    public Page<BaobabArticleResponseDto> findAll(Pageable pageable) {
+        Page<BaobabArticleResponseDto> ret = baobabArticleRepository.findAllByOrderByCreatedAtDesc(pageable).map(BaobabArticleResponseDto::from);
+        return ret;
     }
 }

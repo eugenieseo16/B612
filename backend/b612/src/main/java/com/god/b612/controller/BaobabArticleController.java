@@ -4,7 +4,6 @@ import com.god.b612.dto.BaobabArticleRequestDto;
 import com.god.b612.dto.BaobabArticleResponseDto;
 import com.god.b612.dto.MemberResponseDto;
 import com.god.b612.entity.BaobabArticle;
-import com.god.b612.entity.Member;
 import com.god.b612.model.BaseResponseBody;
 import com.god.b612.service.BaobabArticleService;
 import com.god.b612.service.MemberService;
@@ -16,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,20 +79,19 @@ public class BaobabArticleController {
 
     @ApiOperation(value = "바오밥나무 글 최신 순으로 조회, 페이징하기", notes = "")
     @GetMapping("")
-    public ResponseEntity<?> showBaobabArticles() {
-//        MemberResponseDto memberResponseDto = memberService.memberSelectByAddress(memberAddress);
-//        BaseResponseBody baseResponseBody;
-//
-//        if (memberResponseDto != null) {
-//            baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(memberResponseDto).build();
-//
-//            return ResponseEntity.status(200).body(baseResponseBody);
-//        } else {
-//            baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
-//
-//            return ResponseEntity.status(400).body(baseResponseBody);
-//        }
-        return null;
+    public ResponseEntity<?> showBaobabArticles(@PageableDefault(value = 10) Pageable pageable) {
+        BaseResponseBody baseResponseBody;
+
+        Page<BaobabArticleResponseDto> baobabArticleResponseDtoPage = baobabArticleService.findAll(pageable);
+        if (baobabArticleResponseDtoPage != null) {
+            baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(baobabArticleResponseDtoPage).build();
+
+            return ResponseEntity.status(200).body(baseResponseBody);
+        } else {
+            baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
     }
 
     @ApiOperation(value = "바오밥나무 글 1개 수정하기", notes = "")
