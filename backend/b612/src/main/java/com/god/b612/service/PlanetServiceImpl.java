@@ -60,6 +60,23 @@ public class PlanetServiceImpl implements PlanetService {
 
             likeRepository.save(like);
 
+            if (planet.getPlanetMemberId() != null) {
+                Member planetOwner = planet.getPlanetMemberId();
+                planetOwner = Member.builder()
+                        .memberId(planetOwner.getMemberId())
+                        .memberHighestScore(planetOwner.getMemberHighestScore())
+                        .memberTierId(planetOwner.getMemberTierId())
+                        .memberNickname(planetOwner.getMemberNickname())
+                        .memberCurrentScore(planetOwner.getMemberCurrentScore())
+                        .memberImage(planetOwner.getMemberImage())
+                        .memberAddress(planetOwner.getMemberAddress())
+                        .memberLiked(planetOwner.getMemberLiked() + 1)
+                        .build();
+
+                memberRepository.save(planetOwner);
+            }
+
+
             planet = Planet.builder()
                     .planetNftId(planet.getPlanetNftId())
                     .planetLikesCount(planet.getPlanetLikesCount() + 1)
@@ -77,6 +94,22 @@ public class PlanetServiceImpl implements PlanetService {
                     .build();
 
             planetRepository.save(planet);
+
+            if (planet.getPlanetMemberId() != null) {
+                Member planetOwner = planet.getPlanetMemberId();
+                planetOwner = Member.builder()
+                        .memberId(planetOwner.getMemberId())
+                        .memberHighestScore(planetOwner.getMemberHighestScore())
+                        .memberTierId(planetOwner.getMemberTierId())
+                        .memberNickname(planetOwner.getMemberNickname())
+                        .memberCurrentScore(planetOwner.getMemberCurrentScore())
+                        .memberImage(planetOwner.getMemberImage())
+                        .memberAddress(planetOwner.getMemberAddress())
+                        .memberLiked(planetOwner.getMemberLiked() - 1)
+                        .build();
+
+                memberRepository.save(planetOwner);
+            }
 
             return true;
         }
@@ -100,9 +133,9 @@ public class PlanetServiceImpl implements PlanetService {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Planet> planets = planetRepository.findAllByOrderByPlanetLikesCountDesc(pageRequest);
 
-        Integer rank=page*size+1;
+        Integer rank = page * size + 1;
         for (Planet planet : planets) {
-            planetResponseDtos.add(planetCustomRepository.makeDtoForRank(planet,rank));
+            planetResponseDtos.add(planetCustomRepository.makeDtoForRank(planet, rank));
             rank++;
         }
 
@@ -155,6 +188,24 @@ public class PlanetServiceImpl implements PlanetService {
             return null;
         }
 
+        if(planet.getPlanetMemberId()!=null){
+            Member pastOwner=planet.getPlanetMemberId();
+
+            pastOwner=Member.builder()
+                    .memberId(pastOwner.getMemberId())
+                    .memberHighestScore(pastOwner.getMemberHighestScore())
+                    .memberTierId(pastOwner.getMemberTierId())
+                    .memberNickname(pastOwner.getMemberNickname())
+                    .memberCurrentScore(pastOwner.getMemberCurrentScore())
+                    .memberImage(pastOwner.getMemberImage())
+                    .memberAddress(pastOwner.getMemberAddress())
+                    .memberLiked(pastOwner.getMemberLiked() - planet.getPlanetLikesCount())
+                    .build();
+
+            memberRepository.save(pastOwner);
+
+        }
+
         planet = Planet.builder()
                 .planetNftId(planetId)
                 .planetLikesCount(planet.getPlanetLikesCount())
@@ -162,6 +213,23 @@ public class PlanetServiceImpl implements PlanetService {
                 .build();
 
         planetRepository.save(planet);
+
+
+
+        Member planetOwner = member;
+        planetOwner = Member.builder()
+                .memberId(planetOwner.getMemberId())
+                .memberHighestScore(planetOwner.getMemberHighestScore())
+                .memberTierId(planetOwner.getMemberTierId())
+                .memberNickname(planetOwner.getMemberNickname())
+                .memberCurrentScore(planetOwner.getMemberCurrentScore())
+                .memberImage(planetOwner.getMemberImage())
+                .memberAddress(planetOwner.getMemberAddress())
+                .memberLiked(planetOwner.getMemberLiked() + planet.getPlanetLikesCount())
+                .build();
+
+        memberRepository.save(planetOwner);
+
 
         PlanetResponseDto planetResponseDto = planetCustomRepository.makeDto(planet);
         return planetResponseDto;
