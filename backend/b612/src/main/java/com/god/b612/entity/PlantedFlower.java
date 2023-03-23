@@ -4,10 +4,10 @@ import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Getter
 @Entity
@@ -19,24 +19,17 @@ public class PlantedFlower {
     private int flowerNftId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(referencedColumnName = "planet_nft_id", name = "planet_nft_id")
-    private Planet planetNftId;
+    private double flowerLocationX;
 
     @NotNull
-    private int flowerLocationX;
+    private double flowerLocationY;
 
     @NotNull
-    private int flowerLocationY;
-
-    @NotNull
-    private int flowerLocationZ;
+    private double flowerLocationZ;
 
     @Builder
-    public PlantedFlower(int flowerNftId, Planet planetNftId, int flowerLocationX, int flowerLocationY, int flowerLocationZ) {
+    public PlantedFlower(int flowerNftId, double flowerLocationX, double flowerLocationY, double flowerLocationZ) {
         this.flowerNftId = flowerNftId;
-        this.planetNftId = planetNftId;
         this.flowerLocationX = flowerLocationX;
         this.flowerLocationY = flowerLocationY;
         this.flowerLocationZ = flowerLocationZ;
