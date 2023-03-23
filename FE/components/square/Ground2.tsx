@@ -6,7 +6,7 @@ const Ground2 = () => {
   const model = useLoader(GLTFLoader, './ground/ground2.glb');
 
   return (
-    <object3D scale={[0.1, 0.1, 0.1]} position={[0, -7, 0]}>
+    <object3D>
       <primitive object={model.scene} />
     </object3D>
   );
