@@ -1,4 +1,4 @@
-import { Center, useAnimations, useGLTF } from '@react-three/drei';
+import { useAnimations, useGLTF } from '@react-three/drei';
 import { degToRad } from 'three/src/math/MathUtils';
 import { useState, useRef, useEffect } from 'react';
 import { Box3, Group, Vector3 } from 'three';

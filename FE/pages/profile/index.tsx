@@ -1,10 +1,14 @@
 import React from 'react';
 import { MotionCanvas } from 'framer-motion-3d';
 import { motion, MotionConfig } from 'framer-motion';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  useRecoilBridgeAcrossReactRoots_UNSTABLE,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
 import userAtom from 'store/userAtom';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
-import { Modal, Fade } from '@mui/material';
+import { Modal } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import styled from '@emotion/styled';
 import FlowersModal from '@components/common/FlowersModal';
@@ -13,12 +17,14 @@ import { Room, MyCamera, RoomNav, Planets } from '@components/profile/index';
 import ProfileModal from '@components/profile/ProfileModal';
 import { useRouter } from 'next/router';
 import { useMobile } from '@hooks/useMobile';
+import Garden from '@components/profile/Garden';
 
 function UserProfile() {
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
   const router = useRouter();
   const user = useRecoilValue(userAtom);
   const isMobile = useMobile();
+  const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
   // useEffect(() => {
   //   if (!Boolean(user)) router.replace('/');
   // }, [user, router]);
@@ -31,6 +37,18 @@ function UserProfile() {
         background: '#252530',
       }}
     >
+      <button
+        onClick={() => setRoomIndex(0)}
+        style={{
+          position: 'absolute',
+          top: '5rem',
+          left: 0,
+          zIndex: 9,
+          display: roomIndex === 0 ? 'none' : 'block',
+        }}
+      >
+        뒤로
+      </button>
       <RoomNav />
       <MotionConfig transition={{ duration: 0.8, ease: 'easeInOut' }}>
         <MotionCanvas
@@ -40,12 +58,13 @@ function UserProfile() {
             height: '100%',
           }}
         >
-          <ambientLight intensity={0.1} />
-          <directionalLight position={[100, 100, 250]} intensity={1.1} />
-          <color attach="background" args={['#252530']} />
-          <MyCamera index={roomIndex} />
-          <Planets index={roomIndex} />
-          <Room />
+          <RecoilBridge>
+            {/* <ambientLight intensity={0.1} /> */}
+            <MyCamera />
+            <Planets />
+            <Room />
+            <Garden />
+          </RecoilBridge>
         </MotionCanvas>
       </MotionConfig>
       <Canvas style={{ display: 'none' }}>
@@ -89,6 +108,7 @@ function UserProfile() {
 
 export default UserProfile;
 
+// eslint-disable-next-line
 const MotionContainer = ({ children, ...rest }: any) => {
   const StyledFade = styled(motion.div)`
     position: absolute;

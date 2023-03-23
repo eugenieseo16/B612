@@ -10,7 +10,7 @@ import { dinosour, glowFlower, marioFlower } from 'assets/img/flowers/index';
 import { Button } from '@mui/material';
 
 // HTMLDivElement, HTMLMotionProps<'div'>;
-const MY_FLOWERS = [0, 1, 2, 1, 1, 1, 1];
+// const MY_FLOWERS = [0, 1, 2, 1, 1, 1, 1];
 const MY_FLOWERS_MAP = [
   { type: 0, count: 1 },
   { type: 1, count: 4 },
@@ -20,6 +20,7 @@ const FLOWER_IMG = [marioFlower, glowFlower, dinosour];
 
 function FlowersModal({ user }: { user: IUser | null }) {
   const [selectedType, setSelectedType] = useState(-1);
+  console.log(user);
   return (
     <Container>
       <div
@@ -38,7 +39,7 @@ function FlowersModal({ user }: { user: IUser | null }) {
               opacity: type === selectedType ? '1' : '0.6',
             }}
             onClick={() => setSelectedType(type)}
-            key={type}
+            key={i}
           >
             <FlowerImgContainer>
               <img src={FLOWER_IMG[type].src} alt="" />

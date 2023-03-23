@@ -5,8 +5,7 @@ import {
   PerspectiveCamera,
   useGLTF,
 } from '@react-three/drei';
-import React, { useEffect, useState, useRef } from 'react';
-import { Box3, Vector3 } from 'three';
+import React, { useEffect, useRef } from 'react';
 import { degToRad } from 'three/src/math/MathUtils';
 
 const GLTF_URL = [
