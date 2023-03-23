@@ -15,10 +15,7 @@ import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
 function ProfileModal({ user }: { user: IUser | null }) {
-  // const me = useRecoilValue(userAtom);
-  const me = {
-    memberAddress: '',
-  };
+  const me = useRecoilValue(userAtom);
   return (
     <Container>
       <AvatarContainer>
@@ -88,12 +85,10 @@ const Container = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: 5vh 0 0 5vw;
-  color: #fff;
   h1,
   span,
   p,
   a {
-    color: #fff;
     font-family: 'pixel';
   }
   a {

@@ -17,7 +17,7 @@ function UserController() {
       if (!memberAddress || window.ethereum.networkVersion != 5) {
         setUser(null);
       } else {
-        const { data } = await axios.post('http://70.12.247.194:8080/member', {
+        const { data } = await axios.post('http://127.0.0.1:8080/member', {
           memberAddress,
         });
         const eth = (

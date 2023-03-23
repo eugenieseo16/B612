@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion-3d';
-import { degToRad } from 'three/src/math/MathUtils';
+import { useGLTF } from '@react-three/drei';
+import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
+import { useRecoilState } from 'recoil';
+import selectedPlanetAtom from 'store/profile/selectedPlanet';
+import roomIndexAtom from 'store/profile/roomIndexAtom';
 
-function Planets({ index }: { index: number }) {
-  const [time, setTime] = useState(1);
-  const [selected, setSeleted] = useState(-1);
-
-  useEffect(() => {
-    const id = setTimeout(() => {
-      setTime(time + 1);
-    }, 15000);
-    return () => clearTimeout(id);
-  }, [time]);
-
+function Planets() {
+  const getRandom = (min: number, max: number) => {
+    return Math.random() * (max - min) + min;
+  };
   return (
     <>
       <motion.group>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(e => (
+        {[1, 2, 3, 4, 5].map((e, i) => (
           <Planet
-            selected={selected === e}
-            setSeleted={setSeleted}
             key={e}
-            index={index}
+            index={i}
             planetId={e}
+            pos={[-16 + 8 * i, getRandom(15, 35), getRandom(-75, -5)]}
+            time={getRandom(10, 15)}
           />
         ))}
       </motion.group>
@@ -32,67 +29,52 @@ function Planets({ index }: { index: number }) {
 
 export default Planets;
 
-function Planet({ index, selected, setSeleted, planetId }: any) {
-  function getRandom(min: number, max: number) {
-    return Math.random() * (max - min) + min;
-  }
-  const [y, setY] = useState(5);
-  const [pos, setPos] = useState({
-    x: getRandom(-200, 200),
-    y: getRandom(-100, 100),
-    z: getRandom(-600, -800),
-  });
-  const [rotateY, setRotateY] = useState(degToRad(getRandom(-360, 360)));
+// eslint-disable-next-line
+function Planet({ planetId, time, pos }: any) {
+  const scene = useGLTF(
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1679556189/cprsxurbqcea7uk6p2vf.glb'
+  );
+  const clone = SkeletonUtils.clone(scene.scene);
+  const [selected, setSelected] = useRecoilState(selectedPlanetAtom);
+  const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
+
+  const [y, setY] = useState(2);
 
   useEffect(() => {
     const id = setTimeout(() => {
-      setPos({
-        x: getRandom(-200, 200),
-        y: getRandom(-100, 100),
-        z: getRandom(-600, -800),
-      });
-      setRotateY(degToRad(getRandom(-360, 360)));
-    }, 30000);
-
+      setY(-y);
+    }, time * 1000);
     return () => clearTimeout(id);
-  }, [pos]);
+  }, [y, time]);
+  const handleClick = () => {
+    if (roomIndex !== 2) setRoomIndex(2);
+    setSelected(planetId);
+  };
 
   useEffect(() => {
-    const id = setTimeout(() => {
-      if (y > 0) setY(-5);
-      else setY(5);
-    }, 2000);
-    return () => clearTimeout(id);
-  }, [y]);
+    if (roomIndex !== 2) setSelected(-1);
+  }, [roomIndex, setSelected]);
 
+  console.log(selected === planetId);
   return (
-    <motion.mesh
-      animate={{ y, z: index === 2 ? 0 : -1000 }}
-      transition={{ duration: 2 }}
-      position={[0, 0, -1000]}
-    >
-      <motion.mesh
+    <React.Fragment>
+      <motion.group
         animate={{
-          ...pos,
-          rotateY,
+          x: selected === planetId ? 0 : pos[0],
+          y: selected === planetId ? 25 : pos[1],
+          z: selected === planetId ? -40 : pos[2],
+          scale: selected === planetId ? 3 : 1,
         }}
-        transition={{ ease: 'linear', duration: 30 }}
-        onClick={() => setSeleted(planetId)}
-        position={[
-          getRandom(-200, 200),
-          getRandom(-100, 100),
-          getRandom(-600, -800),
-        ]}
       >
-        <boxGeometry args={[32, 32, 32]} />
-        <motion.meshStandardMaterial
-          animate={{
-            opacity: selected ? 1 : index === 2 ? 0.6 : 0,
-            color: selected ? 'blue' : 'red',
-          }}
-          transition={{ duration: 0.5 }}
-        />
-      </motion.mesh>
-    </motion.mesh>
+        <motion.group
+          scale={10}
+          animate={{ y }}
+          transition={{ ease: 'linear', duration: time }}
+          onClick={handleClick}
+        >
+          <primitive object={clone} />
+        </motion.group>
+      </motion.group>
+    </React.Fragment>
   );
 }
