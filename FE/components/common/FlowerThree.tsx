@@ -9,9 +9,9 @@ import React, { useEffect, useRef } from 'react';
 import { degToRad } from 'three/src/math/MathUtils';
 
 const GLTF_URL = [
-  'mario_flower/scene.gltf',
-  'glowing_flower/scene.gltf',
-  'dinosaur/scene.gltf',
+  'https://res.cloudinary.com/dohkkln9r/image/upload/v1679551338/ly46ooskkuxo1cfpm7di.glb',
+  'https://res.cloudinary.com/dohkkln9r/image/upload/v1679551338/ly46ooskkuxo1cfpm7di.glb',
+  'https://res.cloudinary.com/dohkkln9r/image/upload/v1679551338/ly46ooskkuxo1cfpm7di.glb',
 ];
 
 function FlowerThree({ type }: { type: number }) {

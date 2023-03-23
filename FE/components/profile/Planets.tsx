@@ -31,7 +31,9 @@ export default Planets;
 
 // eslint-disable-next-line
 function Planet({ planetId, time, pos }: any) {
-  const scene = useGLTF('/planets/ringed-planet.glb');
+  const scene = useGLTF(
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1679556189/cprsxurbqcea7uk6p2vf.glb'
+  );
   const clone = SkeletonUtils.clone(scene.scene);
   const [selected, setSelected] = useRecoilState(selectedPlanetAtom);
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
@@ -65,7 +67,7 @@ function Planet({ planetId, time, pos }: any) {
         }}
       >
         <motion.group
-          scale={0.5}
+          scale={10}
           animate={{ y }}
           transition={{ ease: 'linear', duration: time }}
           onClick={handleClick}
