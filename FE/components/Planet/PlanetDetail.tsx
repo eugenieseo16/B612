@@ -29,8 +29,8 @@ function PlanetDetailCard() {
               src="https://i.pinimg.com/236x/df/3c/4d/df3c4dcf15935d0111426bb28b12d9b1.jpg"
               alt=""
             />
-            <h6>사용자 이름</h6>
-            <span>🪨</span>
+            <h6>사용자 이름 #7</h6>
+            <span></span>
           </div>
 
           <div>
