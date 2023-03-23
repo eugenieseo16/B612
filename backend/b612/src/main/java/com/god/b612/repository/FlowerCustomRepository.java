@@ -6,7 +6,7 @@ import com.god.b612.entity.Flower;
 public interface FlowerCustomRepository {
     FlowerResponseDto makeDto(Flower flower);
 
-    FlowerResponseDto makePlant(int flowerId, int planetId, double x, double y, double z);
+    FlowerResponseDto makePlant(int flowerId, double x, double y, double z);
 
 
 }

@@ -6,8 +6,6 @@ import lombok.Getter;
 public class PlantRequestDto {
     int flowerId;
 
-    int planetId;
-
     double x;
 
     double y;

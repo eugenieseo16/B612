@@ -9,6 +9,4 @@ import java.util.List;
 public interface PlantedFlowerRepository extends JpaRepository<PlantedFlower, Integer> {
     PlantedFlower findPlantedFlowerByFlowerNftId(int flowerId);
     void deleteByFlowerNftId(int flowerId);
-
-    List<PlantedFlower> findPlantedFlowersByPlanetNftId(Planet planetId);
 }

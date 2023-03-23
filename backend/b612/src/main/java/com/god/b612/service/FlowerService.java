@@ -12,5 +12,9 @@ public interface FlowerService {
 
     boolean deleteFlower(int flowerId);
 
-    List<FlowerResponseDto> selectFlowersInPlanet(int planetId);
+    List<FlowerResponseDto> selectFlowersInMember(int memberId);
+
+    Boolean isItPlanted(int flowerId);
+
+    FlowerResponseDto sellFlower(int buyerId, int flowerId);
 }

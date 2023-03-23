@@ -17,8 +17,6 @@ public class FlowerResponseDto {
 
     String ownerNickName;
 
-    int planetId;
-
     double flowerLocationX;
 
     double flowerLocationY;
@@ -26,13 +24,12 @@ public class FlowerResponseDto {
     double flowerLocationZ;
 
     @Builder
-    FlowerResponseDto(int flowerNftId, int ownerId, boolean flowerPlanted, String ownerNickName, String ownerTierName, int planetId, double flowerLocationX, double flowerLocationY, double flowerLocationZ) {
+    FlowerResponseDto(int flowerNftId, int ownerId, boolean flowerPlanted, String ownerNickName, String ownerTierName, double flowerLocationX, double flowerLocationY, double flowerLocationZ) {
         this.flowerNftId = flowerNftId;
         this.ownerId = ownerId;
         this.flowerPlanted = flowerPlanted;
         this.ownerNickName = ownerNickName;
         this.ownerTierName = ownerTierName;
-        this.planetId = planetId;
         this.flowerLocationX = flowerLocationX;
         this.flowerLocationY = flowerLocationY;
         this.flowerLocationZ = flowerLocationZ;

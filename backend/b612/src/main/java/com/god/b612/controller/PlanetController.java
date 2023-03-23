@@ -151,63 +151,7 @@ public class PlanetController {
     }
 
 
-    @Transactional
-    @ApiOperation(value = "꽃을 특정 행성에 심는다.", notes = "꽃의 nft id, 행성의 nft id, 행성내 꽃의 위치 좌표를 입력해 꽃을 심는다.")
-    @PostMapping("/flower")
-    public ResponseEntity<BaseResponseBody> plantFlower(@RequestBody PlantRequestDto plantRequestDto) {
-        FlowerResponseDto flowerResponseDto = flowerService.plantFlower(plantRequestDto);
 
-        BaseResponseBody baseResponseBody =
-                BaseResponseBody.builder()
-                        .message("success")
-                        .statusCode(200)
-                        .responseData(flowerResponseDto)
-                        .build();
-
-        return ResponseEntity.status(200).body(baseResponseBody);
-    }
-
-
-    @Transactional
-    @ApiOperation(value = "꽃을 행성에서 뽑는다.", notes = "꽃의 NFT 아이디를 입력한다.")
-    @DeleteMapping("/flower/{flowerNftId}")
-    public ResponseEntity<BaseResponseBody> deleteFlower(@PathVariable("flowerNftId") int flowerId) {
-
-        if (flowerService.deleteFlower(flowerId)) {
-            BaseResponseBody baseResponseBody =
-                    BaseResponseBody.builder()
-                            .message("success")
-                            .statusCode(200)
-                            .build();
-
-            return ResponseEntity.status(200).body(baseResponseBody);
-        } else {
-            BaseResponseBody baseResponseBody =
-                    BaseResponseBody.builder()
-                            .message("fail")
-                            .statusCode(400)
-                            .build();
-
-            return ResponseEntity.status(400).body(baseResponseBody);
-        }
-    }
-
-
-    @Transactional
-    @ApiOperation(value = "특정 행성에 있는 꽃들을 찾는다.", notes = "행성의 NFT 아이디를 입력한다.")
-    @GetMapping("/flower/{planetNftId}")
-    public ResponseEntity<BaseResponseBody> selectFlowersInPlanet(@PathVariable("planetNftId") int planetId) {
-        List<FlowerResponseDto> flowerResponseDtos=flowerService.selectFlowersInPlanet(planetId);
-
-        BaseResponseBody baseResponseBody =
-                BaseResponseBody.builder()
-                        .message("success")
-                        .statusCode(200)
-                        .responseData(flowerResponseDtos)
-                        .build();
-
-        return ResponseEntity.status(200).body(baseResponseBody);
-    }
 
 
 

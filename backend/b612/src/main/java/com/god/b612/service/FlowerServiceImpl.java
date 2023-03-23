@@ -59,13 +59,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     @Transactional
     public FlowerResponseDto plantFlower(PlantRequestDto plantRequestDto) {
-        Planet planet = planetRepository.findTopByPlanetNftId(plantRequestDto.getPlanetId());
-
-        if (planet == null) {
-            planetCustomRepository.createPlanet(plantRequestDto.getPlanetId());
-        }
-
-        FlowerResponseDto flowerResponseDto = flowerCustomRepository.makePlant(plantRequestDto.getFlowerId(), plantRequestDto.getPlanetId(), plantRequestDto.getX(), plantRequestDto.getY(), plantRequestDto.getZ());
+        FlowerResponseDto flowerResponseDto = flowerCustomRepository.makePlant(plantRequestDto.getFlowerId(), plantRequestDto.getX(), plantRequestDto.getY(), plantRequestDto.getZ());
 
         return flowerResponseDto;
     }
@@ -95,21 +89,55 @@ public class FlowerServiceImpl implements FlowerService {
     }
 
     @Override
-    public List<FlowerResponseDto> selectFlowersInPlanet(int planetId) {
-        Planet planet=planetRepository.findTopByPlanetNftId(planetId);
-        List<PlantedFlower> plantedFlowers=plantedFlowerRepository.findPlantedFlowersByPlanetNftId(planet);
+    public List<FlowerResponseDto> selectFlowersInMember(int memberId) {
+        Member member=memberRepository.findMemberByMemberId(memberId);
+
+        List<Flower> flowers=flowerRepository.findFlowersByFlowerOwnerIdAndAndFlowerPlanted(member,true);
+
         ArrayList<FlowerResponseDto> flowerResponseDtos=new ArrayList<>();
 
-        if(plantedFlowers.size()==0){
+        if(flowers.size()==0){
             return null;
         }
         else{
-            for(PlantedFlower plantedFlower: plantedFlowers){
-                Flower flower=flowerRepository.findFlowerByFlowerNftId(plantedFlower.getFlowerNftId());
+            for(Flower flower: flowers){
                 flowerResponseDtos.add(flowerCustomRepository.makeDto(flower));
             }
             return flowerResponseDtos;
         }
+    }
+
+    @Override
+    public Boolean isItPlanted(int flowerId) {
+        Flower flower=flowerRepository.findFlowerByFlowerNftId(flowerId);
+
+        if(flower==null){
+            return null;
+        }
+
+        return flower.isFlowerPlanted();
+    }
+
+    @Override
+    @Transactional
+    public FlowerResponseDto sellFlower(int buyerId, int flowerId) {
+        Member member=memberRepository.findMemberByMemberId(buyerId);
+        Flower flower=flowerRepository.findFlowerByFlowerNftId(flowerId);
+        PlantedFlower plantedFlower=plantedFlowerRepository.findPlantedFlowerByFlowerNftId(flowerId);
+
+        if(plantedFlower!=null){
+            plantedFlowerRepository.deleteByFlowerNftId(flowerId);
+        }
+
+        flower=Flower.builder()
+                .flowerNftId(flower.getFlowerNftId())
+                .flowerOwnerId(member)
+                .flowerPlanted(false)
+                .build();
+
+        flowerRepository.save(flower);
+
+        return flowerCustomRepository.makeDto(flower);
     }
 
 

@@ -42,7 +42,6 @@ public class FlowerCustomRepositoryImpl implements FlowerCustomRepository {
                     .ownerNickName(flower.getFlowerOwnerId().getMemberNickname())
                     .ownerId(flower.getFlowerOwnerId().getMemberId())
                     .ownerTierName(flower.getFlowerOwnerId().getMemberTierId().getTierName())
-                    .planetId(plantedFlower.getPlanetNftId().getPlanetNftId())
                     .flowerLocationX(plantedFlower.getFlowerLocationX())
                     .flowerLocationY(plantedFlower.getFlowerLocationY())
                     .flowerLocationZ(plantedFlower.getFlowerLocationZ())
@@ -54,9 +53,8 @@ public class FlowerCustomRepositoryImpl implements FlowerCustomRepository {
     }
 
     @Override
-    public FlowerResponseDto makePlant(int flowerId, int planetId, double x, double y, double z) {
+    public FlowerResponseDto makePlant(int flowerId, double x, double y, double z) {
         Flower flower = flowerRepository.findFlowerByFlowerNftId(flowerId);
-        Planet planet = planetRepository.findTopByPlanetNftId(planetId);
 
         flower = Flower.builder()
                 .flowerNftId(flowerId)
@@ -68,7 +66,6 @@ public class FlowerCustomRepositoryImpl implements FlowerCustomRepository {
 
         PlantedFlower plantedFlower = PlantedFlower.builder()
                 .flowerNftId(flowerId)
-                .planetNftId(planet)
                 .flowerLocationX(x)
                 .flowerLocationY(y)
                 .flowerLocationZ(z)
@@ -82,7 +79,6 @@ public class FlowerCustomRepositoryImpl implements FlowerCustomRepository {
                 .ownerNickName(flower.getFlowerOwnerId().getMemberNickname())
                 .ownerId(flower.getFlowerOwnerId().getMemberId())
                 .ownerTierName(flower.getFlowerOwnerId().getMemberTierId().getTierName())
-                .planetId(planetId)
                 .flowerLocationX(x)
                 .flowerLocationY(y)
                 .flowerLocationZ(z)
