@@ -6,8 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PlanetResponseDto {
-
+public class PlanetResponseDtoForRank {
+    Integer rank;
 
     int memberId;
 
@@ -22,12 +22,13 @@ public class PlanetResponseDto {
     int planetLikeCount;
 
     @Builder
-    PlanetResponseDto(int planetNftId, int planetLikeCount, int memberId, String memberNickName, String memberTierName, int memberCurrentScore) {
+    PlanetResponseDtoForRank(int planetNftId, int planetLikeCount, int memberId, String memberNickName, String memberTierName, int memberCurrentScore, Integer rank) {
         this.memberId = memberId;
         this.memberCurrentScore = memberCurrentScore;
         this.memberNickName = memberNickName;
         this.memberTierName = memberTierName;
         this.planetNftId = planetNftId;
         this.planetLikeCount = planetLikeCount;
+        this.rank = rank;
     }
 }

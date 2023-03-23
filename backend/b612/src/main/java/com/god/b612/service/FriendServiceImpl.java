@@ -90,7 +90,7 @@ public class FriendServiceImpl implements FriendService{
         friendRepository.save(accpted);
 
         friendEntity=Friend.builder()
-                .friendId(friendId)
+                .friendId(friendEntity.getFriendId())
                 .friendRequestMemberId(friend)
                 .friendResponseMemberId(me)
                 .friendAccepted((byte) 1)
