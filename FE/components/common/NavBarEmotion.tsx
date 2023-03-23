@@ -54,3 +54,19 @@ export const Container = styled.div`
     }
   }
 `;
+
+export const NotificationBar = styled.div`
+  margin-top: 5rem;
+  width: 400px;
+
+  .notification-item {
+    display: flex;
+    flex-direction: column;
+    h4 {
+      padding: 1rem 0rem;
+    }
+    p {
+      padding-bottom: 1rem;
+    }
+  }
+`;
