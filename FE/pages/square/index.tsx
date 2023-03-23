@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
+import Link from 'next/link';
 
 import {
   OrbitControls,
@@ -12,32 +13,13 @@ import {
 } from '@react-three/drei';
 import Lights from '@components/square/Lights';
 // import Ground from '@components/square/Ground';
-import { TetrisModel } from '@components/square/Tetris';
+import Tetris from '@components/square/Tetris';
 import { AppleTreeModel } from '@components/square/Appletree';
 import AvatarFinn from '@components/square/AvatarFinn';
 // import Trees from '@components/square/Trees';
 // import Rocks from '@components/square/Rocks';
 import Tetris2 from '@components/square/Tetris2';
 import Ground2 from '@components/square/Ground2';
-
-// const TextureSpheres = () => {
-//   const map = useTexture('../textures/aerial_rocks_04_diff_1k.png');
-//   const normalMap = useTexture('../textures/aerial_rocks_04_nor_gl_1k.png');
-//   const roughnessMap = useTexture('../textures/aerial_rocks_04_rough_1k.png');
-
-//   return (
-//     <>
-//       <mesh scale={[0.5, 0.5, 0.5]} position={[0, 1, 0]} castShadow>
-//         <sphereGeometry />
-//         <meshStandardMaterial
-//           map={map}
-//           normalMap={normalMap}
-//           roughnessMap={roughnessMap}
-//         />
-//       </mesh>
-//     </>
-//   );
-// };
 
 function Square() {
   const styles = {
@@ -70,7 +52,7 @@ function Square() {
 
         {/* <Ground /> */}
         <Ground2 />
-        <TetrisModel />
+        <Tetris />
         <Tetris2 />
         <AppleTreeModel position={[-3, 0, 2]} />
         {/* <TextureSpheres /> */}

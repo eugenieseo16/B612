@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 const Ground2 = () => {
-  const model = useLoader(GLTFLoader, './ground/ground2.glb');
+  const model = useLoader(GLTFLoader, './ground/ground.glb');
 
   return (
     <object3D>

@@ -127,6 +127,7 @@ const AvatarFinn = () => {
       // move model & camera
       const moveX = walkDirection.x * velocity * delta;
       const moveZ = walkDirection.z * velocity * delta;
+
       model.scene.position.x += moveX;
       model.scene.position.z += moveZ;
       updateCameraTarget(moveX, moveZ);
