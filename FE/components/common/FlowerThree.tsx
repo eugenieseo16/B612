@@ -5,8 +5,7 @@ import {
   PerspectiveCamera,
   useGLTF,
 } from '@react-three/drei';
-import React, { useEffect, useState, useRef } from 'react';
-import { Box3, Vector3 } from 'three';
+import React, { useEffect, useRef } from 'react';
 import { degToRad } from 'three/src/math/MathUtils';
 
 const GLTF_URL = [
@@ -47,16 +46,12 @@ function FlowerThree({ type }: { type: number }) {
 export default FlowerThree;
 
 function Flower({ type }: { type: number }) {
-  const [height, setHeight] = useState(0);
-
   const flower = useGLTF(GLTF_URL[type]);
 
   useEffect(() => {
     flower.scene.traverse(node => {
       node.castShadow = true;
     });
-    const bbox = new Box3().setFromObject(flower.scene);
-    setHeight(bbox.getSize(new Vector3()).y);
   }, [flower]);
 
   return (
