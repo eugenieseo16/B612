@@ -1,6 +1,7 @@
 package com.god.b612.repository;
 
 import com.god.b612.dto.PlanetResponseDto;
+import com.god.b612.dto.PlanetResponseDtoForRank;
 import com.god.b612.entity.Like;
 import com.god.b612.entity.Planet;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class PlanetCustomRepositoryImpl implements PlanetCustomRepository {
 
     @Override
     public Planet createPlanet(int planetId) {
-        Planet planet=Planet.builder()
+        Planet planet = Planet.builder()
                 .planetNftId(planetId)
                 .planetLikesCount(0)
                 .build();
@@ -27,9 +28,34 @@ public class PlanetCustomRepositoryImpl implements PlanetCustomRepository {
     }
 
     @Override
+    public PlanetResponseDtoForRank makeDtoForRank(Planet planet, Integer rank) {
+        PlanetResponseDtoForRank planetResponseDto;
+        if (planet.getPlanetMemberId() != null) {
+
+            planetResponseDto = PlanetResponseDtoForRank.builder()
+                    .planetNftId(planet.getPlanetNftId())
+                    .planetLikeCount(planet.getPlanetLikesCount())
+                    .memberId(planet.getPlanetMemberId().getMemberId())
+                    .memberNickName(planet.getPlanetMemberId().getMemberNickname())
+                    .memberCurrentScore(planet.getPlanetMemberId().getMemberCurrentScore())
+                    .memberTierName(planet.getPlanetMemberId().getMemberTierId().getTierName())
+                    .rank(rank)
+                    .build();
+
+        } else {
+            planetResponseDto = PlanetResponseDtoForRank.builder()
+                    .planetNftId(planet.getPlanetNftId())
+                    .planetLikeCount(planet.getPlanetLikesCount())
+                    .rank(rank)
+                    .build();
+        }
+        return planetResponseDto;
+    }
+
+    @Override
     public PlanetResponseDto makeDto(Planet planet) {
         PlanetResponseDto planetResponseDto;
-        if(planet.getPlanetMemberId()!=null) {
+        if (planet.getPlanetMemberId() != null) {
 
             planetResponseDto = PlanetResponseDto.builder()
                     .planetNftId(planet.getPlanetNftId())
@@ -40,8 +66,7 @@ public class PlanetCustomRepositoryImpl implements PlanetCustomRepository {
                     .memberTierName(planet.getPlanetMemberId().getMemberTierId().getTierName())
                     .build();
 
-        }
-        else{
+        } else {
             planetResponseDto = PlanetResponseDto.builder()
                     .planetNftId(planet.getPlanetNftId())
                     .planetLikeCount(planet.getPlanetLikesCount())
@@ -53,8 +78,8 @@ public class PlanetCustomRepositoryImpl implements PlanetCustomRepository {
     }
 
     @Override
-    public PlanetResponseDto makeDtoByLike(Like like){
-        PlanetResponseDto planetResponseDto=PlanetResponseDto.builder()
+    public PlanetResponseDto makeDtoByLike(Like like) {
+        PlanetResponseDto planetResponseDto = PlanetResponseDto.builder()
                 .planetNftId(like.getLikePlanetNftId().getPlanetNftId())
                 .planetLikeCount(like.getLikePlanetNftId().getPlanetLikesCount())
                 .build();

@@ -1,6 +1,7 @@
 package com.god.b612.service;
 
 import com.god.b612.dto.PlanetResponseDto;
+import com.god.b612.dto.PlanetResponseDtoForRank;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface PlanetService {
 
     PlanetResponseDto findPlanetLike(int planetId);
 
-    List<PlanetResponseDto> viewPlanetRanking(int page, int size);
+    List<PlanetResponseDtoForRank> viewPlanetRanking(int page, int size);
 
     List<PlanetResponseDto> viewLikedPlanet(int memberId, int page, int size);
 

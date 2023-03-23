@@ -1,6 +1,7 @@
 package com.god.b612.service;
 
 import com.god.b612.dto.PlanetResponseDto;
+import com.god.b612.dto.PlanetResponseDtoForRank;
 import com.god.b612.entity.Like;
 import com.god.b612.entity.Member;
 import com.god.b612.entity.Planet;
@@ -94,13 +95,15 @@ public class PlanetServiceImpl implements PlanetService {
     }
 
     @Override
-    public List<PlanetResponseDto> viewPlanetRanking(int page, int size) {
-        ArrayList<PlanetResponseDto> planetResponseDtos = new ArrayList<>();
+    public List<PlanetResponseDtoForRank> viewPlanetRanking(int page, int size) {
+        ArrayList<PlanetResponseDtoForRank> planetResponseDtos = new ArrayList<>();
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Planet> planets = planetRepository.findAllByOrderByPlanetLikesCountDesc(pageRequest);
 
+        Integer rank=page*size+1;
         for (Planet planet : planets) {
-            planetResponseDtos.add(planetCustomRepository.makeDto(planet));
+            planetResponseDtos.add(planetCustomRepository.makeDtoForRank(planet,rank));
+            rank++;
         }
 
         return planetResponseDtos;
