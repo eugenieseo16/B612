@@ -7,11 +7,6 @@ function Example() {
   const ref = useRef<HTMLInputElement>(null);
   const user = useRecoilValue(userAtom);
 
-  const transactionParameters = {
-    to: '0x4a3d1539c3800e411C9925E37703d6993383aad1', // Required except during contract publications.
-    from: user?.memberAddress, // must match user's active address.
-    value: '0x100000000', // Only required to send ether to the recipient from the initiating external account.
-  };
   const handleClick = () => {
     if (!ref.current?.value) return;
 
