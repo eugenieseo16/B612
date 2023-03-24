@@ -5,9 +5,13 @@ import { iconDataList } from '../../utils/iconDataList';
 
 interface GlowingButtonProps {
   icon: string;
+  onClick?: Function;
 }
 
-export default function BlueGlowingButton({ icon }: GlowingButtonProps) {
+export default function BlueGlowingButton({
+  icon,
+  onClick,
+}: GlowingButtonProps) {
   const [selected, setSelected] = useState(false);
   const iconImg = iconDataList.get(icon);
 
@@ -18,6 +22,7 @@ export default function BlueGlowingButton({ icon }: GlowingButtonProps) {
           className={selected ? 'selected' : 'default'}
           onClick={() => {
             setSelected(!selected);
+            if (onClick) onClick();
           }}
         >
           <img src={iconImg} alt="" />

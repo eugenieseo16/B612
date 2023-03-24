@@ -18,18 +18,26 @@ import ProfileModal from '@components/profile/ProfileModal';
 import { useRouter } from 'next/router';
 import { useMobile } from '@hooks/useMobile';
 import Garden from '@components/profile/Garden';
+import BlueGlowingButton from '@components/common/BlueGlowingButton';
+import PurpleGlowingButton from '@components/common/PurpleGlowingButton';
+import animateAtom from 'store/profile/animateAtom';
 
 function UserProfile() {
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
+  const isAnimate = useRecoilValue(animateAtom);
   const router = useRouter();
   const user = useRecoilValue(userAtom);
   const isMobile = useMobile();
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
+
   useEffect(() => {
     if (!Boolean(user)) router.replace('/');
-    return () => setRoomIndex(0);
   }, [user, router]);
+  useEffect(() => {
+    setRoomIndex(0);
+  }, []);
 
+  // console.log('HERE!!!');
   return (
     <div
       style={{
@@ -38,24 +46,12 @@ function UserProfile() {
         background: '#252530',
       }}
     >
-      <button
-        onClick={() => setRoomIndex(0)}
-        style={{
-          position: 'absolute',
-          top: '5rem',
-          left: 0,
-          zIndex: 9,
-          display: roomIndex === 0 ? 'none' : 'block',
-        }}
-      >
-        뒤로
-      </button>
-      <RoomNav />
+      {roomIndex !== 1 && <RoomNav />}
+
       <MotionConfig transition={{ duration: 0.8, ease: 'easeInOut' }}>
         <MotionCanvas
           style={{
-            width: 'calc(100% - 20rem)',
-            minWidth: '70%',
+            width: '100%',
             height: '100%',
           }}
         >
@@ -74,7 +70,7 @@ function UserProfile() {
       <Modal
         sx={{
           minWidth: '70%',
-          width: isMobile ? '100%' : 'calc(100% - 20rem)',
+          width: '100%',
           marginTop: '5rem',
           display: 'flex',
           justifyContent: 'center',

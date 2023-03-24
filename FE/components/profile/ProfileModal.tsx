@@ -15,6 +15,8 @@ import defaultImg from 'assets/imgs/cryptoPunk1.png';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 import axios from 'axios';
+import RoomNav from './RoomNav';
+import { rgba } from 'emotion-rgba';
 
 interface IEditData {
   memberNickname: string;
@@ -42,6 +44,7 @@ function ProfileModal({ user }: { user: IUser | null }) {
 
   return (
     <Container>
+      <RoomNav />
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <AvatarContainer>
           {!isEdit ? (
@@ -59,6 +62,7 @@ function ProfileModal({ user }: { user: IUser | null }) {
               </label>
               <input
                 onChange={e => {
+                  if (!e.target.files) return;
                   setEditValue({
                     ...editValue,
                     memberImage: URL.createObjectURL(e.target.files[0]),
@@ -172,7 +176,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: 5vh 0 15vh 5vw;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: ${rgba(colors.blue, 0.4)};
   h1,
   span,
   p,
