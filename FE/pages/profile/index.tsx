@@ -11,24 +11,34 @@ import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { Modal } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import styled from '@emotion/styled';
-import FlowersModal from '@components/common/FlowersModal';
+import { useEffect } from 'react';
 
 import { Room, MyCamera, RoomNav, Planets } from '@components/profile/index';
 import ProfileModal from '@components/profile/ProfileModal';
 import { useRouter } from 'next/router';
 import { useMobile } from '@hooks/useMobile';
 import Garden from '@components/profile/Garden';
+import BlueGlowingButton from '@components/common/BlueGlowingButton';
+import PurpleGlowingButton from '@components/common/PurpleGlowingButton';
+import animateAtom from 'store/profile/animateAtom';
+import selectedPlanetAtom from 'store/profile/selectedPlanet';
+import PlanetDetailCard from '@components/Planet/PlanetDetail';
 
 function UserProfile() {
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
+  const planetDetail = useRecoilValue(selectedPlanetAtom);
   const router = useRouter();
   const user = useRecoilValue(userAtom);
-  const isMobile = useMobile();
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
-  // useEffect(() => {
-  //   if (!Boolean(user)) router.replace('/');
-  // }, [user, router]);
 
+  useEffect(() => {
+    if (!Boolean(user)) router.replace('/');
+  }, [user, router]);
+  useEffect(() => {
+    setRoomIndex(0);
+  }, []);
+
+  // console.log('HERE!!!');
   return (
     <div
       style={{
@@ -37,30 +47,19 @@ function UserProfile() {
         background: '#252530',
       }}
     >
-      <button
-        onClick={() => setRoomIndex(0)}
-        style={{
-          position: 'absolute',
-          top: '5rem',
-          left: 0,
-          zIndex: 9,
-          display: roomIndex === 0 ? 'none' : 'block',
-        }}
-      >
-        뒤로
-      </button>
-      <RoomNav />
+      {roomIndex !== 1 && <RoomNav />}
+      {planetDetail !== -1 && <PlanetDetailCard />}
+
       <MotionConfig transition={{ duration: 0.8, ease: 'easeInOut' }}>
         <MotionCanvas
           style={{
-            width: 'calc(100% - 20rem)',
-            minWidth: '70%',
+            width: '100%',
             height: '100%',
           }}
         >
           <RecoilBridge>
             {/* <ambientLight intensity={0.1} /> */}
-            <MyCamera />
+            <MyCamera router={router} />
             <Planets />
             <Room />
             <Garden />
@@ -73,7 +72,7 @@ function UserProfile() {
       <Modal
         sx={{
           minWidth: '70%',
-          width: isMobile ? '100%' : 'calc(100% - 20rem)',
+          width: '100%',
           marginTop: '5rem',
           display: 'flex',
           justifyContent: 'center',
@@ -95,10 +94,6 @@ function UserProfile() {
             </MotionContainer>
           ) : roomIndex === 2 ? (
             'nullnullnull'
-          ) : roomIndex === 3 ? (
-            <MotionContainer>
-              <FlowersModal user={user} />
-            </MotionContainer>
           ) : null}
         </>
       </Modal>
@@ -112,10 +107,10 @@ export default UserProfile;
 const MotionContainer = ({ children, ...rest }: any) => {
   const StyledFade = styled(motion.div)`
     position: absolute;
-    top: 2.5%;
-    left: 2.5%;
-    width: 95%;
-    height: 95%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   `;
 
   return (
