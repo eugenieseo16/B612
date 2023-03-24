@@ -122,11 +122,11 @@ public class BaobabArticleController {
     @ApiOperation(value = "바오밥나무 글 1개 삭제하기", notes = "")
     @DeleteMapping("/detail/{baobabArticleId}")
     public ResponseEntity<?> deleteMemberInfo(@ApiParam(value = "바오밥 게시글 primary Key") @PathVariable("baobabArticleId") int baobabArticleId,
-                                              @RequestBody @ApiParam(value = "삭제 요청 회원 주소", required = true) Map<String, String> memberAddress) throws IOException, FirebaseAuthException, IOException {
+                                              @RequestParam @ApiParam(value = "삭제 요청 회원 주소", required = true) String memberAddress) throws IOException, FirebaseAuthException, IOException {
         BaseResponseBody baseResponseBody;
         BaobabArticleResponseDto baobabArticleResponseDto = baobabArticleService.baobabArticleSelectById(baobabArticleId);
         MemberResponseDto writer = memberService.memberSelectById(baobabArticleResponseDto.getBaobabArticleMemberId());
-        if (!memberAddress.get("memberAddress").equals(writer.getMemberAddress())) {
+        if (!memberAddress.equals(writer.getMemberAddress())) {
             baseResponseBody = BaseResponseBody.builder().message("글쓴이가 아닙니다.").statusCode(400).build();
             return ResponseEntity.status(400).body(baseResponseBody);
         }
