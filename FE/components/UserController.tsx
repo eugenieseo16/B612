@@ -3,9 +3,11 @@ import userAtom from 'store/userAtom';
 import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
 import { usePlanetTokenContract } from './contracts/planetToken';
+import { useRouter } from 'next/router';
 
 function UserController() {
   const setUser = useSetRecoilState(userAtom);
+  const router = useRouter();
 
   const planetTokenContract = usePlanetTokenContract();
 
@@ -47,7 +49,7 @@ function UserController() {
       window.ethereum?.removeListener('accountsChanged', handleAccount);
       window.ethereum?.removeListener('chainChanged', handleAccount);
     };
-  }, [setUser]);
+  }, [setUser, router.pathname]);
 
   return <></>;
 }

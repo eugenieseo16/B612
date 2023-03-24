@@ -4,6 +4,7 @@ export const PlanetDetail = styled.div`
   position: fixed;
   bottom: 4rem;
   left: 3rem;
+  z-index: 99;
 
   width: 30em;
   height: 12rem;
