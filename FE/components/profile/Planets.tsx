@@ -61,13 +61,13 @@ function Planet({ planetId, time, pos }: any) {
       <motion.group
         animate={{
           x: selected === planetId ? 0 : pos[0],
-          y: selected === planetId ? 25 : pos[1],
+          y: selected === planetId ? 0 : pos[1],
           z: selected === planetId ? -40 : pos[2],
-          scale: selected === planetId ? 3 : 1,
+          scale: selected === planetId ? 2 : 1,
         }}
       >
         <motion.group
-          scale={10}
+          scale={5}
           animate={{ y }}
           transition={{ ease: 'linear', duration: time }}
           onClick={handleClick}

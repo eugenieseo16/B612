@@ -10,7 +10,7 @@ import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { useRecoilState } from 'recoil';
 
 function RoomNav() {
-  const ROOM = ['HOME', 'DESKTOP', 'PLANETS', 'FLOWERS'];
+  const ROOM = ['HOME', 'DESKTOP', 'PLANETS', 'GARDEN'];
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
   return (
     <div

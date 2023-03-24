@@ -11,7 +11,7 @@ import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { Modal } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import styled from '@emotion/styled';
-import FlowersModal from '@components/common/FlowersModal';
+import { useEffect } from 'react';
 
 import { Room, MyCamera, RoomNav, Planets } from '@components/profile/index';
 import ProfileModal from '@components/profile/ProfileModal';
@@ -25,9 +25,10 @@ function UserProfile() {
   const user = useRecoilValue(userAtom);
   const isMobile = useMobile();
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
-  // useEffect(() => {
-  //   if (!Boolean(user)) router.replace('/');
-  // }, [user, router]);
+  useEffect(() => {
+    if (!Boolean(user)) router.replace('/');
+    return () => setRoomIndex(0);
+  }, [user, router]);
 
   return (
     <div
@@ -60,7 +61,7 @@ function UserProfile() {
         >
           <RecoilBridge>
             {/* <ambientLight intensity={0.1} /> */}
-            <MyCamera />
+            <MyCamera router={router} />
             <Planets />
             <Room />
             <Garden />
@@ -95,10 +96,6 @@ function UserProfile() {
             </MotionContainer>
           ) : roomIndex === 2 ? (
             'nullnullnull'
-          ) : roomIndex === 3 ? (
-            <MotionContainer>
-              <FlowersModal user={user} />
-            </MotionContainer>
           ) : null}
         </>
       </Modal>
@@ -112,10 +109,10 @@ export default UserProfile;
 const MotionContainer = ({ children, ...rest }: any) => {
   const StyledFade = styled(motion.div)`
     position: absolute;
-    top: 2.5%;
-    left: 2.5%;
-    width: 95%;
-    height: 95%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   `;
 
   return (

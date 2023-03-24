@@ -3,12 +3,14 @@ import { useThree } from '@react-three/fiber';
 import { LayoutCamera } from 'framer-motion-3d';
 import { useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
+
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 const CAMERA_POS = [
   { x: 0, y: 10, z: 60 },
   { x: -17, y: 5, z: 4 },
   { x: 0, y: 55, z: 0 },
-  { x: 300, y: 100, z: 0 }, //
+  { x: 20, y: 15, z: 15 }, //
 ];
 const CAMERA_ANGLE = [
   {
@@ -34,13 +36,16 @@ const CAMERA_ANGLE = [
     rotateZ: 0.455953684691092,
   },
 ];
-function MyCamera() {
+function MyCamera({ router }: { router: any }) {
   const ref = useRef();
   const [isAnimate, setIsAnimate] = useState(true);
   const roomIndex = useRecoilValue(roomIndexAtom);
-  useThree(({ camera }) => {
-    console.log(camera.rotation);
-  });
+  useEffect(() => {
+    if (roomIndex === 3 && !isAnimate) router.push('/garden');
+  }, [isAnimate]);
+  // useThree(({ camera }) => {
+  //   console.log(camera.rotation);
+  // });
   // useFrame(({ camera }) => {
   //   camera.lookAt(0, 25, -40);
   //   console.log(camera.rotation);
@@ -67,7 +72,7 @@ function MyCamera() {
         }}
         onAnimationStart={() => setIsAnimate(true)}
         onAnimationComplete={() => setIsAnimate(false)}
-        transition={{ duration: 1 }}
+        transition={{ duration: roomIndex === 3 ? 2 : 1 }}
         far={1500}
         position={[-10, 20, 35]}
         // rotation={[

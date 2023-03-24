@@ -1,11 +1,17 @@
 import { Center, useGLTF } from '@react-three/drei';
-import React from 'react';
+import { degToRad } from 'three/src/math/MathUtils';
 
 function Garden() {
-  const garden = useGLTF('/garden_pond/scene.gltf');
+  const garden = useGLTF(
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1679556580/qbtr4fdvy4pufqtrqgwm.glb'
+  );
   return (
     <>
-      <Center scale={8} position={[300, 5, 0]}>
+      <Center
+        rotation={[degToRad(25), 0, 0]}
+        scale={0.05}
+        position={[15, 5, 0]}
+      >
         <primitive object={garden.scene} />
       </Center>
     </>
