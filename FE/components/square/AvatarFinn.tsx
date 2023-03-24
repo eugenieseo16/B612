@@ -1,11 +1,6 @@
 /* eslint-disable prefer-const */
 import React, { useEffect, useRef } from 'react';
-import {
-  OrbitControls,
-  PerspectiveCamera,
-  useAnimations,
-  useGLTF,
-} from '@react-three/drei';
+import { useAnimations, useGLTF } from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
@@ -34,7 +29,7 @@ const directionOffset = ({
     if (left) {
       directionOffset = Math.PI / 4; // w+a
     } else if (right) {
-      directionOffset = Math.PI / 4; // w+d
+      directionOffset = -Math.PI / 4; // w+d
     }
   } else if (backward) {
     if (left) {
@@ -69,7 +64,7 @@ const AvatarFinn = () => {
   });
 
   const currentAction = useRef('');
-  const controlsRef = useRef<typeof OrbitControls>();
+  // const controlsRef = useRef<typeof OrbitControls>();
   const camera = useThree(state => state.camera);
 
   const updateCameraTarget = (moveX: number, moveZ: number) => {
@@ -156,7 +151,15 @@ const AvatarFinn = () => {
   return (
     <>
       {/* <PerspectiveCamera position={} ref={ref}/> */}
-      {/* <OrbitControls target={cameraTarget} camera={ref.current} /> */}
+      {/* <OrbitControls target={pos} camera={ref.current} /> */}
+      {/* <OrbitControls
+        target={[
+          model.scene.position.x,
+          model.scene.position.y,
+          model.scene.position.z,
+        ]}
+        enableDamping={true}
+      /> */}
       <primitive object={model.scene} />;
     </>
   );
