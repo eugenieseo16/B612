@@ -57,7 +57,7 @@ public class PlanetController {
     @Transactional
     @ApiOperation(value = "행성의 좋아요 수를 확인한다.", notes = "행성 NFTID를 받아 좋아요 확인")
     @GetMapping("/like/{planetNftId}")
-    public ResponseEntity<BaseResponseBody> findPlanetLike(@PathVariable("planetNftId") @ApiParam("행성 nft 아이디") int planetNftId) {
+    public ResponseEntity<BaseResponseBody> findPlanetLike(@PathVariable("planetNftId") @ApiParam(value = "행성 nft 아이디", example = "0") int planetNftId) {
         PlanetResponseDto planetResponseDto = planetService.findPlanetLike(planetNftId);
 
         BaseResponseBody baseResponseBody =
