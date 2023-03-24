@@ -39,6 +39,8 @@ public class BaobabArticleResponseDto {
         dto.baobabArticleId = baobabArticle.getBaobabArticleId();
         dto.baobabArticleMemberId = baobabArticle.getBaobabArticleMemberId().getMemberId();
         dto.baobabArticleContent = baobabArticle.getBaobabArticleContent();
+        dto.createdTime = baobabArticle.getCreatedTime();
+        dto.updatedTime = baobabArticle.getUpdatedTime();
         return dto;
     }
 

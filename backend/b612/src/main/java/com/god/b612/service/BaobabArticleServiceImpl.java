@@ -12,9 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class BaobabArticleServiceImpl implements BaobabArticleService{
+public class BaobabArticleServiceImpl implements BaobabArticleService {
     @Autowired
     private final MemberRepository memberRepository;
     @Autowired
@@ -59,7 +62,12 @@ public class BaobabArticleServiceImpl implements BaobabArticleService{
 
     @Override
     public Page<BaobabArticleResponseDto> findAll(Pageable pageable) {
-        Page<BaobabArticleResponseDto> ret = baobabArticleRepository.findAllByOrderByCreatedAtDesc(pageable).map(BaobabArticleResponseDto::from);
+//        List<BaobabArticle> baobabArticleList = baobabArticleRepository.findAllByOrderByCreatedTimeDesc();
+//        List<BaobabArticleResponseDto> ret = new ArrayList<>();
+//        for (BaobabArticle ba : baobabArticleList) {
+//            ret.add(BaobabArticleResponseDto.of(ba));
+//        }
+        Page<BaobabArticleResponseDto> ret = baobabArticleRepository.findAllByOrderByCreatedTimeDesc(pageable).map(BaobabArticleResponseDto::from);
         return ret;
     }
 }

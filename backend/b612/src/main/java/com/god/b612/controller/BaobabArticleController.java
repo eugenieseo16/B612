@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -78,8 +79,9 @@ public class BaobabArticleController {
     }
 
     @ApiOperation(value = "바오밥나무 글 최신 순으로 조회, 페이징하기", notes = "")
-    @GetMapping("")
-    public ResponseEntity<?> showBaobabArticles(@PageableDefault(value = 10) Pageable pageable) {
+    @GetMapping("/list")
+    public ResponseEntity<?> showBaobabArticles(/*@PageableDefault(value = 10)*/ Pageable pageable) {
+//    public ResponseEntity<?> showBaobabArticles() {
         BaseResponseBody baseResponseBody;
 
         Page<BaobabArticleResponseDto> baobabArticleResponseDtoPage = baobabArticleService.findAll(pageable);
