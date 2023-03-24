@@ -62,7 +62,7 @@ public class BaobabArticleController {
 
     @ApiOperation(value = "바오밥 나무에 있는 글 1개를 상세 조회 합니다.", notes = "")
     @GetMapping("/detail/{baobabArticleId}")
-    public ResponseEntity<?> showOneBaobabArticle(@ApiParam(value = "바오밥 게시글 primary Key") @PathVariable("baobabArticleId") int baobabArticleId) {
+    public ResponseEntity<?> showOneBaobabArticle(@ApiParam(value = "바오밥 게시글 primary Key", example = "0") @PathVariable("baobabArticleId") int baobabArticleId) {
 
         BaseResponseBody baseResponseBody;
         BaobabArticleResponseDto baobabArticleResponseDto = baobabArticleService.baobabArticleSelectById(baobabArticleId);
@@ -80,8 +80,7 @@ public class BaobabArticleController {
 
     @ApiOperation(value = "바오밥나무 글 최신 순으로 조회, 페이징하기", notes = "")
     @GetMapping("/list")
-    public ResponseEntity<?> showBaobabArticles(/*@PageableDefault(value = 10)*/ Pageable pageable) {
-//    public ResponseEntity<?> showBaobabArticles() {
+    public ResponseEntity<?> showBaobabArticles(Pageable pageable) {
         BaseResponseBody baseResponseBody;
 
         Page<BaobabArticleResponseDto> baobabArticleResponseDtoPage = baobabArticleService.findAll(pageable);
@@ -121,8 +120,8 @@ public class BaobabArticleController {
 
     @ApiOperation(value = "바오밥나무 글 1개 삭제하기", notes = "")
     @DeleteMapping("/detail/{baobabArticleId}")
-    public ResponseEntity<?> deleteMemberInfo(@ApiParam(value = "바오밥 게시글 primary Key") @PathVariable("baobabArticleId") int baobabArticleId,
-                                              @RequestParam @ApiParam(value = "삭제 요청 회원 주소", required = true) String memberAddress) throws IOException, FirebaseAuthException, IOException {
+    public ResponseEntity<?> deleteMemberInfo(@ApiParam(value = "바오밥 게시글 primary Key", example = "0") @PathVariable("baobabArticleId") int baobabArticleId,
+                                              @RequestParam @ApiParam(value = "삭제 요청 회원 주소", required = true) String memberAddress) {
         BaseResponseBody baseResponseBody;
         BaobabArticleResponseDto baobabArticleResponseDto = baobabArticleService.baobabArticleSelectById(baobabArticleId);
         MemberResponseDto writer = memberService.memberSelectById(baobabArticleResponseDto.getBaobabArticleMemberId());
