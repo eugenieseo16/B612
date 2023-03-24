@@ -17,10 +17,10 @@ import java.util.UUID;
 public class FireBaseService {
 
     @Value("${app.firebase-bucket}")
-    private String firebaseBucket;
+    private String firebaseBucket = "find-your-b612.appspot.com";
 
     @Value("${app.firebase-image-url}")
-    private String imageUrl;
+    private String imageUrl = "https://storage.googleapis.com/find-your-b612.appspot.com/%s";
 
     public String uploadFiles(MultipartFile file) throws IOException, FirebaseAuthException {
         Bucket bucket = StorageClient.getInstance().bucket(firebaseBucket);
