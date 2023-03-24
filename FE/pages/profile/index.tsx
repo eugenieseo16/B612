@@ -21,13 +21,14 @@ import Garden from '@components/profile/Garden';
 import BlueGlowingButton from '@components/common/BlueGlowingButton';
 import PurpleGlowingButton from '@components/common/PurpleGlowingButton';
 import animateAtom from 'store/profile/animateAtom';
+import selectedPlanetAtom from 'store/profile/selectedPlanet';
+import PlanetDetailCard from '@components/Planet/PlanetDetail';
 
 function UserProfile() {
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
-  const isAnimate = useRecoilValue(animateAtom);
+  const planetDetail = useRecoilValue(selectedPlanetAtom);
   const router = useRouter();
   const user = useRecoilValue(userAtom);
-  const isMobile = useMobile();
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
   useEffect(() => {
@@ -47,6 +48,7 @@ function UserProfile() {
       }}
     >
       {roomIndex !== 1 && <RoomNav />}
+      {planetDetail !== -1 && <PlanetDetailCard />}
 
       <MotionConfig transition={{ duration: 0.8, ease: 'easeInOut' }}>
         <MotionCanvas
