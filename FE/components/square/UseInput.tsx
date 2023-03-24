@@ -10,7 +10,7 @@ export const UseInput = () => {
     jump: false,
   });
 
-  const keys = {
+  const keys: any = {
     KeyW: 'forward',
     KeyS: 'backward',
     KeyA: 'left',
@@ -19,15 +19,20 @@ export const UseInput = () => {
     Space: 'jump',
   };
 
-  const findKey = (key: string) => keys[key];
+  const findKey = (key: string) => {
+    if (Object.keys(keys).includes(key)) {
+      return keys[key];
+    }
+    return;
+  };
 
   useEffect(() => {
     // 키보드가 눌리면 눌린 키에 해당하는 코드가 있는 지 찾고, false를 true로 바꾼다
-    const handleKeyDown = e => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       setInput(m => ({ ...m, [findKey(e.code)]: true }));
     };
     // 키보드가 떼지면 다시 false 로 변경
-    const handleKeyUp = e => {
+    const handleKeyUp = (e: KeyboardEvent) => {
       setInput(m => ({ ...m, [findKey(e.code)]: false }));
     };
     document.addEventListener('keydown', handleKeyDown);
