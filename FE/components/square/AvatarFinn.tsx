@@ -1,6 +1,11 @@
 /* eslint-disable prefer-const */
 import React, { useEffect, useRef } from 'react';
-import { OrbitControls, useAnimations, useGLTF } from '@react-three/drei';
+import {
+  OrbitControls,
+  PerspectiveCamera,
+  useAnimations,
+  useGLTF,
+} from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
@@ -11,7 +16,19 @@ let rotateAngle = new THREE.Vector3(0, 1, 0);
 let rotateQuaternion = new THREE.Quaternion();
 let cameraTarget = new THREE.Vector3();
 
-const directionOffset = ({ forward, backward, left, right }) => {
+type DirectionOffsetProps = {
+  forward: boolean;
+  backward: boolean;
+  left: boolean;
+  right: boolean;
+};
+
+const directionOffset = ({
+  forward,
+  backward,
+  left,
+  right,
+}: DirectionOffsetProps) => {
   var directionOffset = 0; // w
   if (forward) {
     if (left) {
@@ -39,13 +56,14 @@ const directionOffset = ({ forward, backward, left, right }) => {
 const AvatarFinn = () => {
   const { forward, backward, left, right, jump, shift } = UseInput();
   const model = useGLTF('./avatar_finn/avatar_finn.glb');
+  let pos = [0, 0, 0];
 
   const { actions } = useAnimations(model.animations, model.scene);
   // 아바타 크기조절
   model.scene.scale.set(1.2, 1.2, 1.2);
   // 그림자
   model.scene.traverse(object => {
-    if (object.isMesh) {
+    if (object instanceof THREE.Mesh) {
       object.castShadow = true;
     }
   });
@@ -63,7 +81,7 @@ const AvatarFinn = () => {
     cameraTarget.x = model.scene.position.x;
     cameraTarget.y = model.scene.position.y + 2;
     cameraTarget.z = model.scene.position.z;
-    if (controlsRef.current) controlsRef.current.target = cameraTarget;
+    // if (controlsRef.current) controlsRef.current.target = cameraTarget;
   };
 
   useEffect(() => {
@@ -130,16 +148,20 @@ const AvatarFinn = () => {
 
       model.scene.position.x += moveX;
       model.scene.position.z += moveZ;
+      pos = [model.scene.position.x, 0, model.scene.position.z];
       updateCameraTarget(moveX, moveZ);
     }
   });
-
+  console.log(cameraTarget);
   return (
     <>
-      <OrbitControls ref={controlsRef} />
+      {/* <PerspectiveCamera position={} ref={ref}/> */}
+      {/* <OrbitControls target={cameraTarget} camera={ref.current} /> */}
       <primitive object={model.scene} />;
     </>
   );
 };
 
 export default AvatarFinn;
+
+//

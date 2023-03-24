@@ -1,6 +1,4 @@
-import React, { useRef } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
-import Link from 'next/link';
+import { Canvas } from '@react-three/fiber';
 
 import {
   OrbitControls,
@@ -20,6 +18,7 @@ import AvatarFinn from '@components/square/AvatarFinn';
 // import Rocks from '@components/square/Rocks';
 import Tetris2 from '@components/square/Tetris2';
 import Ground2 from '@components/square/Ground2';
+import { degToRad } from 'three/src/math/MathUtils';
 
 function Square() {
   const styles = {
@@ -31,7 +30,6 @@ function Square() {
 
   // 개발중일때 , true 상태관리와 helper를 키고,끌수 있도록 함
   const testing = true;
-  const controlsRef = useRef();
 
   return (
     <div style={styles.container}>
@@ -47,7 +45,12 @@ function Square() {
         {testing ? <axesHelper args={[2]} /> : null}
         {testing ? <gridHelper args={[30, 30]} /> : null}
 
-        <OrbitControls ref={controlsRef} minDistance={2} maxDistance={100} />
+        {/* <OrbitControls
+          minDistance={2}
+          maxDistance={100}
+          maxPolarAngle={degToRad(60)}
+        /> */}
+
         {/* <Stars /> */}
 
         {/* <Ground /> */}
