@@ -96,7 +96,7 @@ public class BaobabArticleController {
     }
 
     @ApiOperation(value = "바오밥나무 글 1개 수정하기", notes = "")
-    @PutMapping("/detail")
+    @PutMapping("")
     public ResponseEntity<?> updateOneBaobabArticle(@RequestBody @ApiParam(value = "글 내용", required = true) BaobabArticleRequestDto.Update baobabArticleRequestDto) {
 
         BaseResponseBody baseResponseBody;

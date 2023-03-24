@@ -71,7 +71,7 @@ public class PersonalBoardController {
 
     }
 
-    @ApiOperation(value = "보드 글 최신 순으로 나한테 온 것만 조회, 페이징하기", notes = "")
+    @ApiOperation(value = "방명록리스트 멤버 아이디로 최신순 조회, 페이징하기", notes = "")
     @GetMapping("/received/{memberId}")
     public ResponseEntity<?> showMyPersonalBoard(Pageable pageable) {
         BaseResponseBody baseResponseBody;
@@ -89,7 +89,7 @@ public class PersonalBoardController {
     }
 
     @ApiOperation(value = "내가 쓴 보드 글 1개 수정하기", notes = "")
-    @PutMapping("/{personalBoardId}")
+    @PutMapping()
     public ResponseEntity<?> updateOnePersonalBoard(@RequestBody @ApiParam(value = "글 내용", required = true) PersonalBoardRequestDto.Update personalBoardRequestDto) {
 
         BaseResponseBody baseResponseBody;
