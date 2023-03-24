@@ -8,37 +8,46 @@ import {
 } from '@mui/material';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { useRecoilState } from 'recoil';
+import styled from '@emotion/styled';
+import GlowingButton from '@components/common/GlowingButton';
+
+const FloatingButtons = styled.div`
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 9;
+
+  > div {
+    padding: 1rem 0rem;
+  }
+`;
 
 function RoomNav() {
-  const ROOM = ['HOME', 'DESKTOP', 'PLANETS', 'FLOWERS'];
+  const ROOM = ['HOME', 'DESKTOP', 'PLANETS', 'GARDEN'];
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
   return (
-    <div
-      style={{
-        position: 'fixed',
-        right: '0',
-        top: '5rem',
-        padding: '0 1rem',
-        width: '20rem',
-        maxWidth: '30%',
-        height: '100%',
-        background: '#fff',
-      }}
-    >
-      <List component="nav" aria-label="mailbox folders">
-        {ROOM.map((text, i) => (
-          <div key={i}>
-            <ButtonBase sx={{ width: '100%' }} onClick={() => setRoomIndex(i)}>
-              <ListItem>
-                <ListItemText>{text}</ListItemText>
-              </ListItem>
-            </ButtonBase>
-            <Divider />
-          </div>
-        ))}
-      </List>
-      {roomIndex}
-    </div>
+    <FloatingButtons>
+      <GlowingButton
+        onClick={() => setRoomIndex(0)}
+        selected={roomIndex === 0}
+        icon={'friend'}
+      />
+      <GlowingButton
+        onClick={() => setRoomIndex(1)}
+        selected={roomIndex === 1}
+        icon={'friend'}
+      />
+      <GlowingButton
+        onClick={() => setRoomIndex(2)}
+        selected={roomIndex === 2}
+        icon={'friend'}
+      />
+      <GlowingButton
+        onClick={() => setRoomIndex(3)}
+        selected={roomIndex === 3}
+        icon={'quest'}
+      />
+    </FloatingButtons>
   );
 }
 

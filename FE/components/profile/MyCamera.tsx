@@ -1,14 +1,16 @@
 import { OrbitControls } from '@react-three/drei';
-import { useThree } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { LayoutCamera } from 'framer-motion-3d';
 import { useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
+
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 const CAMERA_POS = [
   { x: 0, y: 10, z: 60 },
   { x: -17, y: 5, z: 4 },
-  { x: 0, y: 55, z: 0 },
-  { x: 300, y: 100, z: 0 }, //
+  { x: 0, y: 25, z: 0 },
+  { x: 20, y: 15, z: 5 }, //
 ];
 const CAMERA_ANGLE = [
   {
@@ -23,7 +25,7 @@ const CAMERA_ANGLE = [
     rotateZ: 0,
   },
   {
-    rotateX: -0.6435011087932843,
+    rotateX: 0,
     rotateY: 0,
     rotateZ: 0,
   },
@@ -34,29 +36,40 @@ const CAMERA_ANGLE = [
     rotateZ: 0.455953684691092,
   },
 ];
-function MyCamera() {
+function MyCamera({ router }: { router: any }) {
   const ref = useRef();
   const [isAnimate, setIsAnimate] = useState(true);
   const roomIndex = useRecoilValue(roomIndexAtom);
-  useThree(({ camera }) => {
-    console.log(camera.rotation);
-  });
+  useEffect(() => {
+    let id: ReturnType<typeof setTimeout>;
+    if (roomIndex === 3) {
+      id = setTimeout(() => {
+        router.push('/garden');
+      }, 500);
+    }
+    return () => {
+      if (id) clearTimeout(id);
+    };
+  }, [isAnimate, roomIndex, router]);
+
   // useFrame(({ camera }) => {
-  //   camera.lookAt(0, 25, -40);
+  //   camera.lookAt(0, 25, -30);
   //   console.log(camera.rotation);
-  //   // console.log(camera.position);
   // });
 
   return (
     <>
-      {/* <OrbitControls target={[0, 10, 0]} /> */}
-
       {!isAnimate && (roomIndex === 2 || roomIndex === 0) && (
         <OrbitControls
-          minDistance={50}
+          enabled={roomIndex === 2 || roomIndex === 0}
+          minDistance={10}
           maxDistance={80}
           enablePan={false}
-          target={[0, roomIndex === 0 ? 10 : 25, roomIndex === 0 ? 0 : -40]}
+          target={[
+            0,
+            roomIndex === 0 ? 10 : roomIndex === 2 ? 25 : 0,
+            roomIndex === 0 ? 0 : roomIndex === 2 ? -30 : 0,
+          ]}
         />
       )}
       <LayoutCamera
@@ -70,11 +83,6 @@ function MyCamera() {
         transition={{ duration: 1 }}
         far={1500}
         position={[-10, 20, 35]}
-        // rotation={[
-        //   CAMERA_ANGLE[0].rotateX,
-        //   CAMERA_ANGLE[0].rotateY,
-        //   CAMERA_ANGLE[0].rotateZ,
-        // ]}
       />
     </>
   );

@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import { rgba } from 'emotion-rgba';
+import { shadowGenerator } from 'styles/utils';
 
 export const PinkButton = styled.div`
   .selected {
@@ -120,6 +122,39 @@ export const BlueButton = styled.div`
     width: 80px;
     height: 80px;
     box-shadow: 0px 0px 15px 7px #a9d8e0;
+  }
+
+  img {
+    width: 55px;
+    height: 55px;
+  }
+`;
+
+export const GlowButton = styled.div<any>`
+  .selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 80px;
+    height: 80px;
+    background-color: ${p => rgba(p.bgColor, 0.7)};
+
+    border: solid white 4px;
+    border-radius: 12px;
+    box-shadow: ${p => p.selectedShadow};
+  }
+  .default {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${p => rgba(p.bgColor, 0.4)};
+
+    border-radius: 12px;
+
+    width: 80px;
+    height: 80px;
+    box-shadow: ${p => shadowGenerator(p.defaultShadow)};
   }
 
   img {
