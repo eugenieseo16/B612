@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 @Api("멤버(유저) api")
 @RequiredArgsConstructor
 public class MemberController {
