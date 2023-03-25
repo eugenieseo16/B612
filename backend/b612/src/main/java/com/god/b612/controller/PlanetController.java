@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/planet")
+@RequestMapping("/api/planet")
 @Api("플래닛(행성) api")
 @RequiredArgsConstructor
 public class PlanetController {

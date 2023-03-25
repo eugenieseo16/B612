@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/baobab")
+@RequestMapping("/api/baobab")
 @Api("바오밥 게시판 api")
 @RequiredArgsConstructor
 public class BaobabArticleController {
