@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/friend")
+@RequestMapping("/api/friend")
 @Api("친구 api")
 @RequiredArgsConstructor
 public class FriendController {
