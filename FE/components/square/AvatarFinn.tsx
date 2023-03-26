@@ -102,6 +102,52 @@ const AvatarFinn = () => {
     }
   }, [forward, backward, left, right, jump, shift]);
 
+  // 줌인 줌아웃 설정을 적용해보자
+  const MIN_ZOOM = 0.5;
+  const MAX_ZOOM = 15;
+
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      const deltaY = event.deltaY;
+      let zoomAmount = deltaY > 0 ? 0.5 : 1.5; // zoom in 또는 zoom out
+      const currentZoom = camera.zoom * zoomAmount;
+      if (currentZoom < MIN_ZOOM) {
+        zoomAmount = MIN_ZOOM / camera.zoom;
+      } else if (currentZoom > MAX_ZOOM) {
+        zoomAmount = MAX_ZOOM / camera.zoom;
+      }
+      camera.zoom *= zoomAmount;
+      camera.updateProjectionMatrix();
+    };
+
+    window.addEventListener('wheel', handleWheel);
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [camera]);
+
+  // 캐릭터가 갈수있는 영역좌표 설정하기
+  const isInAllowedArea = (x: number, z: number): boolean => {
+    if (x < -8 && x >= -26) {
+      if ((z >= 16 && z <= 40) || (z >= -48 && z <= -16)) {
+        return true;
+      }
+    } else if (x >= -8 && x <= 26) {
+      if (z >= -23 && z <= 40) {
+        return true;
+      }
+    } else if (x > 26 && x <= 48) {
+      if (z >= -48 && z <= -17) {
+        return true;
+      }
+    } else if (x > 48) {
+      if (z >= -48 && z <= 40) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   useFrame((state, delta) => {
     if (
       currentAction.current == 'running' ||
@@ -141,17 +187,24 @@ const AvatarFinn = () => {
       const moveX = walkDirection.x * velocity * delta;
       const moveZ = walkDirection.z * velocity * delta;
 
-      model.scene.position.x += moveX;
-      model.scene.position.z += moveZ;
-      pos = [model.scene.position.x, 0, model.scene.position.z];
+      if (isInAllowedArea(model.scene.position.x, model.scene.position.z)) {
+        model.scene.position.x += moveX;
+        model.scene.position.z += moveZ;
+        pos = [model.scene.position.x, 0, model.scene.position.z];
+      } else {
+        model.scene.position.x -= moveX;
+        model.scene.position.z -= moveZ;
+        pos = [model.scene.position.x, 0, model.scene.position.z];
+      }
+
       updateCameraTarget(moveX, moveZ);
     }
   });
   console.log(cameraTarget);
+
   return (
     <>
       {/* <PerspectiveCamera position={} ref={ref}/> */}
-      {/* <OrbitControls target={pos} camera={ref.current} /> */}
       {/* <OrbitControls
         target={[
           model.scene.position.x,

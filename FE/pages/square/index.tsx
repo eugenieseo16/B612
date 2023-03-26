@@ -36,28 +36,23 @@ function Square() {
         style={{ backgroundImage: `url("/sky.png")`, backgroundSize: 'cover' }}
         shadows
         camera={{
-          position: [0, 8, 14],
+          position: [0, 6, 14],
         }}
       >
         {/*testing = true : 왼쪽상단에 상태를 보여준다, helper 킨다 */}
         {testing ? <Stats /> : null}
         {testing ? <axesHelper args={[2]} /> : null}
-        {testing ? <gridHelper args={[30, 30]} /> : null}
-
+        {testing ? <gridHelper args={[300, 300]} /> : null}
         {/* <OrbitControls
           minDistance={2}
           maxDistance={100}
           maxPolarAngle={degToRad(60)}
         /> */}
-
         {/* <Stars /> */}
-
         <Ground />
-
         <Tetris />
         <Tetris2 />
         <AppleTreeModel position={[-3, 0, 2]} />
-
         <Lights />
         <AvatarFinn />
         {/* <Trees />
