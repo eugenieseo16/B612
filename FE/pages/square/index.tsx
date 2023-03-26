@@ -40,9 +40,9 @@ function Square() {
         }}
       >
         {/*testing = true : 왼쪽상단에 상태를 보여준다, helper 킨다 */}
-        {testing ? <Stats /> : null}
+        {/* {testing ? <Stats /> : null}
         {testing ? <axesHelper args={[2]} /> : null}
-        {testing ? <gridHelper args={[300, 300]} /> : null}
+        {testing ? <gridHelper args={[300, 300]} /> : null} */}
         {/* <OrbitControls
           minDistance={2}
           maxDistance={100}

@@ -128,7 +128,7 @@ const AvatarFinn = () => {
 
   // 캐릭터가 갈수있는 영역좌표 설정하기
   const isInAllowedArea = (x: number, z: number): boolean => {
-    if (x < -8 && x >= -26) {
+    if (x < -8 && x >= -23) {
       if ((z >= 16 && z <= 40) || (z >= -48 && z <= -16)) {
         return true;
       }
@@ -140,7 +140,7 @@ const AvatarFinn = () => {
       if (z >= -48 && z <= -17) {
         return true;
       }
-    } else if (x > 48) {
+    } else if (x > 48 && x < 106) {
       if (z >= -48 && z <= 40) {
         return true;
       }
@@ -187,17 +187,16 @@ const AvatarFinn = () => {
       const moveX = walkDirection.x * velocity * delta;
       const moveZ = walkDirection.z * velocity * delta;
 
-      if (isInAllowedArea(model.scene.position.x, model.scene.position.z)) {
+      // Check if the new position is within the allowed area
+      const newPosition = model.scene.position.clone();
+      newPosition.x += moveX;
+      newPosition.z += moveZ;
+      if (isInAllowedArea(newPosition.x, newPosition.z)) {
         model.scene.position.x += moveX;
         model.scene.position.z += moveZ;
         pos = [model.scene.position.x, 0, model.scene.position.z];
-      } else {
-        model.scene.position.x -= moveX;
-        model.scene.position.z -= moveZ;
-        pos = [model.scene.position.x, 0, model.scene.position.z];
+        updateCameraTarget(moveX, moveZ);
       }
-
-      updateCameraTarget(moveX, moveZ);
     }
   });
   console.log(cameraTarget);
