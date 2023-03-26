@@ -1,24 +1,17 @@
-import { useTexture } from '@react-three/drei';
-import * as THREE from 'three';
-import React from 'react';
+import { useLoader } from '@react-three/fiber';
+import React, { useEffect } from 'react';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-const Ground: React.FC = () => {
-  const normalMap = useTexture('../textures/grass_rock_nor_gl.png');
-  const roughnessMap = useTexture('../textures/grass_rock_rough.png');
+const Ground = () => {
+  const model = useLoader(GLTFLoader, './ground/ground.glb');
 
   return (
-    <>
-      <mesh rotation-x={Math.PI * -0.5} receiveShadow>
-        <planeBufferGeometry args={[300, 300]} />
-        <meshStandardMaterial
-          normalMap={normalMap}
-          roughnessMap={roughnessMap}
-          color={'#A0CA33'}
-          side={THREE.FrontSide}
-        />
-      </mesh>
-    </>
+    <object3D>
+      <primitive object={model.scene} />
+    </object3D>
   );
 };
 
 export default Ground;
+
+// https://jstris.jezevec10.com/?langSwitch=ko
