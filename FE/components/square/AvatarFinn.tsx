@@ -1,9 +1,12 @@
 /* eslint-disable prefer-const */
-import React, { useEffect, useRef } from 'react';
-import { useAnimations, useGLTF } from '@react-three/drei';
+import React, { useEffect, useRef, useState } from 'react';
+import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
+
+import Modal from '@mui/material/Modal';
+import { CertificateModal } from '@components/Planet/index';
 
 // eslint-disable-next-line prefer-const
 let walkDirection = new THREE.Vector3();
@@ -148,6 +151,27 @@ const AvatarFinn = () => {
     return false;
   };
 
+  // modal 영역 설정하기
+
+  const isModalArea = (x: number, z: number): boolean => {
+    if (x <= -20 && x >= -23 && z >= -48 && z <= -45) {
+      return true;
+    }
+    return false;
+  };
+
+  const [showModal, setShowModal] = useState(false);
+  const handleOpen = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+
+  useEffect(() => {
+    if (isModalArea(model.scene.position.x, model.scene.position.z)) {
+      setShowModal(true);
+    } else {
+      setShowModal(false);
+    }
+  }, [model.scene.position.x, model.scene.position.z]);
+
   useFrame((state, delta) => {
     if (
       currentAction.current == 'running' ||
@@ -213,6 +237,18 @@ const AvatarFinn = () => {
         enableDamping={true}
       /> */}
       <primitive object={model.scene} />;
+      <Html>
+        {showModal && (
+          <Modal open={showModal} onClose={handleClose}>
+            <CertificateModal />
+          </Modal>
+        )}
+      </Html>
+      {/* {showModal && (
+        <Modal open={showModal} onClose={handleClose}>
+          <CertificateModal />
+        </Modal>
+      )} */}
     </>
   );
 };
