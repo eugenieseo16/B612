@@ -15,7 +15,6 @@ import ListItemText from '@mui/material/ListItemText';
 import AppBar from '@mui/material/AppBar';
 
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import MetaMaskLogin from '@components/MetaMaskLogin';
 
@@ -122,7 +121,7 @@ function NavBar() {
               </Drawer>
               {/* profile */}
               <Link href={`/profile`}>
-                <AccountCircleIcon sx={{ fontSize: '30px' }} id="icon-item" />
+                <img src={user?.memberImage} alt="" id="profile-image" />
               </Link>
             </div>
           )}

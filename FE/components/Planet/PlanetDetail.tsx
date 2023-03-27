@@ -1,10 +1,13 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
+import userAtom from 'store/userAtom';
 
 import { PlanetDetail } from './PlanetDetailEmotion';
 
-import SSF from '../../assets/imgs/ssf.png';
+import Goerli from '../../assets/imgs/goerli-eth.png';
 
 function PlanetDetailCard() {
+  const user = useRecoilValue(userAtom);
   return (
     <PlanetDetail>
       <div className="detail-container">
@@ -14,8 +17,10 @@ function PlanetDetailCard() {
             <h2>부지런한 하나별</h2>
           </div>
           <div className="planet-price">
-            <img src={SSF.src} alt="SSAFY coin" id="ssafy-coin" />
-            <p>320 SSF</p>
+            <img src={Goerli.src} alt="SSAFY coin" id="ssafy-coin" />
+
+            <span>333</span>
+            <span>GoerliETH</span>
           </div>
         </div>
 
@@ -25,16 +30,9 @@ function PlanetDetailCard() {
 
         <div className="planet-owner">
           <div className="member-info">
-            <img
-              src="https://i.pinimg.com/236x/df/3c/4d/df3c4dcf15935d0111426bb28b12d9b1.jpg"
-              alt=""
-            />
-            <h6>사용자 이름 #7</h6>
+            <img src={user?.memberImage} alt="" />
+            <h6>{user?.memberNickname}</h6>
             <span></span>
-          </div>
-
-          <div>
-            <button>구매 요청하기</button>
           </div>
         </div>
       </div>

@@ -21,6 +21,9 @@ export const PlanetDetail = styled.div`
       .planet-price {
         display: flex;
         align-items: center;
+        img {
+          border-radius: 50%;
+        }
       }
     }
 

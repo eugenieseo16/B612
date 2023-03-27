@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { Canvas } from '@react-three/fiber';
 
 import Modal from '@mui/material/Modal';
 
@@ -45,14 +46,12 @@ function Planet() {
 
   return (
     <>
+      {/* <Canvas></Canvas> */}
+
       <PlanetDetailCard></PlanetDetailCard>
       <FloatingButtons>
         <div className="floating-button-items" onClick={handleOpenFriends}>
           <BlueGlowingButton icon={'friend'} />
-        </div>
-
-        <div className="floating-button-items" onClick={handleOpenItems}>
-          <PurpleGlowingButton icon={'plant'} />
         </div>
 
         <div className="floating-button-items" onClick={handleOpenCertificate}>
