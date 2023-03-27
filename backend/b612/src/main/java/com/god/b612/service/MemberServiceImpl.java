@@ -1,17 +1,21 @@
 package com.god.b612.service;
 
 import com.god.b612.dto.MemberResponseDto;
+import com.god.b612.dto.MemberResponseDtoForRank;
 import com.god.b612.entity.Member;
-import com.god.b612.entity.Tier;
 import com.god.b612.repository.MemberCustomRepository;
 import com.god.b612.repository.MemberRepository;
+import com.god.b612.repository.PlanetRepository;
 import com.god.b612.repository.TierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +29,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private final MemberCustomRepository memberCustomRepository;
+
+    @Autowired
+    private final PlanetRepository planetRepository;
 
 
     @Transactional
@@ -40,6 +47,7 @@ public class MemberServiceImpl implements MemberService {
                     .memberTierId(tierRepository.findTierByTierId(1))
                     .memberCurrentScore(0)
                     .memberHighestScore(0)
+                    .memberLiked(0)
                     .build();
 
             memberRepository.save(member);
@@ -72,8 +80,68 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     @Override
-    public Boolean updateInfoByAddress(String url, String nickname, String address) {
-        return memberCustomRepository.updateMember(url, nickname, address);
+    public Boolean updateInfoByAddress(String url, String address) {
+        return memberCustomRepository.updateMember(url, address);
+    }
+
+    @Override
+    public Boolean checkNickname(String nickname) {
+        Member member=memberRepository.findMemberByMemberNickname(nickname);
+        if(member==null){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public MemberResponseDto changeNickname(int memberId, String nickname) {
+        Member member=memberRepository.findMemberByMemberId(memberId);
+        member=Member.builder()
+                .memberId(memberId)
+                .memberNickname(nickname)
+                .memberAddress(member.getMemberAddress())
+                .memberCurrentScore(member.getMemberCurrentScore())
+                .memberHighestScore(member.getMemberHighestScore())
+                .memberImage(member.getMemberImage())
+                .memberTierId(member.getMemberTierId())
+                .memberLiked(member.getMemberLiked())
+                .build();
+
+        memberRepository.save(member);
+
+        return memberCustomRepository.createMemberResponseDtoByEntity(member);
+    }
+
+    @Override
+    public List<MemberResponseDto> searchMember(String string) {
+        List<Member> members = memberRepository.findMembersByMemberNicknameContaining(string);
+        ArrayList<MemberResponseDto> memberResponseDtos=new ArrayList<>();
+        if(members.size()==0){
+            return null;
+        }
+        else{
+            for(Member member : members){
+                memberResponseDtos.add(memberCustomRepository.createMemberResponseDtoByEntity(member));
+            }
+        }
+
+        return memberResponseDtos;
+    }
+
+
+    @Override
+    public List<MemberResponseDtoForRank> viewRank(int page, int size) {
+
+        PageRequest pageRequest=PageRequest.of(page,size);
+        Page<Member> members=memberRepository.findMembersByOrderByMemberLikedDesc(pageRequest);
+        ArrayList<MemberResponseDtoForRank> memberResponseDtoForRanks=new ArrayList<>();
+
+
+        for(Member member:members){
+            memberResponseDtoForRanks.add(memberCustomRepository.makeMemberDtoForRank(member));
+        }
+
+        return memberResponseDtoForRanks;
     }
 
 }
