@@ -40,12 +40,12 @@ function RoomNav() {
       <GlowingButton
         onClick={() => setRoomIndex(2)}
         selected={roomIndex === 2}
-        icon={'friend'}
+        icon={'planet'}
       />
       <GlowingButton
         onClick={() => setRoomIndex(3)}
         selected={roomIndex === 3}
-        icon={'quest'}
+        icon={'plant'}
       />
     </FloatingButtons>
   );

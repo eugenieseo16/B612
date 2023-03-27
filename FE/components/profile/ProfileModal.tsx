@@ -12,17 +12,19 @@ import {
 } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import defaultImg from 'assets/imgs/cryptoPunk1.png';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import userAtom from 'store/userAtom';
 import axios from 'axios';
 import RoomNav from './RoomNav';
 import { rgba } from 'emotion-rgba';
+import roomIndexAtom from 'store/profile/roomIndexAtom';
 
 interface IEditData {
   memberNickname: string;
   memberImage?: string;
 }
 function ProfileModal({ user }: { user: IUser | null }) {
+  const setRoomIndex = useSetRecoilState(roomIndexAtom);
   const [me, setMe] = useRecoilState(userAtom);
 
   const defaultData: IEditData = {
@@ -34,19 +36,19 @@ function ProfileModal({ user }: { user: IUser | null }) {
   const [isEdit, setIsEdit] = useState(false);
   const [editValue, setEditValue] = useState(defaultData);
 
-  useEffect(() => {
-    return () => {
-      if (!me) return;
-      setMe({ ...me, ...editValue });
-    };
-  }, []);
-  console.log(editValue);
+  // useEffect(() => {
+  //   return () => {
+  //     if (!me) return;
+  //     setMe({ ...me, ...editValue });
+  //   };
+  // }, []);
 
   return (
     <Container>
       <RoomNav />
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <AvatarContainer>
+          <button onClick={() => setRoomIndex(0)}>이전</button>
           {!isEdit ? (
             <Avatar
               src={me?.memberImage}
@@ -172,10 +174,11 @@ const AvatarContainer = styled.div`
   align-items: center;
 `;
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 5vh 0 15vh 5vw;
+  padding: 5vh 5vw 15vh 5vw;
   background-color: ${rgba(colors.blue, 0.4)};
   h1,
   span,

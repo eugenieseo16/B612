@@ -68,6 +68,7 @@ function Planet({ planetId, time, pos }: any) {
 
   useEffect(() => {
     if (roomIndex !== 2) setSelected(-1);
+    else setSelected(1);
   }, [roomIndex, setSelected]);
 
   return (

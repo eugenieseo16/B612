@@ -19,9 +19,12 @@ function UserController() {
       if (!memberAddress || window.ethereum.networkVersion != 5) {
         setUser(null);
       } else {
-        const { data } = await axios.post('http://127.0.0.1:8080/member', {
-          memberAddress,
-        });
+        const { data } = await axios.post(
+          'https://j8a208.p.ssafy.io/api/member',
+          {
+            memberAddress,
+          }
+        );
         const eth = (
           parseInt(
             await window.ethereum.request({
