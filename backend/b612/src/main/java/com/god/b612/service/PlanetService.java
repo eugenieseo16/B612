@@ -18,4 +18,6 @@ public interface PlanetService {
     boolean checkSomeoneLiked(int memberId, int planetId);
 
     PlanetResponseDto buyPlanet(int memberId, int planetId);
+
+    List<PlanetResponseDto> viewMemberStar(int memberId);
 }

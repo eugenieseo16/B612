@@ -1,13 +1,11 @@
 package com.god.b612.controller;
 
-import com.god.b612.dto.FlowerResponseDto;
-import com.god.b612.dto.MemberNicknameChangeDto;
-import com.god.b612.dto.MemberResponseDto;
-import com.god.b612.dto.MemberResponseDtoForRank;
+import com.god.b612.dto.*;
 import com.god.b612.model.BaseResponseBody;
 import com.god.b612.service.FireBaseService;
 import com.god.b612.service.FlowerService;
 import com.god.b612.service.MemberService;
+import com.god.b612.service.PlanetService;
 import com.google.firebase.auth.FirebaseAuthException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,6 +35,9 @@ public class MemberController {
 
     @Autowired
     private final FlowerService flowerService;
+
+    @Autowired
+    private final PlanetService planetService;
 
     private final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -173,6 +174,18 @@ public class MemberController {
 
         return ResponseEntity.status(200).body(baseResponseBody);
 
+    }
+
+
+    @ApiOperation(value = "유저 별목록 보기", notes = "유저의 별들을 보여줍니다.")
+    @GetMapping("/{memberId}/star")
+    public ResponseEntity<BaseResponseBody> memberStars(@PathVariable("memberId") int memberId) {
+
+        List<PlanetResponseDto> planetResponseDtos=planetService.viewMemberStar(memberId);
+
+        BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(planetResponseDtos).build();
+        return ResponseEntity.status(200).body(baseResponseBody);
+        
     }
 
 }
