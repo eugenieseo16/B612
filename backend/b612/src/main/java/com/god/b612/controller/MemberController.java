@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 @Api("멤버(유저) api")
 @RequiredArgsConstructor
 public class MemberController {
@@ -58,7 +58,7 @@ public class MemberController {
 
     @ApiOperation(value = "회원을 회원 번호로 조회한다.", notes = "회원번호를 입력하면 회원정보로 응답한다.")
     @GetMapping("/{memberId}")
-    public ResponseEntity<?> findUser(@ApiParam(value = "회원 primary Key") @PathVariable("memberId") int memberId) {
+    public ResponseEntity<?> findUser(@ApiParam(value = "회원 primary Key", example = "0") @PathVariable("memberId") int memberId) {
         MemberResponseDto memberResponseDto = memberService.memberSelectById(memberId);
         BaseResponseBody baseResponseBody;
 

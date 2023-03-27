@@ -9,8 +9,10 @@ server:
       force: true
 
 #database
+
 spring:
   jpa:
+    generate-ddl : true
     hibernate:
       ddl-auto: update
     show-sql: true
