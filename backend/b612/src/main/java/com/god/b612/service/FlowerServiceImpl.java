@@ -141,4 +141,22 @@ public class FlowerServiceImpl implements FlowerService {
     }
 
 
+    public List<FlowerResponseDto> selectMemberInventory(int memberId) {
+        Member member=memberRepository.findMemberByMemberId(memberId);
+
+        List<Flower> flowers=flowerRepository.findFlowersByFlowerOwnerIdAndAndFlowerPlanted(member,false);
+
+        ArrayList<FlowerResponseDto> flowerResponseDtos=new ArrayList<>();
+
+        if(flowers.size()==0){
+            return null;
+        }
+        else{
+            for(Flower flower: flowers){
+                flowerResponseDtos.add(flowerCustomRepository.makeDto(flower));
+            }
+            return flowerResponseDtos;
+        }
+    }
+
 }

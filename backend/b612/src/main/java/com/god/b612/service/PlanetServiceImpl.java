@@ -5,10 +5,8 @@ import com.god.b612.dto.PlanetResponseDtoForRank;
 import com.god.b612.entity.Like;
 import com.god.b612.entity.Member;
 import com.god.b612.entity.Planet;
-import com.god.b612.repository.LikeRepository;
-import com.god.b612.repository.MemberRepository;
-import com.god.b612.repository.PlanetCustomRepository;
-import com.god.b612.repository.PlanetRepository;
+import com.god.b612.entity.Tier;
+import com.god.b612.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +32,8 @@ public class PlanetServiceImpl implements PlanetService {
 
     @Autowired
     private final LikeRepository likeRepository;
+    @Autowired
+    private TierRepository tierRepository;
 
     //행성 좋아요 생성 및 삭제
     @Override
@@ -60,9 +60,29 @@ public class PlanetServiceImpl implements PlanetService {
 
             likeRepository.save(like);
 
+            if (planet.getPlanetMemberId() != null) {
+                Member planetOwner = planet.getPlanetMemberId();
+                int memberLike=planetOwner.getMemberLiked()+1;
+
+                planetOwner = Member.builder()
+                        .memberId(planetOwner.getMemberId())
+                        .memberHighestScore(planetOwner.getMemberHighestScore())
+                        .memberTierId(planetOwner.getMemberTierId())
+                        .memberNickname(planetOwner.getMemberNickname())
+                        .memberCurrentScore(planetOwner.getMemberCurrentScore())
+                        .memberImage(planetOwner.getMemberImage())
+                        .memberAddress(planetOwner.getMemberAddress())
+                        .memberLiked(memberLike)
+                        .build();
+
+                memberRepository.save(planetOwner);
+            }
+            int planetLike=planet.getPlanetLikesCount() + 1;
+
             planet = Planet.builder()
                     .planetNftId(planet.getPlanetNftId())
-                    .planetLikesCount(planet.getPlanetLikesCount() + 1)
+                    .planetLikesCount(planetLike)
+                    .planetMemberId(planet.getPlanetMemberId())
                     .build();
 
             planetRepository.save(planet);
@@ -71,9 +91,33 @@ public class PlanetServiceImpl implements PlanetService {
             //라이크 삭제(이미 있을 경우)
             likeRepository.deleteLikeByLikeId(like.getLikeId());
 
+            int planetLike=planet.getPlanetLikesCount() - 1;
+
+
+
+
+
+            if (planet.getPlanetMemberId() != null) {
+                Member planetOwner = planet.getPlanetMemberId();
+                int memberLike=planetOwner.getMemberLiked()-1;
+                planetOwner = Member.builder()
+                        .memberId(planetOwner.getMemberId())
+                        .memberHighestScore(planetOwner.getMemberHighestScore())
+                        .memberTierId(planetOwner.getMemberTierId())
+                        .memberNickname(planetOwner.getMemberNickname())
+                        .memberCurrentScore(planetOwner.getMemberCurrentScore())
+                        .memberImage(planetOwner.getMemberImage())
+                        .memberAddress(planetOwner.getMemberAddress())
+                        .memberLiked(memberLike)
+                        .build();
+
+                memberRepository.save(planetOwner);
+            }
+
             planet = Planet.builder()
                     .planetNftId(planet.getPlanetNftId())
                     .planetLikesCount(planet.getPlanetLikesCount() - 1)
+                    .planetMemberId(planet.getPlanetMemberId())
                     .build();
 
             planetRepository.save(planet);
@@ -100,9 +144,9 @@ public class PlanetServiceImpl implements PlanetService {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Planet> planets = planetRepository.findAllByOrderByPlanetLikesCountDesc(pageRequest);
 
-        Integer rank=page*size+1;
+        Integer rank = page * size + 1;
         for (Planet planet : planets) {
-            planetResponseDtos.add(planetCustomRepository.makeDtoForRank(planet,rank));
+            planetResponseDtos.add(planetCustomRepository.makeDtoForRank(planet, rank));
             rank++;
         }
 
@@ -155,6 +199,25 @@ public class PlanetServiceImpl implements PlanetService {
             return null;
         }
 
+        if(planet.getPlanetMemberId()!=null){
+            Member pastOwner=planet.getPlanetMemberId();
+            int memberscore=pastOwner.getMemberCurrentScore()-1;
+
+            pastOwner=Member.builder()
+                    .memberId(pastOwner.getMemberId())
+                    .memberHighestScore(pastOwner.getMemberHighestScore())
+                    .memberTierId(pastOwner.getMemberTierId())
+                    .memberNickname(pastOwner.getMemberNickname())
+                    .memberCurrentScore(memberscore)
+                    .memberImage(pastOwner.getMemberImage())
+                    .memberAddress(pastOwner.getMemberAddress())
+                    .memberLiked(pastOwner.getMemberLiked() - planet.getPlanetLikesCount())
+                    .build();
+
+            memberRepository.save(pastOwner);
+
+        }
+
         planet = Planet.builder()
                 .planetNftId(planetId)
                 .planetLikesCount(planet.getPlanetLikesCount())
@@ -162,6 +225,48 @@ public class PlanetServiceImpl implements PlanetService {
                 .build();
 
         planetRepository.save(planet);
+
+
+
+        Member planetOwner = member;
+        int memberscore=planetOwner.getMemberCurrentScore()+1;
+        int memberhigh=planetOwner.getMemberHighestScore();
+        Tier memberTier=planetOwner.getMemberTierId();
+
+        if(memberscore>memberhigh){
+            memberhigh=memberscore;
+
+            if(memberhigh==1){
+                memberTier=tierRepository.findTierByTierId(2);
+            }
+
+            else if(memberhigh==3){
+                memberTier=tierRepository.findTierByTierId(3);
+            }
+
+            else if(memberhigh==5){
+                memberTier=tierRepository.findTierByTierId(4);
+            }
+
+            else if(memberhigh==7){
+                memberTier=tierRepository.findTierByTierId(5);
+            }
+
+        }
+
+        planetOwner = Member.builder()
+                .memberId(planetOwner.getMemberId())
+                .memberHighestScore(memberhigh)
+                .memberTierId(memberTier)
+                .memberNickname(planetOwner.getMemberNickname())
+                .memberCurrentScore(memberscore)
+                .memberImage(planetOwner.getMemberImage())
+                .memberAddress(planetOwner.getMemberAddress())
+                .memberLiked(planetOwner.getMemberLiked() + planet.getPlanetLikesCount())
+                .build();
+
+        memberRepository.save(planetOwner);
+
 
         PlanetResponseDto planetResponseDto = planetCustomRepository.makeDto(planet);
         return planetResponseDto;
