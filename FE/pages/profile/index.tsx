@@ -54,7 +54,7 @@ function UserProfile() {
       )}
       {planetDetail === -1 && roomIndex === 0 && (
         <>
-          <ProfileCard />
+          <ProfileCard user={null} />
         </>
       )}
 
