@@ -114,8 +114,8 @@ public class FriendController {
 
     @Transactional
     @ApiOperation(value = "member의 친구 목록을 가져옵니다.", notes = "멤버 id를 입력하면, 해당 멤버의 친구목록을 받아옵니다.")
-    @GetMapping("/{memberId}/{page}&{size}")
-    public ResponseEntity<?>  getFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId, @ApiParam(value = "Page 번호, 0부터 시작") @PathVariable("page")int page,@PathVariable("size")int size){
+    @GetMapping("/{memberId}")
+    public ResponseEntity<?>  getFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId, @RequestParam int page,@RequestParam int size){
         System.out.println("0");
         PageRequest pageRequest=PageRequest.of(page,size);
         System.out.println("5");
@@ -144,8 +144,8 @@ public class FriendController {
 
     @Transactional
     @ApiOperation(value = "member의 수락하지 않은 친구 요청 목록을 가져옵니다.", notes = "멤버 id를 입력하면, 해당 멤버가 허락하지 않은 친구요청들을 받아옵니다.")
-    @GetMapping("/unresponse/{memberId}/{page}&{size}")
-    public ResponseEntity<?>  getUnresponsedFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId, @ApiParam(value = "Page 번호, 0부터 시작") @PathVariable("page")int page,@PathVariable("size")int size){
+    @GetMapping("/unresponse/{memberId}")
+    public ResponseEntity<?>  getUnresponsedFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId, @RequestParam int page,@RequestParam int size){
         PageRequest pageRequest=PageRequest.of(page,size);
         List<MemberResponseDto> memberResponseDtos=friendService.findMyUnaccpetedFriendList(memberId,pageRequest);
 
@@ -171,8 +171,8 @@ public class FriendController {
 
     @Transactional
     @ApiOperation(value = "member가 친구 요청을 보냈지만 수락하지 않은 사람들의 목록을 가져옵니다.", notes = "멤버 id를 입력하면, 해당 멤버가 친구 요청을 보냈지만 수락하지 않은 멤버들을 받아옵니다.")
-    @GetMapping("/request/{memberId}/{page}&{size}")
-    public ResponseEntity<?>  getRequestedFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId, @ApiParam(value = "Page 번호, 0부터 시작") @PathVariable("page")int page,@PathVariable("size")int size){
+    @GetMapping("/request/{memberId}")
+    public ResponseEntity<?>  getRequestedFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId, @RequestParam int page,@RequestParam int size){
         PageRequest pageRequest=PageRequest.of(page,size);
         List<MemberResponseDto> memberResponseDtos=friendService.findMyRequestedFriendList(memberId,pageRequest);
 

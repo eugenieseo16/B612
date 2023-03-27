@@ -154,8 +154,8 @@ public class MemberController {
 
 
     @ApiOperation(value = "유저 랭킹조회", notes = "유저의 랭킹들을 보여줍니다. 페이지와 사이즈 입력 페이지는 0부터시작")
-    @GetMapping("/ranking/{page}&{size}")
-    public ResponseEntity<BaseResponseBody> viewRanking(@PathVariable("page") int page, @PathVariable("size") int size) {
+    @GetMapping("/ranking")
+    public ResponseEntity<BaseResponseBody> viewRanking(@RequestParam int page, @RequestParam int size) {
         List<MemberResponseDtoForRank> memberResponseDtoForRanks=memberService.viewRank(page,size);
 
         BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(memberResponseDtoForRanks).build();

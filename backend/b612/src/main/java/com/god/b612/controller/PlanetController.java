@@ -72,8 +72,8 @@ public class PlanetController {
 
     @Transactional
     @ApiOperation(value = "행성의 좋아요 수 랭킹을 가져온다.", notes = "페이지와 사이즈를 입력하면 된다 페이지는 0부터 시작")
-    @GetMapping("/ranking/{page}&{size}")
-    public ResponseEntity<BaseResponseBody> getRanking(@PathVariable("page") int page, @PathVariable("size") int size) {
+    @GetMapping("/ranking")
+    public ResponseEntity<BaseResponseBody> getRanking(@RequestParam int page, @RequestParam int size) {
         List<PlanetResponseDtoForRank> planetResponseDtos = planetService.viewPlanetRanking(page, size);
 
         BaseResponseBody baseResponseBody =
@@ -90,8 +90,8 @@ public class PlanetController {
 
     @Transactional
     @ApiOperation(value = "어떤 유저가 좋아요 한 행성을 확인한다.", notes = "유저 아이디와 페이지와 사이즈를 입력하면 된다 페이지는 0부터 시작")
-    @GetMapping("{memberId}/like/{page}&{size}")
-    public ResponseEntity<BaseResponseBody> getMemberLikePlanets(@PathVariable("memberId") int memberId, @PathVariable("page") int page, @PathVariable("size") int size) {
+    @GetMapping("{memberId}/like")
+    public ResponseEntity<BaseResponseBody> getMemberLikePlanets(@PathVariable("memberId") int memberId, @RequestParam int page, @RequestParam int size) {
         List<PlanetResponseDto> planetResponseDtos = planetService.viewLikedPlanet(memberId, page, size);
 
         BaseResponseBody baseResponseBody =
