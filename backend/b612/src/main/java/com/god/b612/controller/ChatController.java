@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/chat")
+@RequestMapping("/api/chat")
 public class ChatController {
     private SimpMessagingTemplate messagingTemplate;
 
