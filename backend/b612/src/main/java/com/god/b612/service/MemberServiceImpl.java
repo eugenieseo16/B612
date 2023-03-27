@@ -136,9 +136,10 @@ public class MemberServiceImpl implements MemberService {
         Page<Member> members=memberRepository.findMembersByOrderByMemberLikedDesc(pageRequest);
         ArrayList<MemberResponseDtoForRank> memberResponseDtoForRanks=new ArrayList<>();
 
-
+        int rank=page*size+1;
         for(Member member:members){
-            memberResponseDtoForRanks.add(memberCustomRepository.makeMemberDtoForRank(member));
+            memberResponseDtoForRanks.add(memberCustomRepository.makeMemberDtoForRank(member,rank));
+            rank++;
         }
 
         return memberResponseDtoForRanks;
