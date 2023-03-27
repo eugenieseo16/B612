@@ -1,0 +1,44 @@
+#port
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+
+#database
+
+spring:
+  jpa:
+    generate-ddl : true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  #swagger spring version over 2.6
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  profiles:
+    include: secret
+  #image size settings
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+
+#logging
+logging:
+  level:
+    com.god.b612: debug
+
+#firebase image storage
+app:
+  firebase-configuration-file: ../java/resources/serviceAccountKey.json
+  firebase-bucket: find-your-b612.appspot.com
+  firebase-image-url: https://storage.googleapis.com/find-your-b612.appspot.com/%s
+
