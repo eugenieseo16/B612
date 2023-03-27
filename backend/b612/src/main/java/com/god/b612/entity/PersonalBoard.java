@@ -20,6 +20,7 @@ public class PersonalBoard extends BaseEntity {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
+<<<<<<< HEAD:backend/b612/src/main/java/com/god/b612/entity/PersonalBoard.java
     @JoinColumn(referencedColumnName = "member_id", name = "personal_board_owner_id")
     private Member personalBoardOwnerId;
 
@@ -27,6 +28,15 @@ public class PersonalBoard extends BaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(referencedColumnName = "member_id", name = "personal_board_writer_id")
     private Member personalBoardWriterId;
+=======
+    @JoinColumn(referencedColumnName = "member_id", name ="personal_board_owner_id")
+    private Members personalBoardOwnerId;
+
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(referencedColumnName = "member_id", name ="personal_board_writer_id")
+    private Members personalBoardWriterId;
+>>>>>>> feature/be/chatting:backend/b612/src/main/java/com/god/b612/entity/PersonalBoards.java
 
     @NotNull
     @Column(name = "personal_board_content")
