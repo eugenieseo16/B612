@@ -18,11 +18,10 @@ import ProfileModal from '@components/profile/ProfileModal';
 import { useRouter } from 'next/router';
 import { useMobile } from '@hooks/useMobile';
 import Garden from '@components/profile/Garden';
-import BlueGlowingButton from '@components/common/BlueGlowingButton';
-import PurpleGlowingButton from '@components/common/PurpleGlowingButton';
-import animateAtom from 'store/profile/animateAtom';
 import selectedPlanetAtom from 'store/profile/selectedPlanet';
-import PlanetDetailCard from '@components/Planet/PlanetDetail';
+import PlanetNav from '@components/profile/PlanetNav';
+import ProfileCard from '@components/profile/ProfileCard';
+import PlanetDetailCard from '@components/profile/PlanetDetailCard';
 
 function UserProfile() {
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
@@ -38,7 +37,6 @@ function UserProfile() {
     setRoomIndex(0);
   }, []);
 
-  // console.log('HERE!!!');
   return (
     <div
       style={{
@@ -48,7 +46,17 @@ function UserProfile() {
       }}
     >
       {roomIndex !== 1 && <RoomNav />}
-      {planetDetail !== -1 && <PlanetDetailCard />}
+      {planetDetail !== -1 && (
+        <>
+          <PlanetDetailCard />
+          <PlanetNav />
+        </>
+      )}
+      {planetDetail === -1 && roomIndex === 0 && (
+        <>
+          <ProfileCard user={null} />
+        </>
+      )}
 
       <MotionConfig transition={{ duration: 0.8, ease: 'easeInOut' }}>
         <MotionCanvas
