@@ -11,5 +11,5 @@ public interface MemberCustomRepository {
 
     Boolean updateMember(String url, String address);
 
-    MemberResponseDtoForRank makeMemberDtoForRank(Member member);
+    MemberResponseDtoForRank makeMemberDtoForRank(Member member, int rank);
 }

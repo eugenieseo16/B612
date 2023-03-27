@@ -71,9 +71,9 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
         return memberResponseDto;
     }
     @Override
-    public MemberResponseDtoForRank makeMemberDtoForRank(Member member) {
+    public MemberResponseDtoForRank makeMemberDtoForRank(Member member, int rank) {
         MemberResponseDtoForRank memberResponseDtoForRank=MemberResponseDtoForRank.builder()
-                .rank(0)
+                .rank(rank)
                 .memberId(member.getMemberId())
                 .memberAddress(member.getMemberAddress())
                 .memberNickname(member.getMemberNickname())
