@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/friend")
+@RequestMapping("/api/friend")
 @Api("친구 api")
 @RequiredArgsConstructor
 public class FriendController {
@@ -62,7 +62,7 @@ public class FriendController {
     @Transactional
     @ApiOperation(value = "친구 삭제 or 친구 요청 거절", notes = "친구와 친구를 끊거나 친구 요청을 거절함")
     @DeleteMapping("/{myId}&{requestId}")
-    public ResponseEntity<?> deleteFriend(@ApiParam(value = "내 id 입력", required = true)@PathVariable("myId") int myId,@ApiParam(value = "친구를 요청한 사람 혹은 친구의 멤버 아이디 입력", required = true)@PathVariable("requestId") int friendMemberId){
+    public ResponseEntity<?> deleteFriend(@ApiParam(value = "내 id 입력", required = true, example = "0")@PathVariable("myId") int myId,@ApiParam(value = "친구를 요청한 사람 혹은 친구의 멤버 아이디 입력", required = true, example = "0")@PathVariable("requestId") int friendMemberId){
         if(friendService.deleteFriend(myId,friendMemberId)){
             BaseResponseBody baseResponseBody=
                     BaseResponseBody.builder()
@@ -87,7 +87,7 @@ public class FriendController {
     @Transactional
     @ApiOperation(value = "친구 요청 수락", notes = "친구요청 수락")
     @GetMapping("/accept/{myId}&{requestId}")
-    public ResponseEntity<?> acceptFriendRequest(@ApiParam(value = "내 id 입력", required = true)@PathVariable("myId") int myId,@ApiParam(value = "친구를 요청한 사람 아이디 입력", required = true)@PathVariable("requestId") int requestId){
+    public ResponseEntity<?> acceptFriendRequest(@ApiParam(value = "내 id 입력", required = true, example = "0")@PathVariable("myId") int myId,@ApiParam(value = "친구를 요청한 사람 아이디 입력", required = true, example = "0")@PathVariable("requestId") int requestId){
 
         if(friendService.acceptFriend(myId,requestId)){
             BaseResponseBody baseResponseBody=
@@ -201,7 +201,7 @@ public class FriendController {
     @Transactional
     @ApiOperation(value = "request 멤버와 response 멤버 아이디로 친구 dto 찾기", notes = "친구신청을 건사람 아이디와 친구신청을 받은 사람 아이디를 입력해 친구 dto를 받아옵니다.")
     @GetMapping("/{requestId}&{responseId}")
-    public ResponseEntity<?>  findFriend(@ApiParam(value = "친구신청을 건 사람") @PathVariable("requestId")int requestId, @ApiParam(value = "친구신청을 받은 사람") @PathVariable("responseId")int responseId){
+    public ResponseEntity<?>  findFriend(@ApiParam(value = "친구신청을 건 사람", example = "0") @PathVariable("requestId")int requestId, @ApiParam(value = "친구신청을 받은 사람", example = "0") @PathVariable("responseId")int responseId){
         FriendResponseDto friendResponseDto= friendService.findFriend(requestId,responseId);
         if(friendResponseDto!=null){
             BaseResponseBody baseResponseBody= BaseResponseBody.builder()
