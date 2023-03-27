@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useSetRecoilState } from 'recoil';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
+import { Avatar } from '@mui/material';
 
 import SSF from '../../assets/imgs/ssf.png';
 
@@ -11,11 +12,8 @@ function ProfileCard({ user }: { user: IUser | null }) {
       <div className="detail-container">
         <div className="planet-owner">
           <div className="member-info">
-            <img
-              src="https://i.pinimg.com/236x/df/3c/4d/df3c4dcf15935d0111426bb28b12d9b1.jpg"
-              alt=""
-            />
-            <h6>사용자 이름 #7</h6>
+            <Avatar src={user?.memberImage} />
+            <h6>{user?.memberNickname}</h6>
             <span></span>
           </div>
 
@@ -51,11 +49,7 @@ export const StyledProfileCard = styled.div`
       .member-info {
         display: flex;
         align-items: center;
-        img {
-          width: 3rem;
-          height: 3rem;
-          border-radius: 50%;
-        }
+        gap: 1rem;
       }
     }
 

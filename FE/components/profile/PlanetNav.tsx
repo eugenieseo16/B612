@@ -1,27 +1,30 @@
 import styled from '@emotion/styled';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import selectedPlanetAtom from 'store/profile/selectedPlanet';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { shadowGenerator, simpleShadow } from 'styles/utils';
 import { colors } from 'styles/colors';
+import planetAtom from 'store/planetsAtom';
 
 function PlanetNav() {
   const [selectedPlanet, setSelectedPlanet] =
     useRecoilState(selectedPlanetAtom);
+  const plants = useRecoilValue(planetAtom);
+
   const handlePlanet = (type: 'next' | 'prev') => () => {
     if (type === 'next') {
-      if (selectedPlanet == 5) return;
+      if (selectedPlanet == plants.length - 1) return;
       setSelectedPlanet(selectedPlanet + 1);
     } else {
-      if (selectedPlanet == 1) return;
+      if (selectedPlanet == 0) return;
       setSelectedPlanet(selectedPlanet - 1);
     }
   };
   return (
     <>
       <Button onClick={handlePlanet('prev')} style={{ left: '20%' }}>
-        {selectedPlanet > 1 && (
+        {selectedPlanet > 0 && (
           <NavigateBeforeIcon
             sx={{
               fontSize: '8rem',
@@ -32,7 +35,7 @@ function PlanetNav() {
         )}
       </Button>
       <Button onClick={handlePlanet('next')} style={{ right: '20%' }}>
-        {selectedPlanet < 5 && (
+        {selectedPlanet < plants.length - 1 && (
           <NavigateNextIcon
             sx={{
               fontSize: '8rem',

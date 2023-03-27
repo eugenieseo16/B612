@@ -1,15 +1,22 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import SSF from '../../assets/imgs/ssf.png';
+import { useRecoilValue } from 'recoil';
+import selectedPlanetAtom from 'store/profile/selectedPlanet';
+import planetAtom from 'store/planetsAtom';
 
 function PlanetDetailCard() {
+  const selectedId = useRecoilValue(selectedPlanetAtom);
+  const planets = useRecoilValue(planetAtom);
+  console.log(planets[selectedId].planetType);
   return (
     <PlanetCard>
       <div className="detail-container">
         <div>
-          <p>진실된 뱀파이어처럼</p>
-          <h2>부지런한 하나별</h2>
+          <p>
+            {planets[selectedId].planetName.split(' ').slice(0, 3).join(' ')}
+          </p>
+          <h2>{planets[selectedId].planetName.split(' ')[3]}</h2>
         </div>
         <div style={{ display: 'flex', alignItems: 'end' }}>
           <button>자세히 보기</button>

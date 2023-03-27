@@ -23,7 +23,6 @@ function Example() {
       ],
     });
   };
-  console.log(planets);
   return (
     <div>
       <h2>잔고 {user?.eth} GoerliETH</h2>

@@ -2,23 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion-3d';
 import { useGLTF } from '@react-three/drei';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import selectedPlanetAtom from 'store/profile/selectedPlanet';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { Box3, Vector3 } from 'three';
+import { usePlanetTokenContract } from '@components/contracts/planetToken';
+import planetAtom from 'store/planetsAtom';
 
 function Planets({ user }: { user: IUser | null }) {
+  const planets = useRecoilValue(planetAtom);
+
   const getRandom = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
   };
+
+  console.log('PLANETS', planets);
   return (
     <>
       <motion.group>
-        {[1, 2, 3, 4, 5].map((e, i) => (
+        {planets.map((planet, i) => (
           <Planet
-            key={e}
-            index={i}
-            planetId={e}
+            key={i}
+            data={planet}
+            planetId={i}
             pos={[-20 + 10 * i, getRandom(15, 35), getRandom(-30, -10)]}
             time={getRandom(10, 15)}
           />
@@ -31,7 +37,7 @@ function Planets({ user }: { user: IUser | null }) {
 export default Planets;
 
 // eslint-disable-next-line
-function Planet({ planetId, time, pos }: any) {
+function Planet({ data, planetId, time, pos }: any) {
   const [selected, setSelected] = useRecoilState(selectedPlanetAtom);
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
 
@@ -68,7 +74,7 @@ function Planet({ planetId, time, pos }: any) {
 
   useEffect(() => {
     if (roomIndex !== 2) setSelected(-1);
-    else setSelected(1);
+    else setSelected(0);
   }, [roomIndex, setSelected]);
 
   return (

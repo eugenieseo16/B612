@@ -20,7 +20,6 @@ const FLOWER_IMG = [marioFlower, glowFlower, dinosour];
 
 function FlowersModal({ user }: { user: IUser | null }) {
   const [selectedType, setSelectedType] = useState(-1);
-  console.log(user);
   return (
     <Container>
       <div

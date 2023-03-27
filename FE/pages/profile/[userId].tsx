@@ -23,6 +23,7 @@ import PlanetNav from '@components/profile/PlanetNav';
 import ProfileCard from '@components/profile/ProfileCard';
 import PlanetDetailCard from '@components/profile/PlanetDetailCard';
 import MyProfileModal from '@components/profile/MyProfileModal';
+import PlanetController from '@components/PlanetController';
 
 function UserProfile() {
   const router = useRouter();
@@ -41,7 +42,7 @@ function UserProfile() {
   useEffect(() => {
     setRoomIndex(0);
   }, []);
-  console.log(me);
+  console.log(me, userData?.responseData?.memberAddress);
 
   return (
     <div
@@ -51,6 +52,7 @@ function UserProfile() {
         background: '#252530',
       }}
     >
+      <PlanetController userAddress={userData?.responseData?.memberAddress} />
       {roomIndex !== 1 && <RoomNav />}
       {planetDetail !== -1 && (
         <>

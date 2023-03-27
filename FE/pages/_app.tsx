@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <UserController />
-        <PlanetController />
+        {/* <PlanetController /> */}
         <Layout />
         <AnimatePresence mode="wait">
           <motion.div
