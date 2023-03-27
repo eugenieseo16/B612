@@ -1,14 +1,12 @@
 /* eslint-disable prefer-const */
-import React, { useEffect, useRef } from 'react';
-import {
-  OrbitControls,
-  PerspectiveCamera,
-  useAnimations,
-  useGLTF,
-} from '@react-three/drei';
+import React, { useEffect, useRef, useState } from 'react';
+import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
+
+import Modal from '@mui/material/Modal';
+import { CertificateModal } from '@components/Planet/index';
 
 // eslint-disable-next-line prefer-const
 let walkDirection = new THREE.Vector3();
@@ -34,7 +32,7 @@ const directionOffset = ({
     if (left) {
       directionOffset = Math.PI / 4; // w+a
     } else if (right) {
-      directionOffset = Math.PI / 4; // w+d
+      directionOffset = -Math.PI / 4; // w+d
     }
   } else if (backward) {
     if (left) {
@@ -69,7 +67,7 @@ const AvatarFinn = () => {
   });
 
   const currentAction = useRef('');
-  const controlsRef = useRef<typeof OrbitControls>();
+  // const controlsRef = useRef<typeof OrbitControls>();
   const camera = useThree(state => state.camera);
 
   const updateCameraTarget = (moveX: number, moveZ: number) => {
@@ -106,6 +104,73 @@ const AvatarFinn = () => {
       currentAction.current = action;
     }
   }, [forward, backward, left, right, jump, shift]);
+
+  // 줌인 줌아웃 설정을 적용해보자
+  const MIN_ZOOM = 0.5;
+  const MAX_ZOOM = 15;
+
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      const deltaY = event.deltaY;
+      let zoomAmount = deltaY > 0 ? 0.5 : 1.5; // zoom in 또는 zoom out
+      const currentZoom = camera.zoom * zoomAmount;
+      if (currentZoom < MIN_ZOOM) {
+        zoomAmount = MIN_ZOOM / camera.zoom;
+      } else if (currentZoom > MAX_ZOOM) {
+        zoomAmount = MAX_ZOOM / camera.zoom;
+      }
+      camera.zoom *= zoomAmount;
+      camera.updateProjectionMatrix();
+    };
+
+    window.addEventListener('wheel', handleWheel);
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [camera]);
+
+  // 캐릭터가 갈수있는 영역좌표 설정하기
+  const isInAllowedArea = (x: number, z: number): boolean => {
+    if (x < -8 && x >= -23) {
+      if ((z >= 16 && z <= 40) || (z >= -48 && z <= -16)) {
+        return true;
+      }
+    } else if (x >= -8 && x <= 26) {
+      if (z >= -23 && z <= 40) {
+        return true;
+      }
+    } else if (x > 26 && x <= 48) {
+      if (z >= -48 && z <= -17) {
+        return true;
+      }
+    } else if (x > 48 && x < 106) {
+      if (z >= -48 && z <= 40) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  // modal 영역 설정하기
+
+  const isModalArea = (x: number, z: number): boolean => {
+    if (x <= -20 && x >= -23 && z >= -48 && z <= -45) {
+      return true;
+    }
+    return false;
+  };
+
+  const [showModal, setShowModal] = useState(false);
+  const handleOpen = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+
+  useEffect(() => {
+    if (isModalArea(model.scene.position.x, model.scene.position.z)) {
+      setShowModal(true);
+    } else {
+      setShowModal(false);
+    }
+  }, [model.scene.position.x, model.scene.position.z]);
 
   useFrame((state, delta) => {
     if (
@@ -146,18 +211,44 @@ const AvatarFinn = () => {
       const moveX = walkDirection.x * velocity * delta;
       const moveZ = walkDirection.z * velocity * delta;
 
-      model.scene.position.x += moveX;
-      model.scene.position.z += moveZ;
-      pos = [model.scene.position.x, 0, model.scene.position.z];
-      updateCameraTarget(moveX, moveZ);
+      // Check if the new position is within the allowed area
+      const newPosition = model.scene.position.clone();
+      newPosition.x += moveX;
+      newPosition.z += moveZ;
+      if (isInAllowedArea(newPosition.x, newPosition.z)) {
+        model.scene.position.x += moveX;
+        model.scene.position.z += moveZ;
+        pos = [model.scene.position.x, 0, model.scene.position.z];
+        updateCameraTarget(moveX, moveZ);
+      }
     }
   });
   console.log(cameraTarget);
+
   return (
     <>
       {/* <PerspectiveCamera position={} ref={ref}/> */}
-      {/* <OrbitControls target={cameraTarget} camera={ref.current} /> */}
+      {/* <OrbitControls
+        target={[
+          model.scene.position.x,
+          model.scene.position.y,
+          model.scene.position.z,
+        ]}
+        enableDamping={true}
+      /> */}
       <primitive object={model.scene} />;
+      <Html>
+        {showModal && (
+          <Modal open={showModal} onClose={handleClose}>
+            <CertificateModal />
+          </Modal>
+        )}
+      </Html>
+      {/* {showModal && (
+        <Modal open={showModal} onClose={handleClose}>
+          <CertificateModal />
+        </Modal>
+      )} */}
     </>
   );
 };
