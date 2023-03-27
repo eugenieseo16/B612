@@ -4,6 +4,10 @@ import Friend from '../assets/imgs/buttonIcons/users.svg';
 import Planet from '../assets/imgs/buttonIcons/planet.svg';
 import Plant from '../assets/imgs/buttonIcons/plant.svg';
 import Quest from '../assets/imgs/buttonIcons/target-arrow.svg';
+import Chair from '../assets/imgs/buttonIcons/armchair.svg';
+import Door from '../assets/imgs/buttonIcons/door.svg';
+import Home from '../assets/imgs/buttonIcons/home.svg';
+import User from '../assets/imgs/buttonIcons/user.svg';
 
 export const iconDataList = new Map<string, string>();
 iconDataList.set('item', Item.src);
@@ -12,3 +16,7 @@ iconDataList.set('friend', Friend.src);
 iconDataList.set('planet', Planet.src);
 iconDataList.set('plant', Plant.src);
 iconDataList.set('quest', Quest.src);
+iconDataList.set('chair', Chair.src);
+iconDataList.set('door', Door.src);
+iconDataList.set('home', Home.src);
+iconDataList.set('user', User.src);
