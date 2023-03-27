@@ -105,7 +105,7 @@ function MyProfileModal() {
                 // axios
                 setEditValue({ ...me, ...editValue });
                 setIsEdit(false);
-                setMe({ ...me, ...editValue });
+                // setMe({ ...me, ...editValue });
               }}
             >
               등록

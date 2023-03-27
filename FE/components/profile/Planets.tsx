@@ -9,7 +9,7 @@ import { Box3, Vector3 } from 'three';
 import { usePlanetTokenContract } from '@components/contracts/planetToken';
 import planetAtom from 'store/planetsAtom';
 
-function Planets({ user }: { user: IUser | null }) {
+function Planets() {
   const planets = useRecoilValue(planetAtom);
 
   const getRandom = (min: number, max: number) => {

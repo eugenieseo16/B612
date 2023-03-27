@@ -76,7 +76,7 @@ function UserProfile() {
           <RecoilBridge>
             {/* <ambientLight intensity={0.1} /> */}
             <MyCamera router={router} />
-            <Planets user={userData?.responseData} />
+            <Planets />
             <Room />
             <Garden />
           </RecoilBridge>
