@@ -65,6 +65,7 @@ public class PlanetCustomRepositoryImpl implements PlanetCustomRepository {
                     .memberNickName(planet.getPlanetMemberId().getMemberNickname())
                     .memberCurrentScore(planet.getPlanetMemberId().getMemberCurrentScore())
                     .memberTierName(planet.getPlanetMemberId().getMemberTierId().getTierName())
+                    .memberLiked(planet.getPlanetMemberId().getMemberLiked())
                     .build();
 
         } else {

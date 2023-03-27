@@ -272,5 +272,21 @@ public class PlanetServiceImpl implements PlanetService {
         return planetResponseDto;
     }
 
+    @Override
+    public List<PlanetResponseDto> viewMemberStar(int memberId) {
+        ArrayList<PlanetResponseDto> planetResponseDtos=new ArrayList<>();
+        Member member=memberRepository.findMemberByMemberId(memberId);
+        List<Planet> planets =  planetRepository.findAllByPlanetMemberIdOrderByPlanetLikesCount(member);
+
+        if(planets.size()==0){
+            return null;
+        }
+
+        for(Planet planet:planets){
+            planetResponseDtos.add(planetCustomRepository.makeDto(planet));
+        }
+        return planetResponseDtos;
+    }
+
 
 }
