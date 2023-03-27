@@ -12,31 +12,37 @@ import { Modal } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
+import { useQuery } from 'react-query';
 
 import { Room, MyCamera, RoomNav, Planets } from '@components/profile/index';
 import ProfileModal from '@components/profile/ProfileModal';
 import { useRouter } from 'next/router';
 import Garden from '@components/profile/Garden';
 import selectedPlanetAtom from 'store/profile/selectedPlanet';
-import PlanetDetailCard from '@components/Planet/PlanetDetail';
 import PlanetNav from '@components/profile/PlanetNav';
+import ProfileCard from '@components/profile/ProfileCard';
+import PlanetDetailCard from '@components/profile/PlanetDetailCard';
+import MyProfileModal from '@components/profile/MyProfileModal';
 
 function UserProfile() {
-  const {
-    query: { userId },
-  } = useRouter();
-
+  const router = useRouter();
+  const { userId } = router.query;
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
   const planetDetail = useRecoilValue(selectedPlanetAtom);
-  const router = useRouter();
-  const user = useRecoilValue(userAtom);
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
+  const me = useRecoilValue(userAtom);
+
+  const { data: userData } = useQuery(`user/${userId}`, () =>
+    fetch(`https://j8a208.p.ssafy.io/api/member/${userId}`).then(res =>
+      res.json()
+    )
+  );
   useEffect(() => {
     setRoomIndex(0);
   }, []);
+  console.log(me);
 
-  // console.log('HERE!!!');
   return (
     <div
       style={{
@@ -54,7 +60,7 @@ function UserProfile() {
       )}
       {planetDetail === -1 && roomIndex === 0 && (
         <>
-          <PlanetDetailCard />
+          <ProfileCard user={userData?.responseData} />
         </>
       )}
 
@@ -68,7 +74,7 @@ function UserProfile() {
           <RecoilBridge>
             {/* <ambientLight intensity={0.1} /> */}
             <MyCamera router={router} />
-            <Planets />
+            <Planets user={userData?.responseData} />
             <Room />
             <Garden />
           </RecoilBridge>
@@ -90,7 +96,9 @@ function UserProfile() {
         closeAfterTransition
         hideBackdrop
         open={
-          roomIndex > 0 && roomIndex !== 2 && router.pathname === '/profile'
+          roomIndex > 0 &&
+          roomIndex !== 2 &&
+          router.pathname === '/profile/[userId]'
         }
         onClose={() => setRoomIndex(0)}
         onClick={() => setRoomIndex(0)}
@@ -98,7 +106,11 @@ function UserProfile() {
         <>
           {roomIndex === 1 ? (
             <MotionContainer>
-              <ProfileModal user={user} />
+              {me?.memberId == userId ? (
+                <MyProfileModal />
+              ) : (
+                <ProfileModal user={userData?.responseData} />
+              )}
             </MotionContainer>
           ) : roomIndex === 2 ? (
             'nullnullnull'

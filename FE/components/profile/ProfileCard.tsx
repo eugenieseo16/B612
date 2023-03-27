@@ -4,7 +4,7 @@ import roomIndexAtom from 'store/profile/roomIndexAtom';
 
 import SSF from '../../assets/imgs/ssf.png';
 
-function ProfileCard({ user }: { user: IUser }) {
+function ProfileCard({ user }: { user: IUser | null }) {
   const setRoomIndex = useSetRecoilState(roomIndexAtom);
   return (
     <StyledProfileCard>

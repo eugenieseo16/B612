@@ -7,7 +7,7 @@ import selectedPlanetAtom from 'store/profile/selectedPlanet';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { Box3, Vector3 } from 'three';
 
-function Planets() {
+function Planets({ user }: { user: IUser | null }) {
   const getRandom = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
   };
