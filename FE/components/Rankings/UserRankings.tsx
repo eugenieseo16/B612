@@ -12,9 +12,11 @@ import { Container } from './RankingsEmotion';
 import userRankings from '../../public/dummy/UserRanking.json';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-export default function BasicTable() {
-  const members = userRankings.content.members;
+import { MemberRankingAPI } from 'API/rankingURLs';
 
+export default function BasicTable() {
+  const data = MemberRankingAPI();
+  console.log(data);
   return (
     <Container>
       <TableContainer>
@@ -36,7 +38,7 @@ export default function BasicTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {members.map(member => (
+            {data?.responseData?.map((member: any) => (
               <TableRow
                 key={member.memberId}
                 sx={
@@ -55,18 +57,19 @@ export default function BasicTable() {
                 <TableCell align="left">
                   <Link href={`/profile/${member.memberId}`} id="link-item">
                     <div className="member-item">
-                      <img src={member.memberProfileImage} alt="" />
-                      <h6>{member.memberName}</h6>
+                      <img src={member.memberImage} alt="" />
+                      <h6>{member.memberNickname}</h6>
                     </div>
                   </Link>
                 </TableCell>
                 <TableCell align="center">
-                  <p>{member.memberClass}</p>
+                  {/* member tier 추가 필요 */}
+                  <p>{member.memberTierName}</p>
                 </TableCell>
                 <TableCell align="center">
                   <div className="like-item">
                     <FavoriteIcon id="icon-item" />
-                    <p>{member.totalCount}</p>
+                    <p>{member.memberLiked}</p>
                   </div>
                 </TableCell>
               </TableRow>
