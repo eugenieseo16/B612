@@ -1,23 +1,12 @@
 import { Canvas } from '@react-three/fiber';
+import { Stats } from '@react-three/drei';
 
-import {
-  // OrbitControls,
-  // PerspectiveCamera,
-  // Stars,
-  Stats,
-  // useTexture,
-  // useGLTF,
-  // useAnimations,
-} from '@react-three/drei';
 import Lights from '@components/square/Lights';
 import Ground from '@components/square/Ground';
 import Tetris from '@components/square/Tetris';
 import { AppleTreeModel } from '@components/square/Appletree';
 import AvatarFinn from '@components/square/AvatarFinn';
-// import Trees from '@components/square/Trees';
-// import Rocks from '@components/square/Rocks';
 import Tetris2 from '@components/square/Tetris2';
-// import { degToRad } from 'three/src/math/MathUtils';
 
 function Square() {
   const styles = {
@@ -40,23 +29,16 @@ function Square() {
         }}
       >
         {/*testing = true : 왼쪽상단에 상태를 보여준다, helper 킨다 */}
-        {/* {testing ? <Stats /> : null}
+        {testing ? <Stats /> : null}
         {testing ? <axesHelper args={[2]} /> : null}
-        {testing ? <gridHelper args={[300, 300]} /> : null} */}
-        {/* <OrbitControls
-          minDistance={2}
-          maxDistance={100}
-          maxPolarAngle={degToRad(60)}
-        /> */}
-        {/* <Stars /> */}
+        {testing ? <gridHelper args={[300, 300]} /> : null}
+
         <Ground />
         <Tetris />
         <Tetris2 />
         <AppleTreeModel position={[-3, 0, 2]} />
         <Lights />
         <AvatarFinn />
-        {/* <Trees />
-        <Rocks /> */}
       </Canvas>
     </div>
   );
