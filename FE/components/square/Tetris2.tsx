@@ -9,7 +9,7 @@ import { Html } from '@react-three/drei';
 
 const Tetris2 = () => {
   const model = useLoader(GLTFLoader, './tetris/tetris_animation.glb');
-  const { actions } = useAnimations(model.animations, model.scene.clone());
+  const { actions } = useAnimations(model.animations, model.scene);
   const objectRef = useRef<THREE.Object3D>(null);
 
   const [openCertificate, setOpenCertificate] = useState(false);
@@ -23,18 +23,15 @@ const Tetris2 = () => {
 
   return (
     <>
-      <object3D ref={objectRef} scale={[40, 40, 40]} position={[30, 0, -40]}>
+      <object3D ref={objectRef} scale={[40, 40, 40]} position={[35, 0, -45]}>
+        <primitive object={model.scene} onClick={handleOpenCertificate} />
+      </object3D>
+      {/* <object3D ref={objectRef} scale={[40, 40, 40]} position={[-20, 0, 18]}>
         <primitive
           object={model.scene.clone()}
           onClick={handleOpenCertificate}
         />
-      </object3D>
-      <object3D ref={objectRef} scale={[40, 40, 40]} position={[-20, 0, 18]}>
-        <primitive
-          object={model.scene.clone()}
-          onClick={handleOpenCertificate}
-        />
-      </object3D>
+      </object3D> */}
       <Html>
         {openCertificate && (
           <Modal open={openCertificate} onClose={handleCloseCertificate}>

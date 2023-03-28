@@ -1,12 +1,14 @@
 import { Canvas } from '@react-three/fiber';
 import { Stats } from '@react-three/drei';
 
-import Lights from '@components/square/Lights';
-import Ground from '@components/square/Ground';
-import Tetris from '@components/square/Tetris';
-import { AppleTreeModel } from '@components/square/Appletree';
-import AvatarFinn from '@components/square/AvatarFinn';
-import Tetris2 from '@components/square/Tetris2';
+import {
+  Lights,
+  Ground,
+  Tetris,
+  AppleTreeModel,
+  AvatarFinn,
+  Tetris2,
+} from '@components/square/index';
 
 function Square() {
   const styles = {
