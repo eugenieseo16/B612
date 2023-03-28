@@ -4,9 +4,11 @@ import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
+import CertificateModal from '@components/Planet/CertificateModal';
+import { Modal } from '@mui/material';
 
-import Modal from '@mui/material/Modal';
-import { CertificateModal } from '@components/Planet/index';
+// import Modal from '@mui/material/Modal';
+// import { CertificateModal } from '@components/Planet/index';
 
 // eslint-disable-next-line prefer-const
 let walkDirection = new THREE.Vector3();
@@ -153,8 +155,12 @@ const AvatarFinn = () => {
 
   // modal 영역 설정하기
 
-  const isModalArea = (x: number, z: number): boolean => {
-    if (x <= -20 && x >= -23 && z >= -48 && z <= -45) {
+  const isTetrisModalArea = (x: number, z: number): boolean => {
+    if (x <= -18 && x >= -23 && z >= -48 && z <= -45) {
+      return true;
+    } else if (x <= 32 && x >= 28 && z >= -42 && z <= -38) {
+      return true;
+    } else if (x <= -18 && x >= -23 && z >= 16 && z <= 20) {
       return true;
     }
     return false;
@@ -165,7 +171,7 @@ const AvatarFinn = () => {
   const handleClose = () => setShowModal(false);
 
   useEffect(() => {
-    if (isModalArea(model.scene.position.x, model.scene.position.z)) {
+    if (isTetrisModalArea(model.scene.position.x, model.scene.position.z)) {
       setShowModal(true);
     } else {
       setShowModal(false);
