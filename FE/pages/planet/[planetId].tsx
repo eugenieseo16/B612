@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber';
 
 import Modal from '@mui/material/Modal';
 
-import PlanetTest from '@components/Planet/PlanetTest';
+// import PlanetTest from '@components/Planet/PlanetTest';
 import PlanetDetailCard from '@components/Planet/PlanetDetail';
 import BlueGlowingButton from '@components/common/BlueGlowingButton';
 import PinkGlowingButton from '@components/common/PinkGlowingButton';
@@ -13,7 +13,6 @@ import YellowGlowingButton from '@components/common/YellowGlowingButton';
 import {
   CertificateModal,
   FriendsModal,
-  ItemsModal,
   PlanetsModal,
 } from '@components/Planet/index';
 
@@ -32,10 +31,6 @@ function Planet() {
   const handleOpenFriends = () => setOpenFriends(true);
   const handleCloseFriends = () => setOpenFriends(false);
 
-  const [openItems, setOpenItems] = useState(false);
-  const handleOpenItems = () => setOpenItems(true);
-  const handleCloseItems = () => setOpenItems(false);
-
   const [openCertificate, setOpenCertificate] = useState(false);
   const handleOpenCertificate = () => setOpenCertificate(true);
   const handleCloseCertificate = () => setOpenCertificate(false);
@@ -46,7 +41,7 @@ function Planet() {
 
   return (
     <>
-      <PlanetTest></PlanetTest>
+      {/* <PlanetTest></PlanetTest> */}
 
       <PlanetDetailCard></PlanetDetailCard>
       <FloatingButtons>
@@ -65,11 +60,6 @@ function Planet() {
       {/* 친구 목록 조회 */}
       <Modal open={openFriends} onClose={handleCloseFriends}>
         <FriendsModal />
-      </Modal>
-
-      {/* 아이템 조회 */}
-      <Modal open={openItems} onClose={handleCloseItems}>
-        <ItemsModal />
       </Modal>
 
       {/* 인증서 발급 */}
