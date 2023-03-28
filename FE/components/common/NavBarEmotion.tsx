@@ -45,10 +45,16 @@ export const Container = styled.div`
     align-items: center;
 
     .icon-container {
-      margin-left: 2rem;
+      margin-left: 1rem;
       display: flex;
       #icon-item {
         color: #394666;
+        margin-left: 20px;
+      }
+      #profile-image {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
         margin-left: 20px;
       }
     }

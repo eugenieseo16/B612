@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { Canvas } from '@react-three/fiber';
 
 import Modal from '@mui/material/Modal';
 
+import PlanetTest from '@components/Planet/PlanetTest';
 import PlanetDetailCard from '@components/Planet/PlanetDetail';
 import BlueGlowingButton from '@components/common/BlueGlowingButton';
 import PinkGlowingButton from '@components/common/PinkGlowingButton';
-import PurpleGlowingButton from '@components/common/PurpleGlowingButton';
 import YellowGlowingButton from '@components/common/YellowGlowingButton';
 
 import {
@@ -45,14 +46,12 @@ function Planet() {
 
   return (
     <>
+      <PlanetTest></PlanetTest>
+
       <PlanetDetailCard></PlanetDetailCard>
       <FloatingButtons>
         <div className="floating-button-items" onClick={handleOpenFriends}>
           <BlueGlowingButton icon={'friend'} />
-        </div>
-
-        <div className="floating-button-items" onClick={handleOpenItems}>
-          <PurpleGlowingButton icon={'plant'} />
         </div>
 
         <div className="floating-button-items" onClick={handleOpenCertificate}>
