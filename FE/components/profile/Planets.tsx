@@ -6,21 +6,22 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import selectedPlanetAtom from 'store/profile/selectedPlanet';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { Box3, Vector3 } from 'three';
-import { usePlanetTokenContract } from '@components/contracts/planetToken';
+import {
+  usePlanetContract,
+  usePlanetTokenContract,
+} from '@components/contracts/planetToken';
 import planetAtom from 'store/planetsAtom';
 
-function Planets() {
+function Planets({ memberAddress }: { memberAddress: string }) {
   const planets = useRecoilValue(planetAtom);
-
   const getRandom = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
   };
 
-  console.log('PLANETS', planets);
   return (
     <>
       <motion.group>
-        {planets.map((planet, i) => (
+        {planets?.map((planet, i) => (
           <Planet
             key={i}
             data={planet}

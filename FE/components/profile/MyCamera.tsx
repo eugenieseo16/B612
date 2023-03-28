@@ -3,7 +3,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { LayoutCamera } from 'framer-motion-3d';
 import { useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 const CAMERA_POS = [
@@ -36,27 +36,27 @@ const CAMERA_ANGLE = [
     rotateZ: 0.455953684691092,
   },
 ];
-function MyCamera({ router }: { router: any }) {
+function MyChildCamera({ router }: { router: any }) {
   const ref = useRef();
   const [isAnimate, setIsAnimate] = useState(true);
   const roomIndex = useRecoilValue(roomIndexAtom);
-  useEffect(() => {
-    let id: ReturnType<typeof setTimeout>;
-    if (roomIndex === 3) {
-      id = setTimeout(() => {
-        router.push('/garden');
-      }, 500);
-    }
-    return () => {
-      if (id) clearTimeout(id);
-    };
-  }, [isAnimate, roomIndex, router]);
+  // useEffect(() => {
+  //   let id: ReturnType<typeof setTimeout>;
+  //   if (roomIndex === 3) {
+  //     id = setTimeout(() => {
+  //       router.push('/garden');
+  //     }, 500);
+  //   }
+  //   return () => {
+  //     if (id) clearTimeout(id);
+  //   };
+  // }, [roomIndex]);
 
   // useFrame(({ camera }) => {
   //   camera.lookAt(0, 25, -30);
   //   console.log(camera.rotation);
   // });
-
+  console.log(roomIndex, isAnimate);
   return (
     <>
       {!isAnimate && (roomIndex === 2 || roomIndex === 0) && (
@@ -87,4 +87,5 @@ function MyCamera({ router }: { router: any }) {
     </>
   );
 }
+const MyCamera = React.memo(MyChildCamera);
 export default MyCamera;

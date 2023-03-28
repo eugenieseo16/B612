@@ -5,6 +5,7 @@ import {
   useRecoilBridgeAcrossReactRoots_UNSTABLE,
   useRecoilState,
   useRecoilValue,
+  useSetRecoilState,
 } from 'recoil';
 import userAtom from 'store/userAtom';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
@@ -24,25 +25,39 @@ import ProfileCard from '@components/profile/ProfileCard';
 import PlanetDetailCard from '@components/profile/PlanetDetailCard';
 import MyProfileModal from '@components/profile/MyProfileModal';
 import PlanetController from '@components/PlanetController';
+import { usePlanetContract } from '@components/contracts/planetToken';
+import planetAtom from 'store/planetsAtom';
 
 function UserProfile() {
   const router = useRouter();
   const { userId } = router.query;
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
+
+  const setPlanets = useSetRecoilState(planetAtom);
+  const planetContract = usePlanetContract();
   const planetDetail = useRecoilValue(selectedPlanetAtom);
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
   const me = useRecoilValue(userAtom);
 
-  const { data: userData } = useQuery(`user/${userId}`, () =>
-    fetch(`https://j8a208.p.ssafy.io/api/member/${userId}`).then(res =>
+  const { data: userData } = useQuery(`user/${userId}`, () => {
+    if (!userId) return;
+    return fetch(`http://127.0.0.1:8080/api/member/${userId}`).then(res =>
       res.json()
-    )
-  );
+    );
+  });
+
   useEffect(() => {
     setRoomIndex(0);
-  }, []);
-  console.log(me, userData?.responseData?.memberAddress);
+    if (userData?.responseData?.memberAddress) {
+      planetContract?.methods
+        .getPlanetTokens(userData?.responseData?.memberAddress)
+        .call()
+        .then((data: any) => {
+          setPlanets(data);
+        });
+    }
+  }, [planetContract, userData]);
 
   return (
     <div
@@ -52,7 +67,7 @@ function UserProfile() {
         background: '#252530',
       }}
     >
-      <PlanetController userAddress={userData?.responseData?.memberAddress} />
+      {/* <PlanetController userAddress={userData?.responseData?.memberAddress} /> */}
       {roomIndex !== 1 && <RoomNav />}
       {planetDetail !== -1 && (
         <>
@@ -76,7 +91,7 @@ function UserProfile() {
           <RecoilBridge>
             {/* <ambientLight intensity={0.1} /> */}
             <MyCamera router={router} />
-            <Planets />
+            <Planets memberAddress={userData?.responseData?.memberAddress} />
             <Room />
             <Garden />
           </RecoilBridge>

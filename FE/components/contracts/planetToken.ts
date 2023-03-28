@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
 import useWeb3 from '.';
 
@@ -828,4 +830,13 @@ export const usePlanetTokenContract = () => {
   const web3 = useWeb3();
   if (web3) return new web3.eth.Contract(planetTokenAbi, planetTokenAddress);
   return null;
+};
+export const usePlanetContract = () => {
+  const [contract, setContract] = useState<any>();
+  useEffect(() => {
+    const web3 = new Web3(window.ethereum);
+    const temp: any = new web3.eth.Contract(planetTokenAbi, planetTokenAddress);
+    setContract(temp);
+  }, []);
+  return contract;
 };
