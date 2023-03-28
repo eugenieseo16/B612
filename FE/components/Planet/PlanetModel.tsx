@@ -3,13 +3,12 @@ import { Canvas } from '@react-three/fiber';
 import { useGLTF, Stage, PresentationControls } from '@react-three/drei';
 
 function Model(props: any) {
-  const { scene } = useGLTF('#');
+  const { scene } = useGLTF('/planet/blue_diamond.glb');
   return <primitive object={scene} {...props} />;
 }
 
 function PlanetTest() {
   return (
-    // <Canvas dpr={[1, 2]} camera={{ fov: 45 }} style={{ position: 'absolute' }}>
     <Canvas dpr={[1, 2]} camera={{ fov: 45 }} style={{ position: 'fixed' }}>
       <PresentationControls
         speed={1.5}
