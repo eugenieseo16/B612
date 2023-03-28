@@ -4,10 +4,10 @@ import { Canvas } from '@react-three/fiber';
 
 import Modal from '@mui/material/Modal';
 
+import PlanetTest from '@components/Planet/PlanetTest';
 import PlanetDetailCard from '@components/Planet/PlanetDetail';
 import BlueGlowingButton from '@components/common/BlueGlowingButton';
 import PinkGlowingButton from '@components/common/PinkGlowingButton';
-import PurpleGlowingButton from '@components/common/PurpleGlowingButton';
 import YellowGlowingButton from '@components/common/YellowGlowingButton';
 
 import {
@@ -46,7 +46,7 @@ function Planet() {
 
   return (
     <>
-      {/* <Canvas></Canvas> */}
+      <PlanetTest></PlanetTest>
 
       <PlanetDetailCard></PlanetDetailCard>
       <FloatingButtons>
