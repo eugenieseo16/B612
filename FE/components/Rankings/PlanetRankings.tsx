@@ -9,12 +9,13 @@ import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
 
 import { Container } from './RankingsEmotion';
-import planetRankings from '../../public/dummy/PlanetRanking.json';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-export default function BasicTable() {
-  const planets = planetRankings.content.members;
+import { PlanetRankingAPI } from 'API/rankingURLs';
 
+export default function BasicTable() {
+  const data = PlanetRankingAPI();
+  console.log(data);
   return (
     <Container>
       <TableContainer>
@@ -36,7 +37,7 @@ export default function BasicTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {planets.map(planet => (
+            {data?.responseData?.map((planet: any) => (
               <TableRow
                 key={planet.planetId}
                 sx={
@@ -55,18 +56,19 @@ export default function BasicTable() {
                 <TableCell align="left">
                   <Link href={`/planet/${planet.planetId}`} id="link-item">
                     <div className="planet-item">
-                      <img src={planet.memberProfileImage} alt="" />
+                      {/* Web3로 받아와야함 */}
+                      <img src={planet.planetImage} alt="" />
                       <h4>{planet.planetName}</h4>
                     </div>
                   </Link>
                 </TableCell>
                 <TableCell align="center">
-                  <p>{planet.memberName}</p>
+                  <p>{planet.memberNickName}</p>
                 </TableCell>
                 <TableCell align="center">
                   <div className="like-item">
                     <FavoriteIcon id="icon-item" />
-                    <p>{planet.totalCount}</p>
+                    <p>{planet.planetLikeCount}</p>
                   </div>
                 </TableCell>
               </TableRow>
