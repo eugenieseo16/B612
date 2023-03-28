@@ -16,6 +16,7 @@ import Modal from '@mui/material/Modal';
 
 import FriendsModal from '@components/Planet/FriendsModal';
 import QuestsModal from '@components/Planet/QuestsModal';
+import planetAtom from 'store/planetsAtom';
 
 const modalStyle = {
   position: 'absolute' as 'absolute',
@@ -60,7 +61,7 @@ const Home: NextPage = () => {
         <h1>{user?.memberNickname + '님, 환영해요!'}</h1>
       )}
 
-      <Link href={`/profile`}>myProfile</Link>
+      <Link href={`/profile/${user?.memberId}`}>myProfile</Link>
       <div>
         <Link href={`/square`}>광장으로 이동</Link>
       </div>

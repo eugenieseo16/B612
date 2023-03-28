@@ -4,8 +4,8 @@ interface IUser {
   memberImage?: string;
   memberNickname: string;
   memberTierName: string;
+  memberId: number;
   eth: number;
-  planets: IPlanet[];
 }
 
 interface IPlanet {
