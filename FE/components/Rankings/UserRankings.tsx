@@ -9,14 +9,12 @@ import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
 
 import { Container } from './RankingsEmotion';
-import userRankings from '../../public/dummy/UserRanking.json';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import { MemberRankingAPI } from 'API/rankingURLs';
 
 export default function BasicTable() {
   const data = MemberRankingAPI();
-  console.log(data);
   return (
     <Container>
       <TableContainer>
