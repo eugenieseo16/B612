@@ -1,5 +1,4 @@
 import { OrbitControls } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
 import { LayoutCamera } from 'framer-motion-3d';
 import { useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -40,17 +39,17 @@ function MyChildCamera({ router }: { router: any }) {
   const ref = useRef();
   const [isAnimate, setIsAnimate] = useState(true);
   const roomIndex = useRecoilValue(roomIndexAtom);
-  // useEffect(() => {
-  //   let id: ReturnType<typeof setTimeout>;
-  //   if (roomIndex === 3) {
-  //     id = setTimeout(() => {
-  //       router.push('/garden');
-  //     }, 500);
-  //   }
-  //   return () => {
-  //     if (id) clearTimeout(id);
-  //   };
-  // }, [roomIndex]);
+  useEffect(() => {
+    let id: ReturnType<typeof setTimeout>;
+    if (roomIndex === 3) {
+      id = setTimeout(() => {
+        router.push('/garden');
+      }, 500);
+    }
+    return () => {
+      if (id) clearTimeout(id);
+    };
+  }, [roomIndex]);
 
   // useFrame(({ camera }) => {
   //   camera.lookAt(0, 25, -30);
@@ -82,7 +81,7 @@ function MyChildCamera({ router }: { router: any }) {
         onAnimationComplete={() => setIsAnimate(false)}
         transition={{ duration: 1 }}
         far={1500}
-        position={[0, 10, 60]}
+        position={[0, 10, 150]}
       />
     </>
   );

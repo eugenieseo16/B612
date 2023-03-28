@@ -32,9 +32,9 @@ function UserProfile() {
   const router = useRouter();
   const { userId } = router.query;
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
+  const [planets, setPlanets] = useRecoilState(planetAtom);
+  const [selected, setSelected] = useRecoilState(selectedPlanetAtom);
 
-  const setPlanets = useSetRecoilState(planetAtom);
-  const planetContract = usePlanetContract();
   const planetDetail = useRecoilValue(selectedPlanetAtom);
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
@@ -49,15 +49,7 @@ function UserProfile() {
 
   useEffect(() => {
     setRoomIndex(0);
-    if (userData?.responseData?.memberAddress) {
-      planetContract?.methods
-        .getPlanetTokens(userData?.responseData?.memberAddress)
-        .call()
-        .then((data: any) => {
-          setPlanets(data);
-        });
-    }
-  }, [planetContract, userData]);
+  }, []);
 
   return (
     <div
@@ -91,10 +83,15 @@ function UserProfile() {
           <RecoilBridge>
             {/* <ambientLight intensity={0.1} /> */}
             <MyCamera router={router} />
-            <Planets memberAddress={userData?.responseData?.memberAddress} />
             <Room />
             <Garden />
           </RecoilBridge>
+          <Planets
+            memberAddress={userData?.responseData.memberAddress}
+            planetsState={[planets, setPlanets]}
+            selectedState={[selected, setSelected]}
+            roomIndexState={[roomIndex, setRoomIndex]}
+          />
         </MotionCanvas>
       </MotionConfig>
       <Canvas style={{ display: 'none' }}>
@@ -162,3 +159,5 @@ const MotionContainer = ({ children, ...rest }: any) => {
     </StyledFade>
   );
 };
+
+const Temp = () => {};

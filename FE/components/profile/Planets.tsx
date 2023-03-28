@@ -2,27 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion-3d';
 import { useGLTF } from '@react-three/drei';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import selectedPlanetAtom from 'store/profile/selectedPlanet';
-import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { Box3, Vector3 } from 'three';
-import {
-  usePlanetContract,
-  usePlanetTokenContract,
-} from '@components/contracts/planetToken';
-import planetAtom from 'store/planetsAtom';
 
-function Planets({ memberAddress }: { memberAddress: string }) {
-  const planets = useRecoilValue(planetAtom);
+import { usePlanetContract } from '@components/contracts/planetToken';
+
+function Planets({
+  memberAddress,
+  planetsState,
+  selectedState,
+  roomIndexState,
+}: any) {
+  const [planets, setPlanets] = planetsState;
+  const planetContract = usePlanetContract();
+
   const getRandom = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
   };
 
+  useEffect(() => {
+    if (!memberAddress) return;
+    planetContract?.methods
+      .getPlanetTokens(memberAddress)
+      .call()
+      .then((data: any) => {
+        setPlanets(data);
+      });
+  }, [planetContract]);
+
   return (
     <>
-      <motion.group>
-        {planets?.map((planet, i) => (
+      <group>
+        {planets?.map((planet: any, i: number) => (
           <Planet
+            selectedState={selectedState}
+            roomIndexState={roomIndexState}
             key={i}
             data={planet}
             planetId={i}
@@ -30,7 +43,7 @@ function Planets({ memberAddress }: { memberAddress: string }) {
             time={getRandom(10, 15)}
           />
         ))}
-      </motion.group>
+      </group>
     </>
   );
 }
@@ -38,9 +51,16 @@ function Planets({ memberAddress }: { memberAddress: string }) {
 export default Planets;
 
 // eslint-disable-next-line
-function Planet({ data, planetId, time, pos }: any) {
-  const [selected, setSelected] = useRecoilState(selectedPlanetAtom);
-  const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
+function Planet({
+  data,
+  planetId,
+  time,
+  pos,
+  selectedState,
+  roomIndexState,
+}: any) {
+  const [selected, setSelected] = selectedState;
+  const [roomIndex, setRoomIndex] = roomIndexState;
 
   const scene = useGLTF(
     'https://res.cloudinary.com/dohkkln9r/image/upload/v1679556189/cprsxurbqcea7uk6p2vf.glb'
