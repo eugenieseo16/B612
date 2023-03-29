@@ -26,6 +26,10 @@ function UserController() {
       isApproved = await planetContract?.methods
         .isApprovedForAll(memberAddress, planetContractAddress)
         .call();
+      let planets = [];
+      planets = await planetContract?.methods
+        .getPlanetTokens(memberAddress)
+        .call();
 
       const eth = (
         parseInt(
@@ -38,7 +42,7 @@ function UserController() {
         10 ** -18
       ).toFixed(4);
 
-      setUser({ ...data.responseData, isApproved, eth: +eth });
+      setUser({ ...data.responseData, planets, isApproved, eth: +eth });
     };
 
     handleAccount();
@@ -49,7 +53,7 @@ function UserController() {
       window.ethereum?.removeListener('chainChanged', handleAccount);
     };
   }, [planetContract]);
-
+  console.log('USER CONTROLLER');
   return <></>;
 }
 

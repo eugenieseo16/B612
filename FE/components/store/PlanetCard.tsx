@@ -1,5 +1,5 @@
 import { PlanetDetail } from '../Planet/PlanetDetailEmotion';
-import SSF from '../../assets/imgs/ssf.png';
+import GETH from '../../assets/imgs/goerli-eth.png';
 import { useRecoilValue } from 'recoil';
 import storeIndexAtom from 'store/store/storeIndexAtom';
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';
@@ -20,9 +20,12 @@ function PlanetCard() {
     planetContract?.methods.purchasePlanetToken(planet?.planetTokenId).send({
       from: me?.memberAddress,
       value: planet.planetPrice,
-      // gasPrice: '2500000000',
     });
-    console.log(planet.planetTokenId);
+  };
+  const discardForSale = () => {
+    planetContract?.methods
+      .discardForSalePlanetToken(planet?.planetTokenId)
+      .send({ from: me?.memberAddress });
   };
 
   return (
@@ -34,8 +37,8 @@ function PlanetCard() {
             <h2>{title}</h2>
           </div>
           <div className="planet-price">
-            <img src={SSF.src} alt="SSAFY coin" id="ssafy-coin" />
-            <p>{+planet?.planetPrice * 10 ** -18} SSF</p>
+            <img src={GETH.src} alt="SSAFY coin" id="ssafy-coin" />
+            <p>{+planet?.planetPrice * 10 ** -18} GETH</p>
           </div>
         </div>
 
@@ -46,7 +49,12 @@ function PlanetCard() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-          <button onClick={purchasePlanet}>즉시구매</button>
+          {me?.memberAddress.toLocaleUpperCase() !=
+          planet?.userAddress.toLocaleUpperCase() ? (
+            <button onClick={purchasePlanet}>즉시구매</button>
+          ) : (
+            <button onClick={discardForSale}>판매 취소</button>
+          )}
         </div>
       </div>
     </PlanetDetail>
