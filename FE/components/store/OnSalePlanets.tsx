@@ -6,13 +6,16 @@ import storeIndexAtom from 'store/store/storeIndexAtom';
 
 function OnSalePlanets() {
   const onSalePlanets = useRecoilValue(onSalePlanetsAtom);
-  const { index } = useRecoilValue(storeIndexAtom);
+  const { index, page } = useRecoilValue(storeIndexAtom);
+  const curPlanetsLength =
+    onSalePlanets.length - page * 5 > 4 ? 5 : onSalePlanets.length - page * 5;
 
   return (
     <>
       {onSalePlanets.map((planet, i) => {
-        const deg = (Math.PI * 2 * (i - index)) / 6;
-
+        const deg =
+          (Math.PI * 2 * (i - (index % curPlanetsLength))) / curPlanetsLength;
+        if (i > 4) return;
         return (
           <motion.mesh
             key={i}
@@ -20,7 +23,9 @@ function OnSalePlanets() {
             transition={{ duration: 0.4, ease: 'linear' }}
           >
             <sphereGeometry />
-            <meshStandardMaterial color={`#${planet.planetColor.slice(1)}`} />
+            <meshStandardMaterial
+              color={`#${planet.planetColor.slice(0, 6)}`}
+            />
           </motion.mesh>
         );
       })}

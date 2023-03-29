@@ -9,6 +9,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import PlanetController from '@components/PlanetController';
+import { useGLTF } from '@react-three/drei';
+import { PLANETS_LIST } from 'utils/utils';
 React.useLayoutEffect = React.useEffect;
 
 declare global {
@@ -19,6 +21,12 @@ declare global {
 }
 const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
+  const tt = useGLTF.preload('/little-prince.glb');
+
+  PLANETS_LIST.forEach(planet => {
+    useGLTF.preload(planet);
+  });
+
   const router = useRouter();
   const Background = styled.div`
     background-image: url('https://ifh.cc/g/HXB7pP.jpg');

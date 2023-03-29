@@ -1,8 +1,7 @@
 import { usePlanetContract } from '@components/contracts/planetToken';
 import OnSalePlanets from '@components/store/OnSalePlanets';
 import PlanetCard from '@components/store/PlanetCard';
-import StoreCamera from '@components/store/StoreCamera';
-import { OrbitControls } from '@react-three/drei';
+import StoreNav from '@components/store/StoreNav';
 import { Canvas } from '@react-three/fiber';
 import { MotionCanvas } from 'framer-motion-3d';
 import React, { useEffect } from 'react';
@@ -11,12 +10,10 @@ import {
   useRecoilState,
 } from 'recoil';
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';
-import storeIndexAtom from 'store/store/storeIndexAtom';
 
 function StorePage() {
   const planetContract = usePlanetContract();
   const [onSalePlanets, setOnSalePlanets] = useRecoilState(onSalePlanetsAtom);
-  const [storeIndex, setStoreIndex] = useRecoilState(storeIndexAtom);
 
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
@@ -32,24 +29,9 @@ function StorePage() {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          if (storeIndex.index <= 0) return;
-          setStoreIndex({ ...storeIndex, index: storeIndex.index - 1 });
-        }}
-      >
-        prev
-      </button>
-      <button
-        onClick={() => {
-          if (storeIndex.index >= onSalePlanets.length - 1) return;
-          setStoreIndex({ ...storeIndex, index: storeIndex.index + 1 });
-        }}
-      >
-        next
-      </button>
+      <StoreNav />
       <PlanetCard />
-      <MotionCanvas style={{ height: 'calc(100vh - 5rem)', width: '100%' }}>
+      <MotionCanvas style={{ height: '100vh', width: '100%' }}>
         <RecoilBridge>
           <ambientLight />
           <OnSalePlanets />
