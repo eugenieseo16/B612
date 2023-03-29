@@ -1,4 +1,7 @@
 import React, { useRef } from 'react';
+import { useRecoilValue } from 'recoil';
+import userAtom from 'store/userAtom';
+
 import { useRouter } from 'next/navigation';
 import { Canvas } from '@react-three/fiber';
 import { useGLTF, Stage, PresentationControls } from '@react-three/drei';
@@ -69,6 +72,14 @@ function Planet(props: any) {
 function RocketModel() {
   const router = useRouter();
 
+  // 내 행성 랜덤 id 가져오기
+  const user = useRecoilValue(userAtom);
+  const getRandomMyPlanet = (planetNums: number) => {
+    return Math.floor(Math.random() * planetNums) + 1;
+  };
+  const planetId =
+    user?.planets?.length && getRandomMyPlanet(user.planets.length);
+
   return (
     <Canvas
       dpr={[1, 2]}
@@ -99,7 +110,7 @@ function RocketModel() {
       <PresentationControls>
         <Center
           position={[1, 0.5, 0.3]}
-          onClick={() => router.push(`/planet/1`)}
+          onClick={() => router.push(`/planet/${planetId}`)}
         >
           <Planet />
         </Center>
