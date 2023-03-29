@@ -153,8 +153,7 @@ const AvatarFinn = () => {
     return false;
   };
 
-  // modal 영역 설정하기
-
+  // modal 영역 설정하기 (테트리스)
   const isTetrisModalArea = (x: number, z: number): boolean => {
     if (x <= -18 && x >= -23 && z >= -48 && z <= -45) {
       return true;
