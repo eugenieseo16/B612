@@ -120,7 +120,7 @@ function NavBar() {
                 {list}
               </Drawer>
               {/* profile */}
-              <Link href={`/profile`}>
+              <Link href={`/profile/11`}>
                 <img src={user?.memberImage} alt="" id="profile-image" />
               </Link>
             </div>
