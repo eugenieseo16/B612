@@ -1,4 +1,4 @@
-// import React, { useEffect, useState } from 'react';
+import React from 'react';
 // import * as io from 'socket.io-client';
 
 // const socket = io.connect('http://127.0.0.1:8080/chat');
@@ -39,4 +39,4 @@
 // }
 
 // export default Chatting;
-import WebSocket from 'ws';
+// import WebSocket from 'ws';
