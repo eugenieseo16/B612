@@ -12,7 +12,6 @@ import YellowGlowingButton from '@components/common/YellowGlowingButton';
 import {
   CertificateModal,
   FriendsModal,
-  ItemsModal,
   PlanetsModal,
 } from '@components/Planet/index';
 
@@ -30,10 +29,6 @@ function Planet() {
   const [openFriends, setOpenFriends] = useState(false);
   const handleOpenFriends = () => setOpenFriends(true);
   const handleCloseFriends = () => setOpenFriends(false);
-
-  const [openItems, setOpenItems] = useState(false);
-  const handleOpenItems = () => setOpenItems(true);
-  const handleCloseItems = () => setOpenItems(false);
 
   const [openCertificate, setOpenCertificate] = useState(false);
   const handleOpenCertificate = () => setOpenCertificate(true);
@@ -64,11 +59,6 @@ function Planet() {
       {/* 친구 목록 조회 */}
       <Modal open={openFriends} onClose={handleCloseFriends}>
         <FriendsModal />
-      </Modal>
-
-      {/* 아이템 조회 */}
-      <Modal open={openItems} onClose={handleCloseItems}>
-        <ItemsModal />
       </Modal>
 
       {/* 인증서 발급 */}
