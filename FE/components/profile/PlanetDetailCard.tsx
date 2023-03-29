@@ -4,22 +4,30 @@ import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import selectedPlanetAtom from 'store/profile/selectedPlanet';
 import planetAtom from 'store/planetsAtom';
+import { usePlanetContract } from '@components/contracts/planetToken';
+import userAtom from 'store/userAtom';
 
 function PlanetDetailCard() {
+  const me = useRecoilValue(userAtom);
   const selectedId = useRecoilValue(selectedPlanetAtom);
   const planets = useRecoilValue(planetAtom);
-  console.log(planets[selectedId].planetType);
+  const planet = planets[selectedId];
+  const planetContract = usePlanetContract();
+  const handleSale = () => {
+    planetContract?.methods
+      .setForSalePlanetToken(planet.planetTokenId, '2000000000000000000')
+      .send({ from: me?.memberAddress });
+  };
   return (
     <PlanetCard>
       <div className="detail-container">
         <div>
-          <p>
-            {planets[selectedId].planetName.split(' ').slice(0, 3).join(' ')}
-          </p>
-          <h2>{planets[selectedId].planetName.split(' ')[3]}</h2>
+          <p>{planet.planetName.split(' ').slice(0, 3).join(' ')}</p>
+          <h2>{planet.planetName.split(' ')[3]}</h2>
         </div>
         <div style={{ display: 'flex', alignItems: 'end' }}>
-          <button>자세히 보기</button>
+          {/* <button>자세히 보기</button> */}
+          <button onClick={handleSale}>팔기</button>
         </div>
       </div>
     </PlanetCard>

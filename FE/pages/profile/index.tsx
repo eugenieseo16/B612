@@ -41,7 +41,7 @@ function UserProfile() {
     <div
       style={{
         width: '100vw',
-        height: 'calc(100vh - 5rem)',
+        height: '100vh',
         background: '#252530',
       }}
     >

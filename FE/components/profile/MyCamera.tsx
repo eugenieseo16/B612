@@ -1,9 +1,8 @@
 import { OrbitControls } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
 import { LayoutCamera } from 'framer-motion-3d';
 import { useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 const CAMERA_POS = [
@@ -36,7 +35,7 @@ const CAMERA_ANGLE = [
     rotateZ: 0.455953684691092,
   },
 ];
-function MyCamera({ router }: { router: any }) {
+function MyChildCamera({ router }: { router: any }) {
   const ref = useRef();
   const [isAnimate, setIsAnimate] = useState(true);
   const roomIndex = useRecoilValue(roomIndexAtom);
@@ -50,13 +49,13 @@ function MyCamera({ router }: { router: any }) {
     return () => {
       if (id) clearTimeout(id);
     };
-  }, [isAnimate, roomIndex, router]);
+  }, [roomIndex]);
 
   // useFrame(({ camera }) => {
   //   camera.lookAt(0, 25, -30);
   //   console.log(camera.rotation);
   // });
-
+  console.log(roomIndex, isAnimate);
   return (
     <>
       {!isAnimate && (roomIndex === 2 || roomIndex === 0) && (
@@ -82,9 +81,10 @@ function MyCamera({ router }: { router: any }) {
         onAnimationComplete={() => setIsAnimate(false)}
         transition={{ duration: 1 }}
         far={1500}
-        position={[0, 10, 60]}
+        position={[0, 10, 150]}
       />
     </>
   );
 }
+const MyCamera = React.memo(MyChildCamera);
 export default MyCamera;
