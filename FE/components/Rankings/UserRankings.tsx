@@ -1,10 +1,14 @@
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+
+import { tierDataList } from '../../utils/tierDataList';
 
 import Link from 'next/link';
 
@@ -14,7 +18,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { MemberRankingAPI } from 'API/rankingURLs';
 
 export default function BasicTable() {
+  const router = useRouter();
   const data = MemberRankingAPI();
+
   return (
     <Container>
       <TableContainer>
@@ -54,15 +60,20 @@ export default function BasicTable() {
                 </TableCell>
                 <TableCell align="left">
                   <Link href={`/profile/${member.memberId}`} id="link-item">
-                    <div className="member-item">
+                    <div
+                      className="member-item"
+                      onClick={() => router.push(`/profile/${member.memberId}`)}
+                    >
                       <img src={member.memberImage} alt="" />
                       <h6>{member.memberNickname}</h6>
                     </div>
                   </Link>
                 </TableCell>
                 <TableCell align="center">
-                  {/* member tier 추가 필요 */}
-                  <p>{member.memberTierName}</p>
+                  <div className="member-tier">
+                    <img src={tierDataList.get(member.memberTierName)} alt="" />
+                    <p>{member.memberTierName}</p>
+                  </div>
                 </TableCell>
                 <TableCell align="center">
                   <div className="like-item">
