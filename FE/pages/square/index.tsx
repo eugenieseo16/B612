@@ -38,6 +38,9 @@ function Square() {
         <Ground />
         <Tetris />
         <Tetris2 />
+        {/* position={[35, 0, -45]} */}
+        {/* <Tetris2 />  */}
+        {/* position={[-20, 0, 18]} */}
         <AppleTreeModel position={[14, 0, -45]} />
         <Lights />
         <AvatarFinn />
