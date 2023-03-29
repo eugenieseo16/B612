@@ -55,7 +55,7 @@ function UserProfile() {
     <div
       style={{
         width: '100vw',
-        height: 'calc(100vh - 5rem)',
+        height: '100vh',
         background: '#252530',
       }}
     >
@@ -101,7 +101,7 @@ function UserProfile() {
         sx={{
           minWidth: '70%',
           width: '100%',
-          marginTop: '5rem',
+          marginTop: '4rem',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',

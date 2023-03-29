@@ -27,7 +27,7 @@ function Planets({
       .then((data: any) => {
         setPlanets(data);
       });
-  }, [planetContract]);
+  }, [planetContract, memberAddress]);
 
   return (
     <>
