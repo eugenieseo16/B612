@@ -7,6 +7,7 @@ interface IUser {
   memberId: number;
   eth: number;
   isApproved?: boolean;
+  planets: IPlanet[];
 }
 
 interface IPlanet {
@@ -17,5 +18,6 @@ interface IPlanet {
   planetPrice: string;
   planetTokenId: string;
   planetType: string;
+  userAddress: string;
 }
 interface IRose {}
