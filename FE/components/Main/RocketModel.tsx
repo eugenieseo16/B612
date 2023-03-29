@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { Canvas } from '@react-three/fiber';
 import { useGLTF, Stage, PresentationControls } from '@react-three/drei';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
@@ -66,25 +67,40 @@ function Planet(props: any) {
   return <primitive object={clone} {...props} />;
 }
 function RocketModel() {
+  const router = useRouter();
+
   return (
     <Canvas
       dpr={[1, 2]}
       camera={{ fov: 45, position: [-0.05, 0, 3] }}
       style={{ position: 'fixed' }}
     >
-      <ambientLight intensity={0.5} />
+      <Stage></Stage>
+
+      {/* 랜덤행성으로 가는 로켓 3D */}
       <PresentationControls>
-        <Rocket position={[-1.2, 0.35, 0.2]} />
+        <Rocket
+          position={[-1.2, 0.35, 0.2]}
+          onClick={() => router.push(`/planet/1`)}
+        />
       </PresentationControls>
 
+      {/* 광장 3D */}
       <PresentationControls>
-        <Center position={[0, -0.2, 1.3]}>
+        <Center
+          position={[0, -0.2, 1.3]}
+          onClick={() => router.push(`/square`)}
+        >
           <Square />
         </Center>
       </PresentationControls>
 
+      {/* 랜덤 내 행성 3D */}
       <PresentationControls>
-        <Center position={[1, 0.5, 0.3]}>
+        <Center
+          position={[1, 0.5, 0.3]}
+          onClick={() => router.push(`/planet/1`)}
+        >
           <Planet />
         </Center>
       </PresentationControls>

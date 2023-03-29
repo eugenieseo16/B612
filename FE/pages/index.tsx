@@ -10,6 +10,7 @@ import RocketModel from '@components/Main/RocketModel';
 
 const Home: NextPage = () => {
   const user = useRecoilValue(userAtom);
+  console.log(user);
 
   return (
     <div style={{ paddingTop: '4rem' }}>
