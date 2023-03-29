@@ -5,7 +5,6 @@ import {
   useRecoilBridgeAcrossReactRoots_UNSTABLE,
   useRecoilState,
   useRecoilValue,
-  useSetRecoilState,
 } from 'recoil';
 import userAtom from 'store/userAtom';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
@@ -24,9 +23,9 @@ import PlanetNav from '@components/profile/PlanetNav';
 import ProfileCard from '@components/profile/ProfileCard';
 import PlanetDetailCard from '@components/profile/PlanetDetailCard';
 import MyProfileModal from '@components/profile/MyProfileModal';
-import PlanetController from '@components/PlanetController';
-import { usePlanetContract } from '@components/contracts/planetToken';
+
 import planetAtom from 'store/planetsAtom';
+import planetPageAtom from 'store/profile/planetPageAtom';
 
 function UserProfile() {
   const router = useRouter();
@@ -34,6 +33,7 @@ function UserProfile() {
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
   const [planets, setPlanets] = useRecoilState(planetAtom);
   const [selected, setSelected] = useRecoilState(selectedPlanetAtom);
+  const [planetPage, setPlanetPage] = useRecoilState(planetPageAtom);
 
   const planetDetail = useRecoilValue(selectedPlanetAtom);
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
@@ -91,6 +91,7 @@ function UserProfile() {
             planetsState={[planets, setPlanets]}
             selectedState={[selected, setSelected]}
             roomIndexState={[roomIndex, setRoomIndex]}
+            planetPageState={[planetPage, setPlanetPage]}
           />
         </MotionCanvas>
       </MotionConfig>
