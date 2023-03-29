@@ -10,9 +10,9 @@ import userAtom from 'store/userAtom';
 
 function PlanetCard() {
   const planetContract = usePlanetContract();
-  const { index } = useRecoilValue(storeIndexAtom);
+  const { index, page } = useRecoilValue(storeIndexAtom);
   const planets = useRecoilValue(onSalePlanetsAtom);
-  const planet = planets[index];
+  const planet = planets[index + page * 5];
   const [adj, title] = planetNameParser(planet?.planetName);
   const me = useRecoilValue(userAtom);
 
