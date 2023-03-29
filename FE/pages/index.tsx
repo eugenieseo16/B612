@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   const user = useRecoilValue(userAtom);
 
   return (
-    <div>
+    <div style={{ paddingTop: '4rem' }}>
       {!Boolean(user) ? (
         <></>
       ) : (
