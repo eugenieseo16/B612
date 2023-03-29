@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Canvas } from '@react-three/fiber';
 
 import Modal from '@mui/material/Modal';
 
-// import PlanetTest from '@components/Planet/PlanetTest';
+import PlanetModel from '@components/Planet/PlanetModel';
 import PlanetDetailCard from '@components/Planet/PlanetDetail';
 import BlueGlowingButton from '@components/common/BlueGlowingButton';
 import PinkGlowingButton from '@components/common/PinkGlowingButton';
@@ -41,7 +40,7 @@ function Planet() {
 
   return (
     <>
-      {/* <PlanetTest></PlanetTest> */}
+      <PlanetModel></PlanetModel>
 
       <PlanetDetailCard></PlanetDetailCard>
       <FloatingButtons>
