@@ -21,8 +21,9 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHandler, "/chat").setAllowedOrigins("*").withSockJS();
+        registry.addHandler(webSocketHandler, "/ws/chat").setAllowedOrigins("*");
     }
+
     
     //빈 직접 등록
     @Bean
