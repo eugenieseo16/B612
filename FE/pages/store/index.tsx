@@ -1,8 +1,7 @@
 import { usePlanetContract } from '@components/contracts/planetToken';
 import OnSalePlanets from '@components/store/OnSalePlanets';
 import PlanetCard from '@components/store/PlanetCard';
-import StoreCamera from '@components/store/StoreCamera';
-import { OrbitControls } from '@react-three/drei';
+import styled from '@emotion/styled';
 import { Canvas } from '@react-three/fiber';
 import { MotionCanvas } from 'framer-motion-3d';
 import React, { useEffect } from 'react';
@@ -12,6 +11,9 @@ import {
 } from 'recoil';
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';
 import storeIndexAtom from 'store/store/storeIndexAtom';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { colors } from 'styles/colors';
 
 function StorePage() {
   const planetContract = usePlanetContract();
@@ -32,24 +34,44 @@ function StorePage() {
 
   return (
     <div>
-      <button
+      <Button
         onClick={() => {
-          if (storeIndex.index <= 0) return;
-          setStoreIndex({ ...storeIndex, index: storeIndex.index - 1 });
+          if (storeIndex.index <= 0) {
+            setStoreIndex({ ...storeIndex, index: onSalePlanets.length - 1 });
+          } else {
+            setStoreIndex({ ...storeIndex, index: storeIndex.index - 1 });
+          }
         }}
+        style={{ left: '20%' }}
       >
-        prev
-      </button>
-      <button
+        <NavigateBeforeIcon
+          sx={{
+            fontSize: '8rem',
+            color: colors.skyBlue,
+            filter: 'drop-shadow(0px 0px 5px #fff)',
+          }}
+        />
+      </Button>
+      <Button
         onClick={() => {
-          if (storeIndex.index >= onSalePlanets.length - 1) return;
-          setStoreIndex({ ...storeIndex, index: storeIndex.index + 1 });
+          if (storeIndex.index >= onSalePlanets.length - 1)
+            setStoreIndex({ ...storeIndex, index: 0 });
+          else {
+            setStoreIndex({ ...storeIndex, index: storeIndex.index + 1 });
+          }
         }}
+        style={{ right: '20%' }}
       >
-        next
-      </button>
+        <NavigateNextIcon
+          sx={{
+            fontSize: '8rem',
+            color: colors.skyBlue,
+            filter: 'drop-shadow(0px 0px 5px #fff)',
+          }}
+        />
+      </Button>
       <PlanetCard />
-      <MotionCanvas style={{ height: 'calc(100vh - 5rem)', width: '100%' }}>
+      <MotionCanvas style={{ height: '100vh', width: '100%' }}>
         <RecoilBridge>
           <ambientLight />
           <OnSalePlanets />
@@ -64,3 +86,11 @@ function StorePage() {
 }
 
 export default StorePage;
+const Button = styled.button`
+  position: absolute;
+  top: 50%;
+  z-index: 99;
+  background: none;
+  border: none;
+  cursor: pointer;
+`;

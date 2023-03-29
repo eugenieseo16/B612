@@ -20,7 +20,9 @@ function OnSalePlanets() {
             transition={{ duration: 0.4, ease: 'linear' }}
           >
             <sphereGeometry />
-            <meshStandardMaterial color={`#${planet.planetColor.slice(1)}`} />
+            <meshStandardMaterial
+              color={`#${planet.planetColor.slice(0, 6)}`}
+            />
           </motion.mesh>
         );
       })}
