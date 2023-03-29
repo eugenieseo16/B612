@@ -18,6 +18,7 @@ import axios from 'axios';
 import RoomNav from './RoomNav';
 import { rgba } from 'emotion-rgba';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
+import { usePlanetContract } from '@components/contracts/planetToken';
 
 interface IEditData {
   memberNickname: string;
@@ -25,6 +26,8 @@ interface IEditData {
 }
 function MyProfileModal() {
   const setRoomIndex = useSetRecoilState(roomIndexAtom);
+  const planetContract = usePlanetContract();
+
   const [me, setMe] = useRecoilState(userAtom);
 
   const defaultData: IEditData = {
@@ -35,7 +38,14 @@ function MyProfileModal() {
   const [imageData, setImageData] = useState<File | null>(null);
   const [isEdit, setIsEdit] = useState(false);
   const [editValue, setEditValue] = useState(defaultData);
-
+  const toggleApproval = () => {
+    planetContract.methods
+      .setApprovalForAll(
+        '0xeab8b1e0cd0de0c9e07928d8d8c9aab166ae983e',
+        !me?.isApproved
+      )
+      .send({ from: me?.memberAddress });
+  };
   useEffect(() => {
     return () => console.log(editValue);
   }, []);
@@ -119,6 +129,8 @@ function MyProfileModal() {
           <span>충전하러 가기 </span>
           <a>https://goerlifaucet.com/</a>
         </div>
+        <p>Approval : {me?.isApproved ? '수락' : '거부'}</p>
+        <button onClick={toggleApproval}>toggle Approval</button>
       </>
       <div>
         <>

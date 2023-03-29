@@ -54,7 +54,7 @@ const Home: NextPage = () => {
   `;
 
   return (
-    <div>
+    <div style={{ paddingTop: '4rem' }}>
       {!Boolean(user) ? (
         <></>
       ) : (

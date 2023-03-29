@@ -16,6 +16,7 @@
     "@react-three/drei": "^9.57.0",
     "@react-three/fiber": "^8.11.5",
     "axios": "^1.3.4",
+    "dayjs": "^1.11.7",
     "emotion-rgba": "^0.0.11",
     "framer-motion": "^10.0.1",
     "framer-motion-3d": "^10.0.1",
