@@ -832,9 +832,13 @@ export const usePlanetTokenContract = () => {
   return null;
 };
 export const usePlanetContract = () => {
+  const provider =
+    'https://maximum-dark-knowledge.ethereum-goerli.discover.quiknode.pro/36a08a142a57e427d958da89026ad9adbb135ad0/';
+  const web3Provider = new Web3.providers.HttpProvider(provider);
   const [contract, setContract] = useState<any>();
   useEffect(() => {
-    const web3 = new Web3(window.ethereum);
+    let web3 = new Web3(web3Provider);
+    if (window.ethereum) web3 = new Web3(window.ethereum);
     const temp: any = new web3.eth.Contract(planetTokenAbi, planetTokenAddress);
     setContract(temp);
   }, []);

@@ -6,6 +6,7 @@ interface IUser {
   memberTierName: string;
   memberId: number;
   eth: number;
+  isApproved?: boolean;
 }
 
 interface IPlanet {
