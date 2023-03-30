@@ -135,34 +135,42 @@ type Props = {
   defaultShadow: string;
 };
 export const GlowButton = styled.div<Props>`
-  .selected {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 80px;
-    height: 80px;
-    background-color: ${p => rgba(p.bgColor, 0.7)};
-
-    border: solid white 4px;
-    border-radius: 12px;
-    box-shadow: ${p => p.selectedShadow};
-  }
+  .selected,
   .default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${p => rgba(p.bgColor, 0.4)};
-
-    border-radius: 12px;
-
     width: 80px;
     height: 80px;
-    box-shadow: ${p => shadowGenerator(p.defaultShadow)};
+    border-radius: 12px;
   }
 
+  .selected {
+    border: solid white 4px;
+    background-color: ${p => rgba(p.bgColor, 0.7)};
+    box-shadow: ${p => p.selectedShadow};
+  }
+  .default {
+    background-color: ${p => rgba(p.bgColor, 0.4)};
+    box-shadow: ${p => shadowGenerator(p.defaultShadow)};
+  }
   img {
     width: 55px;
     height: 55px;
+  }
+
+  @media (max-width: 500px) {
+    .selected,
+    .default {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: transparent;
+      box-shadow: none;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 `;

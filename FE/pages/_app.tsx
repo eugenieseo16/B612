@@ -11,6 +11,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import Loading from '../components/loading/loading';
 import { useGLTF } from '@react-three/drei';
 import { PLANETS_LIST } from 'utils/utils';
+import { useMobile } from '@hooks/useMobile';
+import MobileNav from '@components/common/MobileNav';
 React.useLayoutEffect = React.useEffect;
 
 declare global {
@@ -22,6 +24,7 @@ declare global {
 const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const isMobile = useMobile();
 
   useGLTF.preload('/little-prince.glb');
   PLANETS_LIST.forEach(planet => {
@@ -72,7 +75,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   },
                 }}
               >
-                <Layout />
+                {!isMobile ? <Layout /> : <MobileNav />}
 
                 <Background />
 

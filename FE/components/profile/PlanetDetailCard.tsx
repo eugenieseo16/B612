@@ -71,4 +71,25 @@ export const PlanetCard = styled.div`
       background: rgba(255, 255, 255, 0.7);
     }
   }
+  @media (max-width: 500px) {
+    left: 5%;
+    bottom: 1rem;
+    width: 90%;
+    border-radius: 0;
+
+    h2 {
+      font-size: 1.4rem;
+    }
+    p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .detail-container {
+      padding: 1rem;
+      button {
+        font-size: 1rem;
+        width: 5rem;
+      }
+    }
+  }
 `;

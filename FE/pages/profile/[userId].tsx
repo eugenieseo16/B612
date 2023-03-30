@@ -28,9 +28,11 @@ import MyProfileModal from '@components/profile/MyProfileModal';
 import planetAtom from 'store/planetsAtom';
 import planetPageAtom from 'store/profile/planetPageAtom';
 import animateAtom from 'store/profile/animateAtom';
+import { useMobile } from '@hooks/useMobile';
 
 function UserProfile() {
   const router = useRouter();
+  const isMobile = useMobile();
   const { userId } = router.query;
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
   const [planets, setPlanets] = useRecoilState(planetAtom);
@@ -65,6 +67,7 @@ function UserProfile() {
         width: '100vw',
         height: '100vh',
         background: '#252530',
+        position: 'relative',
       }}
     >
       {/* <PlanetController userAddress={userData?.responseData?.memberAddress} /> */}
@@ -76,10 +79,8 @@ function UserProfile() {
           <PlanetNav />
         </>
       )}
-      {planetDetail === -1 && roomIndex === 0 && (
-        <>
-          <ProfileCard user={isMe ? me : userData?.responseData} />
-        </>
+      {planetDetail === -1 && roomIndex === 0 && !isMobile && (
+        <ProfileCard user={isMe ? me : userData?.responseData} />
       )}
 
       <MotionConfig transition={{ duration: 0.8, ease: 'easeInOut' }}>
