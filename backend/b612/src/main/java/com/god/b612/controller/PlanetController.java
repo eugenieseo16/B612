@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class PlanetController {
     @Transactional
     @ApiOperation(value = "행성 좋아요를 생성하거나 삭제한다.", notes = "좋아요가 있는 사람이 누르면 삭제, 없는 사람이 누르면 생성")
     @PostMapping("/like")
-    public ResponseEntity<BaseResponseBody> createOrDeleteLike(@RequestBody @ApiParam(value = "좋아요 하는 유저와 행성 id 입력", required = true) PlanetRequestDto planetRequestDto) {
+    public ResponseEntity<BaseResponseBody> createOrDeleteLike(@RequestBody @Valid @ApiParam(value = "좋아요 하는 유저와 행성 id 입력", required = true) PlanetRequestDto planetRequestDto) {
 
         if (planetService.createAndDeleteLike(planetRequestDto.getPlanetNftId(), planetRequestDto.getPlanetLikeMemberId())) {
 
@@ -135,7 +136,7 @@ public class PlanetController {
     @Transactional
     @ApiOperation(value = "행성의 주인을 변경한다(행성을 구매한다.)", notes = "바뀐 주인 유저 아이디와 행성 아이디를 입력한다")
     @PostMapping("/buy")
-    public ResponseEntity<BaseResponseBody> buyPlanet(@RequestBody @ApiParam(value = "바뀔 주인 유저 id와 행성 nft Id를 입력한다.", required = true) PlanetBuyDto planetBuyDto) {
+    public ResponseEntity<BaseResponseBody> buyPlanet(@RequestBody @Valid @ApiParam(value = "바뀔 주인 유저 id와 행성 nft Id를 입력한다.", required = true) PlanetBuyDto planetBuyDto) {
         PlanetResponseDto planetResponseDto = planetService.buyPlanet(planetBuyDto.getMemberId(), planetBuyDto.getPlanetId());
 
         if (planetResponseDto != null) {
