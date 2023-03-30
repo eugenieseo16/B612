@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class FlowerController {
 
     @ApiOperation(value = "꽃 등록(생성)", notes = "유저가 꽃을 뽑을 경우 이함수를 통해 db에 등록됩니다.")
     @PostMapping()
-    public ResponseEntity<BaseResponseBody> registFlower(@RequestBody FlowerRequestDto flowerRequestDto) {
+    public ResponseEntity<BaseResponseBody> registFlower(@RequestBody @Valid FlowerRequestDto flowerRequestDto) {
         FlowerResponseDto flowerResponseDto = flowerService.createFlower(flowerRequestDto.getFlowerNftId(), flowerRequestDto.getOwnerMemberId());
 
         BaseResponseBody baseResponseBody =
@@ -74,7 +75,7 @@ public class FlowerController {
     @Transactional
     @ApiOperation(value = "꽃을 유저 필드에 심는다.", notes = "꽃의 nft id, 필드내 꽃의 위치 좌표를 입력해 꽃을 심는다.")
     @PostMapping("/plant")
-    public ResponseEntity<BaseResponseBody> plantFlower(@RequestBody PlantRequestDto plantRequestDto) {
+    public ResponseEntity<BaseResponseBody> plantFlower(@RequestBody @Valid PlantRequestDto plantRequestDto) {
         FlowerResponseDto flowerResponseDto = flowerService.plantFlower(plantRequestDto);
 
         BaseResponseBody baseResponseBody =
@@ -134,7 +135,7 @@ public class FlowerController {
     @Transactional
     @ApiOperation(value = "꽃의 주인을 변경한다.", notes = "주인이 될 유저 Id와 꽃의 NFTID를 입력한다.")
     @PostMapping("/sell")
-    public ResponseEntity<BaseResponseBody> sellFlower(@RequestBody FlowerSellRequestDto flowerSellRequestDto){
+    public ResponseEntity<BaseResponseBody> sellFlower(@RequestBody @Valid FlowerSellRequestDto flowerSellRequestDto){
         FlowerResponseDto flowerResponseDto=flowerService.sellFlower(flowerSellRequestDto.getBuyerId(), flowerSellRequestDto.getFlowerNftId());
 
         BaseResponseBody baseResponseBody =
