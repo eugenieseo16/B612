@@ -95,7 +95,6 @@ function UserProfile() {
             <Garden />
           </RecoilBridge>
           <Planets
-            me={isMe}
             memberAddress={userData?.responseData?.memberAddress}
             planetsState={[planets, setPlanets]}
             selectedState={[selected, setSelected]}

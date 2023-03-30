@@ -16,11 +16,10 @@ function PlanetNav() {
   const totalLength = planets.length;
   const curPlanetsLength =
     totalLength - planetPage * 5 >= 4 ? 5 : totalLength - planetPage * 5;
-
   const handlePlanet =
     (type: 'next' | 'prev' | 'nextPage' | 'prevPage') => () => {
       if (type === 'next') {
-        if (totalLength - (planetPage + 1) * 5 <= 0) {
+        if (totalLength + planetPage * 5 > totalLength) {
           return;
         }
 
