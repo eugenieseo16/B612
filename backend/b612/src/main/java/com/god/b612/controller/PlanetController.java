@@ -107,8 +107,8 @@ public class PlanetController {
 
     @Transactional
     @ApiOperation(value = "멤버가 특정 행성을 좋아요 했는지 행성을 확인한다.", notes = "유저 아이디와 행성 아이디를 입력한다")
-    @GetMapping("/{memberId}&{planetId}")
-    public ResponseEntity<BaseResponseBody> doesMemberLikeThatPlanet(@PathVariable("memberId") int memberId, @PathVariable("planetId") int planetId) {
+    @GetMapping()
+    public ResponseEntity<BaseResponseBody> doesMemberLikeThatPlanet(@RequestParam int memberId, @RequestParam int planetId) {
         boolean check = planetService.checkSomeoneLiked(memberId, planetId);
 
         BaseResponseBody baseResponseBody =
