@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
 import styled from '@emotion/styled';
-import { GetFriendAPI } from 'API/friendURLs';
+import { useFriendAPI } from 'API/friendURLs';
 
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
@@ -11,6 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
 import Divider from '@mui/material/Divider';
+import { useRouter } from 'next/router';
+import { useSearchByNameAPI } from 'API/memberAPIs';
 
 const Modal = styled.div`
   position: absolute;
@@ -19,6 +21,7 @@ const Modal = styled.div`
   transform: translate(-50%, -50%);
   width: 70%;
   height: 70%;
+  overflow-y: scroll;
   background-color: rgba(188, 240, 250, 0.7);
   border: none;
   border-radius: 30px;
@@ -42,7 +45,16 @@ const Modal = styled.div`
 
 function FriendsModal() {
   const user = useRecoilValue(userAtom);
-  const data = GetFriendAPI(user?.memberId);
+  const data = useFriendAPI(user?.memberId);
+  const router = useRouter();
+  const [search, setSearch] = useState('');
+  const searchResults = useSearchByNameAPI(search);
+
+  const ff: any = {};
+  searchResults?.responseData?.forEach(
+    (friend: IUser) => (ff[friend.memberId] = true)
+  );
+  data?.responseData?.forEach((friend: IUser) => (ff[friend.memberId] = false));
 
   return (
     <Modal>
@@ -64,12 +76,36 @@ function FriendsModal() {
           sx={{ ml: 1, flex: 1 }}
           placeholder="닉네임으로 검색해주세요"
           inputProps={{ 'aria-label': '닉네임으로 검색해주세요' }}
+          onChange={e => setSearch(e.target.value)}
+          value={search}
         />
       </Paper>
-
+      {/* 검색결과 이미 친구인 사람은 return null*/}
+      {searchResults?.responseData?.map((friend: IUser) => {
+        if (!ff[friend.memberId] || !search) return;
+        return (
+          <div
+            key={friend.memberId}
+            className="friend"
+            onClick={() => router.push(`/profile/${friend.memberId}`)}
+          >
+            <img src={friend.memberImage} alt="" />
+            <div>
+              <h2>{friend.memberNickname}</h2>
+              <h6>{friend.memberTierName}</h6>
+            </div>
+            <Divider />
+          </div>
+        );
+      })}
       {/* 친구 목록 */}
-      {data?.responseData?.map((friend: any) => (
-        <div key={friend.memberId} className="friend">
+      <h2 style={{ padding: '3rem 0 2rem 0 ' }}>여기부턴 이미 찡꾸찡꾸👅👅</h2>
+      {data?.responseData?.map((friend: IUser) => (
+        <div
+          key={friend.memberId}
+          className="friend"
+          onClick={() => router.push(`/profile/${friend.memberId}`)}
+        >
           <img src={friend.memberImage} alt="" />
           <div>
             <h2>{friend.memberNickname}</h2>
