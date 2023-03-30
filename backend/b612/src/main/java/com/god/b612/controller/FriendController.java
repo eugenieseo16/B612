@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class FriendController {
     @Transactional
     @ApiOperation(value = "친구 요청 생성", notes = "친구 신청이 온 친구에게 친구 요청을 할 경우 서로 친구가 되고, 아니면 친구 요청이 생성됨.")
     @PostMapping()
-    public ResponseEntity<?> makeFriendRequest(@RequestBody @ApiParam(value = "친구 요청 생성 Dto 입력", required = true)FriendRequestDto friendRequestDto){
+    public ResponseEntity<?> makeFriendRequest(@RequestBody @Valid @ApiParam(value = "친구 요청 생성 Dto 입력", required = true)FriendRequestDto friendRequestDto){
         Friend friend = friendService.registFriend(friendRequestDto);
 
 

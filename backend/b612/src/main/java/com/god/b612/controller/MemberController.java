@@ -19,6 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +50,8 @@ public class MemberController {
 
     @ApiOperation(value = "회원가입 하고 로그인 하거나, 로그인 한다.", notes = "해당 주소로 가입이 되어있다면 유저 정보를 보내주고, 가입되어있지 않다면 유저를 가입 시킨 후 정보를 보내준다.")
     @PostMapping()
-    public ResponseEntity<?> loginOrRegist(@RequestBody @ApiParam(value = "회원 주소", required = true) Map<String, String> memberAddress) {
-        MemberResponseDto memberResponseDto = memberService.membersLoginOrRegist(memberAddress.get("memberAddress"));
+    public ResponseEntity<?> loginOrRegist(@RequestBody @Valid @ApiParam(value = "회원 주소", required = true) MemberRequestDto.Create memberRequestDto) {
+        MemberResponseDto memberResponseDto = memberService.membersLoginOrRegist(memberRequestDto.getMemberAddress());
         BaseResponseBody baseResponseBody;
         if (memberResponseDto != null) {
             baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(memberResponseDto).build();
@@ -129,7 +132,7 @@ public class MemberController {
 
     @ApiOperation(value = "회원 닉네임을 수정합니다.", notes = "회원의 닉네임을 수정할 수 있습니다.")
     @PutMapping("/nickname")
-    public ResponseEntity<BaseResponseBody> changeMemberNickname(@RequestBody @ApiParam(value = "바뀔 유저 id와 바꿀 닉네임을 입력한다.", required = true) MemberNicknameChangeDto memberNicknameChangeDto) {
+    public ResponseEntity<BaseResponseBody> changeMemberNickname(@RequestBody @Valid @ApiParam(value = "바뀔 유저 id와 바꿀 닉네임을 입력한다.", required = true) MemberNicknameChangeDto memberNicknameChangeDto) {
         Boolean check = memberService.checkNickname(memberNicknameChangeDto.getChangedNickname());
         if (check) {
             MemberResponseDto memberResponseDto = memberService.changeNickname(memberNicknameChangeDto.getMemberId(), memberNicknameChangeDto.getChangedNickname());
