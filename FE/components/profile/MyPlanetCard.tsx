@@ -8,12 +8,13 @@ import { usePlanetContract } from '@components/contracts/planetToken';
 import userAtom from 'store/userAtom';
 import planetPageAtom from 'store/profile/planetPageAtom';
 
-function PlanetDetailCard({ planets }: { planets: IPlanet[] }) {
+function PlanetDetailCard() {
   const me = useRecoilValue(userAtom);
   const selectedId = useRecoilValue(selectedPlanetAtom);
+  const planets = useRecoilValue(planetAtom);
   const page = useRecoilValue(planetPageAtom);
   const planet = planets[selectedId + page * 5];
-  
+  console.log('여기', page * 5, selectedId);
   const planetContract = usePlanetContract();
   const handleSale = () => {
     planetContract?.methods
@@ -24,8 +25,8 @@ function PlanetDetailCard({ planets }: { planets: IPlanet[] }) {
     <PlanetCard>
       <div className="detail-container">
         <div>
-          <p>{planet?.planetName?.split(' ').slice(0, 3).join(' ')}</p>
-          <h2>{planet?.planetName?.split(' ')[3]}</h2>
+          <p>{planet.planetName.split(' ').slice(0, 3).join(' ')}</p>
+          <h2>{planet.planetName.split(' ')[3]}</h2>
         </div>
         <div style={{ display: 'flex', alignItems: 'end' }}>
           {/* <button>자세히 보기</button> */}

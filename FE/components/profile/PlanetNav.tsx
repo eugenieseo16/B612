@@ -8,14 +8,13 @@ import { colors } from 'styles/colors';
 import planetAtom from 'store/planetsAtom';
 import planetPageAtom from 'store/profile/planetPageAtom';
 
-function PlanetNav() {
+function PlanetNav({ totalLength = 0 }: { totalLength?: number }) {
   const [selectedPlanet, setSelectedPlanet] =
     useRecoilState(selectedPlanetAtom);
-  const planets = useRecoilValue(planetAtom);
   const [planetPage, setPlanetPage] = useRecoilState(planetPageAtom);
 
   const curPlanetsLength =
-    planets.length - planetPage * 5 > 4 ? 5 : planets.length - planetPage * 5;
+    totalLength - planetPage * 5 > 4 ? 5 : totalLength - planetPage * 5;
 
   const handlePlanet =
     (type: 'next' | 'prev' | 'nextPage' | 'prevPage') => () => {
@@ -33,6 +32,7 @@ function PlanetNav() {
         setSelectedPlanet(0);
       }
     };
+
   return (
     <>
       <Button onClick={handlePlanet('prevPage')} style={{ left: '10%' }}>
@@ -56,7 +56,7 @@ function PlanetNav() {
         )}
       </Button>
       <Button onClick={handlePlanet('next')} style={{ right: '20%' }}>
-        {selectedPlanet < planets.length - 1 && (
+        {selectedPlanet < totalLength - 1 && (
           <NavigateNextIcon
             sx={{
               fontSize: '8rem',
@@ -68,7 +68,7 @@ function PlanetNav() {
       </Button>
 
       <Button onClick={handlePlanet('nextPage')} style={{ right: '10%' }}>
-        {selectedPlanet < planets.length - 1 && (
+        {selectedPlanet < totalLength - 1 && (
           <NavigateNextIcon
             sx={{
               fontSize: '8rem',

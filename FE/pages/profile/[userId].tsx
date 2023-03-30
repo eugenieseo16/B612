@@ -68,10 +68,16 @@ function UserProfile() {
     >
       {/* <PlanetController userAddress={userData?.responseData?.memberAddress} /> */}
       {roomIndex !== 1 && <RoomNav />}
-      {planetDetail !== -1 && (
+      {planetDetail !== -1 && roomIndex === 2 && isMe && me?.planets && (
         <>
-          <PlanetDetailCard />
-          <PlanetNav />
+          <PlanetDetailCard planets={me?.planets} />
+          <PlanetNav totalLength={me?.planets.length} />
+        </>
+      )}
+      {planetDetail !== -1 && roomIndex === 2 && !isMe && (
+        <>
+          <PlanetDetailCard planets={planets} />
+          <PlanetNav totalLength={planets.length} />
         </>
       )}
       {planetDetail === -1 && roomIndex === 0 && (
