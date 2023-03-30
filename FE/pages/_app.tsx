@@ -14,6 +14,7 @@ import Loading from "../components/loading/loading"
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { useGLTF } from '@react-three/drei';
+import { PLANETS_LIST } from 'utils/utils';
 React.useLayoutEffect = React.useEffect;
 
 declare global {
@@ -24,6 +25,12 @@ declare global {
 }
 const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
+  const tt = useGLTF.preload('/little-prince.glb');
+
+  PLANETS_LIST.forEach(planet => {
+    useGLTF.preload(planet);
+  });
+
   const router = useRouter();
   const Background = styled.div`
     background-image: url('https://ifh.cc/g/HXB7pP.jpg');
