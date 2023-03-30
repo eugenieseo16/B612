@@ -26,6 +26,7 @@ import MyProfileModal from '@components/profile/MyProfileModal';
 
 import planetAtom from 'store/planetsAtom';
 import planetPageAtom from 'store/profile/planetPageAtom';
+import animateAtom from 'store/profile/animateAtom';
 
 function UserProfile() {
   const router = useRouter();
@@ -34,6 +35,7 @@ function UserProfile() {
   const [planets, setPlanets] = useRecoilState(planetAtom);
   const [selected, setSelected] = useRecoilState(selectedPlanetAtom);
   const [planetPage, setPlanetPage] = useRecoilState(planetPageAtom);
+  const [animate, setAnimate] = useRecoilState(animateAtom);
 
   const planetDetail = useRecoilValue(selectedPlanetAtom);
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
@@ -50,6 +52,11 @@ function UserProfile() {
   useEffect(() => {
     setRoomIndex(0);
   }, []);
+  useEffect(() => {
+    setAnimate(true);
+  }, [roomIndex]);
+
+  const isMe = me?.memberId == userId;
 
   return (
     <div
@@ -69,7 +76,7 @@ function UserProfile() {
       )}
       {planetDetail === -1 && roomIndex === 0 && (
         <>
-          <ProfileCard user={userData?.responseData} />
+          <ProfileCard user={isMe ? me : userData?.responseData} />
         </>
       )}
 
@@ -87,8 +94,13 @@ function UserProfile() {
             <Garden />
           </RecoilBridge>
           <Planets
-            memberAddress={userData?.responseData.memberAddress}
-            planetsState={[planets, setPlanets]}
+            me={isMe}
+            memberAddress={
+              isMe ? me?.memberAddress : userData?.responseData.memberAddress
+            }
+            planetsState={
+              isMe ? [me?.planets, () => {}] : [planets, setPlanets]
+            }
             selectedState={[selected, setSelected]}
             roomIndexState={[roomIndex, setRoomIndex]}
             planetPageState={[planetPage, setPlanetPage]}
@@ -121,7 +133,7 @@ function UserProfile() {
         <>
           {roomIndex === 1 ? (
             <MotionContainer>
-              {me?.memberId == userId ? (
+              {isMe ? (
                 <MyProfileModal />
               ) : (
                 <ProfileModal user={userData?.responseData} />
@@ -140,6 +152,8 @@ export default UserProfile;
 
 // eslint-disable-next-line
 const MotionContainer = ({ children, ...rest }: any) => {
+  const roomIndex = useRecoilValue(roomIndexAtom);
+  const [isAnimate, setAnimate] = useRecoilState(animateAtom);
   const StyledFade = styled(motion.div)`
     position: absolute;
     top: 0;
@@ -152,9 +166,10 @@ const MotionContainer = ({ children, ...rest }: any) => {
     <StyledFade
       {...rest}
       onClick={e => e.stopPropagation()}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ opacity: isAnimate ? 0 : 1 }}
+      animate={{ opacity: roomIndex === 1 ? 1 : 0 }}
       transition={{ duration: 0.5, delay: 1.2 }}
+      onAnimationComplete={() => setAnimate(false)}
     >
       <div style={{ width: '100%', height: '100%' }}>{children}</div>
     </StyledFade>
