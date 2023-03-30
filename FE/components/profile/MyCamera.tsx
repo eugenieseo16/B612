@@ -81,7 +81,7 @@ function MyChildCamera({ router }: { router: any }) {
         onAnimationComplete={() => setIsAnimate(false)}
         transition={{ duration: 1 }}
         far={1500}
-        position={[0, 10, 150]}
+        position={[0, 10, 60]}
       />
     </>
   );
