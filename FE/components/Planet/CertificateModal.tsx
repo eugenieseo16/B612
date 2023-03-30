@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from '@emotion/styled';
 
 const Modal = styled.div`
@@ -14,12 +14,12 @@ const Modal = styled.div`
   padding: 30px;
 `;
 
-function CertificateModal() {
+const CertificateModal = memo(function SomeComponent() {
   return (
     <Modal>
       <div>Certificate</div>
     </Modal>
   );
-}
+});
 
 export default CertificateModal;
