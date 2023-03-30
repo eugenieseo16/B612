@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';
 import storeIndexAtom from 'store/store/storeIndexAtom';
 import { colors } from 'styles/colors';
 
 function StoreNav() {
-  const [onSalePlanets, setOnSalePlanets] = useRecoilState(onSalePlanetsAtom);
+  const onSalePlanets = useRecoilValue(onSalePlanetsAtom);
   const [storeIndex, setStoreIndex] = useRecoilState(storeIndexAtom);
   console.log(storeIndex);
   return (

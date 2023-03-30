@@ -1,3 +1,4 @@
+/* eslint-disable  */
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion-3d';
 import { useGLTF } from '@react-three/drei';

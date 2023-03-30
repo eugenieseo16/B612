@@ -35,6 +35,7 @@ const CAMERA_ANGLE = [
     rotateZ: 0.455953684691092,
   },
 ];
+// eslint-disable-next-line
 function MyChildCamera({ router }: { router: any }) {
   const ref = useRef();
   const [isAnimate, setIsAnimate] = useState(true);
@@ -49,7 +50,7 @@ function MyChildCamera({ router }: { router: any }) {
     return () => {
       if (id) clearTimeout(id);
     };
-  }, [roomIndex]);
+  }, [roomIndex, router]);
 
   // useFrame(({ camera }) => {
   //   camera.lookAt(0, 25, -30);

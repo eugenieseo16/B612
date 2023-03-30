@@ -55,7 +55,7 @@ function UserController() {
       window.ethereum?.removeListener('accountsChanged', handleAccount);
       window.ethereum?.removeListener('chainChanged', handleAccount);
     };
-  }, [planetContract]);
+  }, [planetContract, setUser]);
   console.log('USER CONTROLLER');
   return <></>;
 }

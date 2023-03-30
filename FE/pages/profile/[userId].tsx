@@ -5,6 +5,7 @@ import {
   useRecoilBridgeAcrossReactRoots_UNSTABLE,
   useRecoilState,
   useRecoilValue,
+  useSetRecoilState,
 } from 'recoil';
 import userAtom from 'store/userAtom';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
@@ -35,7 +36,7 @@ function UserProfile() {
   const [planets, setPlanets] = useRecoilState(planetAtom);
   const [selected, setSelected] = useRecoilState(selectedPlanetAtom);
   const [planetPage, setPlanetPage] = useRecoilState(planetPageAtom);
-  const [animate, setAnimate] = useRecoilState(animateAtom);
+  const setAnimate = useSetRecoilState(animateAtom);
 
   const planetDetail = useRecoilValue(selectedPlanetAtom);
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
@@ -51,10 +52,10 @@ function UserProfile() {
 
   useEffect(() => {
     setRoomIndex(0);
-  }, []);
+  }, [setRoomIndex]);
   useEffect(() => {
     setAnimate(true);
-  }, [roomIndex]);
+  }, [roomIndex, setAnimate]);
 
   const isMe = me?.memberId == userId;
 
@@ -171,5 +172,3 @@ const MotionContainer = ({ children, ...rest }: any) => {
     </StyledFade>
   );
 };
-
-const Temp = () => {};

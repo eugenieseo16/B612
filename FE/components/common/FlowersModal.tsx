@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import styled from '@emotion/styled';
 import { Canvas } from '@react-three/fiber';
 import { colors } from 'styles/colors';

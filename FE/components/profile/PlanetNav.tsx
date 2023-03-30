@@ -3,7 +3,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import selectedPlanetAtom from 'store/profile/selectedPlanet';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { shadowGenerator, simpleShadow } from 'styles/utils';
 import { colors } from 'styles/colors';
 import planetAtom from 'store/planetsAtom';
 import planetPageAtom from 'store/profile/planetPageAtom';

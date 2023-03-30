@@ -1,11 +1,3 @@
-import React from 'react';
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  ButtonBase,
-} from '@mui/material';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { useRecoilState } from 'recoil';
 import styled from '@emotion/styled';
@@ -23,7 +15,6 @@ const FloatingButtons = styled.div`
 `;
 
 function RoomNav() {
-  const ROOM = ['HOME', 'DESKTOP', 'PLANETS', 'GARDEN'];
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
   return (
     <FloatingButtons>

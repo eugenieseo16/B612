@@ -129,8 +129,12 @@ export const BlueButton = styled.div`
     height: 55px;
   }
 `;
-
-export const GlowButton = styled.div<any>`
+type Props = {
+  bgColor: string;
+  selectedShadow: string;
+  defaultShadow: string;
+};
+export const GlowButton = styled.div<Props>`
   .selected {
     display: flex;
     justify-content: center;

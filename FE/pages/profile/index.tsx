@@ -16,7 +16,6 @@ import { useEffect } from 'react';
 import { Room, MyCamera, RoomNav, Planets } from '@components/profile/index';
 import ProfileModal from '@components/profile/ProfileModal';
 import { useRouter } from 'next/router';
-import { useMobile } from '@hooks/useMobile';
 import Garden from '@components/profile/Garden';
 import selectedPlanetAtom from 'store/profile/selectedPlanet';
 import PlanetNav from '@components/profile/PlanetNav';
@@ -35,7 +34,7 @@ function UserProfile() {
   }, [user, router]);
   useEffect(() => {
     setRoomIndex(0);
-  }, []);
+  }, [setRoomIndex]);
 
   return (
     <div

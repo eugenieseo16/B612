@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { colors } from 'styles/colors';
 import {
@@ -12,9 +12,8 @@ import {
 } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import defaultImg from 'assets/imgs/cryptoPunk1.png';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import userAtom from 'store/userAtom';
-import axios from 'axios';
 import RoomNav from './RoomNav';
 import { rgba } from 'emotion-rgba';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
@@ -120,6 +119,7 @@ function MyProfileModal() {
                   changedNickname: editValue.memberNickname,
                   memberId: me.memberId,
                 });
+                console.log(imageData);
               }}
             >
               등록
