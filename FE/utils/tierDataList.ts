@@ -9,4 +9,4 @@ tierDataList.set('지구', Earth.src);
 tierDataList.set('별', Star.src);
 tierDataList.set('장미', Rose.src);
 tierDataList.set('여우', Fox.src);
-tierDataList.set('돌맹이', Rock.src);
+tierDataList.set('돌멩이', Rock.src);
