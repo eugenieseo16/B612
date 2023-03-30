@@ -42,7 +42,7 @@ function UserProfile() {
 
   const { data: userData } = useQuery(`user/${userId}`, () => {
     if (!userId) return;
-    return fetch(`http://127.0.0.1:8080/api/member/${userId}`).then(res =>
+    return fetch(`https://j8a208.p.ssafy.io/api/member/${userId}`).then(res =>
       res.json()
     );
   });

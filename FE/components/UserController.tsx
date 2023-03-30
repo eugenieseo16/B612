@@ -16,9 +16,12 @@ function UserController() {
         setUser(null);
         return;
       }
-      const { data } = await axios.post('http://127.0.0.1:8080/api/member', {
-        memberAddress,
-      });
+      const { data } = await axios.post(
+        'https://j8a208.p.ssafy.io/api/member',
+        {
+          memberAddress,
+        }
+      );
       const planetContractAddress =
         '0xeab8b1e0cd0de0c9e07928d8d8c9aab166ae983e';
       let isApproved = false;
