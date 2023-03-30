@@ -94,6 +94,16 @@ public class PlanetController {
     public ResponseEntity<BaseResponseBody> getMemberLikePlanets(@PathVariable("memberId") int memberId, @RequestParam int page, @RequestParam int size) {
         List<PlanetResponseDto> planetResponseDtos = planetService.viewLikedPlanet(memberId, page, size);
 
+        if(planetResponseDtos==null){
+            BaseResponseBody baseResponseBody =
+                    BaseResponseBody.builder()
+                            .message("fail")
+                            .statusCode(400)
+                            .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+
         BaseResponseBody baseResponseBody =
                 BaseResponseBody.builder()
                         .message("success")
