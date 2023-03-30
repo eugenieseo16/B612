@@ -6,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
+import { tierDataList } from '../../utils/tierDataList';
+
 import Link from 'next/link';
 
 import { Container } from './RankingsEmotion';
@@ -13,9 +15,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import { PlanetRankingAPI } from 'API/rankingURLs';
 
+import Web3 from 'web3';
+
 export default function BasicTable() {
   const data = PlanetRankingAPI();
   console.log(data);
+
+  // console.log(Web3.eth.accounts);
+
   return (
     <Container>
       <TableContainer>
@@ -63,7 +70,10 @@ export default function BasicTable() {
                   </Link>
                 </TableCell>
                 <TableCell align="center">
-                  <p>{planet.memberNickName}</p>
+                  <div className="member-tier">
+                    <img src={tierDataList.get(planet.memberTierName)} alt="" />
+                    <p>{planet.memberNickName}</p>
+                  </div>
                 </TableCell>
                 <TableCell align="center">
                   <div className="like-item">

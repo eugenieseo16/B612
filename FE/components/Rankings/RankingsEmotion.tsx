@@ -20,6 +20,16 @@ export const Container = styled.div`
     }
   }
 
+  .member-tier {
+    display: flex;
+    align-items: center;
+    img {
+      width: 25px;
+      height: 25px;
+      margin-right: 8px;
+    }
+  }
+
   .like-item {
     display: flex;
     align-items: center;
