@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
@@ -13,6 +13,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import Divider from '@mui/material/Divider';
 import { useRouter } from 'next/router';
 import { useSearchByNameAPI } from 'API/memberAPIs';
+import axios from 'axios';
+import { friendAPIUrls } from 'API/apiURLs';
 
 const Modal = styled.div`
   position: absolute;
@@ -43,7 +45,7 @@ const Modal = styled.div`
   }
 `;
 
-function FriendsModal() {
+const FriendsModal = memo(function SomComponent() {
   const user = useRecoilValue(userAtom);
   const data = useFriendAPI(user?.memberId);
   const router = useRouter();
@@ -55,6 +57,14 @@ function FriendsModal() {
     (friend: IUser) => (ff[friend.memberId] = true)
   );
   data?.responseData?.forEach((friend: IUser) => (ff[friend.memberId] = false));
+
+  const addFriend = async (friendResponseMemberId: number) => {
+    const { data } = await axios.post(friendAPIUrls.requestFriendAPIUrl, {
+      friendRequestMemberId: user?.memberId,
+      friendResponseMemberId,
+    });
+    console.log(data);
+  };
 
   return (
     <Modal>
@@ -93,6 +103,9 @@ function FriendsModal() {
             <div>
               <h2>{friend.memberNickname}</h2>
               <h6>{friend.memberTierName}</h6>
+              <button onClick={() => addFriend(friend.memberId)}>
+                친구추가
+              </button>
             </div>
             <Divider />
           </div>
@@ -116,6 +129,6 @@ function FriendsModal() {
       ))}
     </Modal>
   );
-}
+});
 
 export default FriendsModal;

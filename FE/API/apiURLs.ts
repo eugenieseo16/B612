@@ -7,6 +7,7 @@ export const rankingAPIUrls = {
 
 export const friendAPIUrls = {
   getFriendsAPIUrl: `${apiBaseUrl}/friend`,
+  requestFriendAPIUrl: `${apiBaseUrl}/friend`,
 };
 export const memberAPIUrls = {
   putNicknameAPIUrl: `${apiBaseUrl}/member/nickname`,
