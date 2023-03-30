@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
 import useWeb3 from '.';
 
@@ -828,4 +830,17 @@ export const usePlanetTokenContract = () => {
   const web3 = useWeb3();
   if (web3) return new web3.eth.Contract(planetTokenAbi, planetTokenAddress);
   return null;
+};
+export const usePlanetContract = () => {
+  const provider =
+    'https://maximum-dark-knowledge.ethereum-goerli.discover.quiknode.pro/36a08a142a57e427d958da89026ad9adbb135ad0/';
+  const web3Provider = new Web3.providers.HttpProvider(provider);
+  const [contract, setContract] = useState<any>();
+  useEffect(() => {
+    let web3 = new Web3(web3Provider);
+    if (window.ethereum) web3 = new Web3(window.ethereum);
+    const temp: any = new web3.eth.Contract(planetTokenAbi, planetTokenAddress);
+    setContract(temp);
+  }, []);
+  return contract;
 };

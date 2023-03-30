@@ -23,36 +23,43 @@ import PlanetNav from '@components/profile/PlanetNav';
 import ProfileCard from '@components/profile/ProfileCard';
 import PlanetDetailCard from '@components/profile/PlanetDetailCard';
 import MyProfileModal from '@components/profile/MyProfileModal';
-import PlanetController from '@components/PlanetController';
+
+import planetAtom from 'store/planetsAtom';
+import planetPageAtom from 'store/profile/planetPageAtom';
 
 function UserProfile() {
   const router = useRouter();
   const { userId } = router.query;
   const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
+  const [planets, setPlanets] = useRecoilState(planetAtom);
+  const [selected, setSelected] = useRecoilState(selectedPlanetAtom);
+  const [planetPage, setPlanetPage] = useRecoilState(planetPageAtom);
+
   const planetDetail = useRecoilValue(selectedPlanetAtom);
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
   const me = useRecoilValue(userAtom);
 
-  const { data: userData } = useQuery(`user/${userId}`, () =>
-    fetch(`https://j8a208.p.ssafy.io/api/member/${userId}`).then(res =>
+  const { data: userData } = useQuery(`user/${userId}`, () => {
+    if (!userId) return;
+    return fetch(`http://127.0.0.1:8080/api/member/${userId}`).then(res =>
       res.json()
-    )
-  );
+    );
+  });
+
   useEffect(() => {
     setRoomIndex(0);
   }, []);
-  console.log(me, userData?.responseData?.memberAddress);
 
   return (
     <div
       style={{
         width: '100vw',
-        height: 'calc(100vh - 5rem)',
+        height: '100vh',
         background: '#252530',
       }}
     >
-      <PlanetController userAddress={userData?.responseData?.memberAddress} />
+      {/* <PlanetController userAddress={userData?.responseData?.memberAddress} /> */}
       {roomIndex !== 1 && <RoomNav />}
       {planetDetail !== -1 && (
         <>
@@ -76,10 +83,16 @@ function UserProfile() {
           <RecoilBridge>
             {/* <ambientLight intensity={0.1} /> */}
             <MyCamera router={router} />
-            <Planets />
             <Room />
             <Garden />
           </RecoilBridge>
+          <Planets
+            memberAddress={userData?.responseData.memberAddress}
+            planetsState={[planets, setPlanets]}
+            selectedState={[selected, setSelected]}
+            roomIndexState={[roomIndex, setRoomIndex]}
+            planetPageState={[planetPage, setPlanetPage]}
+          />
         </MotionCanvas>
       </MotionConfig>
       <Canvas style={{ display: 'none' }}>
@@ -89,7 +102,7 @@ function UserProfile() {
         sx={{
           minWidth: '70%',
           width: '100%',
-          marginTop: '5rem',
+          marginTop: '4rem',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -147,3 +160,5 @@ const MotionContainer = ({ children, ...rest }: any) => {
     </StyledFade>
   );
 };
+
+const Temp = () => {};

@@ -2,34 +2,59 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion-3d';
 import { useGLTF } from '@react-three/drei';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import selectedPlanetAtom from 'store/profile/selectedPlanet';
-import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { Box3, Vector3 } from 'three';
-import { usePlanetTokenContract } from '@components/contracts/planetToken';
-import planetAtom from 'store/planetsAtom';
 
-function Planets() {
-  const planets = useRecoilValue(planetAtom);
+import { usePlanetContract } from '@components/contracts/planetToken';
+import { PLANETS_LIST } from 'utils/utils';
+
+function Planets({
+  memberAddress,
+  planetsState,
+  selectedState,
+  roomIndexState,
+  planetPageState,
+}: any) {
+  const [planetPage, setPlanetPage] = planetPageState;
+  const [planets, setPlanets] = planetsState;
+  const planetContract = usePlanetContract();
+
+  const curPlanetsLength =
+    planets.length - planetPage * 5 > 4 ? 5 : planets.length - planetPage * 5;
 
   const getRandom = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
   };
 
-  console.log('PLANETS', planets);
+  useEffect(() => {
+    if (!memberAddress) return;
+    planetContract?.methods
+      .getPlanetTokens(memberAddress)
+      .call()
+      .then((data: any) => {
+        setPlanets(data);
+      });
+  }, [planetContract, memberAddress]);
+
+  console.log(curPlanetsLength);
+
   return (
     <>
-      <motion.group>
-        {planets.map((planet, i) => (
-          <Planet
-            key={i}
-            data={planet}
-            planetId={i}
-            pos={[-20 + 10 * i, getRandom(15, 35), getRandom(-30, -10)]}
-            time={getRandom(10, 15)}
-          />
-        ))}
-      </motion.group>
+      <group>
+        {planets?.map((planet: any, i: number) => {
+          if (i > curPlanetsLength - 1) return;
+          return (
+            <Planet
+              selectedState={selectedState}
+              roomIndexState={roomIndexState}
+              key={i}
+              data={planets[i + planetPage * 5]}
+              planetId={i}
+              pos={[-20 + 10 * i, getRandom(15, 35), getRandom(-30, -10)]}
+              time={getRandom(10, 15)}
+            />
+          );
+        })}
+      </group>
     </>
   );
 }
@@ -37,13 +62,17 @@ function Planets() {
 export default Planets;
 
 // eslint-disable-next-line
-function Planet({ data, planetId, time, pos }: any) {
-  const [selected, setSelected] = useRecoilState(selectedPlanetAtom);
-  const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
-
-  const scene = useGLTF(
-    'https://res.cloudinary.com/dohkkln9r/image/upload/v1679556189/cprsxurbqcea7uk6p2vf.glb'
-  );
+function Planet({
+  data,
+  planetId,
+  time,
+  pos,
+  selectedState,
+  roomIndexState,
+}: any) {
+  const [selected, setSelected] = selectedState;
+  const [roomIndex, setRoomIndex] = roomIndexState;
+  const scene = useGLTF(PLANETS_LIST[data.planetType]);
   const clone = SkeletonUtils.clone(scene.scene);
 
   //3D 모델링 리사이즈

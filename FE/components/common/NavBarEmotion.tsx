@@ -1,17 +1,18 @@
 import styled from '@emotion/styled';
+import { rgba } from 'emotion-rgba';
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  background-color: #aec5ff;
+  background-color: ${rgba('#fff', 0.4)};
   justify-content: space-between;
-  padding: 2rem 2rem;
+  padding: 0rem 2rem;
 
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 5rem;
+  height: 4rem;
 
   #link-item {
     padding: 15px;

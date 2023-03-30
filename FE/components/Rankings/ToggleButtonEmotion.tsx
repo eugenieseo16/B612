@@ -1,12 +1,16 @@
 import styled from '@emotion/styled';
 
+export const RankingModal = styled.div`
+  // width: 100vh;
+  // height: 100vh;
+`;
 export const ButtonContainer = styled.div`
   background-color: #bd95f4;
   border-radius: 50px;
   margin-top: 20px;
   margin-bottom: 20px;
 
-  height: 6rem;
+  height: 5rem;
   width: 21rem;
 
   display: flex;

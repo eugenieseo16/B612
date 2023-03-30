@@ -9,6 +9,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import PlanetController from '@components/PlanetController';
+import { useGLTF } from '@react-three/drei';
+import { PLANETS_LIST } from 'utils/utils';
 React.useLayoutEffect = React.useEffect;
 
 declare global {
@@ -19,15 +21,21 @@ declare global {
 }
 const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
+  const tt = useGLTF.preload('/little-prince.glb');
+
+  PLANETS_LIST.forEach(planet => {
+    useGLTF.preload(planet);
+  });
+
   const router = useRouter();
   const Background = styled.div`
     background-image: url('https://ifh.cc/g/HXB7pP.jpg');
     background-size: cover;
-    height: calc(100vh - 5rem);
+    height: calc(100vh);
     width: 100vw;
     z-index: -1;
     position: fixed;
-    top: 5rem;
+    top: 0;
   `;
 
   return (
@@ -38,7 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Layout />
         <AnimatePresence mode="wait">
           <motion.div
-            style={{ minHeight: 'calc(100vh - 5rem)' }}
+            style={{ minHeight: 'calc(100vh)' }}
             key={router.route}
             initial="initialState"
             animate="animateState"
@@ -59,6 +67,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             }}
           >
             <Background />
+
             <Component {...pageProps} />
           </motion.div>
         </AnimatePresence>
