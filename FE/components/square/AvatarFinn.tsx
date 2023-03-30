@@ -40,7 +40,7 @@ const directionOffset = ({
     if (left) {
       directionOffset = Math.PI / 4 + Math.PI / 2; // s+a
     } else if (right) {
-      directionOffset = Math.PI / 4 - Math.PI / 2; // s+d
+      directionOffset = -Math.PI / 4 - Math.PI / 2; // s+d
     } else {
       directionOffset = Math.PI; // s
     }
@@ -54,8 +54,8 @@ const directionOffset = ({
 };
 
 const AvatarFinn = () => {
-  const { forward, backward, left, right, jump, shift } = UseInput();
-  const model = useGLTF('./avatar_finn/avatar_finn.glb');
+  const { forward, backward, left, right, shift } = UseInput();
+  const model = useGLTF('./avatar_finn/gaonasi.glb');
   let pos = [0, 0, 0];
 
   const { actions } = useAnimations(model.animations, model.scene);
@@ -92,8 +92,8 @@ const AvatarFinn = () => {
       if (shift) {
         action = 'running';
       }
-    } else if (jump) {
-      action = 'jumping';
+      // } else if (jump) {
+      //   action = 'jumping';
     } else {
       action = 'Action';
     }
@@ -105,7 +105,7 @@ const AvatarFinn = () => {
       NextActionToPlay?.reset().fadeIn(0.2).play();
       currentAction.current = action;
     }
-  }, [forward, backward, left, right, jump, shift]);
+  }, [forward, backward, left, right, shift]);
 
   // 줌인 줌아웃 설정을 적용해보자
   const MIN_ZOOM = 0.5;
@@ -210,7 +210,7 @@ const AvatarFinn = () => {
       walkDirection.applyAxisAngle(rotateAngle, newDirectionOffset);
 
       //run/walk velocity
-      const velocity = currentAction.current == 'running' ? 10 : 5;
+      const velocity = currentAction.current == 'running' ? 8 : 4;
 
       // move model & camera
       const moveX = walkDirection.x * velocity * delta;
