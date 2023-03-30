@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from '@emotion/styled';
 
 const Modal = styled.div`
@@ -14,12 +14,12 @@ const Modal = styled.div`
   padding: 30px;
 `;
 
-function PlanetsModal() {
+const PlanetsModal = memo(function SomeComponent() {
   return (
     <Modal>
       <div>Planets</div>
     </Modal>
   );
-}
+});
 
 export default PlanetsModal;

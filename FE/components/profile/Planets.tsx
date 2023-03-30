@@ -19,7 +19,7 @@ function Planets({
   const planetContract = usePlanetContract();
 
   const curPlanetsLength =
-    planets.length - planetPage * 5 > 4 ? 5 : planets.length - planetPage * 5;
+    planets?.length - planetPage * 5 > 4 ? 5 : planets?.length - planetPage * 5;
 
   const getRandom = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
@@ -34,8 +34,6 @@ function Planets({
         setPlanets(data);
       });
   }, [planetContract, memberAddress]);
-
-  console.log(curPlanetsLength);
 
   return (
     <>

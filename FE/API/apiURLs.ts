@@ -6,5 +6,10 @@ export const rankingAPIUrls = {
 };
 
 export const friendAPIUrls = {
-  getFriendsAPIUrl: `${apiBaseUrl}/friend/`,
+  getFriendsAPIUrl: `${apiBaseUrl}/friend`,
+  requestFriendAPIUrl: `${apiBaseUrl}/friend`,
+};
+export const memberAPIUrls = {
+  putNicknameAPIUrl: `${apiBaseUrl}/member/nickname`,
+  searchByNameAPIUrl: `${apiBaseUrl}/member/search`,
 };
