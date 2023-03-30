@@ -158,6 +158,10 @@ public class PlanetServiceImpl implements PlanetService {
         ArrayList<PlanetResponseDto> planetResponseDtos = new ArrayList<>();
         PageRequest pageRequest = PageRequest.of(page, size);
         Member member = memberRepository.findMemberByMemberId(memberId);
+
+        if(member==null){
+            return null;
+        }
         Page<Like> likes = likeRepository.findAllByLikeMemberIdOrderByLikePlanetNftId(member, pageRequest);
 
         for (Like like : likes) {
@@ -276,10 +280,13 @@ public class PlanetServiceImpl implements PlanetService {
     public List<PlanetResponseDto> viewMemberStar(int memberId) {
         ArrayList<PlanetResponseDto> planetResponseDtos=new ArrayList<>();
         Member member=memberRepository.findMemberByMemberId(memberId);
+        if(member==null){
+            return null;
+        }
         List<Planet> planets =  planetRepository.findAllByPlanetMemberIdOrderByPlanetLikesCount(member);
 
         if(planets.size()==0){
-            return null;
+            return planetResponseDtos;
         }
 
         for(Planet planet:planets){
