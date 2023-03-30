@@ -9,7 +9,7 @@ type Props = {
 };
 export const changeNickNameAPI = async (income: Props) => {
   const { data } = await axios.put(
-    'https://j8a208.p.ssafy.io:8080/api/member/nickname',
+    `${memberAPIUrls.putNicknameAPIUrl}`,
     income
   );
   return data;

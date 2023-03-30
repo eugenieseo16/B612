@@ -68,16 +68,11 @@ function UserProfile() {
     >
       {/* <PlanetController userAddress={userData?.responseData?.memberAddress} /> */}
       {roomIndex !== 1 && <RoomNav />}
-      {planetDetail !== -1 && roomIndex === 2 && isMe && me?.planets && (
+
+      {planetDetail !== -1 && roomIndex === 2 && (
         <>
-          <PlanetDetailCard planets={me?.planets} />
-          <PlanetNav totalLength={me?.planets.length} />
-        </>
-      )}
-      {planetDetail !== -1 && roomIndex === 2 && !isMe && (
-        <>
-          <PlanetDetailCard planets={planets} />
-          <PlanetNav totalLength={planets.length} />
+          <PlanetDetailCard />
+          <PlanetNav />
         </>
       )}
       {planetDetail === -1 && roomIndex === 0 && (
@@ -101,12 +96,8 @@ function UserProfile() {
           </RecoilBridge>
           <Planets
             me={isMe}
-            memberAddress={
-              isMe ? me?.memberAddress : userData?.responseData.memberAddress
-            }
-            planetsState={
-              isMe ? [me?.planets, () => {}] : [planets, setPlanets]
-            }
+            memberAddress={userData?.responseData?.memberAddress}
+            planetsState={[planets, setPlanets]}
             selectedState={[selected, setSelected]}
             roomIndexState={[roomIndex, setRoomIndex]}
             planetPageState={[planetPage, setPlanetPage]}

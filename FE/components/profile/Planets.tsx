@@ -8,7 +8,6 @@ import { usePlanetContract } from '@components/contracts/planetToken';
 import { PLANETS_LIST } from 'utils/utils';
 
 function Planets({
-  me = false,
   memberAddress,
   planetsState,
   selectedState,
@@ -27,8 +26,7 @@ function Planets({
   };
 
   useEffect(() => {
-    console.log('Here', me);
-    if (!memberAddress || me) return;
+    if (!memberAddress) return;
     planetContract?.methods
       .getPlanetTokens(memberAddress)
       .call()

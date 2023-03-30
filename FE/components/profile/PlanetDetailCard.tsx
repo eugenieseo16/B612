@@ -8,12 +8,13 @@ import { usePlanetContract } from '@components/contracts/planetToken';
 import userAtom from 'store/userAtom';
 import planetPageAtom from 'store/profile/planetPageAtom';
 
-function PlanetDetailCard({ planets }: { planets: IPlanet[] }) {
+function PlanetDetailCard() {
+  const planets = useRecoilValue(planetAtom);
   const me = useRecoilValue(userAtom);
   const selectedId = useRecoilValue(selectedPlanetAtom);
   const page = useRecoilValue(planetPageAtom);
   const planet = planets[selectedId + page * 5];
-  
+
   const planetContract = usePlanetContract();
   const handleSale = () => {
     planetContract?.methods
