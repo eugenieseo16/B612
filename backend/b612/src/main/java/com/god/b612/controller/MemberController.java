@@ -26,6 +26,7 @@ import java.util.Map;
 @RequestMapping("/api/member")
 @Api("멤버(유저) api")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET , RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class MemberController {
     @Autowired
     private final MemberService memberService;
