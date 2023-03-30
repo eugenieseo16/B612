@@ -4,7 +4,7 @@ import { rgba } from 'emotion-rgba';
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${rgba('#Fee4be', 0.4)};
+  background-color: ${rgba('#fff', 0.4)};
   justify-content: space-between;
   padding: 0rem 2rem;
 
