@@ -1,4 +1,6 @@
 import React from 'react';
+import { useRouter } from 'next/router';
+
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
@@ -6,8 +8,25 @@ import { PlanetDetail } from './PlanetDetailEmotion';
 
 import Goerli from '../../assets/imgs/goerli-eth.png';
 
+import { usePlanetContract } from '@components/contracts/planetToken';
+// import { getPlanetDetailAPI } from 'API/planetAPIs';
+
 function PlanetDetailCard() {
   const user = useRecoilValue(userAtom);
+
+  const router = useRouter();
+  const planetId = router.query;
+
+  const planetContract = usePlanetContract();
+  async function getPlanetDetail() {
+    const planetDetail = await planetContract?.methods
+      .b612AddressMap('3')
+      .call();
+    return planetDetail;
+  }
+  // const planetDetail = await getPlanetDetail();
+  // console.log(planetDetail);
+
   return (
     <PlanetDetail>
       <div className="detail-container">
@@ -17,7 +36,7 @@ function PlanetDetailCard() {
             <h2>부지런한 하나별</h2>
           </div>
           <div className="planet-price">
-            <img src={Goerli.src} alt="SSAFY coin" id="ssafy-coin" />
+            <img src={Goerli.src} alt="Goerli Ethereum" id="goerli-ethereum" />
 
             <span>333</span>
             <span>GoerliETH</span>

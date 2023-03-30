@@ -59,7 +59,7 @@ export const PlanetDetail = styled.div`
       background: rgba(255, 255, 255, 0.7);
     }
 
-    #ssafy-coin {
+    #goerli-ethereum {
       width: 30px;
       margin-right: 5px;
     }

@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { Container } from './RankingsEmotion';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { PlanetRankingAPI } from 'API/rankingURLs';
+import { PlanetRankingAPI } from 'API/rankingAPIs';
 
 import Web3 from 'web3';
 
