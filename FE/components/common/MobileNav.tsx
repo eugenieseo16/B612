@@ -9,6 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 import { useRouter } from 'next/router';
+import { handleMetamaskLogin } from '@components/MetaMaskLogin';
 
 export default function MobileNav() {
   const [value, setValue] = React.useState(0);
@@ -19,10 +20,12 @@ export default function MobileNav() {
       router.push(`/profile/${me.memberId}`);
       return;
     }
+    if (window.ethereum) {
+      handleMetamaskLogin();
+      return;
+    }
 
-    window.open(
-      'https://metamask.app.link/dapp/maximum-dark-knowledge.ethereum-goerli.discover.quiknode.pro/36a08a142a57e427d958da89026ad9adbb135ad0/'
-    );
+    window.open('https://metamask.app.link/dapp/b612.shop');
   };
   return (
     <Paper
