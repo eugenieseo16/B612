@@ -36,6 +36,7 @@ public class FriendController {
     public ResponseEntity<?> makeFriendRequest(@RequestBody @ApiParam(value = "친구 요청 생성 Dto 입력", required = true)FriendRequestDto friendRequestDto){
         Friend friend = friendService.registFriend(friendRequestDto);
 
+
         if(friend==null){
             BaseResponseBody baseResponseBody=
                     BaseResponseBody.builder()
@@ -116,12 +117,19 @@ public class FriendController {
     @ApiOperation(value = "member의 친구 목록을 가져옵니다.", notes = "멤버 id를 입력하면, 해당 멤버의 친구목록을 받아옵니다.")
     @GetMapping("/{memberId}")
     public ResponseEntity<?>  getFriends(@ApiParam(value = "친구목록을 조회할 멤버 아이디") @PathVariable("memberId")int memberId, @RequestParam int page,@RequestParam int size){
-        System.out.println("0");
         PageRequest pageRequest=PageRequest.of(page,size);
-        System.out.println("5");
         List<MemberResponseDto> memberResponseDtos=friendService.findFriendList(memberId,pageRequest);
 
-        if(memberResponseDtos.size()!=0){
+        if(memberResponseDtos==null){
+            BaseResponseBody baseResponseBody= BaseResponseBody.builder()
+                    .message("fail")
+                    .statusCode(400)
+                    .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+
+        else{
             BaseResponseBody baseResponseBody=
                     BaseResponseBody.builder()
                             .message("success")
@@ -129,15 +137,6 @@ public class FriendController {
                             .responseData(memberResponseDtos)
                             .build();
             return ResponseEntity.status(200).body(baseResponseBody);
-        }
-
-        else{
-            BaseResponseBody baseResponseBody= BaseResponseBody.builder()
-                    .message("fail")
-                    .statusCode(400)
-                    .build();
-
-            return ResponseEntity.status(400).body(baseResponseBody);
         }
     }
 
@@ -149,7 +148,16 @@ public class FriendController {
         PageRequest pageRequest=PageRequest.of(page,size);
         List<MemberResponseDto> memberResponseDtos=friendService.findMyUnaccpetedFriendList(memberId,pageRequest);
 
-        if(memberResponseDtos.size()!=0){
+        if(memberResponseDtos==null){
+            BaseResponseBody baseResponseBody= BaseResponseBody.builder()
+                    .message("fail")
+                    .statusCode(400)
+                    .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+
+        else{
             BaseResponseBody baseResponseBody=
                     BaseResponseBody.builder()
                             .message("success")
@@ -157,15 +165,6 @@ public class FriendController {
                             .responseData(memberResponseDtos)
                             .build();
             return ResponseEntity.status(200).body(baseResponseBody);
-        }
-
-        else{
-            BaseResponseBody baseResponseBody= BaseResponseBody.builder()
-                    .message("fail")
-                    .statusCode(400)
-                    .build();
-
-            return ResponseEntity.status(400).body(baseResponseBody);
         }
     }
 
@@ -176,7 +175,16 @@ public class FriendController {
         PageRequest pageRequest=PageRequest.of(page,size);
         List<MemberResponseDto> memberResponseDtos=friendService.findMyRequestedFriendList(memberId,pageRequest);
 
-        if(memberResponseDtos.size()!=0){
+        if(memberResponseDtos==null){
+            BaseResponseBody baseResponseBody= BaseResponseBody.builder()
+                    .message("fail")
+                    .statusCode(400)
+                    .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+
+        else{
             BaseResponseBody baseResponseBody=
                     BaseResponseBody.builder()
                             .message("success")
@@ -184,15 +192,6 @@ public class FriendController {
                             .responseData(memberResponseDtos)
                             .build();
             return ResponseEntity.status(200).body(baseResponseBody);
-        }
-
-        else{
-            BaseResponseBody baseResponseBody= BaseResponseBody.builder()
-                    .message("fail")
-                    .statusCode(400)
-                    .build();
-
-            return ResponseEntity.status(400).body(baseResponseBody);
         }
     }
 
@@ -204,6 +203,17 @@ public class FriendController {
     public ResponseEntity<?>  findFriend(@RequestParam int requestId, @RequestParam int responseId){
         FriendResponseDto friendResponseDto= friendService.findFriend(requestId,responseId);
         if(friendResponseDto!=null){
+            if(friendResponseDto.getFriendResponseMemberId()==0){
+                BaseResponseBody baseResponseBody= BaseResponseBody.builder()
+                        .message("success")
+                        .statusCode(200)
+                        .responseData(null)
+                        .build();
+
+                return ResponseEntity.status(200).body(baseResponseBody);
+            }
+
+
             BaseResponseBody baseResponseBody= BaseResponseBody.builder()
                     .message("success")
                     .statusCode(200)

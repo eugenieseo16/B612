@@ -2,6 +2,7 @@ package com.god.b612.controller;
 
 import com.god.b612.dto.*;
 import com.god.b612.model.BaseResponseBody;
+import com.god.b612.repository.MemberRepository;
 import com.god.b612.service.FireBaseService;
 import com.god.b612.service.FlowerService;
 import com.god.b612.service.MemberService;
@@ -40,6 +41,8 @@ public class MemberController {
     private final PlanetService planetService;
 
     private final Logger logger = LoggerFactory.getLogger(MemberController.class);
+    @Autowired
+    private MemberRepository memberRepository;
 
     @ApiOperation(value = "회원가입 하고 로그인 하거나, 로그인 한다.", notes = "해당 주소로 가입이 되어있다면 유저 정보를 보내주고, 가입되어있지 않다면 유저를 가입 시킨 후 정보를 보내준다.")
     @PostMapping()
@@ -170,6 +173,10 @@ public class MemberController {
 
         List<FlowerResponseDto> flowerResponseDtos = flowerService.selectMemberInventory(memberId);
 
+        if(flowerResponseDtos==null){
+            BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
+        }
+
         BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(flowerResponseDtos).build();
 
         return ResponseEntity.status(200).body(baseResponseBody);
@@ -180,6 +187,11 @@ public class MemberController {
     @ApiOperation(value = "유저 별목록 보기", notes = "유저의 별들을 보여줍니다.")
     @GetMapping("/{memberId}/star")
     public ResponseEntity<BaseResponseBody> memberStars(@PathVariable("memberId") int memberId) {
+
+        if (memberRepository.findMemberByMemberId(memberId)==null){
+            BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
 
         List<PlanetResponseDto> planetResponseDtos=planetService.viewMemberStar(memberId);
 

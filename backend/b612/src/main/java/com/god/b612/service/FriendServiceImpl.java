@@ -35,11 +35,12 @@ public class FriendServiceImpl implements FriendService{
     private final MemberCustomRepository memberCustomRepository;
 
     public Friend registFriend(FriendRequestDto friendRequestDto){
-        Friend returnFriend=friendCustomRepository.makeFriendEntity(friendRequestDto);
-
-        if(null!=friendRepository.findTopByFriendRequestMemberIdAndFriendResponseMemberId(returnFriend.getFriendRequestMemberId(),returnFriend.getFriendResponseMemberId())){
+        Member member1=memberRepository.findMemberByMemberId(friendRequestDto.getFriendRequestMemberId());
+        Member member2=memberRepository.findMemberByMemberId(friendRequestDto.getFriendResponseMemberId());
+        if(member1 ==null || member2==null){
             return null;
         }
+        Friend returnFriend=friendCustomRepository.makeFriendEntity(friendRequestDto);
 
 
         List<Friend> friends= friendRepository.findAllByFriendResponseMemberId(returnFriend.getFriendRequestMemberId());
@@ -75,13 +76,14 @@ public class FriendServiceImpl implements FriendService{
     }
 
     @Override
-    public boolean acceptFriend(int myId,int friendId){
+    public Boolean acceptFriend(int myId,int friendId){
         Member me = memberRepository.findMemberByMemberId(myId);
         Member friend=memberRepository.findMemberByMemberId(friendId);
-        Friend friendEntity=friendRepository.findTopByFriendRequestMemberIdAndFriendResponseMemberId(friend,me);
-        if(friendEntity==null){
+        if(me==null || friend==null){
             return false;
         }
+        Friend friendEntity=friendRepository.findTopByFriendRequestMemberIdAndFriendResponseMemberId(friend,me);
+
         Friend accpted=Friend.builder()
                 .friendAccepted((byte)1)
                 .friendRequestMemberId(me)
@@ -105,19 +107,29 @@ public class FriendServiceImpl implements FriendService{
         Member requestMember=memberRepository.findMemberByMemberId(requestId);
         Member responseMember=memberRepository.findMemberByMemberId(responseId);
 
+        if(requestMember==null||responseMember==null){
+            return null;
+        }
+
         Friend friend=friendRepository.findTopByFriendRequestMemberIdAndFriendResponseMemberId(requestMember,responseMember);
-        FriendResponseDto responseDto=null;
+        FriendResponseDto responseDto;
+
         if(friend!=null){
             responseDto=friendCustomRepository.makeDto(friend);
             return responseDto;
         }
+        responseDto=FriendResponseDto.builder().build();
         return responseDto;
     }
 
     @Override
     public List<MemberResponseDto> findFriendList(int memberId, Pageable pageable) {
         Member member=memberRepository.findMemberByMemberId(memberId);
+        if(member==null){
+            return null;
+        }
         Page<Friend> friends=friendRepository.findAllByFriendResponseMemberIdAndFriendAcceptedOrderByCreatedTime(member,(byte)1,pageable);
+
         ArrayList<MemberResponseDto> memberResponseDtos=new ArrayList<>();
 
         for(Friend friend: friends){
@@ -129,6 +141,9 @@ public class FriendServiceImpl implements FriendService{
 
     public List<MemberResponseDto> findMyUnaccpetedFriendList(int memberId, Pageable pageable){
         Member member=memberRepository.findMemberByMemberId(memberId);
+        if(member==null){
+            return null;
+        }
         Page<Friend> friends=friendRepository.findAllByFriendResponseMemberIdAndFriendAcceptedOrderByCreatedTime(member,(byte)0,pageable);
         ArrayList<MemberResponseDto> memberResponseDtos=new ArrayList<>();
 
@@ -143,6 +158,9 @@ public class FriendServiceImpl implements FriendService{
     @Override
     public List<MemberResponseDto> findMyRequestedFriendList(int memberId, Pageable pageable){
         Member member=memberRepository.findMemberByMemberId(memberId);
+        if(member==null){
+            return null;
+        }
         Page<Friend> friends=friendRepository.findAllByFriendRequestMemberIdAndFriendAcceptedOrderByCreatedTime(member,(byte)0,pageable);
         ArrayList<MemberResponseDto> memberResponseDtos=new ArrayList<>();
 
@@ -154,15 +172,17 @@ public class FriendServiceImpl implements FriendService{
         return memberResponseDtos;
     }
 
-    public boolean deleteFriend(int myId, int friendId){
+    public Boolean deleteFriend(int myId, int friendId){
         Member me=memberRepository.findMemberByMemberId(myId);
         Member friend=memberRepository.findMemberByMemberId(friendId);
+
+        if(me==null||friend==null){
+            return false;
+        }
+
         Friend friend1=friendRepository.findTopByFriendRequestMemberIdAndFriendResponseMemberId(me,friend);
         Friend friend2=friendRepository.findTopByFriendRequestMemberIdAndFriendResponseMemberId(friend,me);
 
-        if(friend1==null&friend2==null){
-            return false;
-        }
 
         if(friend1!=null)
         {

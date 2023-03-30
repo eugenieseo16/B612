@@ -20,7 +20,7 @@ public interface FriendService {
 
     public List<MemberResponseDto> findMyRequestedFriendList(int memberId, Pageable pageable);
 
-    public boolean acceptFriend(int myId, int friendId);
+    public Boolean acceptFriend(int myId, int friendId);
 
-    public boolean deleteFriend(int myId, int friendId);
+    public Boolean deleteFriend(int myId, int friendId);
 }
