@@ -37,18 +37,16 @@ function PlanetCard() {
             <h2>{title}</h2>
           </div>
           <div className="planet-price">
-            <img src={GETH.src} alt="SSAFY coin" id="ssafy-coin" />
+            <img src={GETH.src} alt="GETH" />
             <p>{+planet?.planetPrice * 10 ** -18} GETH</p>
           </div>
         </div>
 
-        <div className="planet-date">
+        <div className="meta-data">
           <p>
             등록 날짜: {dayjs(+planet?.createdAt * 1000).format('YYYY-MM-DD')}
           </p>
-        </div>
 
-        <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
           {me?.memberAddress.toLocaleUpperCase() !=
           planet?.userAddress.toLocaleUpperCase() ? (
             <button onClick={purchasePlanet}>즉시구매</button>

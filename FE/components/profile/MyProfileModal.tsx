@@ -19,6 +19,7 @@ import { rgba } from 'emotion-rgba';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { usePlanetContract } from '@components/contracts/planetToken';
 import { changeNickNameAPI } from 'API/memberAPIs';
+import left from '../../assets/imgs/buttonIcons/chevron-left.svg';
 
 interface IEditData {
   memberNickname: string;
@@ -51,9 +52,21 @@ function MyProfileModal() {
   return (
     <Container>
       <RoomNav />
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <AvatarContainer>
-          <button onClick={() => setRoomIndex(0)}>이전</button>
+          <Button onClick={() => setRoomIndex(0)}>
+            <img
+              src={left.src}
+              alt=""
+              style={{ width: '2rem', height: '2rem' }}
+            />
+          </Button>
           {!isEdit ? (
             <Avatar
               src={editValue?.memberImage}
@@ -96,7 +109,7 @@ function MyProfileModal() {
           )}
         </AvatarContainer>
         {!isEdit ? (
-          <button onClick={() => setIsEdit(true)}>수정</button>
+          <FriendButton onClick={() => setIsEdit(true)}>수정</FriendButton>
         ) : (
           <div>
             <button
@@ -198,4 +211,18 @@ const Container = styled.div`
   a {
     color: ${colors.blue};
   }
+`;
+const Button = styled.button`
+  background: none;
+  border: none;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const FriendButton = styled(Button)`
+  width: 5rem;
+  background-color: ${colors.purple};
+  border-radius: 1rem;
 `;

@@ -844,3 +844,9 @@ export const usePlanetContract = () => {
   }, []);
   return contract;
 };
+export const myWeb3 = () => {
+  const provider =
+    'https://maximum-dark-knowledge.ethereum-goerli.discover.quiknode.pro/36a08a142a57e427d958da89026ad9adbb135ad0/';
+  const web3Provider = new Web3.providers.HttpProvider(provider);
+  return new Web3(web3Provider);
+};
