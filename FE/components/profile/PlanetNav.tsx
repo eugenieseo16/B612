@@ -15,28 +15,25 @@ function PlanetNav() {
   const totalLength = planets.length;
   const curPlanetsLength =
     totalLength - planetPage * 5 >= 4 ? 5 : totalLength - planetPage * 5;
-  const handlePlanet =
-    (type: 'next' | 'prev' | 'nextPage' | 'prevPage') => () => {
-      if (type === 'next') {
-        if (selectedPlanet == curPlanetsLength - 1) {
-          setSelectedPlanet(0);
-          return;
-        }
-
-        setSelectedPlanet(selectedPlanet + 1);
+  const handlePlanet = (type: 'next' | 'prev') => () => {
+    if (type === 'next') {
+      if (selectedPlanet == curPlanetsLength - 1) {
+        setSelectedPlanet(0);
         return;
       }
 
-      if (type == 'prev') {
-        console.log(selectedPlanet);
+      setSelectedPlanet(selectedPlanet + 1);
+      return;
+    }
 
-        if (selectedPlanet == 0) {
-          setSelectedPlanet(curPlanetsLength - 1);
-          return;
-        }
-        setSelectedPlanet(selectedPlanet - 1);
+    if (type == 'prev') {
+      if (selectedPlanet == 0) {
+        setSelectedPlanet(curPlanetsLength - 1);
+        return;
       }
-    };
+      setSelectedPlanet(selectedPlanet - 1);
+    }
+  };
 
   return (
     <>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { GlowButton } from './GlowingButtonEmotion';
 
-import { iconDataList } from '../../utils/iconDataList';
+import { iconDataList, IconsTypes } from '../../utils/iconDataList';
 import { shadowGenerator } from 'styles/utils';
 import { useMobile } from '@hooks/useMobile';
 
 interface GlowingButtonProps {
-  icon: string;
+  icon: IconsTypes;
   bgColor?: string;
   selected?: boolean;
   defaultColor?: string;

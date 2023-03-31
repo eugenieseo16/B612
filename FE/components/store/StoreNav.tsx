@@ -1,100 +1,65 @@
 import styled from '@emotion/styled';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';
 import storeIndexAtom from 'store/store/storeIndexAtom';
+import Pagination from '@mui/material/Pagination';
+import GlowingButton from '@components/common/GlowingButton';
 import { colors } from 'styles/colors';
 
 function StoreNav() {
   const onSalePlanets = useRecoilValue(onSalePlanetsAtom);
   const [storeIndex, setStoreIndex] = useRecoilState(storeIndexAtom);
-  console.log(storeIndex);
+  const changePage = (e: any, page: number) => {
+    setStoreIndex({ ...storeIndex, page: page - 1 });
+  };
+
+  const handlePage = (type: 'next' | 'prev') => () => {
+    const tt = onSalePlanets.length - storeIndex.page * 5;
+    if (type === 'prev') {
+      if (storeIndex.index <= 0) {
+        setStoreIndex({
+          ...storeIndex,
+          index: tt > 4 ? 4 : tt - 1,
+        });
+        return;
+      }
+      setStoreIndex({ ...storeIndex, index: storeIndex.index - 1 });
+    }
+
+    if (type == 'next') {
+      const curLength = tt > 4 ? 5 : tt;
+      if (storeIndex.index >= curLength - 1)
+        setStoreIndex({ ...storeIndex, index: 0 });
+      else {
+        setStoreIndex({ ...storeIndex, index: storeIndex.index + 1 });
+      }
+    }
+  };
+
   return (
     <>
-      {/* 이전페이지 */}
-      {storeIndex.page > 0 && (
-        <Button
-          onClick={() => {
-            if (storeIndex.page > 0) {
-              setStoreIndex({ page: storeIndex.page - 1, index: 0 });
-            }
-          }}
-          style={{ left: '10%' }}
-        >
-          <NavigateBeforeIcon
-            sx={{
-              fontSize: '8rem',
-              color: colors.purple,
-              filter: 'drop-shadow(0px 0px 5px #fff)',
-            }}
-          />
-        </Button>
-      )}
-      {/* 다음페이지 */}
-      {onSalePlanets.length - (storeIndex.page + 1) * 5 > 0 && (
-        <Button
-          onClick={() => {
-            if (onSalePlanets.length - (storeIndex.page + 1) * 5 > 0) {
-              setStoreIndex({ page: storeIndex.page + 1, index: 0 });
-            }
-          }}
-          style={{ right: '10%' }}
-        >
-          <NavigateNextIcon
-            sx={{
-              fontSize: '8rem',
-              color: colors.purple,
-              filter: 'drop-shadow(0px 0px 5px #fff)',
-            }}
-          />
-        </Button>
-      )}
+      <Pagination
+        count={Math.floor(onSalePlanets.length / 5) + 1}
+        variant="outlined"
+        color="secondary"
+        page={storeIndex.page + 1}
+        onChange={changePage}
+        size={'large'}
+        sx={{
+          position: 'absolute',
+          bottom: '1rem',
+          right: '1rem',
+          zIndex: 9999,
+        }}
+      />
 
       {/* 이전 행성 */}
-      <Button
-        onClick={() => {
-          if (storeIndex.index <= 0) {
-            const tt = onSalePlanets.length - storeIndex.page * 5;
-            setStoreIndex({
-              ...storeIndex,
-              index: tt > 4 ? 4 : tt - 1,
-            });
-          } else {
-            setStoreIndex({ ...storeIndex, index: storeIndex.index - 1 });
-          }
-        }}
-        style={{ left: '20%' }}
-      >
-        <NavigateBeforeIcon
-          sx={{
-            fontSize: '8rem',
-            color: colors.skyBlue,
-            filter: 'drop-shadow(0px 0px 5px #fff)',
-          }}
-        />
+      <Button onClick={handlePage('prev')} style={{ left: '20%' }}>
+        <GlowingButton selected={true} icon="left" bgColor={colors.purple} />
       </Button>
       {/* 다음행성 */}
-      <Button
-        onClick={() => {
-          const tt = onSalePlanets.length - storeIndex.page * 5;
-          const curLength = tt > 4 ? 5 : tt;
-          console.log(curLength);
-          if (storeIndex.index >= curLength - 1)
-            setStoreIndex({ ...storeIndex, index: 0 });
-          else {
-            setStoreIndex({ ...storeIndex, index: storeIndex.index + 1 });
-          }
-        }}
-        style={{ right: '20%' }}
-      >
-        <NavigateNextIcon
-          sx={{
-            fontSize: '8rem',
-            color: colors.skyBlue,
-            filter: 'drop-shadow(0px 0px 5px #fff)',
-          }}
-        />
+      <Button onClick={handlePage('next')} style={{ right: '20%' }}>
+        <GlowingButton selected={true} icon="right" bgColor={colors.purple} />
       </Button>
     </>
   );
