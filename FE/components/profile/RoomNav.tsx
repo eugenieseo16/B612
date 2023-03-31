@@ -28,9 +28,9 @@ function RoomNav() {
     {
       icon: (
         <GlowingButton
-          onClick={() => setRoomIndex(3)}
-          selected={roomIndex === 3}
-          icon={'plant'}
+          onClick={() => setRoomIndex(0)}
+          selected={roomIndex === 0}
+          icon={'chair'}
         />
       ),
       name: 'Home',
@@ -40,7 +40,7 @@ function RoomNav() {
         <GlowingButton
           onClick={() => setRoomIndex(1)}
           selected={roomIndex === 1}
-          icon={'friend'}
+          icon={'user'}
         />
       ),
       name: 'Profile',
@@ -50,7 +50,7 @@ function RoomNav() {
         <GlowingButton
           onClick={() => setRoomIndex(1)}
           selected={roomIndex === 1}
-          icon={'friend'}
+          icon={'planet'}
         />
       ),
       name: 'Planet',
@@ -58,9 +58,9 @@ function RoomNav() {
     {
       icon: (
         <GlowingButton
-          onClick={() => setRoomIndex(0)}
-          selected={roomIndex === 0}
-          icon={'friend'}
+          onClick={() => setRoomIndex(3)}
+          selected={roomIndex === 3}
+          icon={'plant'}
         />
       ),
       name: 'Garden',
@@ -74,17 +74,17 @@ function RoomNav() {
           <GlowingButton
             onClick={() => setRoomIndex(0)}
             selected={roomIndex === 0}
-            icon={'friend'}
+            icon={'chair'}
           />
           <GlowingButton
             onClick={() => setRoomIndex(1)}
             selected={roomIndex === 1}
-            icon={'friend'}
+            icon={'user'}
           />
           <GlowingButton
-            onClick={() => setRoomIndex(1)}
-            selected={roomIndex === 1}
-            icon={'friend'}
+            onClick={() => setRoomIndex(2)}
+            selected={roomIndex === 2}
+            icon={'planet'}
           />
           <GlowingButton
             onClick={() => setRoomIndex(3)}
@@ -103,7 +103,7 @@ function RoomNav() {
           {actions.map((action, i) => (
             <SpeedDialAction
               sx={{ background: rgba(colors.blue, 0.7) }}
-              onClick={() => setRoomIndex(3 - i)}
+              onClick={() => setRoomIndex(i)}
               key={action.name}
               icon={action.icon}
             />
