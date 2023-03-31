@@ -9,12 +9,12 @@ import userAtom from 'store/userAtom';
 import planetPageAtom from 'store/profile/planetPageAtom';
 
 function PlanetDetailCard() {
-  const planets = useRecoilValue(planetAtom);
   const me = useRecoilValue(userAtom);
   const selectedId = useRecoilValue(selectedPlanetAtom);
+  const planets = useRecoilValue(planetAtom);
   const page = useRecoilValue(planetPageAtom);
   const planet = planets[selectedId + page * 5];
-
+  console.log('여기', page * 5, selectedId);
   const planetContract = usePlanetContract();
   const handleSale = () => {
     planetContract?.methods
@@ -25,8 +25,8 @@ function PlanetDetailCard() {
     <PlanetCard>
       <div className="detail-container">
         <div>
-          <p>{planet?.planetName?.split(' ').slice(0, 3).join(' ')}</p>
-          <h2>{planet?.planetName?.split(' ')[3]}</h2>
+          <p>{planet.planetName.split(' ').slice(0, 3).join(' ')}</p>
+          <h2>{planet.planetName.split(' ')[3]}</h2>
         </div>
         <div style={{ display: 'flex', alignItems: 'end' }}>
           {/* <button>자세히 보기</button> */}
@@ -69,27 +69,6 @@ export const PlanetCard = styled.div`
       border: none;
       border-radius: 1rem;
       background: rgba(255, 255, 255, 0.7);
-    }
-  }
-  @media (max-width: 500px) {
-    left: 5%;
-    bottom: 1rem;
-    width: 90%;
-    border-radius: 0;
-
-    h2 {
-      font-size: 1.4rem;
-    }
-    p {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-    }
-    .detail-container {
-      padding: 1rem;
-      button {
-        font-size: 1rem;
-        width: 5rem;
-      }
     }
   }
 `;

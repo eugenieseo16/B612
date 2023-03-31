@@ -4,10 +4,10 @@ export const useMobile = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   const handleResize = () => {
-    if (window.innerWidth > 1000) {
+    if (window.innerWidth > 500) {
       setIsMobile(false);
     }
-    if (window.innerWidth <= 1000) {
+    if (window.innerWidth <= 500) {
       setIsMobile(true);
     }
   };

@@ -1,4 +1,3 @@
-import { useThree } from '@react-three/fiber';
 import { motion } from 'framer-motion-3d';
 import { useRecoilValue } from 'recoil';
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';

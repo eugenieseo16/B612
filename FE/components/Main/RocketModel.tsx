@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
@@ -86,7 +87,7 @@ function RocketModel() {
       camera={{ fov: 45, position: [-0.05, 0, 3] }}
       style={{ position: 'fixed' }}
     >
-      <Stage></Stage>
+      <Stage environment={'studio'}></Stage>
 
       {/* 랜덤행성으로 가는 로켓 3D */}
       <PresentationControls>

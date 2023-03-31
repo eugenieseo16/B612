@@ -16,7 +16,6 @@ function UserController() {
         setUser(null);
         return;
       }
-      // const { data } = await axios.post('http://127.0.0.1:8080/api/member', {
       const { data } = await axios.post(
         'https://j8a208.p.ssafy.io/api/member',
         {
@@ -56,7 +55,7 @@ function UserController() {
       window.ethereum?.removeListener('accountsChanged', handleAccount);
       window.ethereum?.removeListener('chainChanged', handleAccount);
     };
-  }, [planetContract]);
+  }, [planetContract, setUser]);
   console.log('USER CONTROLLER');
   return <></>;
 }

@@ -3,8 +3,6 @@ import { useSetRecoilState } from 'recoil';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { Avatar } from '@mui/material';
 
-import SSF from '../../assets/imgs/ssf.png';
-
 function ProfileCard({ user }: { user: IUser | null }) {
   const setRoomIndex = useSetRecoilState(roomIndexAtom);
   return (
@@ -65,4 +63,5 @@ export const StyledProfileCard = styled.div`
       background: rgba(255, 255, 255, 0.7);
     }
   }
+  
 `;

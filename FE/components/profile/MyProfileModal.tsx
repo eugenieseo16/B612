@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { colors } from 'styles/colors';
 import {
@@ -12,13 +12,13 @@ import {
 } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import defaultImg from 'assets/imgs/cryptoPunk1.png';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import userAtom from 'store/userAtom';
-import axios from 'axios';
 import RoomNav from './RoomNav';
 import { rgba } from 'emotion-rgba';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { usePlanetContract } from '@components/contracts/planetToken';
+import { changeNickNameAPI } from 'API/memberAPIs';
 
 interface IEditData {
   memberNickname: string;
@@ -38,6 +38,7 @@ function MyProfileModal() {
   const [imageData, setImageData] = useState<File | null>(null);
   const [isEdit, setIsEdit] = useState(false);
   const [editValue, setEditValue] = useState(defaultData);
+
   const toggleApproval = () => {
     planetContract.methods
       .setApprovalForAll(
@@ -46,9 +47,6 @@ function MyProfileModal() {
       )
       .send({ from: me?.memberAddress });
   };
-  useEffect(() => {
-    return () => console.log(editValue);
-  }, []);
 
   return (
     <Container>
@@ -105,7 +103,6 @@ function MyProfileModal() {
               onClick={() => {
                 setIsEdit(false);
                 setEditValue(defaultData);
-                confirm('ss');
               }}
             >
               취소
@@ -113,9 +110,16 @@ function MyProfileModal() {
             <button
               onClick={() => {
                 // axios
+                if (!me) return;
                 setEditValue({ ...me, ...editValue });
                 setIsEdit(false);
-                // setMe({ ...me, ...editValue });
+                setMe({ ...me, ...editValue });
+
+                changeNickNameAPI({
+                  changedNickname: editValue.memberNickname,
+                  memberId: me.memberId,
+                });
+                console.log(imageData);
               }}
             >
               등록

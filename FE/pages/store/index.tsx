@@ -7,13 +7,13 @@ import { MotionCanvas } from 'framer-motion-3d';
 import React, { useEffect } from 'react';
 import {
   useRecoilBridgeAcrossReactRoots_UNSTABLE,
-  useRecoilState,
+  useSetRecoilState,
 } from 'recoil';
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';
 
 function StorePage() {
   const planetContract = usePlanetContract();
-  const [onSalePlanets, setOnSalePlanets] = useRecoilState(onSalePlanetsAtom);
+  const setOnSalePlanets = useSetRecoilState(onSalePlanetsAtom);
 
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
@@ -21,11 +21,10 @@ function StorePage() {
     planetContract?.methods
       .getOnSalePlanet()
       .call()
-      .then((data: any) => {
-        console.log('HHHH', data);
+      .then((data: IPlanet[]) => {
         setOnSalePlanets(data);
       });
-  }, [planetContract]);
+  }, [planetContract, setOnSalePlanets]);
 
   return (
     <div>

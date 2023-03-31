@@ -1,10 +1,6 @@
 import type { NextPage } from 'next';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
-import Example from '@components/Example';
-import Link from 'next/link';
-
-import styled from '@emotion/styled';
 
 import RocketModel from '@components/Main/RocketModel';
 

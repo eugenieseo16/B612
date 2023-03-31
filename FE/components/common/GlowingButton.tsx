@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { GlowButton } from './GlowingButtonEmotion';
 
 import { iconDataList } from '../../utils/iconDataList';
 import { shadowGenerator } from 'styles/utils';
+import { useMobile } from '@hooks/useMobile';
 
 interface GlowingButtonProps {
   icon: string;
