@@ -55,7 +55,7 @@ const directionOffset = ({
 
 const AvatarFinn = () => {
   const { forward, backward, left, right, shift } = UseInput();
-  const model = useGLTF('./avatar_finn/gaonasi.glb');
+  const model = useGLTF('./avatar_finn/foureyes.glb');
   let pos = [0, 0, 0];
 
   const { actions } = useAnimations(model.animations, model.scene);
@@ -159,8 +159,8 @@ const AvatarFinn = () => {
       return true;
     } else if (x <= 32 && x >= 28 && z >= -42 && z <= -38) {
       return true;
-    } else if (x <= -18 && x >= -23 && z >= 16 && z <= 20) {
-      return true;
+      // } else if (x <= -18 && x >= -23 && z >= 16 && z <= 20) {
+      //   return true;
     }
     return false;
   };

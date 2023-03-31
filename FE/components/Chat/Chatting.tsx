@@ -13,10 +13,11 @@ const ChatContainer = styled.div`
   align-items: center;
   background-color: #000000;
   opacity: 0.6;
+  width: 20%;
 `;
 
 const ChatHeader = styled.header`
-  padding: 20px;
+  padding: 1rem;
   color: #ffffff;
   width: 100%;
 `;
@@ -51,7 +52,7 @@ const MessageBubble = styled.div<MessageBubbleProps>`
   background-color: ${({ sent }) => (sent ? '#4CAF50' : '#ddd')};
   color: ${({ sent }) => (sent ? '#fff' : '#333')};
   border-radius: 10px;
-  max-width: 70%;
+  max-width: 90%;
 `;
 
 const ChatInputContainer = styled.div`
@@ -62,6 +63,7 @@ const ChatInputContainer = styled.div`
   margin-top: 1rem;
   background-color: #000000;
   opacity: 0.6;
+  width: 20%;
 `;
 
 const ChatInput = styled.input`
@@ -127,8 +129,15 @@ const Chat: React.FC = () => {
     setMessageInput(evt.target.value);
   };
 
+  const handleKeyPress = (evt: React.KeyboardEvent<HTMLInputElement>) => {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      sendMessage();
+    }
+  };
+
   return (
-    <>
+    <div>
       <ChatContainer>
         <ChatHeader>
           <p>아이콘 넣을거임</p>
@@ -150,10 +159,11 @@ const Chat: React.FC = () => {
           placeholder="채팅을 입력해주세요"
           value={messageInput}
           onChange={handleInput}
+          onKeyDown={handleKeyPress}
         />
         <ChatButton onClick={sendMessage}>Send</ChatButton>
       </ChatInputContainer>
-    </>
+    </div>
   );
 };
 export default Chat;
