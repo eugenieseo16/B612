@@ -112,7 +112,8 @@ function UserProfile() {
         sx={{
           minWidth: '70%',
           width: '100%',
-          marginTop: '4rem',
+          marginTop: isMobile ? 0 : '4rem',
+          marginBottom: isMobile ? '56px' : 0,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
