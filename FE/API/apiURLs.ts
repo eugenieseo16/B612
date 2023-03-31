@@ -8,3 +8,8 @@ export const rankingAPIUrls = {
 export const friendAPIUrls = {
   getFriendsAPIUrl: `${apiBaseUrl}/friend/`,
 };
+
+export const planetAPIUrls = {
+  getPlanetAPIUrl: `${apiBaseUrl}/member`,
+  // getMyRandomPlanetUrl: `${apiBaseUrl}/member`,
+};

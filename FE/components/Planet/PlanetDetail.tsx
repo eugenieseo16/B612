@@ -18,13 +18,17 @@ function PlanetDetailCard() {
   const planetId = router.query;
 
   const planetContract = usePlanetContract();
-  async function getPlanetDetail() {
-    const planetDetail = await planetContract?.methods
+  function getPlanetDetail() {
+    planetContract?.methods
       .b612AddressMap('3')
-      .call();
-    return planetDetail;
+      .call()
+      .then((data: any) => {
+        // console.log(data);
+        const planetDetail = data;
+      });
+    // return planetDetail;
   }
-  // const planetDetail = await getPlanetDetail();
+  // const planetDetail = getPlanetDetail('4');
   // console.log(planetDetail);
 
   return (

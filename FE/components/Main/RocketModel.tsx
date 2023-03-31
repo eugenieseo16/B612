@@ -9,7 +9,10 @@ import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { OrbitControls } from '@react-three/drei';
 import { Box3, Vector3 } from 'three';
 
+import { PLANETS_LIST } from 'utils/utils';
 import { Center } from '@react-three/drei';
+import { useMyRandomPlanetAPI, useRandomUserAPI } from 'API/planetAPIs';
+import { usePlanetContract } from '@components/contracts/planetToken';
 
 function Rocket(props: any) {
   const { scene } = useGLTF('/rocket/rocket.glb');
@@ -52,7 +55,7 @@ function Square(props: any) {
 }
 
 function Planet(props: any) {
-  const { scene } = useGLTF('/planet/blue_diamond.glb');
+  const { scene } = useGLTF(PLANETS_LIST[5]);
   const clone = SkeletonUtils.clone(scene);
 
   //3D 모델링 리사이즈
@@ -71,15 +74,26 @@ function Planet(props: any) {
 }
 function RocketModel() {
   const router = useRouter();
+  const user = useRecoilValue(userAtom);
+
+  // 랜덤 프로필 id
+  const randomUserId = useRandomUserAPI(user?.memberId);
 
   // 내 행성 랜덤 id 가져오기
-  const user = useRecoilValue(userAtom);
-  const getRandomMyPlanet = (planetNums: number) => {
-    return Math.floor(Math.random() * planetNums) + 1;
-  };
-  const planetId =
-    user?.planets?.length && getRandomMyPlanet(user.planets.length);
+  const randomMyPlanet = useMyRandomPlanetAPI(user?.memberId);
+  // const randomMyPlanet = useMyRandomPlanetAPI(11);
+  // const randomMyPlanetType = usePlanetDetailAPI(randomMyPlanet);
+  // console.log(randomMyPlanetType);
 
+  const usePlanetType = async (randomMyPlanet: string) => {
+    const planetContract = usePlanetContract();
+    const planetType = await planetContract?.methods
+      .b612AddressMap(randomMyPlanet)
+      .call()
+      .then(console.log);
+
+    return planetType;
+  };
   return (
     <Canvas
       dpr={[1, 2]}
@@ -92,7 +106,7 @@ function RocketModel() {
       <PresentationControls>
         <Rocket
           position={[-1.2, 0.35, 0.2]}
-          onClick={() => router.push(`/planet/1`)}
+          onClick={() => router.push(`/profile/${randomUserId}`)}
         />
       </PresentationControls>
 
@@ -110,7 +124,7 @@ function RocketModel() {
       <PresentationControls>
         <Center
           position={[1, 0.5, 0.3]}
-          onClick={() => router.push(`/planet/${planetId}`)}
+          onClick={() => router.push(`/planet/${randomMyPlanet}`)}
         >
           <Planet />
         </Center>
