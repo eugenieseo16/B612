@@ -20,4 +20,6 @@ public interface PlanetService {
     PlanetResponseDto buyPlanet(int memberId, int planetId);
 
     List<PlanetResponseDto> viewMemberStar(int memberId);
+
+    PlanetResponseDto randomMyPlanet(int memberId);
 }

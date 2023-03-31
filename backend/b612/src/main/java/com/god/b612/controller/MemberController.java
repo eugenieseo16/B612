@@ -204,4 +204,39 @@ public class MemberController {
         
     }
 
+
+
+    @ApiOperation(value = "랜덤 회원 불러오기.", notes = "내 멤버 id를 입력하면, 내가 아닌 유저를 줍니다.")
+    @GetMapping("/random/{memberId}")
+    public ResponseEntity<BaseResponseBody> randomUser(@PathVariable("memberId") int memberId){
+        MemberResponseDto memberResponseDto=memberService.randomUser(memberId);
+        if(memberResponseDto==null){
+            BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+
+        BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(memberResponseDto).build();
+        return ResponseEntity.status(200).body(baseResponseBody);
+    }
+
+
+    @ApiOperation(value = "나의 랜덤 행성 불러오기.", notes = "내 멤버 id를 입력하면, 내가 아닌 유저를 줍니다.")
+    @GetMapping("/{memberId}/planet/random")
+    public ResponseEntity<BaseResponseBody> myRandomPlanet(@PathVariable("memberId") int memberId){
+        PlanetResponseDto planetResponseDto=planetService.randomMyPlanet(memberId);
+
+        if(planetResponseDto==null){
+            BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+        else if(planetResponseDto.getMemberId()==0){
+            BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(null).build();
+            return ResponseEntity.status(200).body(baseResponseBody);
+        }
+        else{
+            BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(planetResponseDto).build();
+            return ResponseEntity.status(200).body(baseResponseBody);
+        }
+    }
+
 }

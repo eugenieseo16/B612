@@ -2,6 +2,7 @@ package com.god.b612.service;
 
 import com.god.b612.dto.MemberResponseDto;
 import com.god.b612.dto.MemberResponseDtoForRank;
+import com.god.b612.dto.PlanetResponseDto;
 import com.god.b612.entity.Member;
 import com.god.b612.repository.MemberCustomRepository;
 import com.god.b612.repository.MemberRepository;
@@ -143,6 +144,28 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return memberResponseDtoForRanks;
+    }
+
+    @Override
+    public MemberResponseDto randomUser(int myId){
+        Member me=memberRepository.findMemberByMemberId(myId);
+        List<Member> rand;
+
+        if(me==null){
+            return null;
+        }
+
+
+        while(true){
+            rand=memberRepository.randomMember();
+            if(me.getMemberId()!=rand.get(0).getMemberId()){
+                break;
+            }
+        }
+
+        MemberResponseDto memberResponseDto=memberCustomRepository.createMemberResponseDtoByEntity(rand.get(0));
+
+        return memberResponseDto;
     }
 
 }

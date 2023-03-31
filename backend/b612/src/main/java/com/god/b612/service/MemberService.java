@@ -2,6 +2,7 @@ package com.god.b612.service;
 
 import com.god.b612.dto.MemberResponseDto;
 import com.god.b612.dto.MemberResponseDtoForRank;
+import com.god.b612.dto.PlanetResponseDto;
 
 import java.util.List;
 
@@ -21,4 +22,7 @@ public interface MemberService {
     public List<MemberResponseDto> searchMember(String string);
 
     List<MemberResponseDtoForRank> viewRank(int page, int size);
+
+    MemberResponseDto randomUser(int myId);
+
 }
