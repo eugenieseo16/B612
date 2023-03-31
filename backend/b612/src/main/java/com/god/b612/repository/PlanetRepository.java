@@ -14,4 +14,6 @@ public interface PlanetRepository extends JpaRepository<Planet, Integer> {
     Page<Planet> findAllByOrderByPlanetLikesCountDesc(Pageable pageable);
 
     List<Planet> findAllByPlanetMemberIdOrderByPlanetLikesCount(Member member);
+
+    List<Planet> findAllByPlanetMemberId(Member member);
 }
