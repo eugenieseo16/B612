@@ -4,7 +4,17 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract MintPlanetToken is ERC721Enumerable {
+library SharedStructs {
+    struct PlanetSalesLog {
+        uint256 planetPrice; // 판매된 가격
+        address planetSeller; // 판매자
+        address planetBuyer; // 구매자
+        uint soldAt; // 판매 시점
+        uint next; // 다음 노드 주소 저장
+    }
+}
+
+contract PlanetToken is ERC721Enumerable {
     constructor() ERC721("find your b612", "b612") {}
 
     struct PlanetTokenData {
@@ -18,16 +28,8 @@ contract MintPlanetToken is ERC721Enumerable {
         bool onSale; // 판매 여부
     }
 
-    struct PlanetSalesLog {
-        uint256 planetPrice; // 판매된 가격
-        address planetSeller; // 판매자
-        address planetBuyer; // 구매자
-        uint soldAt; // 판매 시점
-        uint next; // 다음 노드 주소 저장
-    }
-
     mapping(uint256 => PlanetTokenData) public b612AddressMap;
-    mapping(uint256 => PlanetSalesLog) public planetSalesMap; // 행성 아이디와 판매 로그
+    mapping(uint256 => SharedStructs.PlanetSalesLog) public planetSalesMap; // 행성 아이디와 판매 로그
     mapping(uint256 => uint256) public planetSalesCntMap; // 행성 아이디와 판매 로그 개수 저장
     mapping(uint256 => uint256) public planetPrices; // 가격 매핑
     uint256[] public onSalePlanetTokenArray; // 판매중인 행성 배열
@@ -413,7 +415,7 @@ contract MintPlanetToken is ERC721Enumerable {
                 )
             )
         );
-        PlanetSalesLog memory planetSalesLog = PlanetSalesLog(
+        SharedStructs.PlanetSalesLog memory planetSalesLog = SharedStructs.PlanetSalesLog(
             0,
             msg.sender,
             msg.sender,
@@ -492,9 +494,9 @@ contract MintPlanetToken is ERC721Enumerable {
 
     function getPlanetSalesLog(
         uint256 _planetTokenId
-    ) public view returns (PlanetSalesLog[] memory) {
+    ) public view returns (SharedStructs.PlanetSalesLog[] memory) {
         uint256 length = planetSalesCntMap[_planetTokenId];
-        PlanetSalesLog[] memory planetSalesLog = new PlanetSalesLog[](length);
+        SharedStructs.PlanetSalesLog[] memory planetSalesLog = new SharedStructs.PlanetSalesLog[](length);
         uint nextAddress = planetSalesMap[_planetTokenId].next;
         planetSalesLog[0] = planetSalesMap[_planetTokenId];
         uint idx = 1;
@@ -505,116 +507,6 @@ contract MintPlanetToken is ERC721Enumerable {
         }
 
         return planetSalesLog;
-    }
-
-    function setForSalePlanetToken(
-        uint256 _planetTokenId,
-        uint256 _price
-    ) public {
-        // 판매 등록
-        address planetTokenOwner = ownerOf(_planetTokenId);
-
-        require(
-            planetTokenOwner == msg.sender,
-            "Caller is not planet token owner."
-        );
-        require(_price > 0, "Price is zero or lower.");
-        require(
-            planetPrices[_planetTokenId] == 0,
-            "This planet token is already on sale."
-        );
-        require(
-            isApprovedForAll(planetTokenOwner, address(this)),
-            "planet token owner did not approve token."
-        );
-
-        planetPrices[_planetTokenId] = _price;
-        b612AddressMap[_planetTokenId].onSale = true;
-
-        onSalePlanetTokenArray.push(_planetTokenId);
-    }
-
-    function discardForSalePlanetToken(uint256 _planetTokenId) public {
-        // 판매 등록 취소
-        address planetTokenOwner = ownerOf(_planetTokenId);
-
-        require(
-            planetTokenOwner == msg.sender,
-            "Caller is not planet token owner."
-        );
-        require(
-            planetPrices[_planetTokenId] != 0,
-            "This planet token is already not on sale."
-        );
-        require(
-            isApprovedForAll(planetTokenOwner, address(this)),
-            "planet token owner did not approve token."
-        );
-
-        planetPrices[_planetTokenId] = 0;
-        b612AddressMap[_planetTokenId].onSale = false;
-
-        for (uint256 i = 0; i < onSalePlanetTokenArray.length; i++) {
-            if (planetPrices[onSalePlanetTokenArray[i]] == 0) {
-                onSalePlanetTokenArray[i] = onSalePlanetTokenArray[
-                    onSalePlanetTokenArray.length - 1
-                ];
-                onSalePlanetTokenArray.pop();
-            }
-        }
-    }
-
-    function purchasePlanetToken(uint256 _planetTokenId) public payable {
-        // 구매
-        uint256 price = planetPrices[_planetTokenId];
-        address planetTokenOwner = ownerOf(_planetTokenId);
-
-        require(price > 0, "planet token not sale.");
-        require(price <= msg.value, "Caller sent lower than price.");
-        require(
-            planetTokenOwner != msg.sender,
-            "Caller is planet token owner."
-        );
-
-        payable(planetTokenOwner).transfer(msg.value);
-        this.safeTransferFrom(planetTokenOwner, msg.sender, _planetTokenId);
-
-        b612AddressMap[_planetTokenId].userAddress = msg.sender;
-        b612AddressMap[_planetTokenId].onSale = false;
-
-        planetPrices[_planetTokenId] = 0;
-
-        for (uint256 i = 0; i < onSalePlanetTokenArray.length; i++) {
-            if (planetPrices[onSalePlanetTokenArray[i]] == 0) {
-                onSalePlanetTokenArray[i] = onSalePlanetTokenArray[
-                    onSalePlanetTokenArray.length - 1
-                ];
-                onSalePlanetTokenArray.pop();
-            }
-        }
-
-        // 판매/구매 로그에 추가
-        uint lastNode = findLastNode(_planetTokenId);
-        uint nextAddress = uint256(
-            keccak256(
-                abi.encodePacked(
-                    _planetTokenId,
-                    price,
-                    planetTokenOwner,
-                    msg.sender,
-                    block.timestamp
-                )
-            )
-        );
-        PlanetSalesLog memory planetSalesLog = PlanetSalesLog(
-            price,
-            planetTokenOwner,
-            msg.sender,
-            block.timestamp,
-            nextAddress
-        );
-        planetSalesMap[lastNode] = planetSalesLog;
-        planetSalesCntMap[_planetTokenId]++;
     }
 
     // 판매/구매 로그에서 마지막 노드 찾기
@@ -645,4 +537,45 @@ contract MintPlanetToken is ERC721Enumerable {
     ) public view returns (uint256) {
         return planetPrices[_planetTokenId];
     }
+
+    function getPlanetPrices(uint256 _id) public view returns (uint256) {
+        return planetPrices[_id];
+    }
+
+    function setPlanetPrices(uint256 _id, uint256 _price) public {
+        planetPrices[_id] = _price;
+    }
+
+    function setSaleOfB612AddressMap(uint _planetTokenId, bool _onSale) public {
+        b612AddressMap[_planetTokenId].onSale = _onSale;
+    }
+    
+    function pushOnSalePlanetTokenArray(uint _planetTokenId) public {
+        onSalePlanetTokenArray.push(_planetTokenId);
+    }
+    
+    function getOnSalePlanetTokenArray(uint _idx) public view returns (uint256) {
+        return onSalePlanetTokenArray[_idx];
+    }    
+
+    function setOnSalePlanetTokenArray(uint _idx, uint _planetTokenId) public {
+        onSalePlanetTokenArray[_idx] = _planetTokenId;
+    }  
+
+    function popOnSalePlanetTokenArray() public {
+        onSalePlanetTokenArray.pop();
+    }
+
+    function setUserAddressOfB612AddressMap(uint _planetTokenId, address sender) public {
+        b612AddressMap[_planetTokenId].userAddress = sender;
+    }
+
+    function setLogInPlanetSalesMap(uint256 lastNode, SharedStructs.PlanetSalesLog memory planetSalesLog) public {
+        planetSalesMap[lastNode] = planetSalesLog;
+    }
+
+    function cntUpPlanetSalesCntMap(uint _planetTokenId) public {
+        planetSalesCntMap[_planetTokenId]++;
+    }
+
 }
