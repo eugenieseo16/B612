@@ -1,5 +1,7 @@
+import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Stats } from '@react-three/drei';
+import Chatting from '@components/Chat/Chatting';
 
 import {
   Lights,
