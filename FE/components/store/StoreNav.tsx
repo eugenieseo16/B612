@@ -10,7 +10,7 @@ function StoreNav() {
   const onSalePlanets = useRecoilValue(onSalePlanetsAtom);
   const [storeIndex, setStoreIndex] = useRecoilState(storeIndexAtom);
   const changePage = (e: any, page: number) => {
-    setStoreIndex({ ...storeIndex, page: page - 1 });
+    setStoreIndex({ index: 0, page: page - 1 });
   };
 
   const handlePage = (type: 'next' | 'prev') => () => {
