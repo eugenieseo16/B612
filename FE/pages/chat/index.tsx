@@ -1,8 +1,12 @@
-// import Chatting from '@components/Chat/Chatting';
 import React from 'react';
+import Chatting from '@components/Chat/Chatting';
 
-function Chat() {
-  return <div>{/* <Chatting /> */}</div>;
+function chat() {
+  return (
+    <>
+      <Chatting />
+    </>
+  );
 }
 
-export default Chat;
+export default chat;
