@@ -8,6 +8,8 @@ import Chair from '../assets/imgs/buttonIcons/armchair.svg';
 import Door from '../assets/imgs/buttonIcons/door.svg';
 import Home from '../assets/imgs/buttonIcons/home.svg';
 import User from '../assets/imgs/buttonIcons/user.svg';
+import Left from '../assets/imgs/buttonIcons/chevron-left.svg';
+import Right from '../assets/imgs/buttonIcons/chevron-right.svg';
 
 export const iconDataList = new Map<string, string>();
 iconDataList.set('item', Item.src);
@@ -20,3 +22,19 @@ iconDataList.set('chair', Chair.src);
 iconDataList.set('door', Door.src);
 iconDataList.set('home', Home.src);
 iconDataList.set('user', User.src);
+iconDataList.set('left', Left.src);
+iconDataList.set('right', Right.src);
+
+export type IconsTypes =
+  | 'item'
+  | 'certificate'
+  | 'friend'
+  | 'planet'
+  | 'plant'
+  | 'quest'
+  | 'chair'
+  | 'door'
+  | 'home'
+  | 'user'
+  | 'left'
+  | 'right';
