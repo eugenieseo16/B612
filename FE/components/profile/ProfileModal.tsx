@@ -8,7 +8,6 @@ import {
   ListItemText,
 } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
-import defaultImg from 'assets/imgs/cryptoPunk1.png';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useState } from 'react';
 
