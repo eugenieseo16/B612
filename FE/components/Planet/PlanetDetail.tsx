@@ -64,11 +64,8 @@ function PlanetDetailCard() {
         </div>
 
         <div className="planet-owner">
-          <div className="member-info">
-            <img src={user?.memberImage} alt="" />
-            <h6>{user?.memberNickname}</h6>
-            <span></span>
-          </div>
+          <img src={user?.memberImage} alt="" />
+          <h6>{user?.memberNickname}</h6>
         </div>
       </div>
     </PlanetDetail>
