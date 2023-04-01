@@ -13,6 +13,7 @@ import { motion } from 'framer-motion';
 import { colors } from 'styles/colors';
 import { rgba } from 'emotion-rgba';
 import { useRouter } from 'next/router';
+import { useMobile } from '@hooks/useMobile';
 
 function PlanetDetailCard() {
   const router = useRouter();
@@ -21,6 +22,7 @@ function PlanetDetailCard() {
   const selectedId = useRecoilValue(selectedPlanetAtom);
   const page = useRecoilValue(planetPageAtom);
   const planet = planets[selectedId + page * 5];
+  const isMobile = useMobile();
 
   const planetContract = usePlanetContract();
   const handleSale = () => {
@@ -29,27 +31,51 @@ function PlanetDetailCard() {
       .send({ from: me?.memberAddress });
   };
   return (
-    <PlanetToolTip
-      key={selectedId}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: selectedId === -1 ? 0 : 1 }}
-      transition={{ delay: 0.8, duration: 0.5 }}
-      onClick={() => router.push(`/planet/${planet.planetTokenId}`)}
-    >
-      <Tooltip
-        placement="top"
-        arrow
-        title={
-          <span style={{ color: 'inherit', padding: '1rem', display: 'flex' }}>
-            {planet.planetName}
-          </span>
-        }
-      >
-        <IconButton sx={{ width: '2rem', height: '2rem' }}>
-          <img src="" alt="" />
-        </IconButton>
-      </Tooltip>
-    </PlanetToolTip>
+    <>
+      {!isMobile ? (
+        <PlanetToolTip
+          key={selectedId}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: selectedId === -1 ? 0 : 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          onClick={() => router.push(`/planet/${planet.planetTokenId}`)}
+        >
+          <Tooltip
+            placement="top"
+            arrow
+            title={
+              <span
+                style={{ color: 'inherit', padding: '1rem', display: 'flex' }}
+              >
+                {planet.planetName}
+              </span>
+            }
+          >
+            <IconButton sx={{ width: '2rem', height: '2rem' }}>
+              <img src="" alt="" />
+            </IconButton>
+          </Tooltip>
+        </PlanetToolTip>
+      ) : (
+        <div onClick={() => router.push(`/planet/${planet.planetTokenId}`)}>
+          <Tooltip
+            placement="top"
+            open={true}
+            title={
+              <span
+                style={{ color: 'inherit', padding: '1rem', display: 'flex' }}
+              >
+                {planet.planetName}
+              </span>
+            }
+          >
+            <IconButton sx={{ width: '2rem', height: '2rem' }}>
+              <img src="" alt="" />
+            </IconButton>
+          </Tooltip>
+        </div>
+      )}
+    </>
   );
 }
 

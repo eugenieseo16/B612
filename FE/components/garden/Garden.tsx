@@ -7,6 +7,7 @@ import {
 import { LayoutCamera } from 'framer-motion-3d';
 import { degToRad } from 'three/src/math/MathUtils';
 import { useRef } from 'react';
+import { useEffect } from 'react';
 
 function Garden() {
   const ref = useRef<any>();
@@ -15,17 +16,22 @@ function Garden() {
   );
   const { actions } = useAnimations(animations, ref);
   actions['prop|Cylinder.001Action']?.play();
+  useEffect(() => {
+    scene.traverse(node => (node.receiveShadow = true));
+  }, [scene]);
   return (
     <>
-      <ambientLight />
+      <ambientLight intensity={0.1} />
+      <spotLight castShadow position={[10, 20, 5]} intensity={1} />
+
       <OrbitControls
         enablePan={false}
         maxPolarAngle={degToRad(65)}
         maxDistance={80}
       />
-      <LayoutCamera position={[0, 15, 25]}  />
+      <LayoutCamera position={[0, 15, 25]} />
 
-      <Center top>
+      <Center top receiveShadow>
         <group ref={ref}>
           <primitive object={scene} />
         </group>

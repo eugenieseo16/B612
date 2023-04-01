@@ -1,3 +1,4 @@
+import Flowers from '@components/garden/Flowers';
 import Garden from '@components/garden/Garden';
 import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
@@ -20,6 +21,7 @@ function GardenPage() {
   return (
     <div style={{ height: '100vh' }}>
       <MotionCanvas
+        shadows
         style={{
           width: '100%',
           height: '100%',
@@ -27,6 +29,7 @@ function GardenPage() {
       >
         <RecoilBridge>
           <Garden />
+          <Flowers />
         </RecoilBridge>
       </MotionCanvas>
       <Canvas style={{ display: 'none' }}>
