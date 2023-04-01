@@ -30,3 +30,10 @@ export const likePlanetAPI = (data: any) => {
   const response = axios.post(`${planetAPIUrls.likePlanetAPIUrl}`, data);
   return response;
 };
+
+export const useIsLikedPlanetAPI = (memberId: any, planetId: any) => {
+  const response = useMyQuery(
+    `${planetAPIUrls.isLikedPlanetAPIUrls}?memberId=${memberId}&planetId=${planetId}`
+  );
+  return response?.responseData;
+};
