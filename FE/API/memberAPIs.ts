@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { useMyQuery } from '../hooks/useMyQuery';
 import { memberAPIUrls } from './apiURLs';
+import { useQuery } from 'react-query';
 
 type Props = {
   changedNickname: string;
@@ -19,4 +20,14 @@ export const useSearchByNameAPI = (name: string) => {
     `${memberAPIUrls.searchByNameAPIUrl}/${name ? name : 1}`
   );
   return response;
+};
+
+export const useUserById = (memberId?: number | string | string[]) => {
+  const { data } = useQuery(`user/${memberId}`, () => {
+    if (!memberId) return;
+    return fetch(`${memberAPIUrls.userByIdUrl}/${memberId}`).then(res =>
+      res.json()
+    );
+  });
+  return data?.responseData;
 };

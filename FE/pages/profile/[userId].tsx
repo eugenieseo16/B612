@@ -92,7 +92,7 @@ function UserProfile() {
         >
           <RecoilBridge>
             {/* <ambientLight intensity={0.1} /> */}
-            <MyCamera router={router} />
+            <MyCamera router={router} userId={userId} />
             <Room />
             <Garden />
           </RecoilBridge>

@@ -17,4 +17,5 @@ export const friendAPIUrls = {
 export const memberAPIUrls = {
   putNicknameAPIUrl: `${apiBaseUrl}/member/nickname`,
   searchByNameAPIUrl: `${apiBaseUrl}/member/search`,
+  userByIdUrl: `${apiBaseUrl}/member`,
 };
