@@ -21,6 +21,10 @@ import MetaMaskLogin from '@components/MetaMaskLogin';
 import Badge from '@mui/material/Badge';
 import { Container, NotificationBar } from '../common/NavBarEmotion';
 
+// import headerLogo from '../assets/imgs/logo/headerLogo.png';
+
+import headerLogo from '../../assets/imgs/logo/headerLogo.png';
+
 type Anchor = 'right';
 
 function NavBar() {
@@ -36,8 +40,10 @@ function NavBar() {
     setState({ ...state, [anchor]: open });
   };
 
+  console.log(headerLogo);
   const list = (
     <NotificationBar role="presentation" onClick={toggleDrawer('right', false)}>
+      {/* notifications */}
       <List>
         <ListItem disablePadding>
           <ListItemButton>
@@ -71,13 +77,8 @@ function NavBar() {
     >
       <Container>
         <div className="logo-container">
-          <img
-            src="https://img.insight.co.kr/static/2018/10/19/700/so0f5n598kaaxs9gmz86.jpg"
-            alt=""
-            id="logo-image"
-          />
           <Link href={`/`} id="link-item">
-            <h2>머무르다</h2>
+            <img src={headerLogo.src} alt="" id="logo-image" />
           </Link>
         </div>
 

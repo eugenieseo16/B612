@@ -5,7 +5,6 @@ import ModelCanvas from '@components/Main/ModelCanvas';
 
 const Home: NextPage = () => {
   const user = useRecoilValue(userAtom);
-  // console.log(user?.planets[0]);
 
   return (
     <div style={{ paddingTop: '4rem' }}>

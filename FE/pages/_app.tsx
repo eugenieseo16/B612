@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import PlanetController from '@components/PlanetController';
 import { useGLTF } from '@react-three/drei';
 import { PLANETS_LIST } from 'utils/utils';
+import Head from 'next/head';
 React.useLayoutEffect = React.useEffect;
 
 declare global {
@@ -40,6 +41,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <div>
+        <Head>
+          <title>머무르다</title>
+        </Head>
+      </div>
+
       <RecoilRoot>
         <UserController />
         {/* <PlanetController /> */}
