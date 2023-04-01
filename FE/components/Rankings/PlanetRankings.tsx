@@ -13,9 +13,7 @@ import Link from 'next/link';
 import { Container } from './RankingsEmotion';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { PlanetRankingAPI } from 'API/rankingURLs';
-
-import Web3 from 'web3';
+import { PlanetRankingAPI } from 'API/rankingAPIs';
 
 export default function BasicTable() {
   const data = PlanetRankingAPI();

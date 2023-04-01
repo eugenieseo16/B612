@@ -14,3 +14,8 @@ export const memberAPIUrls = {
   putNicknameAPIUrl: `${apiBaseUrl}/member/nickname`,
   searchByNameAPIUrl: `${apiBaseUrl}/member/search`,
 };
+
+export const planetAPIUrls = {
+  getPlanetAPIUrl: `${apiBaseUrl}/member`,
+  // getMyRandomPlanetUrl: `${apiBaseUrl}/member`,
+};

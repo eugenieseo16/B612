@@ -37,7 +37,7 @@ function PlanetCard() {
             <h2>{title}</h2>
           </div>
           <div className="planet-price">
-            <img src={GETH.src} alt="GETH" />
+            <img src={GETH.src} alt="Goerli Ethereum" id="goerli-ethereum" />
             <p>{+planet?.planetPrice * 10 ** -18} GETH</p>
           </div>
         </div>

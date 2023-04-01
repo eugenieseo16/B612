@@ -2,11 +2,10 @@ import type { NextPage } from 'next';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
-import RocketModel from '@components/Main/RocketModel';
+import ModelCanvas from '@components/Main/ModelCanvas';
 
 const Home: NextPage = () => {
   const user = useRecoilValue(userAtom);
-  console.log(user);
 
   return (
     <div style={{ paddingTop: '4rem' }}>
@@ -16,7 +15,7 @@ const Home: NextPage = () => {
         <h1>{user?.memberNickname + '님, 환영해요!'}</h1>
       )}
 
-      <RocketModel />
+      <ModelCanvas />
     </div>
   );
 };

@@ -11,8 +11,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import Loading from '../components/loading/loading';
 import { useGLTF } from '@react-three/drei';
 import { PLANETS_LIST } from 'utils/utils';
-import { useMobile } from '@hooks/useMobile';
-import MobileNav from '@components/common/MobileNav';
 React.useLayoutEffect = React.useEffect;
 
 declare global {
@@ -48,36 +46,34 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
-          <UserController />
-          {imgsLoaded ? (
-            <AnimatePresence mode="wait">
-              <motion.div
-                style={{ minHeight: 'calc(100vh)' }}
-                key={router.route}
-                initial="initialState"
-                animate="animateState"
-                exit="exitState"
-                transition={{ duration: 0.75, ease: 'easeInOut' }}
-                variants={{
-                  initialState: {
-                    opacity: 0,
-                    clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
-                  },
-                  animateState: {
-                    opacity: 1,
-                    clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
-                  },
-                  exitState: {
-                    clipPath: 'polygon(50% 0, 50% 0, 50% 100%, 50% 100%)',
-                  },
-                }}
-              >
-                {!isMobile ? <Layout /> : <MobileNav />}
-
-                <Background />
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <UserController />
+        {/* <PlanetController /> */}
+        <Layout />
+        <AnimatePresence mode="wait">
+          <motion.div
+            style={{ minHeight: 'calc(100vh)' }}
+            key={router.route}
+            initial="initialState"
+            animate="animateState"
+            exit="exitState"
+            transition={{ duration: 0.75, ease: 'easeInOut' }}
+            variants={{
+              initialState: {
+                opacity: 0,
+                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
+              },
+              animateState: {
+                opacity: 1,
+                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
+              },
+              exitState: {
+                clipPath: 'polygon(50% 0, 50% 0, 50% 100%, 50% 100%)',
+              },
+            }}
+          >
+            <Background />
 
                 <Component {...pageProps} />
               </motion.div>

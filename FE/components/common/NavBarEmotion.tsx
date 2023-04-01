@@ -34,10 +34,8 @@ export const Container = styled.div`
     align-items: center;
 
     #logo-image {
-      width: 50px;
-      height: 50px;
-      aspect-ratio: 1;
-      border-radius: 50%;
+      height: 3.5rem;
+      padding: 3px 0px;
     }
   }
 

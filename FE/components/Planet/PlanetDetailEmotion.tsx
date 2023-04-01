@@ -51,5 +51,22 @@ export const PlanetDetail = styled.div`
         background: rgba(255, 255, 255, 0.7);
       }
     }
+
+    button {
+      height: 2rem;
+      width: 8rem;
+
+      font-size: 1.2rem;
+      color: #252530;
+
+      border: none;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    #goerli-ethereum {
+      width: 30px;
+      margin-right: 5px;
+    }
   }
 `;
