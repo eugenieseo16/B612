@@ -39,8 +39,6 @@ function NavBar() {
   const toggleDrawer = (anchor: Anchor, open: boolean) => () => {
     setState({ ...state, [anchor]: open });
   };
-
-  console.log(headerLogo);
   const list = (
     <NotificationBar role="presentation" onClick={toggleDrawer('right', false)}>
       {/* notifications */}
