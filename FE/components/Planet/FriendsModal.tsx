@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
 import styled from '@emotion/styled';
-import { useFriendAPI } from 'API/friendURLs';
+import { useFriendAPI, useUnresponseFriend } from 'API/friendURLs';
 
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import { useSearchByNameAPI } from 'API/memberAPIs';
 import axios from 'axios';
 import { friendAPIUrls } from 'API/apiURLs';
+import { Button } from '@mui/material';
 
 const Modal = styled.div`
   position: absolute;
@@ -47,16 +48,21 @@ const Modal = styled.div`
 
 const FriendsModal = memo(function SomComponent() {
   const user = useRecoilValue(userAtom);
-  const data = useFriendAPI(user?.memberId);
   const router = useRouter();
+  const data = useFriendAPI(user?.memberId);
+  const unresponse = useUnresponseFriend(user?.memberId);
   const [search, setSearch] = useState('');
   const searchResults = useSearchByNameAPI(search);
 
   const ff: any = {};
-  searchResults?.responseData?.forEach(
-    (friend: IUser) => (ff[friend.memberId] = true)
+  searchResults?.responseData?.forEach((friend: IUser) => {
+    ff[friend.memberId] = 'not';
+  });
+
+  data?.responseData?.forEach(
+    (friend: IUser) => (ff[friend.memberId] = 'friend')
   );
-  data?.responseData?.forEach((friend: IUser) => (ff[friend.memberId] = false));
+  unresponse?.forEach((friend: IUser) => (ff[friend.memberId] = 'requested'));
 
   const addFriend = async (friendResponseMemberId: number) => {
     const { data } = await axios.post(friendAPIUrls.requestFriendAPIUrl, {
@@ -65,6 +71,7 @@ const FriendsModal = memo(function SomComponent() {
     });
     console.log(data);
   };
+  console.log(unresponse);
 
   return (
     <Modal>
@@ -92,7 +99,7 @@ const FriendsModal = memo(function SomComponent() {
       </Paper>
       {/* 검색결과 이미 친구인 사람은 return null*/}
       {searchResults?.responseData?.map((friend: IUser) => {
-        if (!ff[friend.memberId] || !search) return;
+        if (ff[friend.memberId] === 'friend' || !search) return;
         return (
           <div
             key={friend.memberId}
@@ -101,11 +108,25 @@ const FriendsModal = memo(function SomComponent() {
           >
             <img src={friend.memberImage} alt="" />
             <div>
-              <h2>{friend.memberNickname}</h2>
-              <h6>{friend.memberTierName}</h6>
-              <button onClick={() => addFriend(friend.memberId)}>
-                친구추가
-              </button>
+              <h3>{friend.memberNickname}</h3>
+              <p>{friend.memberTierName}</p>
+              {ff[friend.memberId] === 'not' ? (
+                <Button
+                  color="success"
+                  variant="contained"
+                  onClick={() => addFriend(friend.memberId)}
+                >
+                  <span style={{ color: '#fff' }}>친구추가</span>
+                </Button>
+              ) : (
+                <Button
+                  disabled
+                  variant="contained"
+                  onClick={() => addFriend(friend.memberId)}
+                >
+                  <span style={{ color: 'grey' }}>수락대기중</span>
+                </Button>
+              )}
             </div>
             <Divider />
           </div>

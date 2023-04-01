@@ -1,12 +1,13 @@
 /* eslint-disable  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion-3d';
-import { useGLTF } from '@react-three/drei';
+import { Html, useGLTF } from '@react-three/drei';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
-import { Box3, Vector3 } from 'three';
+import { Box3, DoubleSide, Vector3 } from 'three';
 
 import { usePlanetContract } from '@components/contracts/planetToken';
 import { PLANETS_LIST } from 'utils/utils';
+import styled from '@emotion/styled';
 
 function Planets({
   memberAddress,
@@ -80,7 +81,7 @@ function Planet({
   const size = bbox.getSize(new Vector3());
 
   const maxAxis = Math.max(size.x, size.y, size.z);
-  clone.scale.multiplyScalar(1 / maxAxis);
+  clone.scale.multiplyScalar(8 / maxAxis);
   bbox.setFromObject(clone);
   bbox.getCenter(center);
   bbox.getSize(size);
@@ -123,7 +124,7 @@ function Planet({
         }}
       >
         <motion.group
-          scale={8}
+          scale={1}
           animate={{ y: selected === planetId ? 0 : y }}
           transition={{
             ease: 'linear',
@@ -137,3 +138,20 @@ function Planet({
     </React.Fragment>
   );
 }
+
+const Container = styled.div`
+  cursor: pointer;
+  outline: none;
+  border: none;
+  font-size: 8px;
+  font-weight: 300;
+  background: black;
+  color: #f0f0f0;
+  padding: 2px 10px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+`;

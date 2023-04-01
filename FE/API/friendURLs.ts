@@ -63,3 +63,12 @@ export const deleteFriend = (friendMemberId?: number, myId?: number) => {
     params: { friendMemberId, myId },
   });
 };
+
+export const useUnresponseFriend = (memberId?: number) => {
+  const url = `${friendAPIUrls.unresponseFriendAPIUrl}/${memberId}?page=0&size=100`;
+  const { data: userData } = useQuery(url, async () => {
+    if (!memberId) return { responseData: [] };
+    return fetch(url).then(res => res.json());
+  });
+  return userData?.responseData;
+};

@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import selectedPlanetAtom from 'store/profile/selectedPlanet';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+
 import { colors } from 'styles/colors';
 import planetAtom from 'store/planetsAtom';
 import planetPageAtom from 'store/profile/planetPageAtom';
+import { Pagination } from '@mui/material';
+import { rgba } from 'emotion-rgba';
 
 function PlanetNav() {
   const [selectedPlanet, setSelectedPlanet] =
@@ -34,16 +35,28 @@ function PlanetNav() {
       setSelectedPlanet(selectedPlanet - 1);
     }
   };
-
+  const changePage = (e: any, page: number) => {
+    setSelectedPlanet(page - 1);
+  };
   return (
-    <>
-      <Button onClick={handlePlanet('prev')} style={{ left: '20%' }}>
-        prev
-      </Button>
-      <Button onClick={handlePlanet('next')} style={{ right: '20%' }}>
-        next
-      </Button>
-    </>
+    <Pagination
+      count={totalLength}
+      variant="outlined"
+      color="secondary"
+      page={selectedPlanet + planetPage * 5 + 1}
+      onChange={changePage}
+      size={'large'}
+      sx={{
+        position: 'absolute',
+        bottom: '5rem',
+        right: '50%',
+        transform: 'translate(50%,50%)',
+        zIndex: 9999,
+        background: rgba(colors.purple, 0.8),
+        padding: '1rem',
+        borderRadius: '1rem',
+      }}
+    />
   );
 }
 

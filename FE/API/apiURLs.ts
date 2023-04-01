@@ -12,6 +12,7 @@ export const friendAPIUrls = {
   requestedFriendAPIUrl: `${apiBaseUrl}/friend/unresponse`,
   deleteFriendUrl: `${apiBaseUrl}/friend`,
   acceptFriendUrl: `${apiBaseUrl}/friend/accept`,
+  unresponseFriendAPIUrl: `${apiBaseUrl}/friend/request`,
 };
 export const memberAPIUrls = {
   putNicknameAPIUrl: `${apiBaseUrl}/member/nickname`,
