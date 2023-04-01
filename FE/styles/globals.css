@@ -178,7 +178,9 @@ a {
   text-decoration: underline;
   color: #4a5980;
 }
-
+span {
+  font-size: 1rem;
+}
 * {
   font-family: 'WILD-MAYO';
   box-sizing: border-box;

@@ -58,6 +58,17 @@ function ProfileModal({ user }: { user: IUser | null }) {
             <FriendButton disabled style={{ background: 'grey' }}>
               수락대기중
             </FriendButton>
+          ) : isFriend === 'friend' ? (
+            <Button
+              style={{
+                width: '3rem',
+                backgroundColor: colors.yellow,
+                borderRadius: '8px',
+              
+              }}
+            >
+              친구
+            </Button>
           ) : null}
         </div>
 

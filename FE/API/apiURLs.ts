@@ -9,6 +9,9 @@ export const friendAPIUrls = {
   getFriendsAPIUrl: `${apiBaseUrl}/friend`,
   requestFriendAPIUrl: `${apiBaseUrl}/friend`,
   isFriend: `${apiBaseUrl}/friend`,
+  requestedFriendAPIUrl: `${apiBaseUrl}/friend/unresponse`,
+  deleteFriendUrl: `${apiBaseUrl}/friend`,
+  acceptFriendUrl: `${apiBaseUrl}/friend/accept`,
 };
 export const memberAPIUrls = {
   putNicknameAPIUrl: `${apiBaseUrl}/member/nickname`,
