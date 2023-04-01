@@ -24,3 +24,9 @@ export const useMyRandomPlanetAPI = (memberId: any) => {
     return response?.responseData?.planetNftId;
   }
 };
+
+// 행성 좋아요/싫어요
+export const likePlanetAPI = (data: any) => {
+  const response = axios.post(`${planetAPIUrls.likePlanetAPIUrl}`, data);
+  return response;
+};

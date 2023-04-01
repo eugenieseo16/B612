@@ -17,5 +17,5 @@ export const memberAPIUrls = {
 
 export const planetAPIUrls = {
   getPlanetAPIUrl: `${apiBaseUrl}/member`,
-  // getMyRandomPlanetUrl: `${apiBaseUrl}/member`,
+  likePlanetAPIUrl: `${apiBaseUrl}/planet/like`,
 };
