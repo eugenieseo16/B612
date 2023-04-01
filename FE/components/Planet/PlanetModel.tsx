@@ -10,6 +10,13 @@ import { PLANETS_LIST } from 'utils/utils';
 import { usePlanetContract } from '@components/contracts/planetToken';
 import { SkeletonUtils } from 'three-stdlib';
 import { Box3, Vector3 } from 'three';
+import { dividerClasses } from '@mui/material';
+
+import { LikeButton } from './PlanetModelEmotion';
+
+import like from '../../assets/imgs/buttonIcons/heart.svg';
+import dislike from '../../assets/imgs/buttonIcons/heart-filled.svg';
+import { likePlanetAPI } from 'API/planetAPIs';
 
 function Model(props: any) {
   const user = useRecoilValue(userAtom);
@@ -50,14 +57,52 @@ function Model(props: any) {
 }
 
 function PlanetTest() {
+  const user = useRecoilValue(userAtom);
+  const router = useRouter();
+  const planetId = router.query?.planetId;
+
+  const [hovered, setHovered] = useState(false);
+  const [selected, setSelected] = useState(false);
+
+  const likeButton = () => {
+    setSelected(!selected);
+
+    likePlanetAPI({
+      planetLikeMemberId: user?.memberId,
+      planetNftId: planetId,
+    });
+  };
+
   return (
-    <Canvas dpr={[1, 2]} camera={{ fov: 45 }} style={{ position: 'fixed' }}>
-      <PresentationControls>
-        <Stage environment="studio">
-          <Model />
-        </Stage>
-      </PresentationControls>
-    </Canvas>
+    <>
+      <Canvas dpr={[1, 2]} camera={{ fov: 45 }} style={{ position: 'fixed' }}>
+        <PresentationControls>
+          <Stage environment="studio">
+            <mesh
+              onPointerOver={() => setHovered(true)}
+              onPointerOut={() => setHovered(false)}
+            >
+              <Model />
+            </mesh>
+          </Stage>
+        </PresentationControls>
+      </Canvas>
+
+      {hovered ? (
+        <LikeButton
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          {selected ? (
+            <img src={dislike.src} alt="" onClick={likeButton} />
+          ) : (
+            <img src={like.src} alt="" onClick={likeButton} />
+          )}
+        </LikeButton>
+      ) : (
+        <div></div>
+      )}
+    </>
   );
 }
 
