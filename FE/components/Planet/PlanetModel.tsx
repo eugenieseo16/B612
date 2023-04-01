@@ -16,7 +16,7 @@ import { LikeButton } from './PlanetModelEmotion';
 
 import like from '../../assets/imgs/buttonIcons/heart.svg';
 import dislike from '../../assets/imgs/buttonIcons/heart-filled.svg';
-import { likePlanetAPI } from 'API/planetAPIs';
+import { likePlanetAPI, useIsLikedPlanetAPI } from 'API/planetAPIs';
 
 function Model(props: any) {
   const user = useRecoilValue(userAtom);
@@ -62,10 +62,17 @@ function PlanetTest() {
   const planetId = router.query?.planetId;
 
   const [hovered, setHovered] = useState(false);
-  const [selected, setSelected] = useState(false);
+
+  const isLiked = useIsLikedPlanetAPI(user?.memberId, planetId);
+  const [selected, setSelected] = useState(isLiked);
+
+  useEffect(() => {
+    setSelected(isLiked);
+  }, []);
 
   const likeButton = () => {
     setSelected(!selected);
+    console.log(selected);
 
     likePlanetAPI({
       planetLikeMemberId: user?.memberId,
