@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useGLTF, Stage, PresentationControls } from '@react-three/drei';
 import { useRouter } from 'next/router';
@@ -7,21 +7,31 @@ import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
 import { PLANETS_LIST } from 'utils/utils';
+import { usePlanetContract } from '@components/contracts/planetToken';
 
 function Model(props: any) {
   const user = useRecoilValue(userAtom);
 
-  console.log(user?.planets);
+  // console.log(user);
 
   const router = useRouter();
-  const planetId = router.query;
+  const planetId = router.query?.planetId;
 
-  // planet id 를 보내서 Web3로 planet type  받아오기
-  const planetType = '3';
+  // planet type
+  const planetContract = usePlanetContract();
+  const [planetDetail, setPlanetDetail] = useState(null);
 
-  const { scene } = useGLTF(PLANETS_LIST[planetType]);
+  useEffect(() => {
+    if (!planetId) return;
+    planetContract?.methods
+      .b612AddressMap(planetId)
+      .call()
+      .then((data: any) => {
+        setPlanetDetail(data?.planetType);
+      });
+  }, [planetContract, planetId]);
 
-  console.log(PLANETS_LIST[planetType]);
+  const { scene } = useGLTF(PLANETS_LIST[planetDetail || 1]);
 
   return <primitive object={scene} {...props} />;
 }

@@ -15,8 +15,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import { PlanetRankingAPI } from 'API/rankingAPIs';
 
-import Web3 from 'web3';
-
 export default function BasicTable() {
   const data = PlanetRankingAPI();
   console.log(data);

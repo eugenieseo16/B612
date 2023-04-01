@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
@@ -13,6 +13,9 @@ import { PLANETS_LIST } from 'utils/utils';
 import { Center } from '@react-three/drei';
 import { useMyRandomPlanetAPI, useRandomUserAPI } from 'API/planetAPIs';
 import { usePlanetContract } from '@components/contracts/planetToken';
+
+import { usePlanetDetailAPI } from 'API/planetAPIs';
+import { PlanetDetail } from '@components/Planet/PlanetDetailEmotion';
 
 function Rocket(props: any) {
   const { scene } = useGLTF('/rocket/rocket.glb');
@@ -55,7 +58,27 @@ function Square(props: any) {
 }
 
 function Planet(props: any) {
-  const { scene } = useGLTF(PLANETS_LIST[5]);
+  // 내 행성 랜덤 id 가져오기
+  const user = useRecoilValue(userAtom);
+  const myRandomPlanetId = useMyRandomPlanetAPI(user?.memberId);
+
+  const planetContract = usePlanetContract();
+  const [planetDetail, setPlanetDetail] = useState(null);
+
+  useEffect(() => {
+    if (!myRandomPlanetId) return;
+    planetContract?.methods
+      .b612AddressMap(myRandomPlanetId)
+      .call()
+      .then((data: any) => {
+        setPlanetDetail(data?.planetType);
+      });
+  }, [planetContract, myRandomPlanetId]);
+
+  console.log(planetDetail);
+
+  const { scene } = useGLTF(PLANETS_LIST[planetDetail || 1]);
+
   const clone = SkeletonUtils.clone(scene);
 
   //3D 모델링 리사이즈
@@ -72,6 +95,7 @@ function Planet(props: any) {
   clone.position.y -= size.y * 0.5;
   return <primitive object={clone} {...props} />;
 }
+
 function RocketModel() {
   const router = useRouter();
   const user = useRecoilValue(userAtom);
@@ -79,21 +103,9 @@ function RocketModel() {
   // 랜덤 프로필 id
   const randomUserId = useRandomUserAPI(user?.memberId);
 
-  // 내 행성 랜덤 id 가져오기
-  const randomMyPlanet = useMyRandomPlanetAPI(user?.memberId);
-  // const randomMyPlanet = useMyRandomPlanetAPI(11);
-  // const randomMyPlanetType = usePlanetDetailAPI(randomMyPlanet);
-  // console.log(randomMyPlanetType);
+  // 나의 랜덤 행성 id
+  const myRandomPlanetId = useMyRandomPlanetAPI(user?.memberId);
 
-  const usePlanetType = async (randomMyPlanet: string) => {
-    const planetContract = usePlanetContract();
-    const planetType = await planetContract?.methods
-      .b612AddressMap(randomMyPlanet)
-      .call()
-      .then(console.log);
-
-    return planetType;
-  };
   return (
     <Canvas
       dpr={[1, 2]}
@@ -124,7 +136,7 @@ function RocketModel() {
       <PresentationControls>
         <Center
           position={[1, 0.5, 0.3]}
-          onClick={() => router.push(`/planet/${randomMyPlanet}`)}
+          onClick={() => router.push(`/planet/${myRandomPlanetId}`)}
         >
           <Planet />
         </Center>
