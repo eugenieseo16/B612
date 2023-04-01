@@ -8,12 +8,11 @@ import userAtom from 'store/userAtom';
 
 import { PLANETS_LIST } from 'utils/utils';
 import { usePlanetContract } from '@components/contracts/planetToken';
+import { SkeletonUtils } from 'three-stdlib';
+import { Box3, Vector3 } from 'three';
 
 function Model(props: any) {
   const user = useRecoilValue(userAtom);
-
-  // console.log(user);
-
   const router = useRouter();
   const planetId = router.query?.planetId;
 
@@ -32,8 +31,22 @@ function Model(props: any) {
   }, [planetContract, planetId]);
 
   const { scene } = useGLTF(PLANETS_LIST[planetDetail || 1]);
+  const clone = SkeletonUtils.clone(scene);
 
-  return <primitive object={scene} {...props} />;
+  //3D 모델링 리사이즈
+  const bbox = new Box3().setFromObject(clone);
+  const center = bbox.getCenter(new Vector3());
+  const size = bbox.getSize(new Vector3());
+
+  const maxAxis = Math.max(size.x, size.y, size.z);
+  clone.scale.multiplyScalar(1 / maxAxis);
+  bbox.setFromObject(clone);
+  bbox.getCenter(center);
+  bbox.getSize(size);
+  clone.position.copy(center).multiplyScalar(-1);
+  clone.position.y -= size.y * 0.5;
+
+  return <primitive object={clone} {...props} />;
 }
 
 function PlanetTest() {
@@ -41,7 +54,7 @@ function PlanetTest() {
     <Canvas dpr={[1, 2]} camera={{ fov: 45 }} style={{ position: 'fixed' }}>
       <PresentationControls>
         <Stage environment="studio">
-          <Model scale={0.01} />
+          <Model />
         </Stage>
       </PresentationControls>
     </Canvas>

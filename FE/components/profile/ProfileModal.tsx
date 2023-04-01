@@ -15,7 +15,7 @@ import RoomNav from './RoomNav';
 import { rgba } from 'emotion-rgba';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 import left from '../../assets/imgs/buttonIcons/chevron-left.svg';
-import { requestFriendAPI, useFriendAPI, useIsFriendAPI } from 'API/friendURLs';
+import { requestFriendAPI, useFriendAPI, useIsFriendAPI } from 'API/friendAPIs';
 import userAtom from 'store/userAtom';
 
 function ProfileModal({ user }: { user: IUser | null }) {

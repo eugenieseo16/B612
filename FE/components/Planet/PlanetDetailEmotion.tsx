@@ -33,6 +33,18 @@ export const PlanetDetail = styled.div`
         }
       }
     }
+    .planet-owner {
+      display: flex;
+      align-items: center;
+      padding-top: 1rem;
+      img {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-right: 1rem;
+      }
+    }
+
     .meta-data {
       display: flex;
       justify-content: space-between;
