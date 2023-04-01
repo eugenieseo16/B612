@@ -6,16 +6,12 @@ import { useRouter } from 'next/navigation';
 import { Canvas } from '@react-three/fiber';
 import { useGLTF, Stage, PresentationControls } from '@react-three/drei';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
-import { OrbitControls } from '@react-three/drei';
 import { Box3, Vector3 } from 'three';
 
 import { PLANETS_LIST } from 'utils/utils';
 import { Center } from '@react-three/drei';
 import { useMyRandomPlanetAPI, useRandomUserAPI } from 'API/planetAPIs';
 import { usePlanetContract } from '@components/contracts/planetToken';
-
-import { usePlanetDetailAPI } from 'API/planetAPIs';
-import { PlanetDetail } from '@components/Planet/PlanetDetailEmotion';
 
 function Rocket(props: any) {
   const { scene } = useGLTF('/rocket/rocket.glb');
