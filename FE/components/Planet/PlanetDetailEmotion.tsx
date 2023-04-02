@@ -43,6 +43,11 @@ export const PlanetDetail = styled.div`
         height: 40px;
         margin-right: 1rem;
       }
+      #member-tier-icon {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+      }
     }
 
     .meta-data {

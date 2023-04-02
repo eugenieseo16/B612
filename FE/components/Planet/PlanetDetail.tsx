@@ -11,6 +11,8 @@ import Goerli from '../../assets/imgs/goerli-eth.png';
 
 import { usePlanetContract } from '@components/contracts/planetToken';
 import { planetNameParser } from 'utils/planetUtil';
+import { usePlanetOwnerAPI } from 'API/planetAPIs';
+import { tierDataList } from 'utils/tierDataList';
 
 function PlanetDetailCard() {
   const user = useRecoilValue(userAtom);
@@ -22,6 +24,7 @@ function PlanetDetailCard() {
   const [planetPrice, setPlanetPrice] = useState(null);
   const [planetCreatedAt, setPlanetCreatedAt] = useState(null);
   const [planetDetail, setPlanetDetail] = useState(null);
+  const [memberAddress, setMemberAddress] = useState(null);
 
   useEffect(() => {
     if (!planetId) return;
@@ -33,11 +36,15 @@ function PlanetDetailCard() {
         setPlanetPrice(data?.planetPrice);
         setPlanetName(data?.planetName);
         setPlanetCreatedAt(data?.createdAt);
+        setMemberAddress(data?.userAddress);
       });
   }, [planetContract, planetId]);
 
-  console.log(planetDetail);
+  console.log(memberAddress);
   const [adj, title] = planetNameParser(planetName || '');
+
+  const ownerData = usePlanetOwnerAPI(memberAddress);
+  console.log(ownerData);
 
   return (
     <PlanetDetail>
@@ -64,8 +71,13 @@ function PlanetDetailCard() {
         </div>
 
         <div className="planet-owner">
-          <img src={user?.memberImage} alt="" />
-          <h6>{user?.memberNickname}</h6>
+          <img src={ownerData?.memberImage} alt="" />
+          <h6>{ownerData?.memberNickname}</h6>
+          <img
+            src={tierDataList.get(ownerData?.memberTierName)}
+            alt="member tier"
+            id="member-tier-icon"
+          />
         </div>
       </div>
     </PlanetDetail>
