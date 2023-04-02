@@ -3,16 +3,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 import Modal from '@mui/material/Modal';
-import { CertificateModal } from '@components/Planet/index';
+import TetrisModal from './TetrisModal';
 import { Html } from '@react-three/drei';
 
 const Tetris = () => {
   const model = useLoader(GLTFLoader, './tetris/tetris.glb');
   const objectRef = useRef<THREE.Object3D>(null);
 
-  const [openCertificate, setOpenCertificate] = useState(false);
-  const handleOpenCertificate = () => setOpenCertificate(true);
-  const handleCloseCertificate = () => setOpenCertificate(false);
+  const [openTetris, setOpenTetris] = useState(false);
+  const handleOpenTetris = () => setOpenTetris(true);
+  const handleCloseTetris = () => setOpenTetris(false);
 
   return (
     <>
@@ -20,13 +20,13 @@ const Tetris = () => {
         <primitive
           object={model.scene}
           position={[-20, 0, -45]}
-          onClick={handleOpenCertificate}
+          onClick={handleOpenTetris}
         />
       </object3D>
       <Html>
-        {openCertificate && (
-          <Modal open={openCertificate} onClose={handleCloseCertificate}>
-            <CertificateModal />
+        {openTetris && (
+          <Modal open={openTetris} onClose={handleCloseTetris}>
+            <TetrisModal />
           </Modal>
         )}
       </Html>

@@ -105,7 +105,6 @@ const ChatButton = styled.button`
   border: none;
   border-radius: 5px;
   background-color: #ffffff;
-
   color: #000;
   cursor: pointer;
 `;
