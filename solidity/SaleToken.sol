@@ -6,14 +6,13 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "./PlanetToken.sol";
 import "./RoseToken.sol";
 
-contract SaleToken is ERC721Enumerable {
+contract SaleToken {
 
     PlanetToken pt;
     RoseToken rt;
 
-    constructor(PlanetToken planetToken, RoseToken roseToken, address _address) ERC721("find your b612", "b612") {
+    constructor(address _address) {
         // pt = planetToken;
-        rt = roseToken;
         pt = PlanetToken(_address);
     }
 
@@ -22,7 +21,7 @@ contract SaleToken is ERC721Enumerable {
         uint256 _price
     ) public {
         // 판매 등록
-        address planetTokenOwner = ownerOf(_planetTokenId);
+        address planetTokenOwner = pt.ownerOf(_planetTokenId);
 
         require(
             planetTokenOwner == msg.sender,
@@ -34,7 +33,7 @@ contract SaleToken is ERC721Enumerable {
             "This planet token is already on sale."
         );
         require(
-            isApprovedForAll(planetTokenOwner, address(this)),
+            pt.isApprovedForAll(planetTokenOwner, address(this)),
             "planet token owner did not approve token."
         );
 
@@ -44,9 +43,13 @@ contract SaleToken is ERC721Enumerable {
         pt.pushOnSalePlanetTokenArray(_planetTokenId);
     }
 
+    function getPlanetTokenOwner(uint256 _planetTokenId) public view returns (address) {
+        return pt.ownerOf(_planetTokenId);
+    }
+
     function discardForSalePlanetToken(uint256 _planetTokenId) public {
         // 판매 등록 취소
-        address planetTokenOwner = ownerOf(_planetTokenId);
+        address planetTokenOwner = pt.ownerOf(_planetTokenId);
 
         require(
             planetTokenOwner == msg.sender,
@@ -57,7 +60,7 @@ contract SaleToken is ERC721Enumerable {
             "This planet token is already not on sale."
         );
         require(
-            isApprovedForAll(planetTokenOwner, address(this)),
+            pt.isApprovedForAll(planetTokenOwner, address(this)),
             "planet token owner did not approve token."
         );
 
@@ -77,7 +80,7 @@ contract SaleToken is ERC721Enumerable {
     function purchasePlanetToken(uint256 _planetTokenId) public payable {
         // 구매
         uint256 price = pt.getPlanetPrices(_planetTokenId);
-        address planetTokenOwner = ownerOf(_planetTokenId);
+        address planetTokenOwner = pt.ownerOf(_planetTokenId);
 
         require(price > 0, "planet token not sale.");
         require(price <= msg.value, "Caller sent lower than price.");
@@ -87,7 +90,7 @@ contract SaleToken is ERC721Enumerable {
         );
 
         payable(planetTokenOwner).transfer(msg.value);
-        this.safeTransferFrom(planetTokenOwner, msg.sender, _planetTokenId);
+        pt.safeTransferFrom(planetTokenOwner, msg.sender, _planetTokenId);
 
         pt.setUserAddressOfB612AddressMap(_planetTokenId, msg.sender);
         pt.setSaleOfB612AddressMap(_planetTokenId, false);
