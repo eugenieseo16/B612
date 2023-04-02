@@ -13,16 +13,19 @@ export const PlanetDetail = styled.div`
   .detail-container {
     padding: 1rem;
 
-    .planet-info {
+    .planet-name {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      h2 {
+        margin-left: 10px;
+      }
+    }
+    .planet-detail {
       display: flex;
       justify-content: space-between;
-      gap: 2rem;
-      margin-bottom: 8px;
-      div {
-        p {
-          margin-bottom: 4px;
-        }
-      }
+      align-items: center;
+
       .planet-price {
         display: flex;
         align-items: center;
@@ -36,13 +39,24 @@ export const PlanetDetail = styled.div`
     .planet-owner {
       display: flex;
       align-items: center;
-      padding-top: 1rem;
+      padding-top: 5px;
       img {
         border-radius: 50%;
         width: 40px;
         height: 40px;
         margin-right: 1rem;
       }
+      #member-tier-icon {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+      }
+    }
+
+    .for-sale-button {
+      display: flex;
+      justify-content: end;
+      margin-top: 1rem;
     }
 
     .meta-data {
