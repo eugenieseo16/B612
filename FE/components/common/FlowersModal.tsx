@@ -10,9 +10,43 @@ import { motion } from 'framer-motion';
 import { Suspense, useState } from 'react';
 import { dinosour, glowFlower, marioFlower } from 'assets/img/flowers/index';
 import { Button } from '@mui/material';
+import {
+  useRecoilBridgeAcrossReactRoots_UNSTABLE,
+  useRecoilState,
+  useSetRecoilState,
+} from 'recoil';
+import selectedFlowerAtom from 'store/garden/selectedFlowerAtom';
+import gardenIndexAtom from 'store/garden/gardenIndexAtom';
 
 // HTMLDivElement, HTMLMotionProps<'div'>;
 // const MY_FLOWERS = [0, 1, 2, 1, 1, 1, 1];
+
+const FAKE_FLOWERS: IFlower[] = [
+  {
+    createdAt: '',
+    onSale: false,
+    roseColor: '',
+    roseTokenId: '21sda',
+    roseType: 1,
+    userAddress: '',
+  },
+  {
+    createdAt: '',
+    onSale: false,
+    roseColor: '',
+    roseTokenId: '123asasd',
+    roseType: 2,
+    userAddress: '',
+  },
+  {
+    createdAt: '',
+    onSale: false,
+    roseColor: '',
+    roseTokenId: '12ssdffhgs',
+    roseType: 3,
+    userAddress: '',
+  },
+];
 const MY_FLOWERS_MAP = [
   { type: 0, count: 1 },
   { type: 1, count: 4 },
@@ -21,7 +55,10 @@ const MY_FLOWERS_MAP = [
 const FLOWER_IMG = [marioFlower, glowFlower, dinosour];
 
 function FlowersModal({ user }: { user: IUser | null }) {
-  const [selectedType, setSelectedType] = useState(-1);
+  const [selected, setSelected] = useRecoilState(selectedFlowerAtom);
+  const setGardenIndex = useSetRecoilState(gardenIndexAtom);
+  const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
+
   return (
     <Container>
       <div
@@ -33,22 +70,28 @@ function FlowersModal({ user }: { user: IUser | null }) {
           gap: '1.5rem',
         }}
       >
-        {MY_FLOWERS_MAP.map(({ type, count }, i) => (
+        {FAKE_FLOWERS.map((flower: IFlower, i) => (
           <motion.div
             animate={{
-              boxShadow: type === selectedType ? simpleShadow : 'none',
-              opacity: type === selectedType ? '1' : '0.6',
+              boxShadow: simpleShadow,
+              opacity:
+                flower.roseTokenId === selected?.roseTokenId ? '1' : '0.6',
             }}
-            onClick={() => setSelectedType(type)}
+            onClick={() => setSelected(flower)}
             key={i}
           >
             <FlowerImgContainer>
-              <img src={FLOWER_IMG[type].src} alt="" />
+              <img src={FLOWER_IMG[1].src} alt="" />
               <div>
-                <h6>꽃 종류 입니다아아아 #{type}</h6>
-                <p>소유갯수 : {count}</p>
+                <h6>꽃 종류 입니다아아아 #{flower.roseType}</h6>
                 <div>
-                  <Button>팔기</Button>
+                  <Button
+                    onClick={() => setGardenIndex(1)}
+                    variant="contained"
+                    disabled={flower.roseTokenId !== selected?.roseTokenId}
+                  >
+                    <span>심기</span>
+                  </Button>
                 </div>
               </div>
             </FlowerImgContainer>
@@ -64,9 +107,9 @@ function FlowersModal({ user }: { user: IUser | null }) {
             borderRadius: '1rem',
           }}
         >
-          <Suspense fallback={null}>
-            <FlowerThree type={selectedType} />
-          </Suspense>
+          <RecoilBridge>
+            <FlowerThree />
+          </RecoilBridge>
         </Canvas>
       </CenterBox>
     </Container>

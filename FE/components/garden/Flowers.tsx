@@ -3,109 +3,40 @@ import { FLOWERS_LIST } from 'utils/flowerDataList';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { Box3, DoubleSide, Vector3 } from 'three';
 import { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import plantedFlowersAtom from 'store/garden/plantedFlowersAtom';
 function Flowers() {
-  const flowersList: IFlower[] = [
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: '21sda',
-      roseType: '1',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: '123asasd',
-      roseType: '2',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: '12ssdffhgs',
-      roseType: '3',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: 'dfhgjfs1',
-      roseType: '1',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: 'dfhsa12gj1',
-      roseType: '1',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: 'dfhgdg0su9fj1',
-      roseType: '1',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: 'dfhg3465tgj1',
-      roseType: '1',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: 'df1245ggj1',
-      roseType: '1',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: 'dfhgg456732j1',
-      roseType: '1',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: 'dfhg385gj1',
-      roseType: '1',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: 'dfh124gj1',
-      roseType: '1',
-      userAddress: '',
-    },
-    {
-      createdAt: '',
-      onSale: false,
-      roseColor: '',
-      roseTokenId: 'dfh5836gj1',
-      roseType: '1',
-      userAddress: '',
-    },
-  ];
+  // const flowersList: IFlower[] = [
+  //   {
+  //     createdAt: '',
+  //     onSale: false,
+  //     roseColor: '',
+  //     roseTokenId: '21sda',
+  //     roseType: 1,
+  //     userAddress: '',
+  //   },
+  //   {
+  //     createdAt: '',
+  //     onSale: false,
+  //     roseColor: '',
+  //     roseTokenId: '123asasd',
+  //     roseType: 2,
+  //     userAddress: '',
+  //   },
+  //   {
+  //     createdAt: '',
+  //     onSale: false,
+  //     roseColor: '',
+  //     roseTokenId: '12ssdffhgs',
+  //     roseType: 3,
+  //     userAddress: '',
+  //   },
+  // ];
+  const flowersList = useRecoilValue(plantedFlowersAtom);
   return (
     <>
-      {flowersList.map((data, i: number) => (
-        <Flower key={data.roseTokenId} data={data} index={i} />
+      {flowersList?.map((data: IFlower) => (
+        <Flower key={data.roseTokenId} data={data} />
       ))}
     </>
   );
@@ -113,7 +44,7 @@ function Flowers() {
 
 export default Flowers;
 
-function Flower({ data, index }: { data: IFlower; index: number }) {
+function Flower({ data }: { data: IFlower }) {
   const { scene } = useGLTF(FLOWERS_LIST[+data.roseType]);
   const clone = SkeletonUtils.clone(scene);
   useEffect(() => {
@@ -134,7 +65,8 @@ function Flower({ data, index }: { data: IFlower; index: number }) {
   // clone.position.y += size.y * 0.5;
 
   return (
-    <group position={[(index % 3) * 5 - 4, 0.6, Math.floor(index / 3) * 5 - 5]}>
+    // <group position={[(index % 3) * 5 - 4, 0.6, Math.floor(index / 3) * 5 - 5]}>
+    <group position={data?.position ? data?.position : [0, 0, 0]}>
       <Center top>
         <primitive object={clone} />
       </Center>

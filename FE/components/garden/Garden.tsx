@@ -8,6 +8,9 @@ import { LayoutCamera } from 'framer-motion-3d';
 import { degToRad } from 'three/src/math/MathUtils';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import SelectPanel from './SelectPanel';
+import { useRecoilValue } from 'recoil';
+import gardenIndexAtom from 'store/garden/gardenIndexAtom';
 
 function Garden() {
   const ref = useRef<any>();
@@ -19,6 +22,7 @@ function Garden() {
   useEffect(() => {
     scene.traverse(node => (node.receiveShadow = true));
   }, [scene]);
+
   return (
     <>
       <ambientLight intensity={0.1} />
@@ -36,6 +40,7 @@ function Garden() {
           <primitive object={scene} />
         </group>
       </Center>
+      <SelectPanel />
     </>
   );
 }
