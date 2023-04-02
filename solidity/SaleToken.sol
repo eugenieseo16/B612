@@ -11,9 +11,9 @@ contract SaleToken {
     PlanetToken pt;
     RoseToken rt;
 
-    constructor(address _address) {
+    constructor(address _planetAddress) {
         // pt = planetToken;
-        pt = PlanetToken(_address);
+        pt = PlanetToken(_planetAddress);
     }
 
     function setForSalePlanetToken(
@@ -33,7 +33,7 @@ contract SaleToken {
             "This planet token is already on sale."
         );
         require(
-            pt.isApprovedForAll(planetTokenOwner, address(this)),
+            pt.isApprovedForAll(planetTokenOwner, address(pt)),
             "planet token owner did not approve token."
         );
 
@@ -60,7 +60,7 @@ contract SaleToken {
             "This planet token is already not on sale."
         );
         require(
-            pt.isApprovedForAll(planetTokenOwner, address(this)),
+            pt.isApprovedForAll(planetTokenOwner, address(pt)),
             "planet token owner did not approve token."
         );
 
