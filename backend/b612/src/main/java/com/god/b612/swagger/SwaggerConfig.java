@@ -67,6 +67,11 @@ public class SwaggerConfig {
         return getDocket("친구", Predicates.or(PathSelectors.regex("/api/friend.*")));
     }
 
+    @Bean
+    public Docket notificationApi() {
+        return getDocket("알림", Predicates.or(PathSelectors.regex("/api/notification.*")));
+    }
+
 
 
 
