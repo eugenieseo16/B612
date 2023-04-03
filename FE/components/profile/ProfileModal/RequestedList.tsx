@@ -6,15 +6,15 @@ import ListItemText from '@mui/material/ListItemText';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 
-import {
-  deleteFriend,
-  requestFriendAPI,
-  useRequestedFriendsListAPI,
-} from 'API/friendURLs';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import {
+  deleteFriend,
+  requestFriendAPI,
+  useRequestedFriendsListAPI,
+} from 'API/friendAPIs';
 
 function RequestedList() {
   const me = useRecoilValue(userAtom);
