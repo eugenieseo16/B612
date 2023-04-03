@@ -35,17 +35,7 @@ contract RoseToken is ERC721Enumerable {
     function mintRoseToken() public {
         uint256 roseTokenId = totalSupply() + 1;
 
-        uint256 tmp = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, roseTokenId))) % 1000 + 1;
-        uint256 roseType;
-        if(tmp<=3) { // 황금 장미꽃 
-            roseType = 1;
-        } else if(tmp<=33) { // 장미꽃 
-            roseType = 2;
-        } else if(tmp<=333) { // 해바라기 3, 민들레 4, 무궁화 5, 벚꽃 6
-            roseType = tmp%4+3;
-        } else { // 잡초 
-            roseType = 10;
-        }
+        uint256 roseType = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, roseTokenId))) % 1000 + 1;
         uint roseColor = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, roseTokenId))) % 16777215;
         RoseTokenData memory roseTokenData = RoseTokenData(roseTokenId, 0, roseColor, roseType, block.timestamp, msg.sender, false);
         b612RoseMap[roseTokenId] = roseTokenData;
