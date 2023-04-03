@@ -79,7 +79,6 @@ function RocketModel() {
       <OrbitControls target={[0, 1, 0]} maxPolarAngle={Math.PI / 2} />
 
       {/* <Rocket scale={[0.4, 0.4, 0.4]} position={[0, 0, 0]} /> */}
-
       {/* <Square scale={[0.07, 0.07, 0.07]} position={[0, -2, 0]} /> */}
       <Planet scale={[0.009, 0.009, 0.009]} position={[0, 0, 0]} />
     </Canvas>
