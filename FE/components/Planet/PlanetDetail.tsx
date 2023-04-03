@@ -20,6 +20,11 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import {
+  useFriendAPI,
+  useRequestedFriendsListAPI,
+  useUnresponseFriend,
+} from 'API/friendAPIs';
 
 function PlanetDetailCard() {
   const user = useRecoilValue(userAtom);
@@ -32,6 +37,7 @@ function PlanetDetailCard() {
   const [planetCreatedAt, setPlanetCreatedAt] = useState(null);
   const [planetDetail, setPlanetDetail] = useState(null);
   const [memberAddress, setMemberAddress] = useState(null);
+  const [isOnSale, setIsOnSale] = useState(null);
 
   useEffect(() => {
     if (!planetId) return;
@@ -44,6 +50,7 @@ function PlanetDetailCard() {
         setPlanetName(data?.planetName);
         setPlanetCreatedAt(data?.createdAt);
         setMemberAddress(data?.userAddress);
+        setIsOnSale(data?.onSale);
       });
   }, [planetContract, planetId]);
 
@@ -72,6 +79,22 @@ function PlanetDetailCard() {
       .send({ from: user?.memberAddress });
   };
 
+  console.log(isOnSale);
+
+  // 친구 목록
+  const friendsList = useFriendAPI(user?.memberId);
+  // console.log(friendsList?.responseData);
+
+  const [isFriends, setIsFriend] = useState(false);
+
+  // 친구 요청 받은 목록
+  const receivedRequests = useRequestedFriendsListAPI(user?.memberId);
+  console.log(receivedRequests);
+
+  // 친구 요청 보낸 목록
+  const sentRequests = useUnresponseFriend(user?.memberId);
+  console.log(sentRequests);
+
   return (
     <PlanetDetail>
       <div className="detail-container">
@@ -80,7 +103,11 @@ function PlanetDetailCard() {
           <h2>{title}</h2>
         </div>
 
-        <div className="planet-owner">
+        <div
+          className="planet-owner"
+          onClick={() => router.push(`/profile/${ownerData?.memberId}`)}
+          style={{ cursor: 'pointer' }}
+        >
           <img src={ownerData?.memberImage} alt="" />
           <h6>{ownerData?.memberNickname}</h6>
           <img
@@ -105,38 +132,60 @@ function PlanetDetailCard() {
           </div>
         </div>
 
-        <div className="for-sale-button">
-          {ownerData?.memberId === user?.memberId ? (
-            <button onClick={handleClickOpen}>팔기</button>
-          ) : (
-            <></>
-          )}
+        {ownerData?.memberAddress === user?.memberAddress ? (
+          // 본인 소유 행성일 때
+          <div className="for-sale-button">
+            {isOnSale === false ? (
+              <button onClick={handleClickOpen}>팔기</button>
+            ) : (
+              <button>팔기 취소</button>
+            )}
 
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle> 판매를 희망하는 금액을 입력해주세요.</DialogTitle>
-            <DialogContent>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="desired-amount"
-                label="판매 희망 금액 (GETH)"
-                fullWidth
-                variant="standard"
-                type="number"
-                onChange={e => {
-                  setDesiredAmount(e.target.value);
-                }}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>취소</Button>
-              <Button onClick={handleSale}>확인</Button>
-            </DialogActions>
-          </Dialog>
-        </div>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle> 판매를 희망하는 금액을 입력해주세요.</DialogTitle>
+              <DialogContent>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="desired-amount"
+                  label="판매 희망 금액 (GETH)"
+                  fullWidth
+                  variant="standard"
+                  type="number"
+                  onChange={e => {
+                    setDesiredAmount(e.target.value);
+                  }}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>취소</Button>
+                <Button onClick={handleSale}>확인</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        ) : (
+          // 타인 소유 행성일 때
+          <div>
+            {/* {친구사이일 때  ? (
+              <button
+              // onClick={친구 삭제}
+              >
+                친구 삭제
+              </button>
+            ) : 친구 요청 대기중일 때:  ? (
+              <button
+              // onClick={클릭 시 친구 요청 삭제 됨}
+              >
+                친구 요청됨
+              </button>
+            ) : 친구 요청 리스트에 있을 때 ? (
+              <button>친구 수락</button>
+            ) : (
+              <button>친구 신청</button>
+            )} */}
+          </div>
+        )}
       </div>
     </PlanetDetail>
   );
 }
-
-export default PlanetDetailCard;
