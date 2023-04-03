@@ -97,6 +97,12 @@ function NavBar() {
             </h4>
           </Link>
 
+          <Link href={`/square`} id="link-item">
+            <h4 className={pathname === '/store' ? 'selected' : 'default'}>
+              광장
+            </h4>
+          </Link>
+
           {!Boolean(user) ? (
             <div className="icon-container">
               <MetaMaskLogin />
