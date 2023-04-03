@@ -1,124 +1,27 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
-import styled from '@emotion/styled';
+
+import { useRecoilValue } from 'recoil';
+import userAtom from 'store/userAtom';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
-import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
-
-// 메시지의 내용과 송신 시간, 송신자를 담은 인터페이스
-interface Message {
-  content: string;
-  timestamp: number;
-  sentBy: 'user' | 'other' | 'server';
-  username?: string;
-}
-
-// 채팅 컴포넌트의 스타일링
-const ChatContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #000000;
-  opacity: 0.7;
-  width: 100%;
-  height: 30vh;
-`;
-
-const ChatHeader = styled.header`
-  padding: 1rem;
-  color: #ffffff;
-  width: 100%;
-`;
-
-const ChatBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-
-  /* 스크롤바 스타일링 */
-  ::-webkit-scrollbar {
-    width: 1rem;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: #888;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-  }
-`;
-
-// 메시지를 왼쪽/오른쪽에 표시하기 위한 스타일링 & interface
-interface MessageContainerProps {
-  sent: boolean;
-}
-
-const MessageContainer = styled.div<MessageContainerProps>`
-  display: flex;
-  justify-content: ${({ sent }) => (sent ? 'flex-end' : 'flex-start')};
-  padding: 0.5rem;
-  width: 100%;
-`;
-
-// 송신자 별로 메시지에 적용할 스타일링
-interface MessageBubbleProps {
-  sentBy: 'user' | 'other' | 'server';
-  sent: boolean;
-}
-
-const MessageBubble = styled.div<MessageBubbleProps>`
-  padding: 1rem;
-  background-color: ${({ sentBy }) =>
-    sentBy === 'user' ? '#144906' : sentBy === 'other' ? '#ddd' : '#183852'};
-  color: #fff;
-  border-radius: 10px;
-  max-width: 90%;
-`;
-
-const ChatInputContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-  background-color: #000000;
-  opacity: 0.7;
-  width: 100%;
-`;
-
-const ChatInput = styled.input`
-  background-color: #000000;
-  color: #ffffff;
-  margin-right: 0.5rem;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 5px;
-  width: 100%;
-`;
-
-const ChatButton = styled.button`
-  padding: 1rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #ffffff;
-  color: #000;
-  cursor: pointer;
-`;
-
-const LargeChatOutlinedIcon = styled(ChatOutlinedIcon)`
-  font-size: 3rem;
-  margin: 1rem;
-`;
+import type { Message } from './index';
+import {
+  ChatContainer,
+  ChatHeader,
+  ChatBody,
+  MessageContainer,
+  MessageBubble,
+  ChatInputContainer,
+  ChatInput,
+  ChatButton,
+  LargeChatOutlinedIcon,
+} from './index';
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [messageInput, setMessageInput] = useState<string>('');
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const messageBoxRef = useRef<HTMLDivElement>(null);
+  const user = useRecoilValue(userAtom);
 
   useEffect(() => {
     const ws = new WebSocket('wss://j8a208.p.ssafy.io/ws/chat');
@@ -131,6 +34,7 @@ const Chat: React.FC = () => {
         content: '환영합니다!',
         timestamp: Date.now(),
         sentBy: 'server',
+        memberNickname: '머무르다',
       };
       setMessages(prevMessages => [...prevMessages, welcomeMessage]);
     };
@@ -156,6 +60,7 @@ const Chat: React.FC = () => {
       content: messageInput,
       timestamp: Date.now(),
       sentBy: 'user',
+      memberNickname: user?.memberNickname || 'guest',
     };
 
     // WebSocket을 통해 메시지 전송
@@ -207,16 +112,25 @@ const Chat: React.FC = () => {
               <CloseFullscreenIcon onClick={handleChatToggle} />
             </ChatHeader>
             <ChatBody ref={messageBoxRef}>
-              {messages.map((message, index) => (
-                <MessageContainer key={index} sent={message.sentBy === 'user'}>
-                  <MessageBubble
-                    sentBy={message.sentBy}
-                    sent={message.sentBy === 'user'}
-                  >
-                    {message.content}
-                  </MessageBubble>
-                </MessageContainer>
-              ))}
+              {messages.map((message, index) => {
+                const isSentByMe =
+                  user?.memberNickname === message.memberNickname;
+                return (
+                  <MessageContainer key={index} sent={isSentByMe}>
+                    <MessageBubble
+                      sentBy={message.sentBy}
+                      sent={isSentByMe}
+                      isCurrentUser={isSentByMe}
+                    >
+                      <span>
+                        {isSentByMe
+                          ? message.content
+                          : `${message.memberNickname}: ${message.content}`}
+                      </span>
+                    </MessageBubble>
+                  </MessageContainer>
+                );
+              })}
             </ChatBody>
           </ChatContainer>
           <ChatInputContainer>
