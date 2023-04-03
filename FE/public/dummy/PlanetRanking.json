@@ -1,0 +1,96 @@
+{
+  "content": {
+    "members": [
+      {
+        "rank": 1,
+        "memberId": 1,
+        "totalCount": 932,
+        "memberProfileImage": "https://i.pinimg.com/564x/49/4b/45/494b4576aee780bcd60b04951c9143d1.jpg",
+        "memberName": "용감한 장미241",
+        "planetName": "더러운 비밀가든처럼 실용적인 평평별",
+        "planetId": 1
+      },
+      {
+        "rank": 2,
+        "memberId": 2,
+        "totalCount": 834,
+        "memberProfileImage": "https://i.pinimg.com/564x/4b/f7/e0/4bf7e07f3460176b075e6e53dfa78e9b.jpg",
+        "memberName": "호기심 많은 행성21",
+        "planetName": "진실된 뱀파이어처럼 부지런한 하나별",
+        "planetId": 2
+      },
+      {
+        "rank": 3,
+        "memberId": 3,
+        "totalCount": 812,
+        "memberProfileImage": "https://i.pinimg.com/736x/47/e6/80/47e68007e2723bf8f1143678e0c67103.jpg",
+        "memberName": "온순한 소행성15",
+        "planetName": "청량한 용처럼 숨겨진 달콤별",
+        "planetId": 3
+      },
+      {
+        "rank": 4,
+        "memberId": 4,
+        "totalCount": 722,
+        "memberProfileImage": "https://i.pinimg.com/564x/4f/89/a1/4f89a1d65dab48cb9df82c3cea065172.jpg",
+        "memberName": "꿈꾸는 바오밥나무99",
+        "planetName": "규칙적인 두더지처럼 당당한 지구별",
+        "planetId": 4
+      },
+      {
+        "rank": 5,
+        "memberId": 5,
+        "totalCount": 721,
+        "memberProfileImage": "https://i.pinimg.com/564x/d6/40/4c/d6404c376f10622950251c88ccadf064.jpg",
+        "memberName": "작은 뱀192",
+        "planetName": "부드러운 대왕처럼 치밀한 웃음별",
+        "planetId": 5
+      },
+      {
+        "rank": 6,
+        "memberId": 6,
+        "totalCount": 600,
+        "memberProfileImage": "https://i.pinimg.com/736x/c6/b5/be/c6b5be6717b96f6aceddd8cdf19777b4.jpg",
+        "memberName": "장난스러운 램프11",
+        "planetName": "진실된 용처럼 혁신적인 달콤별",
+        "planetId": 6
+      },
+      {
+        "rank": 7,
+        "memberId": 7,
+        "totalCount": 443,
+        "memberProfileImage": "https://i.pinimg.com/736x/9a/8e/27/9a8e272f20f20c9b8630eb23d4378eea.jpg",
+        "memberName": "꿈꾸는 여우1",
+        "planetName": "청량한 케찹처럼 능숙한 초코별",
+        "planetId": 7
+      },
+      {
+        "rank": 8,
+        "memberId": 8,
+        "totalCount": 344,
+        "memberProfileImage": "https://i.pinimg.com/564x/f7/e1/ea/f7e1eaa75ce9ab47e6ba76cec5a40b45.jpg",
+        "memberName": "현명한 달92",
+        "planetName": "예쁜 지네처럼 본능적인 지구별",
+        "planetId": 8
+      },
+      {
+        "rank": 9,
+        "memberId": 9,
+        "totalCount": 122,
+        "memberProfileImage": "https://i.pinimg.com/564x/4c/1c/84/4c1c84a2874e341e60d9e64c82811316.jpg",
+        "memberName": "방랑하는 소행성91",
+        "planetName": "다채로운 뱀파이어처럼 어려운 하나별",
+        "planetId": 9
+      },
+      {
+        "rank": 10,
+        "memberId": 10,
+        "totalCount": 120,
+        "memberProfileImage": "https://i.pinimg.com/564x/bb/32/02/bb32025730fc50a1c6992370e02ef33c.jpg",
+        "memberName": "온순한 장미110",
+        "planetName": "강력한 라이언처럼 선명한 하나별",
+        "planetId": 10
+      }
+    ]
+  }
+}
