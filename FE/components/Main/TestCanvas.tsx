@@ -10,6 +10,8 @@ import { PLANETS_LIST } from 'utils/utils';
 import { SkeletonUtils } from 'three-stdlib';
 import router, { useRouter } from 'next/router';
 
+import styled from '@emotion/styled';
+
 // import Button from './Button'
 
 const vec = new Vector3();
@@ -74,18 +76,19 @@ export default function App() {
   const user = useRecoilValue(userAtom);
 
   // 랜덤 프로필 id
-  const randomUserId = useRandomUserAPI(user?.memberId);
+  const randomUserId = useRandomUserAPI(
+    user?.memberId === undefined ? -1 : user?.memberId
+  );
 
   // 나의 랜덤 행성 id
-  const myRandomPlanetId = useMyRandomPlanetAPI(user?.memberId);
+  const myRandomPlanetId = useMyRandomPlanetAPI(
+    user?.memberId === undefined ? 1 : user?.memberId
+  );
 
   return (
     <Canvas camera={{ position: [0, 0, 5] }}>
       <Environment preset="sunset" />
       <Center>
-        {/* {[...Array(5).keys()].map((x) =>
-          [...Array(3).keys()].map((y) => <Button key={x + y * 5} position={[x * 2.5, y * 2.5, 0]} />)
-        )} */}
         <Square
           scale={[0.03, 0.03, 0.03]}
           position={[2, -1, 0]}
