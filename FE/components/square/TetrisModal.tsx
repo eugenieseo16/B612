@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import styled from '@emotion/styled';
 
 const Modal = styled.div`
@@ -6,8 +6,8 @@ const Modal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 40%;
-  height: 40%;
+  width: 30%;
+  height: 30%;
   background-color: #000000;
   opacity: 0.7;
   border: none;
@@ -34,8 +34,6 @@ const Button = styled.button`
 `;
 
 const TetrisModal = memo(function SomeComponent() {
-  const [url, setUrl] = useState('');
-
   const handleRedirect = () => {
     window.open('https://jstris.jezevec10.com/?langSwitch=ko', '_blank');
   };
