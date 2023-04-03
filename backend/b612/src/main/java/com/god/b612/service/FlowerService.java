@@ -1,12 +1,13 @@
 package com.god.b612.service;
 
+import com.god.b612.dto.FlowerRequestDto;
 import com.god.b612.dto.FlowerResponseDto;
 import com.god.b612.dto.PlantRequestDto;
 
 import java.util.List;
 
 public interface FlowerService {
-    FlowerResponseDto createFlower(int flowerId, int memberId);
+    FlowerResponseDto createFlower(FlowerRequestDto flowerRequestDto);
 
     FlowerResponseDto plantFlower(PlantRequestDto plantRequestDto);
 
