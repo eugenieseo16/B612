@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-library SharedStructs {
+library SharedPlanetStructs {
     struct PlanetSalesLog {
         uint256 planetPrice; // 판매된 가격
         address planetSeller; // 판매자
@@ -29,7 +29,7 @@ contract PlanetToken is ERC721Enumerable {
     }
 
     mapping(uint256 => PlanetTokenData) public b612AddressMap;
-    mapping(uint256 => SharedStructs.PlanetSalesLog) public planetSalesMap; // 행성 아이디와 판매 로그
+    mapping(uint256 => SharedPlanetStructs.PlanetSalesLog) public planetSalesMap; // 행성 아이디와 판매 로그
     mapping(uint256 => uint256) public planetSalesCntMap; // 행성 아이디와 판매 로그 개수 저장
     mapping(uint256 => uint256) public planetPrices; // 가격 매핑
     uint256[] public onSalePlanetTokenArray; // 판매중인 행성 배열
@@ -46,7 +46,6 @@ contract PlanetToken is ERC721Enumerable {
         unicode"긴박한 ",
         unicode"차분한 ",
         unicode"깨끗한 ",
-        unicode"군더더기 없는 ",
         unicode"무서운 ",
         unicode"경쾌한 ",
         unicode"분명한 ",
@@ -107,7 +106,7 @@ contract PlanetToken is ERC721Enumerable {
         unicode"냉철한 ",
         unicode"빠른 ",
         unicode"매끄러운 ",
-        unicode"매우 행복한 ",
+        unicode"행복한 ",
         unicode"강력한 ",
         unicode"더러운 ",
         unicode"강렬한 ",
@@ -241,7 +240,6 @@ contract PlanetToken is ERC721Enumerable {
         unicode"친근한 ",
         unicode"도전적인 ",
         unicode"단순한 ",
-        unicode"자신감 넘치는 ",
         unicode"충실한 ",
         unicode"다양한 ",
         unicode"창의적인 ",
@@ -253,37 +251,28 @@ contract PlanetToken is ERC721Enumerable {
         unicode"꼼꼼한 ",
         unicode"귀여운 ",
         unicode"깔끔한 ",
-        unicode"깜짝 놀란 ",
-        unicode"기억에 남는 ",
         unicode"기발한 ",
-        unicode"꿈을 이룬 ",
         unicode"남다른 ",
         unicode"노력하는 ",
         unicode"눈부신 ",
-        unicode"능력 있는 ",
         unicode"능숙한 ",
         unicode"당당한 ",
         unicode"대단한 ",
         unicode"더러운 ",
-        unicode"도움이 되는 ",
         unicode"독특한 ",
-        unicode"말이 많은 ",
         unicode"멋진 ",
         unicode"무대위의 ",
         unicode"바쁜 ",
         unicode"발명가적인 ",
         unicode"배려하는 ",
         unicode"밝은 ",
-        unicode"박력 있는 ",
         unicode"본능적인 ",
         unicode"부지런한 ",
-        unicode"말 안듣는 ",
         unicode"불규칙한 ",
         unicode"비범한 ",
         unicode"빠른 ",
         unicode"사랑하는 ",
         unicode"살아있는 ",
-        unicode"생동감 있는 ",
         unicode"선명한 ",
         unicode"선실한 ",
         unicode"솔직한 ",
@@ -303,7 +292,6 @@ contract PlanetToken is ERC721Enumerable {
         unicode"열정적인 ",
         unicode"예술적인 ",
         unicode"예쁜 ",
-        unicode"예의 바른 ",
         unicode"완벽한 ",
         unicode"외향적인 ",
         unicode"용감한 ",
@@ -315,8 +303,8 @@ contract PlanetToken is ERC721Enumerable {
         unicode"유익한 ",
         unicode"MZ세대 ",
         unicode"자랑스러운 ",
-        unicode"재능 있는 ",
-        unicode"재치 있는 ",
+        unicode"재능있는 ",
+        unicode"재치있는 ",
         unicode"저돌적인 ",
         unicode"조용한 ",
         unicode"존경받는 ",
@@ -327,11 +315,9 @@ contract PlanetToken is ERC721Enumerable {
         unicode"치밀한 ",
         unicode"친구같은 ",
         unicode"커다란 ",
-        unicode"통찰력 있는 ",
         unicode"특별한 ",
         unicode"파격적인 ",
         unicode"풍부한 ",
-        unicode"피식 웃는 ",
         unicode"허세부리는 ",
         unicode"혁신적인 ",
         unicode"현명한 ",
@@ -415,7 +401,7 @@ contract PlanetToken is ERC721Enumerable {
                 )
             )
         );
-        SharedStructs.PlanetSalesLog memory planetSalesLog = SharedStructs.PlanetSalesLog(
+        SharedPlanetStructs.PlanetSalesLog memory planetSalesLog = SharedPlanetStructs.PlanetSalesLog(
             0,
             msg.sender,
             msg.sender,
@@ -494,9 +480,9 @@ contract PlanetToken is ERC721Enumerable {
 
     function getPlanetSalesLog(
         uint256 _planetTokenId
-    ) public view returns (SharedStructs.PlanetSalesLog[] memory) {
+    ) public view returns (SharedPlanetStructs.PlanetSalesLog[] memory) {
         uint256 length = planetSalesCntMap[_planetTokenId];
-        SharedStructs.PlanetSalesLog[] memory planetSalesLog = new SharedStructs.PlanetSalesLog[](length);
+        SharedPlanetStructs.PlanetSalesLog[] memory planetSalesLog = new SharedPlanetStructs.PlanetSalesLog[](length);
         uint nextAddress = planetSalesMap[_planetTokenId].next;
         planetSalesLog[0] = planetSalesMap[_planetTokenId];
         uint idx = 1;
@@ -570,7 +556,7 @@ contract PlanetToken is ERC721Enumerable {
         b612AddressMap[_planetTokenId].userAddress = sender;
     }
 
-    function setLogInPlanetSalesMap(uint256 lastNode, SharedStructs.PlanetSalesLog memory planetSalesLog) public {
+    function setLogInPlanetSalesMap(uint256 lastNode, SharedPlanetStructs.PlanetSalesLog memory planetSalesLog) public {
         planetSalesMap[lastNode] = planetSalesLog;
     }
 

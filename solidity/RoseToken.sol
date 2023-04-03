@@ -4,6 +4,18 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
+library SharedRoseStructs {
+
+    struct RoseSalesLog {
+        uint256 rosePrice; // 판매된 가격
+        address roseSeller; // 판매자
+        address roseBuyer; // 구매자
+        uint soldAt; // 판매 시점 
+        uint next; // 다음 노드 주소 저장 
+    }
+
+}
+
 contract RoseToken is ERC721Enumerable {
     constructor() ERC721("find your b612", "b612") {}
 
@@ -17,16 +29,8 @@ contract RoseToken is ERC721Enumerable {
         bool onSale; // 판매 여부 
     }
 
-    struct RoseSalesLog {
-        uint256 rosePrice; // 판매된 가격
-        address roseSeller; // 판매자
-        address roseBuyer; // 구매자
-        uint soldAt; // 판매 시점 
-        uint next; // 다음 노드 주소 저장 
-    }
-
     mapping(uint256 => RoseTokenData) public b612RoseMap; 
-    mapping(uint256 => RoseSalesLog) public roseSalesMap; // 장미꽃 아이디와 판매 로그
+    mapping(uint256 => SharedRoseStructs.RoseSalesLog) public roseSalesMap; // 장미꽃 아이디와 판매 로그
     mapping(uint256 => uint256) public roseSalesCntMap; // 장미꽃 아이디와 판매 로그 개수 저장 
     mapping(uint256 => uint256) public rosePrices; // 가격 매핑
 
@@ -35,23 +39,13 @@ contract RoseToken is ERC721Enumerable {
     function mintRoseToken() public {
         uint256 roseTokenId = totalSupply() + 1;
 
-        uint256 tmp = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, roseTokenId))) % 1000 + 1;
-        uint256 roseType;
-        if(tmp<=3) { // 황금 장미꽃 
-            roseType = 1;
-        } else if(tmp<=33) { // 장미꽃 
-            roseType = 2;
-        } else if(tmp<=333) { // 해바라기 3, 민들레 4, 무궁화 5, 벚꽃 6
-            roseType = tmp%4+3;
-        } else { // 잡초 
-            roseType = 10;
-        }
+        uint256 roseType = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, roseTokenId))) % 1000 + 1;
         uint roseColor = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, roseTokenId))) % 16777215;
         RoseTokenData memory roseTokenData = RoseTokenData(roseTokenId, 0, roseColor, roseType, block.timestamp, msg.sender, false);
         b612RoseMap[roseTokenId] = roseTokenData;
         // 로그에 초기 정보 추가
         uint next = uint256(keccak256(abi.encodePacked(roseTokenId, msg.sender, msg.sender, block.timestamp)));
-        RoseSalesLog memory roseSalesLog = RoseSalesLog(0, msg.sender, msg.sender, block.timestamp, next);
+        SharedRoseStructs.RoseSalesLog memory roseSalesLog = SharedRoseStructs.RoseSalesLog(0, msg.sender, msg.sender, block.timestamp, next);
         roseSalesMap[roseTokenId] = roseSalesLog;
         roseSalesCntMap[roseTokenId] = 1;
 
@@ -97,9 +91,9 @@ contract RoseToken is ERC721Enumerable {
         return roseTokenData;
     }
 
-    function getRoseSalesLog(uint256 _roseTokenId) view public returns (RoseSalesLog[] memory) {
+    function getRoseSalesLog(uint256 _roseTokenId) view public returns (SharedRoseStructs.RoseSalesLog[] memory) {
         uint256 length = roseSalesCntMap[_roseTokenId];
-        RoseSalesLog[] memory roseSalesLog = new RoseSalesLog[](length);
+        SharedRoseStructs.RoseSalesLog[] memory roseSalesLog = new SharedRoseStructs.RoseSalesLog[](length);
         uint nextAddress = roseSalesMap[_roseTokenId].next;
         roseSalesLog[0] = roseSalesMap[_roseTokenId];
         uint idx = 1;
@@ -111,70 +105,6 @@ contract RoseToken is ERC721Enumerable {
         return roseSalesLog;
     }
 
-    function setForSaleRoseToken(uint256 _roseTokenId, uint256 _price) public { // 판매 등록 
-        address roseTokenOwner = ownerOf(_roseTokenId);
-
-        require(roseTokenOwner == msg.sender, "Caller is not Rose token owner.");
-        require(_price > 0, "Price is zero or lower.");
-        require(rosePrices[_roseTokenId] == 0, "This Rose token is already on sale.");
-        require(isApprovedForAll(roseTokenOwner, address(this)), "Rose token owner did not approve token.");
-
-        rosePrices[_roseTokenId] = _price;
-        b612RoseMap[_roseTokenId].onSale = true;
-
-        onSaleRoseTokenArray.push(_roseTokenId);
-    }
-
-    function discardForSaleRoseToken(uint256 _roseTokenId) public { // 판매 등록 취소
-        address roseTokenOwner = ownerOf(_roseTokenId);
-
-        require(roseTokenOwner == msg.sender, "Caller is not Rose token owner.");
-        require(rosePrices[_roseTokenId] != 0, "This Rose token is already not on sale.");
-        require(isApprovedForAll(roseTokenOwner, address(this)), "Rose token owner did not approve token.");
-
-        rosePrices[_roseTokenId] = 0;
-        b612RoseMap[_roseTokenId].onSale = false;
-        
-        // 판매중인 토큰 배열 수정 
-        for(uint256 i = 0; i < onSaleRoseTokenArray.length; i++) {
-            if(rosePrices[onSaleRoseTokenArray[i]] == 0) {
-                onSaleRoseTokenArray[i] = onSaleRoseTokenArray[onSaleRoseTokenArray.length - 1];
-                onSaleRoseTokenArray.pop();
-            }
-        }
-    }
-
-    function purchaseRoseToken(uint256 _roseTokenId) public payable { // 구매 
-        uint256 price = rosePrices[_roseTokenId];
-        address roseTokenOwner = ownerOf(_roseTokenId);
-
-        require(price > 0, "msg : Rose token not sale.");
-        require(price <= msg.value, "msg : Caller sent lower than price.");
-        require(roseTokenOwner != msg.sender, "msg : Caller is Rose token owner.");
-
-        payable(roseTokenOwner).transfer(msg.value);
-        this.safeTransferFrom(roseTokenOwner, msg.sender, _roseTokenId);
-
-        rosePrices[_roseTokenId] = 0;
-        b612RoseMap[_roseTokenId].userAddress = msg.sender;
-        b612RoseMap[_roseTokenId].onSale = false;
-
-        // 판매중인 토큰 배열 수정 
-        for(uint256 i = 0; i < onSaleRoseTokenArray.length; i++) {
-            if(rosePrices[onSaleRoseTokenArray[i]] == 0) {
-                onSaleRoseTokenArray[i] = onSaleRoseTokenArray[onSaleRoseTokenArray.length - 1];
-                onSaleRoseTokenArray.pop();
-            }
-        }
-
-        // 판매/구매 로그에 추가
-        uint lastNode = findLastNode(_roseTokenId);
-        uint nextAddress = uint256(keccak256(abi.encodePacked(_roseTokenId, price, roseTokenOwner, msg.sender, block.timestamp)));
-        RoseSalesLog memory roseSalesLog = RoseSalesLog(price, roseTokenOwner, msg.sender, block.timestamp, nextAddress);
-        roseSalesMap[lastNode] = roseSalesLog;
-        roseSalesCntMap[_roseTokenId]++;
-
-    }
 
     // 판매/구매 로그에서 마지막 노드 찾기 
     function findLastNode(uint256 _roseTokenId) view public returns (uint256) {
@@ -196,4 +126,41 @@ contract RoseToken is ERC721Enumerable {
     function getRoseTokenPrice(uint256 _roseTokenId) view public returns (uint256) {
         return rosePrices[_roseTokenId];
     }
+
+    function setRosePrices(uint256 _id, uint256 _price) public {
+        rosePrices[_id] = _price;
+    }
+
+    function setSaleOfB612RoseMap(uint _roseTokenId, bool _onSale) public {
+        b612RoseMap[_roseTokenId].onSale = _onSale;
+    }
+    
+    function pushOnSaleRoseTokenArray(uint _roseTokenId) public {
+        onSaleRoseTokenArray.push(_roseTokenId);
+    }
+    
+    function getOnSaleRoseTokenArray(uint _idx) public view returns (uint256) {
+        return onSaleRoseTokenArray[_idx];
+    }    
+
+    function setOnSaleRoseTokenArray(uint _idx, uint _roseTokenId) public {
+        onSaleRoseTokenArray[_idx] = _roseTokenId;
+    }  
+
+    function popOnSaleRoseTokenArray() public {
+        onSaleRoseTokenArray.pop();
+    }
+
+    function setUserAddressOfB612RoseMap(uint _roseTokenId, address sender) public {
+        b612RoseMap[_roseTokenId].userAddress = sender;
+    }
+
+    function setLogInRoseSalesMap(uint256 lastNode, SharedRoseStructs.RoseSalesLog memory roseSalesLog) public {
+        roseSalesMap[lastNode] = roseSalesLog;
+    }
+
+    function cntUpRoseSalesCntMap(uint _roseTokenId) public {
+        roseSalesCntMap[_roseTokenId]++;
+    }
+
 }

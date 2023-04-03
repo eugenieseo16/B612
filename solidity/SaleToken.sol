@@ -11,9 +11,9 @@ contract SaleToken {
     PlanetToken pt;
     RoseToken rt;
 
-    constructor(address _planetAddress) {
-        // pt = planetToken;
+    constructor(address _planetAddress, address _roseAddress) {
         pt = PlanetToken(_planetAddress);
+        rt = RoseToken(_roseAddress);
     }
 
     function setForSalePlanetToken(
@@ -27,7 +27,7 @@ contract SaleToken {
             planetTokenOwner == msg.sender,
             "Caller is not planet token owner."
         );
-        require(_price > 0, "Price is zero or lower.");
+        require(_price >= 10000000000000000, "Price is too low. Should be more than 10^16");
         require(
             pt.getPlanetPrices(_planetTokenId) == 0,
             "This planet token is already on sale."
@@ -119,7 +119,7 @@ contract SaleToken {
                 )
             )
         );
-        SharedStructs.PlanetSalesLog memory planetSalesLog = SharedStructs.PlanetSalesLog(
+        SharedPlanetStructs.PlanetSalesLog memory planetSalesLog = SharedPlanetStructs.PlanetSalesLog(
             price,
             planetTokenOwner,
             msg.sender,
@@ -129,4 +129,70 @@ contract SaleToken {
         pt.setLogInPlanetSalesMap(lastNode, planetSalesLog);
         pt.cntUpPlanetSalesCntMap(_planetTokenId);
     }
+
+      function setForSaleRoseToken(uint256 _roseTokenId, uint256 _price) public { // 판매 등록 
+        address roseTokenOwner = rt.ownerOf(_roseTokenId);
+
+        require(roseTokenOwner == msg.sender, "Caller is not Rose token owner.");
+        require(_price >= 10000000000000000, "Price is too low. Should be more than 10^16");
+        require(rt.getRoseTokenPrice(_roseTokenId) == 0, "This Rose token is already on sale.");
+        require(rt.isApprovedForAll(roseTokenOwner, address(this)), "Rose token owner did not approve token.");
+
+        rt.setRosePrices(_roseTokenId, _price);
+        rt.setSaleOfB612RoseMap(_roseTokenId, true);
+
+        rt.pushOnSaleRoseTokenArray(_roseTokenId);
+    }
+
+    function discardForSaleRoseToken(uint256 _roseTokenId) public { // 판매 등록 취소
+        address roseTokenOwner = rt.ownerOf(_roseTokenId);
+
+        require(roseTokenOwner == msg.sender, "Caller is not Rose token owner.");
+        require(rt.getRoseTokenPrice(_roseTokenId) != 0, "This Rose token is already not on sale.");
+        require(rt.isApprovedForAll(roseTokenOwner, address(rt)), "Rose token owner did not approve token.");
+
+        rt.setRosePrices(_roseTokenId, 0);
+        rt.setSaleOfB612RoseMap(_roseTokenId, false);
+        
+        // 판매중인 토큰 배열 수정 
+        for(uint256 i = 0; i < rt.getOnSaleRoseTokenArrayLength(); i++) {
+            if(rt.getRoseTokenPrice(rt.getOnSaleRoseTokenArray(i)) == 0) {
+                rt.setOnSaleRoseTokenArray(i, rt.onSaleRoseTokenArray(rt.getOnSaleRoseTokenArrayLength() - 1));
+                rt.popOnSaleRoseTokenArray();
+            }
+        }
+    }
+
+    function purchaseRoseToken(uint256 _roseTokenId) public payable { // 구매 
+        uint256 price = rt.getRoseTokenPrice(_roseTokenId);
+        address roseTokenOwner = rt.ownerOf(_roseTokenId);
+
+        require(price > 0, "msg : Rose token not sale.");
+        require(price <= msg.value, "msg : Caller sent lower than price.");
+        require(roseTokenOwner != msg.sender, "msg : Caller is Rose token owner.");
+
+        payable(roseTokenOwner).transfer(msg.value);
+        rt.safeTransferFrom(roseTokenOwner, msg.sender, _roseTokenId);
+
+        rt.setRosePrices(_roseTokenId, 0);
+        rt.setUserAddressOfB612RoseMap(_roseTokenId, msg.sender);
+        rt.setSaleOfB612RoseMap(_roseTokenId, false);
+
+        // 판매중인 토큰 배열 수정 
+        for(uint256 i = 0; i < rt.getOnSaleRoseTokenArrayLength(); i++) {
+            if(rt.getRoseTokenPrice(rt.getOnSaleRoseTokenArray(i)) == 0) {
+                rt.setOnSaleRoseTokenArray(i, rt.getOnSaleRoseTokenArray(rt.getOnSaleRoseTokenArrayLength() - 1));
+                rt.popOnSaleRoseTokenArray();
+            }
+        }
+
+        // 판매/구매 로그에 추가
+        uint lastNode = rt.findLastNode(_roseTokenId);
+        uint nextAddress = uint256(keccak256(abi.encodePacked(_roseTokenId, price, roseTokenOwner, msg.sender, block.timestamp)));
+        SharedRoseStructs.RoseSalesLog memory roseSalesLog = SharedRoseStructs.RoseSalesLog(price, roseTokenOwner, msg.sender, block.timestamp, nextAddress);
+        rt.setLogInRoseSalesMap(lastNode, roseSalesLog);
+        rt.cntUpRoseSalesCntMap(_roseTokenId);
+
+    }
+
 }
