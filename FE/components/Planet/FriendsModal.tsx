@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
 import styled from '@emotion/styled';
-import { useFriendAPI, useUnresponseFriend } from 'API/friendURLs';
+import { useFriendAPI } from 'API/friendAPIs';
 
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';

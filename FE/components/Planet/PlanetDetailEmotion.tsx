@@ -11,18 +11,53 @@ export const PlanetDetail = styled.div`
 
   border-radius: 2rem;
 
-  .planet-info {
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-bottom: 8px;
-    div {
-      p {
-        margin-bottom: 4px;
+    .planet-name {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      h2 {
+        margin-left: 10px;
       }
     }
-    .planet-price {
+    .planet-detail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .planet-price {
+        display: flex;
+        align-items: center;
+        img {
+          width: 30px;
+          margin-right: 5px;
+          border-radius: 50%;
+        }
+      }
+    }
+    .planet-owner {
+      display: flex;
+      align-items: center;
+      padding-top: 5px;
+      img {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-right: 1rem;
+      }
+      #member-tier-icon {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+      }
+    }
+
+    .for-sale-button {
+      display: flex;
+      justify-content: end;
+      margin-top: 1rem;
+    }
+
+    .meta-data {
       display: flex;
       align-items: center;
       img {
@@ -74,6 +109,23 @@ export const PlanetDetail = styled.div`
       button {
         display: none;
       }
+    }
+
+    button {
+      height: 2rem;
+      width: 8rem;
+
+      font-size: 1.2rem;
+      color: #252530;
+
+      border: none;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    #goerli-ethereum {
+      width: 30px;
+      margin-right: 5px;
     }
   }
 `;

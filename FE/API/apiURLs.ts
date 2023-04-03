@@ -19,3 +19,9 @@ export const memberAPIUrls = {
   searchByNameAPIUrl: `${apiBaseUrl}/member/search`,
   userByIdUrl: `${apiBaseUrl}/member`,
 };
+
+export const planetAPIUrls = {
+  getPlanetAPIUrl: `${apiBaseUrl}/member`,
+  likePlanetAPIUrl: `${apiBaseUrl}/planet/like`,
+  isLikedPlanetAPIUrls: `${apiBaseUrl}/planet/`,
+};

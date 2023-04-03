@@ -13,15 +13,31 @@ import Link from 'next/link';
 import { Container } from './RankingsEmotion';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { PlanetRankingAPI } from 'API/rankingURLs';
-
-import Web3 from 'web3';
+import { PlanetRankingAPI } from 'API/rankingAPIs';
+import { useRouter } from 'next/router';
+import { usePlanetContract } from '@components/contracts/planetToken';
+import { useEffect, useState } from 'react';
 
 export default function BasicTable() {
   const data = PlanetRankingAPI();
-  console.log(data);
 
-  // console.log(Web3.eth.accounts);
+  const router = useRouter();
+
+  const planetContract = usePlanetContract();
+  const [planetDetail, setPlanetDetail] = useState(null);
+
+  const planetId = 1;
+  useEffect(() => {
+    if (!planetId) return;
+    planetContract?.methods
+      .b612AddressMap(planetId)
+      .call()
+      .then((data: any) => {
+        setPlanetDetail(data);
+      });
+  }, [planetContract, planetId]);
+
+  console.log();
 
   return (
     <Container>
@@ -46,7 +62,7 @@ export default function BasicTable() {
           <TableBody>
             {data?.responseData?.map((planet: any) => (
               <TableRow
-                key={planet.planetId}
+                key={planet?.planetNftId}
                 sx={
                   {
                     // '&:last-child td, &:last-child th': {
@@ -61,7 +77,7 @@ export default function BasicTable() {
                   <h2>{planet.rank}</h2>
                 </TableCell>
                 <TableCell align="left">
-                  <Link href={`/planet/${planet.planetId}`} id="link-item">
+                  <Link href={`/planet/${planet.planetNftId}`} id="link-item">
                     <div className="planet-item">
                       {/* Web3로 받아와야함 */}
                       <img src={planet.planetImage} alt="" />
