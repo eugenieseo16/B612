@@ -8,7 +8,7 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import StarsIcon from '@mui/icons-material/Stars';
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import HomeIcon from '@mui/icons-material/Home';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import userAtom from 'store/userAtom';
 import { useRouter } from 'next/router';
 import axios from 'axios';

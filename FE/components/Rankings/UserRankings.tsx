@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { Container } from './RankingsEmotion';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { MemberRankingAPI } from 'API/rankingURLs';
+import { MemberRankingAPI } from 'API/rankingAPIs';
 
 export default function BasicTable() {
   const router = useRouter();

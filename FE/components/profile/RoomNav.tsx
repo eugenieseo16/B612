@@ -96,7 +96,7 @@ function RoomNav() {
 
       {isMobile && (
         <MyDial
-          direction="down"
+          direction="up"
           ariaLabel="SpeedDial basic example"
           icon={<SpeedDialIcon />}
         >
@@ -118,7 +118,7 @@ export default RoomNav;
 
 const MyDial = styled(SpeedDial)`
   position: absolute;
-  top: 1rem;
+  bottom: 5rem;
   right: 1rem;
   .MuiSpeedDial-fab {
     background-color: ${rgba(colors.darkBlue, 0.7)};
