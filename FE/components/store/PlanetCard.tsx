@@ -8,6 +8,7 @@ import { usePlanetContract } from '@components/contracts/planetToken';
 import userAtom from 'store/userAtom';
 import { useMobile } from '@hooks/useMobile';
 import { PlanetDetail } from './PlanetCard.styles';
+import { Button } from '@mui/material';
 
 function PlanetCard() {
   const planetContract = usePlanetContract();
@@ -31,7 +32,7 @@ function PlanetCard() {
   };
 
   return (
-    <PlanetDetail >
+    <PlanetDetail>
       <div className="planet-info">
         <div>
           <p>{adj}</p>
@@ -50,9 +51,13 @@ function PlanetCard() {
 
         {me?.memberAddress.toLocaleUpperCase() !=
         planet?.userAddress.toLocaleUpperCase() ? (
-          <button onClick={purchasePlanet}>즉시구매</button>
+          <Button variant="contained" color="success" onClick={purchasePlanet}>
+            <span style={{ color: '#fff' }}>즉시구매</span>
+          </Button>
         ) : (
-          <button onClick={discardForSale}>판매 취소</button>
+          <Button variant="contained" color="error" onClick={discardForSale}>
+            <span style={{ color: '#fff' }}>판매취소</span>
+          </Button>
         )}
       </div>
     </PlanetDetail>
