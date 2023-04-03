@@ -1,8 +1,8 @@
+import { friendAPIUrls } from 'API/apiURLs';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
 import { useMyQuery } from '../hooks/useMyQuery';
-import { friendAPIUrls } from './apiURLs';
 
 export const useFriendAPI = (memberId?: number) => {
   const response = useMyQuery(
@@ -46,4 +46,29 @@ export const requestFriendAPI = async (
     friendResponseMemberId,
   });
   return data;
+};
+
+export const useRequestedFriendsListAPI = (memberId?: number) => {
+  const url = `${friendAPIUrls.requestedFriendAPIUrl}/${memberId}?page=0&size=100`;
+  const { data: userData } = useQuery(url, async () => {
+    if (!memberId) return { responseData: [] };
+    return fetch(url).then(res => res.json());
+  });
+  return userData?.responseData;
+};
+
+export const deleteFriend = (friendMemberId?: number, myId?: number) => {
+  if (!friendMemberId || !myId) return;
+  axios.delete(`${friendAPIUrls.deleteFriendUrl}`, {
+    params: { friendMemberId, myId },
+  });
+};
+
+export const useUnresponseFriend = (memberId?: number) => {
+  const url = `${friendAPIUrls.unresponseFriendAPIUrl}/${memberId}?page=0&size=100`;
+  const { data: userData } = useQuery(url, async () => {
+    if (!memberId) return { responseData: [] };
+    return fetch(url).then(res => res.json());
+  });
+  return userData?.responseData;
 };

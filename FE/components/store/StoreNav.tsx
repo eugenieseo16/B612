@@ -9,9 +9,6 @@ import { colors } from 'styles/colors';
 function StoreNav() {
   const onSalePlanets = useRecoilValue(onSalePlanetsAtom);
   const [storeIndex, setStoreIndex] = useRecoilState(storeIndexAtom);
-  const changePage = (e: any, page: number) => {
-    setStoreIndex({ index: 0, page: page - 1 });
-  };
 
   const handlePage = (type: 'next' | 'prev') => () => {
     const tt = onSalePlanets.length - storeIndex.page * 5;
@@ -36,13 +33,17 @@ function StoreNav() {
     }
   };
 
+  const changePage = (e: any, page: number) => {
+    setStoreIndex({ index: page - 1, page: storeIndex.page });
+  };
+
   return (
     <>
       <Pagination
-        count={Math.floor(onSalePlanets.length / 5) + 1}
+        count={onSalePlanets.length}
         variant="outlined"
         color="secondary"
-        page={storeIndex.page + 1}
+        page={storeIndex.index + 1}
         onChange={changePage}
         size={'large'}
         sx={{
@@ -54,13 +55,13 @@ function StoreNav() {
       />
 
       {/* 이전 행성 */}
-      <Button onClick={handlePage('prev')} style={{ left: '20%' }}>
+      {/* <Button onClick={handlePage('prev')} style={{ left: '20%' }}>
         <GlowingButton selected={true} icon="left" bgColor={colors.purple} />
-      </Button>
+      </Button> */}
       {/* 다음행성 */}
-      <Button onClick={handlePage('next')} style={{ right: '20%' }}>
+      {/* <Button onClick={handlePage('next')} style={{ right: '20%' }}>
         <GlowingButton selected={true} icon="right" bgColor={colors.purple} />
-      </Button>
+      </Button> */}
     </>
   );
 }
