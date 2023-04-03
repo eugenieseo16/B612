@@ -5,6 +5,8 @@ import com.god.b612.dto.PlanetNotificationDto;
 import com.god.b612.entity.Notification;
 import com.god.b612.model.BaseResponseBody;
 import com.god.b612.service.NotificationService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +28,9 @@ public class NotificationController {
     }
 
     //행성 판매&구매 알림 생성
+    @ApiOperation(value = "행성 판매&구매 알림 생성", notes = "행성 판매하거나 구매 시 판매자, 구매자에게 판매(구매) 알림이 등록됩니다.")
     @PostMapping("/planet")
-    public ResponseEntity<BaseResponseBody> createPlanetNotification(@RequestBody PlanetNotificationDto planetNotificationDto) {
+    public ResponseEntity<BaseResponseBody> createPlanetNotification(@ApiParam(value = "구매한 행성알림dto(구매자, 판매자, 행성NftId)") @RequestBody PlanetNotificationDto planetNotificationDto) {
         Notification buyerNotification = notificationService.createPlanetBuyerNotification(planetNotificationDto);  //구매자 알림등록
         Notification sellerNotification = notificationService.createPlanetSellerNotification(planetNotificationDto);  //판매자 알림등록
 
@@ -41,8 +44,9 @@ public class NotificationController {
     }
 
     //알림(리스트) 조회
+    @ApiOperation(value = "알림목록 조회", notes = "현재 사용자의 알림 목록을 조회합니다.")
     @GetMapping("/{memberId}")
-    public ResponseEntity<BaseResponseBody> getNotificationList(@PathVariable int memberId) {
+    public ResponseEntity<BaseResponseBody> getNotificationList(@ApiParam(value = "현재 사용자 memberId", example = "1") @PathVariable int memberId) {
         try {
             List<Notification> notificationList = notificationService.getNotificationList(memberId);
             BaseResponseBody baseResponseBody = BaseResponseBody.builder().message(SUCCESS).statusCode(200).responseData(notificationList).build();
@@ -54,8 +58,9 @@ public class NotificationController {
     }
 
     //알림 삭제
+    @ApiOperation(value = "알림 삭제", notes = "선택한 알림을 삭제합니다.")
     @DeleteMapping("/{notificationId}")
-    public ResponseEntity<BaseResponseBody> deleteNotification(@PathVariable int notificationId) {
+    public ResponseEntity<BaseResponseBody> deleteNotification(@ApiParam(value = "삭제할 알림 notificationId", example = "1") @PathVariable int notificationId) {
 
         if(notificationService.deleteNotification(notificationId) == 1) {
             BaseResponseBody baseResponseBody = BaseResponseBody.builder().message(SUCCESS).statusCode(200).build();
@@ -68,8 +73,9 @@ public class NotificationController {
 
 
     //미확인 알림개수 갱신
+    @ApiOperation(value = "미확인 알림개수 갱신", notes = "현재 사용자의 확인하지 않은 미확인 알림개수를 새로 갱신합니다.")
     @GetMapping("/refresh/{memberId}")
-    public ResponseEntity<BaseResponseBody> refreshNotificationCnt(@PathVariable int memberId) {
+    public ResponseEntity<BaseResponseBody> refreshNotificationCnt(@ApiParam(value = "현재 사용자 memberId", example = "1") @PathVariable int memberId) {
         try {
             int notificationCnt = notificationService.refreshNotificationCnt(memberId);
             BaseResponseBody baseResponseBody = BaseResponseBody.builder().message(SUCCESS).statusCode(200).responseData(notificationCnt).build();
@@ -81,8 +87,9 @@ public class NotificationController {
     }
 
     //알림 확인처리
+    @ApiOperation(value = "알림 확인처리", notes = "현재 사용자의 선택한 알림을 확인처리합니다.")
     @PutMapping("/check/{notificationId}")
-    public ResponseEntity<BaseResponseBody> checkNotification(@PathVariable int notificationId,
+    public ResponseEntity<BaseResponseBody> checkNotification(@ApiParam(value = "선택한 알림 notificationId", example = "1") @PathVariable int notificationId,
                                                               @RequestBody NotificationUpdateRequestDto notificationUpdateRequestDto) {
 
         if(notificationService.checkNotification(notificationUpdateRequestDto) == 1) {
