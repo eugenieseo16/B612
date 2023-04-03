@@ -9,11 +9,10 @@ import { degToRad } from 'three/src/math/MathUtils';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import SelectPanel from './SelectPanel';
-import { useRecoilValue } from 'recoil';
-import gardenIndexAtom from 'store/garden/gardenIndexAtom';
+import { Group } from 'three';
 
 function Garden() {
-  const ref = useRef<any>();
+  const ref = useRef<Group | null>(null);
   const { scene, animations } = useGLTF(
     'https://res.cloudinary.com/dohkkln9r/image/upload/v1680346947/garden.glb'
   );

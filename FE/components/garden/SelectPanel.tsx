@@ -1,6 +1,6 @@
 import { Center } from '@react-three/drei';
 import React from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import gardenIndexAtom from 'store/garden/gardenIndexAtom';
 import plantedFlowersAtom from 'store/garden/plantedFlowersAtom';
 import selectedFlowerAtom from 'store/garden/selectedFlowerAtom';

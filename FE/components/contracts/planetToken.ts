@@ -1,3 +1,5 @@
+/* eslint-disable  */
+
 import { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';

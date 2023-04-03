@@ -1,4 +1,3 @@
-import { PlanetDetail } from '../Planet/PlanetDetailEmotion';
 import GETH from '../../assets/imgs/goerli-eth.png';
 import { useRecoilValue } from 'recoil';
 import storeIndexAtom from 'store/store/storeIndexAtom';
@@ -8,6 +7,7 @@ import dayjs from 'dayjs';
 import { usePlanetContract } from '@components/contracts/planetToken';
 import userAtom from 'store/userAtom';
 import { useMobile } from '@hooks/useMobile';
+import { PlanetDetail } from './PlanetCard.styles';
 
 function PlanetCard() {
   const planetContract = usePlanetContract();
@@ -31,7 +31,7 @@ function PlanetCard() {
   };
 
   return (
-    <PlanetDetail>
+    <PlanetDetail >
       <div className="planet-info">
         <div>
           <p>{adj}</p>

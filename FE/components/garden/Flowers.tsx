@@ -1,7 +1,7 @@
 import { Center, useGLTF } from '@react-three/drei';
 import { FLOWERS_LIST } from 'utils/flowerDataList';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
-import { Box3, DoubleSide, Vector3 } from 'three';
+import { Box3, Vector3 } from 'three';
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import plantedFlowersAtom from 'store/garden/plantedFlowersAtom';

@@ -1,7 +1,6 @@
 import Flowers from '@components/garden/Flowers';
 import Garden from '@components/garden/Garden';
 import GardenNav from '@components/garden/GardenNav';
-import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useUserById } from 'API/memberAPIs';
 import { MotionCanvas } from 'framer-motion-3d';
@@ -23,9 +22,11 @@ function GardenPage() {
   const user = useUserById(query?.userId);
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
   const [gardenIndex, setGardenIndex] = useRecoilState(gardenIndexAtom);
+  const isMe = me?.memberId === user;
 
   return (
     <div style={{ height: '100vh' }}>
+      {isMe ? <h1>나</h1> : null}
       <GardenNav />
       <Modal open={gardenIndex === 0} onClose={() => setGardenIndex(-1)}>
         <FlowersModal user={user} />
