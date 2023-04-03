@@ -9,5 +9,6 @@ import java.util.List;
 public interface FlowerRepository extends JpaRepository<Flower, Integer> {
 
     List<Flower> findFlowersByFlowerOwnerIdAndAndFlowerPlanted(Member member, boolean planted);
+    List<Flower> findFlowersByFlowerOwnerId(Member member);
     Flower findFlowerByFlowerNftId(int flowerId);
 }

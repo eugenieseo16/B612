@@ -157,7 +157,30 @@ public class FlowerServiceImpl implements FlowerService {
         ArrayList<FlowerResponseDto> flowerResponseDtos=new ArrayList<>();
 
         if(flowers.size()==0){
+            return flowerResponseDtos;
+        }
+        else{
+            for(Flower flower: flowers){
+                flowerResponseDtos.add(flowerCustomRepository.makeDto(flower));
+            }
+            return flowerResponseDtos;
+        }
+    }
+
+    @Override
+    public List<FlowerResponseDto> selectMemberFlowers(int memberId){
+        Member member=memberRepository.findMemberByMemberId(memberId);
+
+        if(member==null){
             return null;
+        }
+
+        List<Flower> flowers=flowerRepository.findFlowersByFlowerOwnerId(member);
+
+        ArrayList<FlowerResponseDto> flowerResponseDtos=new ArrayList<>();
+
+        if(flowers.size()==0){
+            return flowerResponseDtos;
         }
         else{
             for(Flower flower: flowers){
