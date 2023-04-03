@@ -151,14 +151,11 @@ public class MemberServiceImpl implements MemberService {
         Member me=memberRepository.findMemberByMemberId(myId);
         List<Member> rand;
 
-        if(me==null){
-            return null;
-        }
 
 
         while(true){
             rand=memberRepository.randomMember();
-            if(me.getMemberId()!=rand.get(0).getMemberId()){
+            if(myId!=rand.get(0).getMemberId()){
                 break;
             }
         }
