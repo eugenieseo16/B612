@@ -52,10 +52,12 @@ export const PlanetDetail = styled.div`
     }
   }
 
-  .for-sale-button {
+  .for-sale-button,
+  .friend-request-button {
     display: flex;
     justify-content: end;
     margin-top: 1rem;
+    /* font-family: 'WILD-MAYO'; */
   }
 
   .meta-data {

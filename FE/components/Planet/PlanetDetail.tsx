@@ -20,11 +20,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import {
-  useFriendAPI,
-  useRequestedFriendsListAPI,
-  useUnresponseFriend,
-} from 'API/friendAPIs';
+import { requestFriendAPI, useIsFriendAPI } from 'API/friendAPIs';
+import axios from 'axios';
+import styled from '@emotion/styled';
+import { colors } from 'styles/colors';
 
 function PlanetDetailCard() {
   const user = useRecoilValue(userAtom);
@@ -79,21 +78,14 @@ function PlanetDetailCard() {
       .send({ from: user?.memberAddress });
   };
 
-  console.log(isOnSale);
+  const [submit, setSubmit] = useState(false);
+  const isFriend = useIsFriendAPI(user?.memberId, ownerData?.memberId);
 
-  // 친구 목록
-  const friendsList = useFriendAPI(user?.memberId);
-  // console.log(friendsList?.responseData);
-
-  const [isFriends, setIsFriend] = useState(false);
-
-  // 친구 요청 받은 목록
-  const receivedRequests = useRequestedFriendsListAPI(user?.memberId);
-  console.log(receivedRequests);
-
-  // 친구 요청 보낸 목록
-  const sentRequests = useUnresponseFriend(user?.memberId);
-  console.log(sentRequests);
+  const requestFriend = () => {
+    if (submit) return;
+    setSubmit(true);
+    requestFriendAPI(user?.memberId, ownerData?.memberId);
+  };
 
   return (
     <PlanetDetail>
@@ -165,27 +157,35 @@ function PlanetDetailCard() {
           </div>
         ) : (
           // 타인 소유 행성일 때
-          <div>
-            {/* {친구사이일 때  ? (
-              <button
-              // onClick={친구 삭제}
+          <div className="friend-request-button">
+            {isFriend === 'notRequest' && !submit ? (
+              <FriendButton onClick={requestFriend}>친구신청</FriendButton>
+            ) : isFriend === 'notAccepted' || submit ? (
+              <FriendButton disabled style={{ background: 'grey' }}>
+                수락대기중
+              </FriendButton>
+            ) : isFriend === 'friend' ? (
+              <Button
+                style={{
+                  width: '3rem',
+                  backgroundColor: colors.yellow,
+                  borderRadius: '8px',
+                }}
               >
-                친구 삭제
-              </button>
-            ) : 친구 요청 대기중일 때:  ? (
-              <button
-              // onClick={클릭 시 친구 요청 삭제 됨}
-              >
-                친구 요청됨
-              </button>
-            ) : 친구 요청 리스트에 있을 때 ? (
-              <button>친구 수락</button>
-            ) : (
-              <button>친구 신청</button>
-            )} */}
+                친구
+              </Button>
+            ) : null}
           </div>
         )}
       </div>
     </PlanetDetail>
   );
 }
+
+const FriendButton = styled(Button)`
+  width: 5rem;
+  background-color: ${colors.purple};
+  border-radius: 1rem;
+  font-family: 'WILD-MAYO';
+`;
+export default PlanetDetailCard;
