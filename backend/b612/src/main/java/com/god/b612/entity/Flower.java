@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "flowers")
-public class Flower extends BaseEntity{
+public class Flower{
     @Id
     @Column(name = "flower_nft_id")
     private int flowerNftId;
@@ -29,14 +29,17 @@ public class Flower extends BaseEntity{
 
     private boolean onSale;
 
+    private String createdAt;
+
 
     @Builder
-    public Flower(int flowerNftId, boolean flowerPlanted, Member flowerOwnerId, int flowerType, boolean onSale){
+    public Flower(int flowerNftId, boolean flowerPlanted, Member flowerOwnerId, int flowerType, boolean onSale, String createdAt){
         this.flowerNftId=flowerNftId;
         this.flowerPlanted=flowerPlanted;
         this.flowerOwnerId=flowerOwnerId;
         this. flowerType=flowerType;
         this.onSale=onSale;
+        this.createdAt=createdAt;
     }
 
 }

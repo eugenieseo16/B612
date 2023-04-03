@@ -210,10 +210,6 @@ public class MemberController {
     @GetMapping("/random/{memberId}")
     public ResponseEntity<BaseResponseBody> randomUser(@PathVariable("memberId") int memberId){
         MemberResponseDto memberResponseDto=memberService.randomUser(memberId);
-        if(memberResponseDto==null){
-            BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
-            return ResponseEntity.status(400).body(baseResponseBody);
-        }
 
         BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(memberResponseDto).build();
         return ResponseEntity.status(200).body(baseResponseBody);
