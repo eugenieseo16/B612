@@ -179,6 +179,7 @@ public class MemberController {
 
         if(flowerResponseDtos==null){
             BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
+            return ResponseEntity.status(400).body(baseResponseBody);
         }
 
         BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(flowerResponseDtos).build();
@@ -233,6 +234,24 @@ public class MemberController {
             BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(planetResponseDto).build();
             return ResponseEntity.status(200).body(baseResponseBody);
         }
+    }
+
+
+    @ApiOperation(value = "유저 꽃 모두 조회", notes = "심어졌든 안심어졌든 유저가 가진 꽃을 모두 보여줍니다.")
+    @GetMapping("/{memberId}/flowers")
+    public ResponseEntity<BaseResponseBody> memberFlowers(@PathVariable("memberId") int memberId) {
+
+        List<FlowerResponseDto> flowerResponseDtos = flowerService.selectMemberFlowers(memberId);
+
+        if(flowerResponseDtos==null){
+            BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+
+        BaseResponseBody baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(flowerResponseDtos).build();
+
+        return ResponseEntity.status(200).body(baseResponseBody);
+
     }
 
 }
