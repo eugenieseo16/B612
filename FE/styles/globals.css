@@ -1,0 +1,202 @@
+/* reset.css */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  /* font: inherit; */
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+  background-color: #252530;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* reset.css end */
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
+}
+h1 {
+  font-family: 'MAYO';
+  font-size: 3rem;
+  color: #394666;
+}
+h2 {
+  font-family: 'MAYO';
+  font-size: 2.5rem;
+  color: #394666;
+}
+h3 {
+  font-family: 'MAYO';
+  font-size: 2rem;
+  color: #394666;
+}
+h4 {
+  font-family: 'MAYO';
+  font-size: 1.5rem;
+  color: #394666;
+}
+h5 {
+  font-family: 'WILD-MAYO';
+  font-size: 2rem;
+  color: #394666;
+}
+h6 {
+  font-family: 'WILD-MAYO';
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #394666;
+}
+span,
+p {
+  font-family: 'WILD-MAYO';
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #29334d;
+}
+a {
+  cursor: pointer;
+  font-family: 'WILD-MAYO';
+  font-size: 1.3rem;
+  text-decoration: underline;
+  color: #4a5980;
+}
+span {
+  font-size: 1rem;
+}
+* {
+  font-family: 'WILD-MAYO';
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'WILD-MAYO';
+  src: url('../assets/fonts/거친둘기마요.ttf');
+}
+
+@font-face {
+  font-family: 'MAYO';
+  src: url('../assets/fonts/둘기마요.ttf');
+}
+
+@font-face {
+  font-family: 'Pixel';
+  src: url('../assets/fonts/pixelFont.woff');
+}
