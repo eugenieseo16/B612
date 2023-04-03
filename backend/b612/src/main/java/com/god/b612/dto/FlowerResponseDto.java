@@ -11,6 +11,14 @@ public class FlowerResponseDto {
 
     int ownerId;
 
+    String ownerAddress;
+
+    String createdAt;
+
+    boolean onSale;
+
+    int flowerType;
+
     boolean flowerPlanted;
 
     String ownerTierName;
@@ -24,7 +32,7 @@ public class FlowerResponseDto {
     double flowerLocationZ;
 
     @Builder
-    FlowerResponseDto(int flowerNftId, int ownerId, boolean flowerPlanted, String ownerNickName, String ownerTierName, double flowerLocationX, double flowerLocationY, double flowerLocationZ) {
+    FlowerResponseDto(int flowerNftId, int ownerId, boolean flowerPlanted, String ownerNickName, String ownerTierName, double flowerLocationX, double flowerLocationY, double flowerLocationZ, String ownerAddress, boolean onSale, int flowerType, String createdAt) {
         this.flowerNftId = flowerNftId;
         this.ownerId = ownerId;
         this.flowerPlanted = flowerPlanted;
@@ -33,6 +41,10 @@ public class FlowerResponseDto {
         this.flowerLocationX = flowerLocationX;
         this.flowerLocationY = flowerLocationY;
         this.flowerLocationZ = flowerLocationZ;
+        this.createdAt=createdAt;
+        this.ownerAddress=ownerAddress;
+        this.flowerType=flowerType;
+        this.onSale=onSale;
     }
 
 }
