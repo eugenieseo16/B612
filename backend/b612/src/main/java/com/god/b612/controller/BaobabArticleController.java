@@ -7,7 +7,6 @@ import com.god.b612.entity.BaobabArticle;
 import com.god.b612.model.BaseResponseBody;
 import com.god.b612.service.BaobabArticleService;
 import com.god.b612.service.MemberService;
-import com.google.firebase.auth.FirebaseAuthException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,13 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/baobab")
@@ -40,7 +36,7 @@ public class BaobabArticleController {
 
     @ApiOperation(value = "바오밥나무에 글을 작성합니다.", notes = "")
     @PostMapping()
-    public ResponseEntity<?> saveBaobabArticle(@RequestBody @ApiParam(value = "글 내용", required = true) BaobabArticleRequestDto.Create baobabArticleRequestDto) {
+    public ResponseEntity<?> saveBaobabArticle(@RequestBody @Valid @ApiParam(value = "글 내용", required = true) BaobabArticleRequestDto.Create baobabArticleRequestDto) {
 
         BaseResponseBody baseResponseBody;
         MemberResponseDto writer = memberService.memberSelectByAddress(baobabArticleRequestDto.getMemberAddress());
@@ -97,7 +93,7 @@ public class BaobabArticleController {
 
     @ApiOperation(value = "바오밥나무 글 1개 수정하기", notes = "")
     @PutMapping("")
-    public ResponseEntity<?> updateOneBaobabArticle(@RequestBody @ApiParam(value = "글 내용", required = true) BaobabArticleRequestDto.Update baobabArticleRequestDto) {
+    public ResponseEntity<?> updateOneBaobabArticle(@RequestBody @Valid @ApiParam(value = "글 내용", required = true) BaobabArticleRequestDto.Update baobabArticleRequestDto) {
 
         BaseResponseBody baseResponseBody;
         MemberResponseDto writer = memberService.memberSelectByAddress(baobabArticleRequestDto.getMemberAddress());
