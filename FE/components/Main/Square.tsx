@@ -20,7 +20,10 @@ const Torus = (props: JSX.IntrinsicElements['mesh']) => {
   return (
     <group ref={groupRef}>
       <mesh {...props}>
-        <Model scale={[0.03, 0.03, 0.03]} />
+        <Model
+          scale={[0.03, 0.03, 0.03]}
+          onClick={() => router.push(`/square`)}
+        />
         {/* <torusGeometry args={[1, 0.2, 12, 36]} />
         <meshStandardMaterial color={'red'} /> */}
         <Html>
@@ -54,4 +57,5 @@ const FloatingTag = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
