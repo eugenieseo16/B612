@@ -1,13 +1,16 @@
+/* eslint-disable prefer-const */
 import React, { useEffect, useRef, useState } from 'react';
 import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
-import CertificateModal from '@components/Planet/CertificateModal';
+import TetrisModal from './TetrisModal';
 import { Modal } from '@mui/material';
 
-// const 대신 let을 사용해도 괜찮다고 eslint 규칙 비활성화
-/* eslint-disable prefer-const */
+// import Modal from '@mui/material/Modal';
+// import { CertificateModal } from '@components/Planet/index';
+
+// eslint-disable-next-line prefer-const
 let walkDirection = new THREE.Vector3();
 let rotateAngle = new THREE.Vector3(0, 1, 0);
 let rotateQuaternion = new THREE.Quaternion();
@@ -26,11 +29,10 @@ const directionOffset = ({
   left,
   right,
 }: DirectionOffsetProps) => {
-  var directionOffset = 0; // 방향 오프셋을 초기화
+  var directionOffset = 0; // w
   if (forward) {
-    // w
     if (left) {
-      directionOffset = Math.PI / 4; // w+a 대각선 방향으로 이동
+      directionOffset = Math.PI / 4; // w+a
     } else if (right) {
       directionOffset = -Math.PI / 4; // w+d
     }
@@ -40,12 +42,12 @@ const directionOffset = ({
     } else if (right) {
       directionOffset = -Math.PI / 4 - Math.PI / 2; // s+d
     } else {
-      directionOffset = Math.PI; // s 180도 회전하여 뒤로 이동
+      directionOffset = Math.PI; // s
     }
   } else if (left) {
-    directionOffset = Math.PI / 2; // a  90도 회전하여 이동
+    directionOffset = Math.PI / 2; // a
   } else if (right) {
-    directionOffset = -Math.PI / 2; // d   -90도 회전하여 이동
+    directionOffset = -Math.PI / 2; // d
   }
 
   return directionOffset;
@@ -53,24 +55,23 @@ const directionOffset = ({
 
 const AvatarFinn = () => {
   const { forward, backward, left, right, shift } = UseInput();
-  const model = useGLTF('./avatar_finn/foureyes.glb');
+  const model = useGLTF('./avatars/foureyes.glb');
   let pos = [0, 0, 0];
 
   const { actions } = useAnimations(model.animations, model.scene);
   // 아바타 크기조절
   model.scene.scale.set(1.2, 1.2, 1.2);
-  // 객체 반복 순회하면서 해당 객체의 형식이 THREE.Mesh 인 경우 그림자 생성
-  // model.scene.traverse(object => {
-  //   if (object instanceof THREE.Mesh) {
-  //     object.castShadow = true;
-  //   }
-  // });
+  // 그림자
+  model.scene.traverse(object => {
+    if (object instanceof THREE.Mesh) {
+      object.castShadow = true;
+    }
+  });
 
   const currentAction = useRef('');
   // const controlsRef = useRef<typeof OrbitControls>();
   const camera = useThree(state => state.camera);
 
-  // 카메라 위치 이동
   const updateCameraTarget = (moveX: number, moveZ: number) => {
     // move camera
     camera.position.x += moveX;
@@ -85,7 +86,7 @@ const AvatarFinn = () => {
 
   useEffect(() => {
     let action = '';
-    // 방향키를 눌렀을 경우
+
     if (forward || backward || left || right) {
       action = 'walking';
       if (shift) {
@@ -97,7 +98,6 @@ const AvatarFinn = () => {
       action = 'Action';
     }
 
-    // 이전 액션이 현재 액션과 다른 경우
     if (currentAction.current != action) {
       const NextActionToPlay = actions[action];
       const current = actions[currentAction.current];
@@ -112,7 +112,6 @@ const AvatarFinn = () => {
   const MAX_ZOOM = 15;
 
   useEffect(() => {
-    // 마우스 휠 이벤트 핸들러
     const handleWheel = (event: WheelEvent) => {
       const deltaY = event.deltaY;
       let zoomAmount = deltaY > 0 ? 0.5 : 1.5; // zoom in 또는 zoom out
@@ -246,7 +245,7 @@ const AvatarFinn = () => {
       <Html>
         {showModal && (
           <Modal open={showModal} onClose={handleClose}>
-            <CertificateModal />
+            <TetrisModal />
           </Modal>
         )}
       </Html>
