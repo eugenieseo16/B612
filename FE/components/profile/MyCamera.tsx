@@ -36,7 +36,7 @@ const CAMERA_ANGLE = [
   },
 ];
 // eslint-disable-next-line
-function MyChildCamera({ router }: { router: any }) {
+function MyChildCamera({ router, userId }: { router: any; userId: any }) {
   const ref = useRef();
   const [isAnimate, setIsAnimate] = useState(true);
   const roomIndex = useRecoilValue(roomIndexAtom);
@@ -44,7 +44,7 @@ function MyChildCamera({ router }: { router: any }) {
     let id: ReturnType<typeof setTimeout>;
     if (roomIndex === 3) {
       id = setTimeout(() => {
-        router.push('/garden');
+        router.push(`/garden/${userId}`);
       }, 500);
     }
     return () => {
