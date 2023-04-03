@@ -20,4 +20,6 @@ public interface FlowerService {
     FlowerResponseDto sellFlower(int buyerId, int flowerId);
 
     List<FlowerResponseDto> selectMemberInventory(int memberId);
+
+    List<FlowerResponseDto> selectMemberFlowers(int memberId);
 }
