@@ -16,10 +16,12 @@ function Planets({
   roomIndexState,
   planetPageState,
 }: any) {
-  const [planetPage, setPlanetPage] = planetPageState;
+  // const [planetPage, setPlanetPage] = planetPageState;
   const [planets, setPlanets] = planetsState;
+  const [selectedIndex, setIndex] = selectedState;
+  const planetPage = selectedIndex < 0 ? 0 : Math.floor(selectedIndex / 5);
   const planetContract = usePlanetContract();
-
+  // console.log('PAGE', page, planetPage);
   const curPlanetsLength =
     planets?.length - planetPage * 5 > 4 ? 5 : planets?.length - planetPage * 5;
 
@@ -48,7 +50,7 @@ function Planets({
               roomIndexState={roomIndexState}
               key={i}
               data={planets[i + planetPage * 5]}
-              planetId={i}
+              planetId={i + planetPage * 5}
               pos={[-20 + 10 * i, getRandom(15, 35), getRandom(-30, -10)]}
               time={getRandom(10, 15)}
             />
@@ -74,7 +76,7 @@ function Planet({
   const [roomIndex, setRoomIndex] = roomIndexState;
   const scene = useGLTF(PLANETS_LIST[data.planetType]);
   const clone = SkeletonUtils.clone(scene.scene);
-
+  const index = selected % 5;
   //3D 모델링 리사이즈
   const bbox = new Box3().setFromObject(clone);
   const center = bbox.getCenter(new Vector3());
@@ -110,25 +112,25 @@ function Planet({
     <React.Fragment>
       <motion.group
         animate={{
-          x: selected === planetId ? 0 : selected === -1 ? pos[0] : pos[0] * 3,
-          y: selected === planetId ? 35 : pos[1],
+          x: index === planetId % 5 ? 0 : index === -1 ? pos[0] : pos[0] * 3,
+          y: index === planetId % 5 ? 35 : pos[1],
           z:
-            selected === planetId
+            index === planetId % 5
               ? -30
-              : selected === -1
+              : index === -1
               ? pos[2]
               : pos[0] === 0
               ? -60
               : pos[2],
-          scale: selected === planetId ? 3 : 1,
+          scale: index === planetId % 5 ? 3 : 1,
         }}
       >
         <motion.group
           scale={1}
-          animate={{ y: selected === planetId ? 0 : y }}
+          animate={{ y: index === planetId % 5 ? 0 : y }}
           transition={{
             ease: 'linear',
-            duration: selected === planetId ? 1 : time,
+            duration: index === planetId % 5 ? 1 : time,
           }}
           onClick={handleClick}
         >

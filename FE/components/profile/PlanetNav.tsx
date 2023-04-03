@@ -43,7 +43,7 @@ function PlanetNav() {
       count={totalLength}
       variant="outlined"
       color="secondary"
-      page={selectedPlanet + planetPage * 5 + 1}
+      page={selectedPlanet + 1}
       onChange={changePage}
       size={'large'}
       sx={{
