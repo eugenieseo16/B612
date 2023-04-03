@@ -7,7 +7,7 @@ import com.god.b612.entity.Member;
 public interface MemberCustomRepository {
     MemberResponseDto createMemberResponseDtoByEntity(Member member);
 
-    public String makeRandomNickName();
+    public String[] makeRandomNickName();
 
     Boolean updateMember(String url, String address);
 
