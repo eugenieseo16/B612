@@ -39,32 +39,37 @@ public class SwaggerConfig {
 
     @Bean
     public Docket memberApi() {
-        return getDocket("회원", Predicates.or(PathSelectors.regex("/member.*")));
+        return getDocket("회원", Predicates.or(PathSelectors.regex("/api/member.*")));
     }
 
     @Bean
     public Docket flowerApi() {
-        return getDocket("꽃", Predicates.or(PathSelectors.regex("/flower.*")));
+        return getDocket("꽃", Predicates.or(PathSelectors.regex("/api/flower.*")));
     }
 
     @Bean
     public Docket baobabApi() {
-        return getDocket("바오밥 게시판", Predicates.or(PathSelectors.regex("/baobab.*")));
+        return getDocket("바오밥 게시판", Predicates.or(PathSelectors.regex("/api/baobab.*")));
     }
 
     @Bean
     public Docket boardApi() {
-        return getDocket("방명록", Predicates.or(PathSelectors.regex("/board.*")));
+        return getDocket("방명록", Predicates.or(PathSelectors.regex("/api/board.*")));
     }
 
     @Bean
     public Docket planetApi() {
-        return getDocket("행성", Predicates.or(PathSelectors.regex("/planet.*")));
+        return getDocket("행성", Predicates.or(PathSelectors.regex("/api/planet.*")));
     }
 
     @Bean
     public Docket friendApi() {
-        return getDocket("친구", Predicates.or(PathSelectors.regex("/friend.*")));
+        return getDocket("친구", Predicates.or(PathSelectors.regex("/api/friend.*")));
+    }
+
+    @Bean
+    public Docket notificationApi() {
+        return getDocket("알림", Predicates.or(PathSelectors.regex("/api/notification.*")));
     }
 
 

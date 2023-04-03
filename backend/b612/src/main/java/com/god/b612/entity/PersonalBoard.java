@@ -40,3 +40,4 @@ public class PersonalBoard extends BaseEntity {
         this.personalBoardContent=personalBoardContent;
     }
 }
+

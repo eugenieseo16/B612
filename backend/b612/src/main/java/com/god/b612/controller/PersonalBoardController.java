@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/board")
 @Api("보드 api")
@@ -32,7 +34,7 @@ public class PersonalBoardController {
 
     @ApiOperation(value = "보드에 글을 작성합니다.", notes = "")
     @PostMapping()
-    public ResponseEntity<?> saveBoardArticle(@RequestBody @ApiParam(value = "글 내용", required = true) PersonalBoardRequestDto.Create personalBoardRequestDto) {
+    public ResponseEntity<?> saveBoardArticle(@RequestBody @Valid @ApiParam(value = "글 내용", required = true) PersonalBoardRequestDto.Create personalBoardRequestDto) {
 
         BaseResponseBody baseResponseBody;
         MemberResponseDto owner = memberService.memberSelectByAddress(personalBoardRequestDto.getOwnerAddress());
@@ -90,7 +92,7 @@ public class PersonalBoardController {
 
     @ApiOperation(value = "내가 쓴 보드 글 1개 수정하기", notes = "")
     @PutMapping()
-    public ResponseEntity<?> updateOnePersonalBoard(@RequestBody @ApiParam(value = "글 내용", required = true) PersonalBoardRequestDto.Update personalBoardRequestDto) {
+    public ResponseEntity<?> updateOnePersonalBoard(@RequestBody @Valid @ApiParam(value = "글 내용", required = true) PersonalBoardRequestDto.Update personalBoardRequestDto) {
 
         BaseResponseBody baseResponseBody;
         MemberResponseDto writer = memberService.memberSelectByAddress(personalBoardRequestDto.getWriterAddress());
