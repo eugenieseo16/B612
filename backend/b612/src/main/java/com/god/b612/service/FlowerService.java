@@ -17,4 +17,6 @@ public interface FlowerService {
     Boolean isItPlanted(int flowerId);
 
     FlowerResponseDto sellFlower(int buyerId, int flowerId);
+
+    List<FlowerResponseDto> selectMemberInventory(int memberId);
 }

@@ -1,6 +1,7 @@
 package com.god.b612.repository;
 
 import com.god.b612.dto.MemberResponseDto;
+import com.god.b612.dto.MemberResponseDtoForRank;
 import com.god.b612.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,19 +36,20 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
     }
 
     @Override
-    public Boolean updateMember(String url, String nickname, String address) {
+    public Boolean updateMember(String url, String address) {
         Member foundMember = memberRepository.findMemberByMemberAddress(address);
         if(foundMember == null){
             return false;
         }
         Member changedMember = Member.builder()
                 .memberId(foundMember.getMemberId())
-                .memberNickname(nickname)
+                .memberNickname(foundMember.getMemberNickname())
                 .memberAddress(foundMember.getMemberAddress())
                 .memberImage(url)
                 .memberTierId(foundMember.getMemberTierId())
                 .memberHighestScore(foundMember.getMemberHighestScore())
                 .memberCurrentScore(foundMember.getMemberCurrentScore())
+                .memberLiked(foundMember.getMemberLiked())
                 .build();
         memberRepository.save(changedMember);
         return true;
@@ -63,9 +65,25 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
                 .memberTierName(member.getMemberTierId().getTierName())
                 .memberCurrentScore(member.getMemberCurrentScore())
                 .memberImage(member.getMemberImage())
+                .memberLiked(member.getMemberLiked())
                 .build();
 
         return memberResponseDto;
+    }
+    @Override
+    public MemberResponseDtoForRank makeMemberDtoForRank(Member member, int rank) {
+        MemberResponseDtoForRank memberResponseDtoForRank=MemberResponseDtoForRank.builder()
+                .rank(rank)
+                .memberId(member.getMemberId())
+                .memberAddress(member.getMemberAddress())
+                .memberNickname(member.getMemberNickname())
+                .memberTierName(member.getMemberTierId().getTierName())
+                .memberCurrentScore(member.getMemberCurrentScore())
+                .memberImage(member.getMemberImage())
+                .memberLiked(member.getMemberLiked())
+                .build();
+
+        return memberResponseDtoForRank;
     }
 
 }

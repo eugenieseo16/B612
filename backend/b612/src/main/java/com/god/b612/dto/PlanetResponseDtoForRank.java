@@ -21,8 +21,10 @@ public class PlanetResponseDtoForRank {
 
     int planetLikeCount;
 
+    int memberLiked;
+
     @Builder
-    PlanetResponseDtoForRank(int planetNftId, int planetLikeCount, int memberId, String memberNickName, String memberTierName, int memberCurrentScore, Integer rank) {
+    PlanetResponseDtoForRank(int planetNftId, int planetLikeCount, int memberId, String memberNickName, String memberTierName, int memberCurrentScore, Integer rank, int memberLiked) {
         this.memberId = memberId;
         this.memberCurrentScore = memberCurrentScore;
         this.memberNickName = memberNickName;
@@ -30,5 +32,6 @@ public class PlanetResponseDtoForRank {
         this.planetNftId = planetNftId;
         this.planetLikeCount = planetLikeCount;
         this.rank = rank;
+        this.memberLiked=memberLiked;
     }
 }
