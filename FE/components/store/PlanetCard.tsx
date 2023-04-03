@@ -31,7 +31,7 @@ function PlanetCard() {
   };
 
   return (
-    <PlanetDetail >
+    <PlanetDetail>
       <div className="planet-info">
         <div>
           <p>{adj}</p>

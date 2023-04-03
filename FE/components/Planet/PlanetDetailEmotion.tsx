@@ -24,6 +24,7 @@ export const PlanetDetail = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
 
     .planet-price {
       display: flex;
@@ -57,7 +58,7 @@ export const PlanetDetail = styled.div`
     display: flex;
     justify-content: end;
     margin-top: 1rem;
-    /* font-family: 'WILD-MAYO'; */
+    font-family: 'WILD-MAYO';
   }
 
   .meta-data {
@@ -111,6 +112,7 @@ export const PlanetDetail = styled.div`
       }
       button {
         display: none;
+        font-family: 'WILD-MAYO';
       }
     }
 
@@ -129,6 +131,7 @@ export const PlanetDetail = styled.div`
     border: none;
     border-radius: 1rem;
     background: rgba(255, 255, 255, 0.7);
+    font-family: 'WILD-MAYO';
 
     cursor: pointer;
   }

@@ -32,11 +32,12 @@ function PlanetDetailCard() {
   const planetId = router.query?.planetId;
   const planetContract = usePlanetContract();
   const [planetName, setPlanetName] = useState(null);
-  const [planetPrice, setPlanetPrice] = useState(null);
   const [planetCreatedAt, setPlanetCreatedAt] = useState(null);
   const [planetDetail, setPlanetDetail] = useState(null);
   const [memberAddress, setMemberAddress] = useState(null);
   const [isOnSale, setIsOnSale] = useState(null);
+
+  const ownerData = usePlanetOwnerAPI(memberAddress);
 
   useEffect(() => {
     if (!planetId) return;
@@ -45,18 +46,12 @@ function PlanetDetailCard() {
       .call()
       .then((data: any) => {
         setPlanetDetail(data);
-        setPlanetPrice(data?.planetPrice);
         setPlanetName(data?.planetName);
         setPlanetCreatedAt(data?.createdAt);
         setMemberAddress(data?.userAddress);
         setIsOnSale(data?.onSale);
       });
   }, [planetContract, planetId]);
-
-  console.log(memberAddress);
-  const [adj, title] = planetNameParser(planetName || '');
-
-  const ownerData = usePlanetOwnerAPI(memberAddress);
 
   // 팔기 기능
   const [desiredAmount, setDesiredAmount] = useState('0');
@@ -72,9 +67,14 @@ function PlanetDetailCard() {
 
   const handleSale = () => {
     setOpen(false);
-    console.log(desiredAmount);
     planetContract?.methods
       .setForSalePlanetToken(planetId, desiredAmount)
+      .send({ from: user?.memberAddress });
+  };
+
+  const handleDiscardSale = () => {
+    planetContract?.methods
+      .discardForSalePlanetToken(planetId)
       .send({ from: user?.memberAddress });
   };
 
@@ -86,6 +86,8 @@ function PlanetDetailCard() {
     setSubmit(true);
     requestFriendAPI(user?.memberId, ownerData?.memberId);
   };
+
+  const [adj, title] = planetNameParser(planetName || '');
 
   return (
     <PlanetDetail>
@@ -118,19 +120,20 @@ function PlanetDetailCard() {
                 : '0000-00-00'}
             </p>
           </div>
-          <div className="planet-price">
+          {/* <div className="planet-price">
             <img src={Goerli.src} alt="Goerli Ethereum" id="goerli-ethereum" />
             <span>{planetPrice ? planetPrice * 10 ** -18 : 0} GETH</span>
-          </div>
+          </div> */}
         </div>
 
-        {ownerData?.memberAddress === user?.memberAddress ? (
+        {ownerData?.memberAddress.toLowerCase() ===
+        user?.memberAddress.toLowerCase() ? (
           // 본인 소유 행성일 때
           <div className="for-sale-button">
             {isOnSale === false ? (
               <button onClick={handleClickOpen}>팔기</button>
             ) : (
-              <button>팔기 취소</button>
+              <button onClick={handleDiscardSale}>팔기 취소</button>
             )}
 
             <Dialog open={open} onClose={handleClose}>
@@ -146,6 +149,7 @@ function PlanetDetailCard() {
                   type="number"
                   onChange={e => {
                     setDesiredAmount(e.target.value);
+                    // 여기
                   }}
                 />
               </DialogContent>
