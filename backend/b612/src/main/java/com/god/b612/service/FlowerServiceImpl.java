@@ -1,6 +1,7 @@
 package com.god.b612.service;
 
 
+import com.god.b612.dto.FlowerRequestDto;
 import com.god.b612.dto.FlowerResponseDto;
 import com.god.b612.dto.PlantRequestDto;
 import com.god.b612.entity.Flower;
@@ -39,14 +40,17 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     @Transactional
-    public FlowerResponseDto createFlower(int flowerId, int memberId) {
+    public FlowerResponseDto createFlower(FlowerRequestDto flowerRequestDto) {
 
-        Member member = memberRepository.findMemberByMemberId(memberId);
+        Member member = memberRepository.findMemberByMemberId(flowerRequestDto.getOwnerMemberId());
 
         Flower flower = Flower.builder()
-                .flowerNftId(flowerId)
+                .flowerNftId(flowerRequestDto.getFlowerNftId())
                 .flowerPlanted(false)
                 .flowerOwnerId(member)
+                .createdAt(flowerRequestDto.getCreatedAt())
+                .onSale(flowerRequestDto.isOnSale())
+                .flowerType(flowerRequestDto.getFlowerType())
                 .build();
 
         flowerRepository.save(flower);

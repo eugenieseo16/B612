@@ -29,7 +29,7 @@ public class FlowerController {
     @ApiOperation(value = "꽃 등록(생성)", notes = "유저가 꽃을 뽑을 경우 이함수를 통해 db에 등록됩니다.")
     @PostMapping()
     public ResponseEntity<BaseResponseBody> registFlower(@RequestBody @Valid FlowerRequestDto flowerRequestDto) {
-        FlowerResponseDto flowerResponseDto = flowerService.createFlower(flowerRequestDto.getFlowerNftId(), flowerRequestDto.getOwnerMemberId());
+        FlowerResponseDto flowerResponseDto = flowerService.createFlower(flowerRequestDto);
 
         BaseResponseBody baseResponseBody =
                 BaseResponseBody.builder()

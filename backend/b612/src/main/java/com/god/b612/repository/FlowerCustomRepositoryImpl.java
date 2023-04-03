@@ -23,7 +23,12 @@ public class FlowerCustomRepositoryImpl implements FlowerCustomRepository {
     @Override
     public FlowerResponseDto makeDto(Flower flower) {
         PlantedFlower plantedFlower = plantedFlowerRepository.findPlantedFlowerByFlowerNftId(flower.getFlowerNftId());
-
+        /*
+        this.createdAt=createdAt;
+        this.ownerAddress=ownerAddress;
+        this.flowerType=flowerType;
+        this.onSale=onSale;
+        * */
 
         if (plantedFlower == null) {
             FlowerResponseDto flowerResponseDto = FlowerResponseDto.builder()
@@ -32,6 +37,10 @@ public class FlowerCustomRepositoryImpl implements FlowerCustomRepository {
                     .ownerNickName(flower.getFlowerOwnerId().getMemberNickname())
                     .ownerId(flower.getFlowerOwnerId().getMemberId())
                     .ownerTierName(flower.getFlowerOwnerId().getMemberTierId().getTierName())
+                    .createdAt(flower.getCreatedAt())
+                    .ownerAddress(flower.getFlowerOwnerId().getMemberAddress())
+                    .flowerType(flower.getFlowerType())
+                    .onSale(flower.isOnSale())
                     .build();
 
             return flowerResponseDto;
@@ -45,6 +54,10 @@ public class FlowerCustomRepositoryImpl implements FlowerCustomRepository {
                     .flowerLocationX(plantedFlower.getFlowerLocationX())
                     .flowerLocationY(plantedFlower.getFlowerLocationY())
                     .flowerLocationZ(plantedFlower.getFlowerLocationZ())
+                    .createdAt(flower.getCreatedAt())
+                    .ownerAddress(flower.getFlowerOwnerId().getMemberAddress())
+                    .flowerType(flower.getFlowerType())
+                    .onSale(flower.isOnSale())
                     .build();
 
             return flowerResponseDto;
