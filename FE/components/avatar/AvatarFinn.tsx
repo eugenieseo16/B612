@@ -4,54 +4,30 @@ import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
-import TetrisModal from './TetrisModal';
-import { Modal } from '@mui/material';
 
-// import Modal from '@mui/material/Modal';
-// import { CertificateModal } from '@components/Planet/index';
+import { Modal } from '@mui/material';
+import {
+  TetrisModal,
+  BaobabModal,
+  AppleGameModal,
+} from '@components/square/index';
+import {
+  isInAllowedArea,
+  directionOffset,
+  isTetrisModalArea,
+  isAppleModalArea,
+  isBaobabModalArea,
+} from '@components/avatar/index';
 
 // eslint-disable-next-line prefer-const
+//  걷는 방향을 저장하는 변수
 let walkDirection = new THREE.Vector3();
+// 회전 각도를 저장하는 변수
 let rotateAngle = new THREE.Vector3(0, 1, 0);
+// Quaternion 회전 값을 저장하는 변수
 let rotateQuaternion = new THREE.Quaternion();
+// 카메라의 타겟을 저장하는 변수
 let cameraTarget = new THREE.Vector3();
-
-type DirectionOffsetProps = {
-  forward: boolean;
-  backward: boolean;
-  left: boolean;
-  right: boolean;
-};
-
-const directionOffset = ({
-  forward,
-  backward,
-  left,
-  right,
-}: DirectionOffsetProps) => {
-  var directionOffset = 0; // w
-  if (forward) {
-    if (left) {
-      directionOffset = Math.PI / 4; // w+a
-    } else if (right) {
-      directionOffset = -Math.PI / 4; // w+d
-    }
-  } else if (backward) {
-    if (left) {
-      directionOffset = Math.PI / 4 + Math.PI / 2; // s+a
-    } else if (right) {
-      directionOffset = -Math.PI / 4 - Math.PI / 2; // s+d
-    } else {
-      directionOffset = Math.PI; // s
-    }
-  } else if (left) {
-    directionOffset = Math.PI / 2; // a
-  } else if (right) {
-    directionOffset = -Math.PI / 2; // d
-  }
-
-  return directionOffset;
-};
 
 const AvatarFinn = () => {
   const { forward, backward, left, right, shift } = UseInput();
@@ -131,49 +107,37 @@ const AvatarFinn = () => {
     };
   }, [camera]);
 
-  // 캐릭터가 갈수있는 영역좌표 설정하기
-  const isInAllowedArea = (x: number, z: number): boolean => {
-    if (x < -8 && x >= -23) {
-      if ((z >= 16 && z <= 40) || (z >= -48 && z <= -16)) {
-        return true;
-      }
-    } else if (x >= -8 && x <= 26) {
-      if (z >= -23 && z <= 40) {
-        return true;
-      }
-    } else if (x > 26 && x <= 48) {
-      if (z >= -48 && z <= -17) {
-        return true;
-      }
-    } else if (x > 48 && x < 106) {
-      if (z >= -48 && z <= 40) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  // modal 영역 설정하기 (테트리스)
-  const isTetrisModalArea = (x: number, z: number): boolean => {
-    if (x <= -18 && x >= -23 && z >= -48 && z <= -45) {
-      return true;
-    } else if (x <= 32 && x >= 28 && z >= -42 && z <= -38) {
-      return true;
-      // } else if (x <= -18 && x >= -23 && z >= 16 && z <= 20) {
-      //   return true;
-    }
-    return false;
-  };
-
-  const [showModal, setShowModal] = useState(false);
-  const handleOpen = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
+  const [showTetrisModal, setShowTetrisModal] = useState(false);
+  const handleTetrisOpen = () => setShowTetrisModal(true);
+  const handleTetrisClose = () => setShowTetrisModal(false);
+  const [showAppleModal, setShowAppleModal] = useState(false);
+  const handleAppleOpen = () => setShowAppleModal(true);
+  const handleAppleClose = () => setShowAppleModal(false);
+  const [showBaobabModal, setShowBaobabModal] = useState(false);
+  const handleBaobabOpen = () => setShowBaobabModal(true);
+  const handleBaobabClose = () => setShowBaobabModal(false);
 
   useEffect(() => {
     if (isTetrisModalArea(model.scene.position.x, model.scene.position.z)) {
-      setShowModal(true);
+      setShowTetrisModal(true);
     } else {
-      setShowModal(false);
+      setShowTetrisModal(false);
+    }
+  }, [model.scene.position.x, model.scene.position.z]);
+
+  useEffect(() => {
+    if (isAppleModalArea(model.scene.position.x, model.scene.position.z)) {
+      setShowAppleModal(true);
+    } else {
+      setShowAppleModal(false);
+    }
+  }, [model.scene.position.x, model.scene.position.z]);
+
+  useEffect(() => {
+    if (isBaobabModalArea(model.scene.position.x, model.scene.position.z)) {
+      setShowBaobabModal(true);
+    } else {
+      setShowBaobabModal(false);
     }
   }, [model.scene.position.x, model.scene.position.z]);
 
@@ -232,32 +196,34 @@ const AvatarFinn = () => {
 
   return (
     <>
-      {/* <PerspectiveCamera position={} ref={ref}/> */}
-      {/* <OrbitControls
-        target={[
-          model.scene.position.x,
-          model.scene.position.y,
-          model.scene.position.z,
-        ]}
-        enableDamping={true}
-      /> */}
       <primitive object={model.scene} />;
       <Html>
-        {showModal && (
-          <Modal open={showModal} onClose={handleClose}>
+        {showTetrisModal && (
+          <Modal open={showTetrisModal} onClose={handleTetrisClose}>
             <TetrisModal />
           </Modal>
         )}
       </Html>
-      {/* {showModal && (
-        <Modal open={showModal} onClose={handleClose}>
-          <CertificateModal />
-        </Modal>
-      )} */}
+      <Html>
+        {showAppleModal && (
+          <Modal open={showAppleModal} onClose={handleAppleClose}>
+            <AppleGameModal />
+          </Modal>
+        )}
+      </Html>
+      <Html>
+        {showBaobabModal && (
+          <Modal open={showBaobabModal} onClose={handleBaobabClose}>
+            <BaobabModal />
+          </Modal>
+        )}
+      </Html>
     </>
   );
 };
 
 export default AvatarFinn;
 
-//
+// 3D 모델링을 담당하는 AvatarModel 컴포넌트,
+// 애니메이션을 담당하는 AvatarAnimation 컴포넌트,
+// 사용자 입력 처리를 담당하는 AvatarInput 컴포넌트
