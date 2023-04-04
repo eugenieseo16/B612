@@ -36,7 +36,7 @@ function Flowers() {
   return (
     <>
       {flowersList?.map((data: IFlower) => (
-        <Flower key={data.roseTokenId} data={data} />
+        <Flower key={data.flowerNftId} data={data} />
       ))}
     </>
   );
@@ -45,7 +45,7 @@ function Flowers() {
 export default Flowers;
 
 function Flower({ data }: { data: IFlower }) {
-  const { scene } = useGLTF(FLOWERS_LIST[+data.roseType]);
+  const { scene } = useGLTF(FLOWERS_LIST[+data.flowerType % 10]);
   const clone = SkeletonUtils.clone(scene);
   useEffect(() => {
     clone.traverse(node => (node.castShadow = true));
@@ -66,7 +66,13 @@ function Flower({ data }: { data: IFlower }) {
 
   return (
     // <group position={[(index % 3) * 5 - 4, 0.6, Math.floor(index / 3) * 5 - 5]}>
-    <group position={data?.position ? data?.position : [0, 0, 0]}>
+    <group
+      position={[
+        data.flowerLocationX,
+        data.flowerLocationY,
+        data.flowerLocationZ,
+      ]}
+    >
       <Center top>
         <primitive object={clone} />
       </Center>

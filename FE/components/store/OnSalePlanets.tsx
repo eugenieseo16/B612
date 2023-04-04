@@ -22,19 +22,7 @@ function OnSalePlanets() {
           (Math.PI * 2 * (i - (index % curPlanetsLength))) / curPlanetsLength;
         if (i > curPlanetsLength - 1) return;
 
-        return (
-          <Planet key={i} data={onSalePlanets[i + page * 5]} deg={deg} />
-          // <motion.mesh
-          //   key={i}
-          //   animate={{ x: 10 * Math.sin(deg), z: 10 * Math.cos(deg) - 8 }}
-          //   transition={{ duration: 0.4, ease: 'linear' }}
-          // >
-          //   <sphereGeometry />
-          //   <meshStandardMaterial
-          //     color={`#${planet.planetColor.slice(0, 6)}`}
-          //   />
-          // </motion.mesh>
-        );
+        return <Planet key={i} data={onSalePlanets[i + page * 5]} deg={deg} />;
       })}
     </>
   );

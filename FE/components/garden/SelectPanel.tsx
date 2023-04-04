@@ -1,4 +1,6 @@
 import { Center } from '@react-three/drei';
+import { apiBaseUrl } from 'API/apiURLs';
+import axios from 'axios';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import gardenIndexAtom from 'store/garden/gardenIndexAtom';
@@ -17,10 +19,21 @@ function SelectPanel() {
     if (selectedFlower)
       setPlantedFlowers([
         ...plantedFlowers,
-        { ...selectedFlower, position: pos },
+        {
+          ...selectedFlower,
+          flowerLocationX: pos[0],
+          flowerLocationY: pos[1],
+          flowerLocationZ: pos[2],
+        },
       ]);
     setGardenIndex(-1);
     setSelectedFlower(null);
+    axios.post(`${apiBaseUrl}/flower/plant`, {
+      flowerId: selectedFlower?.flowerNftId,
+      x: pos[0],
+      y: pos[1],
+      z: pos[2],
+    });
     console.log(pos);
     console.log(pos);
   };
