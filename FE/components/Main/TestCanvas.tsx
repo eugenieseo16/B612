@@ -15,21 +15,17 @@ import styled from '@emotion/styled';
 
 const vec = new Vector3();
 
-function Rig() {
-  return useFrame(({ camera, mouse }) => {
-    vec.set(mouse.x * 2, mouse.y * 2, camera.position.z);
-    camera.position.lerp(vec, 0.005);
-    camera.lookAt(0, 0, 0);
-  });
-}
-
 function Square(props: any) {
-  const { scene } = useGLTF('/planet/square_preview.glb');
+  const { scene } = useGLTF(
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680596386/square.glb'
+  );
   return <primitive object={scene} {...props} />;
 }
 
 function Rocket(props: any) {
-  const { scene } = useGLTF('/rocket/rocket.glb');
+  const { scene } = useGLTF(
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680596386/rocket.glb'
+  );
   return <primitive object={scene} {...props} />;
 }
 
@@ -37,7 +33,7 @@ function Planet(props: any) {
   // 내 행성 랜덤 id 가져오기
   const user = useRecoilValue(userAtom);
   const myRandomPlanetId = useMyRandomPlanetAPI(
-    user?.memberId === undefined ? 11 : user?.memberId
+    user?.memberId === undefined ? -1 : user?.memberId
   );
 
   const planetContract = usePlanetContract();
@@ -67,7 +63,7 @@ function Planet(props: any) {
   bbox.getCenter(center);
   bbox.getSize(size);
   clone.position.copy(center).multiplyScalar(-1);
-  clone.position.y -= size.y * 4.5;
+  clone.position.y -= size.y * 0.5;
 
   return <primitive object={clone} {...props} />;
 }
@@ -83,7 +79,7 @@ export default function App() {
 
   // 나의 랜덤 행성 id
   const myRandomPlanetId = useMyRandomPlanetAPI(
-    user?.memberId === undefined ? 11 : user?.memberId
+    user?.memberId === undefined ? -1 : user?.memberId
   );
 
   return (
@@ -117,7 +113,6 @@ export default function App() {
         position={[5.5, 1.5, 0]}
         onClick={() => router.push(`/planet/${myRandomPlanetId}`)}
       />
-      <Rig />
     </Canvas>
   );
 }

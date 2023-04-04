@@ -34,6 +34,9 @@ const Modal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   .friend {
     display: flex;
     margin-top: 2rem;
@@ -45,6 +48,18 @@ const Modal = styled.div`
       margin-right: 2rem;
     }
   }
+`;
+
+const StrangerItem = styled.div`
+  border-bottom: solid 1px gray;
+  padding-bottom: 2rem;
+
+  display: flex;
+  justify-content: space-between;
+`;
+const ProfileItem = styled.div`
+  border-bottom: solid 1px gray;
+  padding-bottom: 2rem;
 `;
 
 const MemberDetail = styled.div`
@@ -73,9 +88,7 @@ const FriendsModal = memo(function SomComponent() {
       friendRequestMemberId: user?.memberId,
       friendResponseMemberId,
     });
-    console.log(data);
   };
-  console.log(unresponse);
 
   return (
     <Modal>
@@ -105,13 +118,18 @@ const FriendsModal = memo(function SomComponent() {
       {searchResults?.responseData?.map((friend: IUser) => {
         if (ff[friend.memberId] === 'friend' || !search) return;
         return (
-          <div
+          <StrangerItem
             key={friend.memberId}
             className="friend"
             onClick={() => router.push(`/profile/${friend.memberId}`)}
           >
-            <img src={friend.memberImage} alt="" />
-            <div>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <img src={friend.memberImage} alt="" />
               <div>
                 <h3>{friend.memberNickname}</h3>
                 <MemberDetail>
@@ -128,6 +146,8 @@ const FriendsModal = memo(function SomComponent() {
                   />
                 </MemberDetail>
               </div>
+            </div>
+            <div>
               {ff[friend.memberId] === 'not' ? (
                 <Button
                   color="success"
@@ -146,21 +166,21 @@ const FriendsModal = memo(function SomComponent() {
                 </Button>
               )}
             </div>
-            <Divider />
-          </div>
+            {/* <Divider /> */}
+          </StrangerItem>
         );
       })}
       {/* 친구 목록 */}
-      <h2 style={{ padding: '3rem 0 2rem 0 ' }}>여기부턴 이미 찡꾸찡꾸👅👅</h2>
+      <h2 style={{ marginTop: '2rem' }}>친구 목록</h2>
       {data?.responseData?.map((friend: IUser) => (
-        <div
+        <ProfileItem
           key={friend.memberId}
           className="friend"
           onClick={() => router.push(`/profile/${friend.memberId}`)}
         >
           <img src={friend.memberImage} alt="" />
           <div>
-            <h2>{friend.memberNickname}</h2>
+            <h3>{friend.memberNickname}</h3>
             <MemberDetail>
               <h6>{friend.memberTierName}</h6>
               <img
@@ -171,8 +191,7 @@ const FriendsModal = memo(function SomComponent() {
               />
             </MemberDetail>
           </div>
-          <Divider />
-        </div>
+        </ProfileItem>
       ))}
     </Modal>
   );

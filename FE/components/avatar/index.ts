@@ -5,6 +5,7 @@ import {
   isAppleModalArea,
   isBaobabModalArea,
 } from '@components/avatar/AvatarMovement';
+import AvatarPosition from './AvatarPosition';
 
 export {
   isInAllowedArea,
@@ -12,4 +13,5 @@ export {
   isTetrisModalArea,
   isAppleModalArea,
   isBaobabModalArea,
+  AvatarPosition,
 };
