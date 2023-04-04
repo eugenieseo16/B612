@@ -73,6 +73,9 @@ public class FlowerCustomRepositoryImpl implements FlowerCustomRepository {
                 .flowerNftId(flowerId)
                 .flowerOwnerId(flower.getFlowerOwnerId())
                 .flowerPlanted(true)
+                .createdAt(flower.getCreatedAt())
+                .onSale(flower.isOnSale())
+                .flowerType(flower.getFlowerType())
                 .build();
 
         flowerRepository.save(flower);
@@ -92,6 +95,9 @@ public class FlowerCustomRepositoryImpl implements FlowerCustomRepository {
                 .ownerNickName(flower.getFlowerOwnerId().getMemberNickname())
                 .ownerId(flower.getFlowerOwnerId().getMemberId())
                 .ownerTierName(flower.getFlowerOwnerId().getMemberTierId().getTierName())
+                .ownerAddress(flower.getFlowerOwnerId().getMemberAddress())
+                .flowerType(flower.getFlowerType())
+                .onSale(flower.isOnSale())
                 .flowerLocationX(x)
                 .flowerLocationY(y)
                 .flowerLocationZ(z)
