@@ -3,10 +3,12 @@ import userAtom from 'store/userAtom';
 import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
 import { usePlanetContract } from './contracts/planetToken';
+import { useFlowerContract } from './contracts/roseToken';
 
 function UserController() {
   const setUser = useSetRecoilState(userAtom);
   const planetContract = usePlanetContract();
+  const flowerContract = useFlowerContract();
   useEffect(() => {
     // eslint-disable-next-line
     const handleAccount = async () => {
@@ -45,6 +47,32 @@ function UserController() {
         10 ** -18
       ).toFixed(4);
 
+      const chainData: any[] = await flowerContract?.methods
+        .getRoseTokens(memberAddress)
+        .call();
+      const {
+        data: { responseData: allFlowers },
+      } = await axios.get(
+        `https://j8a208.p.ssafy.io/api/member/${data.responseData.memberId}/flowers`
+      );
+      const allFlowersMap = allFlowers?.map(
+        (flower: any) => flower.flowerNftId
+      );
+
+      const filteredData = chainData?.filter(
+        flower => !allFlowersMap?.includes(+flower.roseTokenId)
+      );
+
+      filteredData?.forEach(flower => {
+        axios.post('https://j8a208.p.ssafy.io/api/flower', {
+          createdAt: flower.createdAt,
+          flowerNftId: flower.roseTokenId,
+          flowerType: +flower.roseType,
+          onSale: flower.onSale,
+          ownerMemberId: data.responseData.memberId,
+        });
+      });
+
       setUser({ ...data.responseData, planets, isApproved, eth: +eth });
     };
 
@@ -55,7 +83,7 @@ function UserController() {
       window.ethereum?.removeListener('accountsChanged', handleAccount);
       window.ethereum?.removeListener('chainChanged', handleAccount);
     };
-  }, [planetContract, setUser]);
+  }, [planetContract, flowerContract, setUser]);
   console.log('USER CONTROLLER');
   return <></>;
 }
