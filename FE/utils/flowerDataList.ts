@@ -12,3 +12,17 @@ export const FLOWERS_LIST = [
   'https://res.cloudinary.com/dohkkln9r/image/upload/v1680591019/box_tree.glb',
   'https://res.cloudinary.com/dohkkln9r/image/upload/v1680591020/bouquet.glb',
 ];
+export const FLOWERS_NAMES = [
+  '반짝꽃',
+  '그냥나무',
+  '꽃',
+  '디그다',
+  '야자수',
+  '달콤꽃',
+  '행복꽃',
+  '노래꽃',
+  '그냥나무',
+  '핑크나무',
+  '네모나무',
+  '장미',
+];

@@ -1,17 +1,18 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import GlowingButton from '@components/common/GlowingButton';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import gardenIndexAtom from 'store/garden/gardenIndexAtom';
 
 function GardenNav() {
-  const setGardenIndex = useSetRecoilState(gardenIndexAtom);
+  const [gardenIndex, setGardenIndex] = useRecoilState(gardenIndexAtom);
+
   return (
     <FloatingButtons>
       <GlowingButton
+        selected={gardenIndex === 0}
         onClick={() => setGardenIndex(0)}
         icon="item"
-        bgColor="#000"
       />
     </FloatingButtons>
   );

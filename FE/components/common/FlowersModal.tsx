@@ -18,6 +18,7 @@ import {
 import selectedFlowerAtom from 'store/garden/selectedFlowerAtom';
 import gardenIndexAtom from 'store/garden/gardenIndexAtom';
 import { useMyInventory } from 'API/flowerAPIs';
+import { FLOWERS_NAMES } from 'utils/flowerDataList';
 
 // HTMLDivElement, HTMLMotionProps<'div'>;
 // const MY_FLOWERS = [0, 1, 2, 1, 1, 1, 1];
@@ -35,19 +36,22 @@ function FlowersModal({ user }: { user: IUser | null }) {
   return (
     <Container
       style={{
-        gridTemplateColumns: inventory.length > 0 ? '35% 65%' : '100%',
+        gridTemplateColumns: inventory?.length > 0 ? '35% 65%' : '100%',
       }}
     >
       <Button
         color="error"
         variant="contained"
-        style={{ position: 'absolute' }}
-        onClick={() => setGardenIndex(-1)}
+        style={{ position: 'absolute', zIndex: 999 }}
+        onClick={() => {
+          setGardenIndex(-1);
+          setSelected(null);
+        }}
       >
         <span style={{ color: '#fff' }}>닫기</span>
       </Button>
 
-      {inventory.length <= 0 ? (
+      {inventory?.length <= 0 ? (
         <h1 style={{ alignSelf: 'center', textAlign: 'center' }}>
           심을 수 있는 꽃이 없습니다
         </h1>
@@ -56,13 +60,13 @@ function FlowersModal({ user }: { user: IUser | null }) {
           <div
             style={{
               overflowY: 'scroll',
-              padding: '0 1rem 0 0',
+              padding: '3rem 1rem 0 0',
               display: 'flex',
               flexDirection: 'column',
               gap: '1.5rem',
             }}
           >
-            {inventory.map((flower: IFlower) => (
+            {inventory?.map((flower: IFlower) => (
               <motion.div
                 animate={{
                   boxShadow: simpleShadow,
@@ -75,14 +79,15 @@ function FlowersModal({ user }: { user: IUser | null }) {
                 <FlowerImgContainer>
                   <img src={FLOWER_IMG[1].src} alt="" />
                   <div>
-                    <h6>꽃 종류 입니다아아아 #{flower.flowerType}</h6>
+                    <h6>#{FLOWERS_NAMES[flower.flowerType % 12]}</h6>
                     <div>
                       <Button
-                        onClick={() => setGardenIndex(1)}
+                        onClick={() => setGardenIndex(-1)}
                         variant="contained"
+                        color="success"
                         disabled={flower.flowerNftId !== selected?.flowerNftId}
                       >
-                        <span>심기</span>
+                        <span style={{ color: '#fff' }}>심기</span>
                       </Button>
                     </div>
                   </div>

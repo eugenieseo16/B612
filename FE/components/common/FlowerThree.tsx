@@ -29,10 +29,10 @@ function FlowerThree() {
       />
       <Environment background files={'/sky.hdr'} />
 
-      <mesh receiveShadow rotation={[degToRad(-90), 0, 0]}>
+      {/* <mesh receiveShadow rotation={[degToRad(-90), 0, 0]}>
         <planeGeometry args={[10, 10]} />
         <meshNormalMaterial />
-      </mesh>
+      </mesh> */}
 
       {flower && <Flower />}
     </>

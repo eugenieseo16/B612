@@ -1,83 +1,78 @@
-import { Center, CycleRaycast, useCursor, useTrail } from '@react-three/drei';
-import { apiBaseUrl } from 'API/apiURLs';
-import axios from 'axios';
-import { useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import gardenIndexAtom from 'store/garden/gardenIndexAtom';
-import plantedFlowersAtom from 'store/garden/plantedFlowersAtom';
+import { Center, useGLTF } from '@react-three/drei';
+import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
+import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import selectedFlowerAtom from 'store/garden/selectedFlowerAtom';
-import { Vector3 } from 'three';
+import { Box3, Vector3 } from 'three';
 import { degToRad } from 'three/src/math/MathUtils';
+import { FLOWERS_LIST } from 'utils/flowerDataList';
+import { colors } from 'styles/colors';
+import plantButtonAtom from 'store/garden/plantButtonAtom';
+import { motion } from 'framer-motion-3d';
+import positionAtom from 'store/garden/positionAtom';
 
 function SelectPanel() {
-  const [test, setTest] = useState<Vector3>(new Vector3());
-  const [gardenIndex, setGardenIndex] = useRecoilState(gardenIndexAtom);
-  const [selectedFlower, setSelectedFlower] =
-    useRecoilState(selectedFlowerAtom);
-  const [plantedFlowers, setPlantedFlowers] =
-    useRecoilState(plantedFlowersAtom);
+  const [position, setPosition] = useRecoilState(positionAtom);
+  const selectedFlower = useRecoilValue(selectedFlowerAtom);
 
-  const handleClick = (pos: [number, number, number]) => () => {
-    if (selectedFlower)
-      setPlantedFlowers([
-        ...plantedFlowers,
-        {
-          ...selectedFlower,
-          flowerLocationX: pos[0],
-          flowerLocationY: pos[1],
-          flowerLocationZ: pos[2],
-        },
-      ]);
-    setGardenIndex(-1);
-    setSelectedFlower(null);
-    axios.post(`${apiBaseUrl}/flower/plant`, {
-      flowerId: selectedFlower?.flowerNftId,
-      x: pos[0],
-      y: pos[1],
-      z: pos[2],
-    });
-    console.log(pos);
-    console.log(pos);
-  };
-  console.log(test);
+  const [{ hold }, setShow] = useRecoilState(plantButtonAtom);
+
   return (
     <>
-      {gardenIndex === 1
-        ? [0, 1, 2, 3, 4, 5, 6, 7, 8].map((el, i: number) => {
-            const pos: [number, number, number] = [
-              (i % 3) * 5 - 4,
-              1,
-              Math.floor(i / 3) * 5 - 5,
-            ];
-
-            return (
-              <Center
-                onClick={handleClick(pos)}
-                key={i}
-                rotation={[degToRad(-90), 0, 0]}
-                position={pos}
-              >
-                <mesh>
-                  <planeGeometry />
-                  <meshNormalMaterial />
-                </mesh>
-              </Center>
-            );
-          })
-        : null}
-      <mesh
-        position={[0, 3, 0]}
-        rotation={[degToRad(-90), 0, 0]}
-        onPointerMove={e => setTest(e.point)}
-      >
-        <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial color={'red'} />
-      </mesh>
-      <mesh position={test}>
-        <boxGeometry />
-      </mesh>
+      {selectedFlower && hold ? (
+        <mesh
+          position={[0, 0, 2]}
+          rotation={[degToRad(-90), 0, 0]}
+          onPointerMove={e => setPosition(e.point)}
+          onPointerUp={() => setShow({ show: true, hold: false })}
+        >
+          <planeGeometry args={[22, 22]} />
+          <meshPhongMaterial color={colors.blue} opacity={0.2} transparent />
+        </mesh>
+      ) : null}
+      {selectedFlower && (
+        <SelectedPreview pos={position} data={selectedFlower} />
+      )}
     </>
   );
 }
 
 export default SelectPanel;
+
+function SelectedPreview({ data, pos }: { data: IFlower; pos: Vector3 }) {
+  const [mousePos, setMousePos] = useState();
+  const [{ show }, setHold] = useRecoilState(plantButtonAtom);
+  const { scene } = useGLTF(FLOWERS_LIST[+data.flowerType % 12]);
+  const clone = SkeletonUtils.clone(scene);
+  useEffect(() => {
+    clone.traverse(node => (node.castShadow = true));
+  }, [clone]);
+
+  //3D 모델링 리사이즈
+  const bbox = new Box3().setFromObject(clone);
+  const center = bbox.getCenter(new Vector3());
+  const size = bbox.getSize(new Vector3());
+
+  const maxAxis = Math.max(size.x, size.y, size.z);
+  clone.scale.multiplyScalar(5 / maxAxis);
+  bbox.setFromObject(clone);
+  bbox.getCenter(center);
+  bbox.getSize(size);
+  clone.position.copy(center).multiplyScalar(-1);
+  // clone.position.y += size.y * 0.5;
+
+  return (
+    // <group position={[(index % 3) * 5 - 4, 0.6, Math.floor(index / 3) * 5 - 5]}>
+    <motion.group
+      position={pos}
+      onPointerDown={e => {
+        console.log(e);
+        setHold({ show, hold: true });
+      }}
+    >
+      <Center top>
+        <primitive object={clone} />
+      </Center>
+    </motion.group>
+  );
+}

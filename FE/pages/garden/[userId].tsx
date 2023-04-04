@@ -2,7 +2,7 @@ import Flowers from '@components/garden/Flowers';
 import Garden from '@components/garden/Garden';
 import GardenNav from '@components/garden/GardenNav';
 import { Canvas } from '@react-three/fiber';
-import { useFlowersById, useUserById } from 'API/memberAPIs';
+import { useUserById } from 'API/memberAPIs';
 import { MotionCanvas } from 'framer-motion-3d';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -16,8 +16,10 @@ import userAtom from 'store/userAtom';
 import Modal from '@mui/material/Modal';
 import gardenIndexAtom from 'store/garden/gardenIndexAtom';
 import FlowersModal from '@components/common/FlowersModal';
-import { useMyInventory, usePlantedFlowers } from 'API/flowerAPIs';
+import { usePlantedFlowers } from 'API/flowerAPIs';
 import plantedFlowersAtom from 'store/garden/plantedFlowersAtom';
+import SelectPanel from '@components/garden/SelectPanel';
+import PlantButtons from '@components/garden/PlantButtons';
 
 function GardenPage() {
   const { query } = useRouter();
@@ -26,15 +28,13 @@ function GardenPage() {
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
   const [gardenIndex, setGardenIndex] = useRecoilState(gardenIndexAtom);
   const isMe = me?.memberId === user?.memberId;
-  const inventory = useMyInventory(me?.memberId);
   const plantedFlowers = usePlantedFlowers(user?.memberId);
   const setPlantedFlowers = useSetRecoilState(plantedFlowersAtom);
+
   useEffect(() => {
     if (plantedFlowers) setPlantedFlowers(plantedFlowers);
     else setPlantedFlowers([]);
-  }, [plantedFlowers]);
-  console.log('인벤토리', inventory);
-  console.log('심어진 꽃', plantedFlowers);
+  }, [plantedFlowers, setPlantedFlowers]);
 
   return (
     <div style={{ height: '100vh' }}>
@@ -53,9 +53,11 @@ function GardenPage() {
           >
             <FlowersModal user={user} />
           </Modal>
+          <PlantButtons />
         </>
       )}
-      <MotionCanvas
+
+      <Canvas
         shadows
         style={{
           width: '100%',
@@ -65,10 +67,8 @@ function GardenPage() {
         <RecoilBridge>
           <Garden />
           <Flowers />
+          <SelectPanel />
         </RecoilBridge>
-      </MotionCanvas>
-      <Canvas style={{ display: 'none' }}>
-        <mesh></mesh>
       </Canvas>
     </div>
   );
