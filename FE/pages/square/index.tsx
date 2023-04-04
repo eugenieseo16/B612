@@ -21,11 +21,10 @@ const SquareContainer = styled.div`
 
 const ChattingContainer = styled.div`
   position: absolute;
-  top: 10%;
+  bottom: 0px;
   padding: 1rem;
   border-radius: 1rem;
-  width: 20%;
-  height: 30%;
+  width: 25%;
 `;
 
 function Square() {
