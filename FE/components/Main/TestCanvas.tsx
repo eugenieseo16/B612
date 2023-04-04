@@ -37,7 +37,7 @@ function Planet(props: any) {
   // 내 행성 랜덤 id 가져오기
   const user = useRecoilValue(userAtom);
   const myRandomPlanetId = useMyRandomPlanetAPI(
-    user?.memberId === undefined ? 11 : user?.memberId
+    user?.memberId === undefined ? -1 : user?.memberId
   );
 
   const planetContract = usePlanetContract();
@@ -67,7 +67,7 @@ function Planet(props: any) {
   bbox.getCenter(center);
   bbox.getSize(size);
   clone.position.copy(center).multiplyScalar(-1);
-  clone.position.y -= size.y * 4.5;
+  clone.position.y -= size.y * 0.5;
 
   return <primitive object={clone} {...props} />;
 }
@@ -83,7 +83,7 @@ export default function App() {
 
   // 나의 랜덤 행성 id
   const myRandomPlanetId = useMyRandomPlanetAPI(
-    user?.memberId === undefined ? 11 : user?.memberId
+    user?.memberId === undefined ? -1 : user?.memberId
   );
 
   return (
