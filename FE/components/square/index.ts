@@ -5,7 +5,7 @@ import TetrisModal from '@components/square/TetrisModal';
 import { AppleTreeModel } from '@components/square/Appletree';
 import AvatarFinn from '@components/avatar/AvatarFinn';
 import Tetris2 from '@components/square/Tetris2';
-import Chatting from './Chatting';
+import ChatBox from '@components/chatting/ChatBox';
 import BaobabModal from './BaobabModal';
 import Baobab from './Baobab';
 import AppleGameModal from './AppleGameModal';
@@ -17,7 +17,7 @@ export {
   AppleTreeModel,
   AvatarFinn,
   Tetris2,
-  Chatting,
+  ChatBox,
   BaobabModal,
   Baobab,
   AppleGameModal,

@@ -16,7 +16,7 @@ import {
   LargeChatOutlinedIcon,
 } from './index';
 
-const Chat: React.FC = () => {
+const ChatBox: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [messageInput, setMessageInput] = useState<string>('');
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -148,4 +148,4 @@ const Chat: React.FC = () => {
     </div>
   );
 };
-export default Chat;
+export default ChatBox;
