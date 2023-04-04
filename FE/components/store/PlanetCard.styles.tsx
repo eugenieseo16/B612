@@ -10,12 +10,7 @@ export const PlanetDetail = styled.div`
   box-shadow: 0px 0px 15px 7px #aec5ff;
   border-radius: 2rem;
   min-width: 25rem;
-  .planet-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
+
   .planet-price {
     display: flex;
     align-items: center;
@@ -25,10 +20,6 @@ export const PlanetDetail = styled.div`
       height: 2rem;
       border-radius: 50%;
     }
-  }
-  .meta-data {
-    display: flex;
-    justify-content: space-between;
   }
 
   @media (max-width: 500px) {
@@ -46,14 +37,26 @@ export const PlanetDetail = styled.div`
         font-size: 1rem;
       }
     }
-    .meta-data {
-      padding: 0.5rem;
-      p {
-        font-size: 0.8rem;
-      }
-      button {
-        display: none;
-      }
+  }
+`;
+
+export const PlanetInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+`;
+
+export const MetaData = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: 500px) {
+    padding: 0.5rem;
+    p {
+      font-size: 0.8rem;
+    }
+    button {
+      display: none;
     }
   }
 `;

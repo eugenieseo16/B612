@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Box3, Vector3 } from 'three';
-import { Stats, Environment, Center, useGLTF } from '@react-three/drei';
+import { Environment, Center, useGLTF } from '@react-three/drei';
 import { useEffect, useState } from 'react';
 import { usePlanetContract } from '@components/contracts/planetToken';
 import { useMyRandomPlanetAPI, useRandomUserAPI } from 'API/planetAPIs';
@@ -8,7 +8,7 @@ import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 import { PLANETS_LIST } from 'utils/utils';
 import { SkeletonUtils } from 'three-stdlib';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 // import Button from './Button'
 
@@ -35,7 +35,9 @@ function Rocket(props: any) {
 function Planet(props: any) {
   // 내 행성 랜덤 id 가져오기
   const user = useRecoilValue(userAtom);
-  const myRandomPlanetId = useMyRandomPlanetAPI(user?.memberId);
+  const myRandomPlanetId = useMyRandomPlanetAPI(
+    user?.memberId === undefined ? 11 : user?.memberId
+  );
 
   const planetContract = usePlanetContract();
   const [planetDetail, setPlanetDetail] = useState(null);
@@ -74,18 +76,19 @@ export default function App() {
   const user = useRecoilValue(userAtom);
 
   // 랜덤 프로필 id
-  const randomUserId = useRandomUserAPI(user?.memberId);
+  const randomUserId = useRandomUserAPI(
+    user?.memberId === undefined ? -1 : user?.memberId
+  );
 
   // 나의 랜덤 행성 id
-  const myRandomPlanetId = useMyRandomPlanetAPI(user?.memberId);
+  const myRandomPlanetId = useMyRandomPlanetAPI(
+    user?.memberId === undefined ? 11 : user?.memberId
+  );
 
   return (
-    <Canvas camera={{ position: [0, 0, 5] }}>
+    <Canvas camera={{ position: [0, 0, 5] }} style={{ position: 'fixed' }}>
       <Environment preset="sunset" />
       <Center>
-        {/* {[...Array(5).keys()].map((x) =>
-          [...Array(3).keys()].map((y) => <Button key={x + y * 5} position={[x * 2.5, y * 2.5, 0]} />)
-        )} */}
         <Square
           scale={[0.03, 0.03, 0.03]}
           position={[2, -1, 0]}
@@ -102,7 +105,6 @@ export default function App() {
         />
       </Center>
       <Rig />
-      <Stats />
     </Canvas>
   );
 }
