@@ -30,59 +30,82 @@ function FlowersModal({ user }: { user: IUser | null }) {
   const setGardenIndex = useSetRecoilState(gardenIndexAtom);
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
+  console.log(inventory);
+
   return (
-    <Container>
-      <div
-        style={{
-          overflowY: 'scroll',
-          padding: '0 1rem 0 0',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.5rem',
-        }}
+    <Container
+      style={{
+        gridTemplateColumns: inventory.length > 0 ? '35% 65%' : '100%',
+      }}
+    >
+      <Button
+        color="error"
+        variant="contained"
+        style={{ position: 'absolute' }}
+        onClick={() => setGardenIndex(-1)}
       >
-        {inventory.map((flower: IFlower) => (
-          <motion.div
-            animate={{
-              boxShadow: simpleShadow,
-              opacity:
-                flower.flowerNftId === selected?.flowerNftId ? '1' : '0.6',
+        <span style={{ color: '#fff' }}>닫기</span>
+      </Button>
+
+      {inventory.length <= 0 ? (
+        <h1 style={{ alignSelf: 'center', textAlign: 'center' }}>
+          심을 수 있는 꽃이 없습니다
+        </h1>
+      ) : (
+        <>
+          <div
+            style={{
+              overflowY: 'scroll',
+              padding: '0 1rem 0 0',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.5rem',
             }}
-            onClick={() => setSelected(flower)}
-            key={flower.flowerNftId}
           >
-            <FlowerImgContainer>
-              <img src={FLOWER_IMG[1].src} alt="" />
-              <div>
-                <h6>꽃 종류 입니다아아아 #{flower.flowerType}</h6>
-                <div>
-                  <Button
-                    onClick={() => setGardenIndex(1)}
-                    variant="contained"
-                    disabled={flower.flowerNftId !== selected?.flowerNftId}
-                  >
-                    <span>심기</span>
-                  </Button>
-                </div>
-              </div>
-            </FlowerImgContainer>
-          </motion.div>
-        ))}
-      </div>
-      <CenterBox style={{ paddingLeft: '1rem' }}>
-        <Canvas
-          shadows
-          style={{
-            width: '100%',
-            height: '100%',
-            borderRadius: '1rem',
-          }}
-        >
-          <RecoilBridge>
-            <FlowerThree />
-          </RecoilBridge>
-        </Canvas>
-      </CenterBox>
+            {inventory.map((flower: IFlower) => (
+              <motion.div
+                animate={{
+                  boxShadow: simpleShadow,
+                  opacity:
+                    flower.flowerNftId === selected?.flowerNftId ? '1' : '0.6',
+                }}
+                onClick={() => setSelected(flower)}
+                key={flower.flowerNftId}
+              >
+                <FlowerImgContainer>
+                  <img src={FLOWER_IMG[1].src} alt="" />
+                  <div>
+                    <h6>꽃 종류 입니다아아아 #{flower.flowerType}</h6>
+                    <div>
+                      <Button
+                        onClick={() => setGardenIndex(1)}
+                        variant="contained"
+                        disabled={flower.flowerNftId !== selected?.flowerNftId}
+                      >
+                        <span>심기</span>
+                      </Button>
+                    </div>
+                  </div>
+                </FlowerImgContainer>
+              </motion.div>
+            ))}
+          </div>
+          <CenterBox style={{ paddingLeft: '1rem' }}>
+            <Canvas
+              shadows
+              style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: '1rem',
+              }}
+            >
+              <RecoilBridge>
+                <FlowerThree />
+              </RecoilBridge>
+            </Canvas>
+          </CenterBox>
+        </>
+      )}
     </Container>
   );
 }
@@ -92,8 +115,8 @@ export default FlowersModal;
 const Container = styled.div`
   padding: 1rem;
   background-color: ${rgba(colors.purple, 0.7)};
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   border-radius: 8px;
   box-shadow: ${shadowGenerator(colors.purple)};
   border: 4px solid white;

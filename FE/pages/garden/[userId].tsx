@@ -42,7 +42,15 @@ function GardenPage() {
       {isMe && (
         <>
           <GardenNav />
-          <Modal open={gardenIndex === 0} onClose={() => setGardenIndex(-1)}>
+          <Modal
+            open={gardenIndex === 0}
+            onClose={() => setGardenIndex(-1)}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <FlowersModal user={user} />
           </Modal>
         </>

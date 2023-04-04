@@ -1,14 +1,16 @@
-import { Center } from '@react-three/drei';
+import { Center, CycleRaycast, useCursor, useTrail } from '@react-three/drei';
 import { apiBaseUrl } from 'API/apiURLs';
 import axios from 'axios';
-import React from 'react';
+import { useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import gardenIndexAtom from 'store/garden/gardenIndexAtom';
 import plantedFlowersAtom from 'store/garden/plantedFlowersAtom';
 import selectedFlowerAtom from 'store/garden/selectedFlowerAtom';
+import { Vector3 } from 'three';
 import { degToRad } from 'three/src/math/MathUtils';
 
 function SelectPanel() {
+  const [test, setTest] = useState<Vector3>(new Vector3());
   const [gardenIndex, setGardenIndex] = useRecoilState(gardenIndexAtom);
   const [selectedFlower, setSelectedFlower] =
     useRecoilState(selectedFlowerAtom);
@@ -37,7 +39,7 @@ function SelectPanel() {
     console.log(pos);
     console.log(pos);
   };
-
+  console.log(test);
   return (
     <>
       {gardenIndex === 1
@@ -63,6 +65,17 @@ function SelectPanel() {
             );
           })
         : null}
+      <mesh
+        position={[0, 3, 0]}
+        rotation={[degToRad(-90), 0, 0]}
+        onPointerMove={e => setTest(e.point)}
+      >
+        <planeGeometry args={[100, 100]} />
+        <meshStandardMaterial color={'red'} />
+      </mesh>
+      <mesh position={test}>
+        <boxGeometry />
+      </mesh>
     </>
   );
 }

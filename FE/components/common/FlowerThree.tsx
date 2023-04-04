@@ -44,7 +44,9 @@ export default FlowerThree;
 function Flower() {
   const flower = useRecoilValue(selectedFlowerAtom);
 
-  const { scene } = useGLTF(FLOWERS_LIST[1]);
+  const { scene } = useGLTF(
+    FLOWERS_LIST[flower?.flowerType ? flower?.flowerType % 12 : 0]
+  );
 
   const bbox = new Box3().setFromObject(scene);
   const center = bbox.getCenter(new Vector3());

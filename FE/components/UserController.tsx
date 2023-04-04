@@ -50,6 +50,8 @@ function UserController() {
       const chainData: any[] = await flowerContract?.methods
         .getRoseTokens(memberAddress)
         .call();
+
+      console.log('채인데이터', chainData);
       const {
         data: { responseData: allFlowers },
       } = await axios.get(
