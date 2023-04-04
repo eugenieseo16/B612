@@ -41,10 +41,11 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findMemberByMemberAddress(memberAddress);
 
         if (member == null) {
+            String[] tmp = memberCustomRepository.makeRandomNickName();
             member = Member.builder()
                     .memberAddress(memberAddress)
-                    .memberNickname(memberCustomRepository.makeRandomNickName())
-                    .memberImage(null)
+                    .memberNickname(tmp[0])
+                    .memberImage(tmp[1])
                     .memberTierId(tierRepository.findTierByTierId(1))
                     .memberCurrentScore(0)
                     .memberHighestScore(0)

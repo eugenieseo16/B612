@@ -299,16 +299,23 @@ public class PlanetServiceImpl implements PlanetService {
     @Override
     public PlanetResponseDto randomMyPlanet(int memberId){
         Member me=memberRepository.findMemberByMemberId(memberId);
+
+
         if(me==null){
-            return null;
+            List<Planet> planets= planetRepository.randomPlanet();
+            Planet planet=planets.get(0);
+            return planetCustomRepository.makeDto(planet);
         }
+
         List<Planet> planets= planetRepository.findAllByPlanetMemberId(me);
+
+
         int n=planets.size();
 
         if(n==0){
-            return PlanetResponseDto.builder()
-                    .memberId(0)
-                    .build();
+            planets= planetRepository.randomPlanet();
+            Planet planet=planets.get(0);
+            return planetCustomRepository.makeDto(planet);
         }
 
 

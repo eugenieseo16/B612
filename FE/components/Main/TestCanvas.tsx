@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Box3, Vector3 } from 'three';
-import { Environment, Center, useGLTF } from '@react-three/drei';
+import { Html, Environment, Center, useGLTF } from '@react-three/drei';
 import { useEffect, useState } from 'react';
 import { usePlanetContract } from '@components/contracts/planetToken';
 import { useMyRandomPlanetAPI, useRandomUserAPI } from 'API/planetAPIs';
@@ -9,6 +9,7 @@ import userAtom from 'store/userAtom';
 import { PLANETS_LIST } from 'utils/utils';
 import { SkeletonUtils } from 'three-stdlib';
 import { useRouter } from 'next/router';
+import styled from '@emotion/styled';
 
 // import Button from './Button'
 
@@ -61,12 +62,12 @@ function Planet(props: any) {
   const size = bbox.getSize(new Vector3());
 
   const maxAxis = Math.max(size.x, size.y, size.z);
-  clone.scale.multiplyScalar(4 / maxAxis);
+  clone.scale.multiplyScalar(4.5 / maxAxis);
   bbox.setFromObject(clone);
   bbox.getCenter(center);
   bbox.getSize(size);
   clone.position.copy(center).multiplyScalar(-1);
-  clone.position.y -= size.y * 4;
+  clone.position.y -= size.y * 4.5;
 
   return <primitive object={clone} {...props} />;
 }
@@ -88,23 +89,79 @@ export default function App() {
   return (
     <Canvas camera={{ position: [0, 0, 5] }} style={{ position: 'fixed' }}>
       <Environment preset="sunset" />
-      <Center>
+      <Html>
+        <SquareTag className="label">
+          <p>광장에서 놀기</p>
+        </SquareTag>
+        <PlanetTag className="label">
+          <p>행성 머무르기</p>
+        </PlanetTag>
+        <RocketTag className="label">
+          <p>모험하기</p>
+        </RocketTag>
+      </Html>
+      <Center position={[0, -1, 0]}>
         <Square
-          scale={[0.03, 0.03, 0.03]}
-          position={[2, -1, 0]}
+          scale={[0.04, 0.04, 0.04]}
           onClick={() => router.push(`/square`)}
         />
-        <Rocket
-          scale={[0.2, 0.2, 0.2]}
-          position={[-1, 0, -1]}
-          onClick={() => router.push(`/profile/${randomUserId}`)}
-        />
-        <Planet
-          position={[6, 1, 0]}
-          onClick={() => router.push(`/planet/${myRandomPlanetId}`)}
-        />
       </Center>
+
+      <Rocket
+        scale={[0.3, 0.3, 0.3]}
+        position={[-5, -1, 0]}
+        onClick={() => router.push(`/profile/${randomUserId}`)}
+      />
+
+      <Planet
+        position={[5.5, 1.5, 0]}
+        onClick={() => router.push(`/planet/${myRandomPlanetId}`)}
+      />
       <Rig />
     </Canvas>
   );
 }
+
+const PlanetTag = styled.div`
+  transform: translate(450px, -100px);
+
+  width: 180px;
+
+  background-color: pink;
+  border-radius: 3rem;
+  height: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const SquareTag = styled.div`
+  transform: translate(-150px, 350px);
+  width: 200px;
+
+  background-color: pink;
+  border-radius: 3rem;
+  height: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const RocketTag = styled.div`
+  transform: translate(-650px, 50px);
+
+  width: 130px;
+
+  background-color: pink;
+  border-radius: 3rem;
+  height: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
