@@ -8,7 +8,9 @@ import userAtom from 'store/userAtom';
 import { useRecoilValue } from 'recoil';
 
 function Model(props: any) {
-  const { scene } = useGLTF('/rocket/rocket.glb');
+  const { scene } = useGLTF(
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680596386/rocket.glb'
+  );
   return <primitive object={scene} {...props} />;
 }
 
