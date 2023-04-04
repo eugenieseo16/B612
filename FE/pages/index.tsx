@@ -6,7 +6,6 @@ import userAtom from 'store/userAtom';
 
 import ModelCanvas from '@components/Main/ModelCanvas';
 import TestCanvas from '@components/Main/TestCanvas';
-import styled from '@emotion/styled';
 
 import Modal from '@mui/material/Modal';
 
@@ -54,12 +53,7 @@ const Home: NextPage = () => {
         <h3>{user?.memberNickname + '님, 환영해요!'}</h3>
       )}
 
-      {/* <ModelCanvas /> */}
-
-      {/* <div style={{ height: 'calc(100vh - 6rem)' }}> */}
-      {/* <TestCanvas /> */}
-      <ModelCanvas />
-      {/* </div> */}
+      <TestCanvas />
 
       <FloatingButtons>
         <div className="floating-button-items" onClick={handleOpenFriends}>
@@ -88,7 +82,6 @@ const Home: NextPage = () => {
       <Modal open={openPlanets} onClose={handleClosePlanets}>
         <PlanetsModal />
       </Modal>
->>>>>>> FE/pages/index.tsx
     </div>
   );
 };
