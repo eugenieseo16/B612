@@ -12,11 +12,6 @@ function Model(props: any) {
 const Torus = (props: JSX.IntrinsicElements['mesh']) => {
   const groupRef = useRef<any>();
 
-  useFrame(() => {
-    groupRef.current.rotation.x -= 0.004;
-    groupRef.current.rotation.y -= 0.002;
-  });
-
   return (
     <group ref={groupRef}>
       <mesh {...props}>
@@ -24,8 +19,7 @@ const Torus = (props: JSX.IntrinsicElements['mesh']) => {
           scale={[0.03, 0.03, 0.03]}
           onClick={() => router.push(`/square`)}
         />
-        {/* <torusGeometry args={[1, 0.2, 12, 36]} />
-        <meshStandardMaterial color={'red'} /> */}
+
         <Html>
           <FloatingTag className="label">
             <p>광장으로 이동</p>
