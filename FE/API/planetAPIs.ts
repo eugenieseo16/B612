@@ -41,7 +41,7 @@ export const useIsLikedPlanetAPI = (memberId: any, planetId: any) => {
 // 행성 소유주 정보
 export const usePlanetOwnerAPI = (memberAddress: any) => {
   const response = useMyQuery(
-    `${planetAPIUrls.getPlanetAPIUrl}?memberAddress=${memberAddress}`
+    `${planetAPIUrls.getPlanetAPIUrl}?member=${memberAddress}`
   );
   return response?.responseData;
 };
