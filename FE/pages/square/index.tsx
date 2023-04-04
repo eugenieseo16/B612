@@ -1,7 +1,6 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Stats } from '@react-three/drei';
-import Chatting from '@components/square/Chatting';
 import styled from '@emotion/styled';
 
 import {
@@ -11,6 +10,8 @@ import {
   AppleTreeModel,
   AvatarFinn,
   Tetris2,
+  Baobab,
+  ChatBox,
 } from '@components/square/index';
 
 const SquareContainer = styled.div`
@@ -60,16 +61,14 @@ function Square() {
         <Ground />
         <Tetris />
         <Tetris2 />
-        {/* position={[35, 0, -45]} */}
-        {/* <Tetris2 />  */}
-        {/* position={[-20, 0, 18]} */}
         <AppleTreeModel position={[14, 0, -45]} />
         <Lights />
         <AvatarFinn />
+        <Baobab />
       </Canvas>
 
       <ChattingContainer onKeyDown={handleKeyDown} onWheel={handleWheel}>
-        <Chatting />
+        <ChatBox />
       </ChattingContainer>
     </SquareContainer>
   );
