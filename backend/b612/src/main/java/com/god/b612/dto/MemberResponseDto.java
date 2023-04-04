@@ -26,14 +26,17 @@ public class MemberResponseDto {
 
     private int memberLiked;
 
+    private int memberCharacter;
+
     @Builder
-    public MemberResponseDto(int memberId, String memberAddress, String memberNickname, String memberImage, String memberTierName, int memberCurrentScore, int memberLiked){
+    public MemberResponseDto(int memberId, int memberCharacter, String memberAddress, String memberNickname, String memberImage, String memberTierName, int memberCurrentScore, int memberLiked){
         this.memberId=memberId;
         this.memberAddress=memberAddress;
         this.memberNickname=memberNickname;
         this.memberImage=memberImage;
         this.memberTierName=memberTierName;
         this.memberCurrentScore=memberCurrentScore;
-        this.memberLiked=memberLiked;
+        this.memberLiked = memberLiked;
+        this.memberCharacter = memberCharacter;
     }
 }
