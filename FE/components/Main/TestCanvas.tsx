@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Box3, Vector3 } from 'three';
-import { Stats, Environment, Center, useGLTF } from '@react-three/drei';
+import { Stats, Environment, Center, useGLTF, Html } from '@react-three/drei';
 import { useEffect, useState } from 'react';
 import { usePlanetContract } from '@components/contracts/planetToken';
 import { useMyRandomPlanetAPI, useRandomUserAPI } from 'API/planetAPIs';
@@ -9,6 +9,8 @@ import userAtom from 'store/userAtom';
 import { PLANETS_LIST } from 'utils/utils';
 import { SkeletonUtils } from 'three-stdlib';
 import router, { useRouter } from 'next/router';
+
+import styled from '@emotion/styled';
 
 // import Button from './Button'
 
@@ -51,22 +53,8 @@ function Planet(props: any) {
   }, [planetContract, myRandomPlanetId]);
 
   const { scene } = useGLTF(PLANETS_LIST[planetDetail || 1]);
-  const clone = SkeletonUtils.clone(scene);
 
-  //3D 모델링 리사이즈
-  const bbox = new Box3().setFromObject(clone);
-  const center = bbox.getCenter(new Vector3());
-  const size = bbox.getSize(new Vector3());
-
-  const maxAxis = Math.max(size.x, size.y, size.z);
-  clone.scale.multiplyScalar(4 / maxAxis);
-  bbox.setFromObject(clone);
-  bbox.getCenter(center);
-  bbox.getSize(size);
-  clone.position.copy(center).multiplyScalar(-1);
-  clone.position.y -= size.y * 4;
-
-  return <primitive object={clone} {...props} />;
+  return <primitive object={scene} {...props} />;
 }
 
 export default function App() {
@@ -74,23 +62,35 @@ export default function App() {
   const user = useRecoilValue(userAtom);
 
   // 랜덤 프로필 id
-  const randomUserId = useRandomUserAPI(user?.memberId);
+  const randomUserId = useRandomUserAPI(
+    user?.memberId === undefined ? -1 : user?.memberId
+  );
 
   // 나의 랜덤 행성 id
-  const myRandomPlanetId = useMyRandomPlanetAPI(user?.memberId);
+  const myRandomPlanetId = useMyRandomPlanetAPI(
+    user?.memberId === undefined ? 1 : user?.memberId
+  );
 
   return (
     <Canvas camera={{ position: [0, 0, 5] }}>
       <Environment preset="sunset" />
       <Center>
-        {/* {[...Array(5).keys()].map((x) =>
-          [...Array(3).keys()].map((y) => <Button key={x + y * 5} position={[x * 2.5, y * 2.5, 0]} />)
-        )} */}
         <Square
           scale={[0.03, 0.03, 0.03]}
           position={[2, -1, 0]}
           onClick={() => router.push(`/square`)}
-        />
+        />{' '}
+        <Html>
+          <FloatingTag className="label">
+            <h3>광장으로 가기</h3>
+          </FloatingTag>
+        </Html>
+        <Html>
+          <div className="label">Torus</div>
+        </Html>
+        <Html>
+          <div className="label">Torus</div>
+        </Html>
         <Rocket
           scale={[0.2, 0.2, 0.2]}
           position={[-1, 0, -1]}
@@ -106,3 +106,10 @@ export default function App() {
     </Canvas>
   );
 }
+
+const FloatingTag = styled.div`
+  width: 300px;
+  /* text-alignment: center; */
+  background-color: pink;
+  border-radius: 3rem;
+`;
