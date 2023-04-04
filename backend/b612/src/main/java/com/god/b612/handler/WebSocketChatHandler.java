@@ -1,5 +1,9 @@
 package com.god.b612.handler;
 
+import com.god.b612.dto.MemberMoveEvent;
+import com.god.b612.entity.Member;
+import com.god.b612.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;

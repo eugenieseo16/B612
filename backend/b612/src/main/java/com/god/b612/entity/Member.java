@@ -47,8 +47,13 @@ public class Member {
     @ColumnDefault("0")
     private int memberLiked;
 
+    private double x;
+    private double y;
+    private double z;
+
+
     @Builder
-    public Member(int memberId, String memberNickname, String memberAddress, String memberImage, Tier memberTierId, int memberHighestScore, int memberCurrentScore,int memberLiked) {
+    public Member(int memberId, String memberNickname, String memberAddress, String memberImage, Tier memberTierId, int memberHighestScore, int memberCurrentScore,int memberLiked, double x, double y, double z) {
         this.memberId = memberId;
         this.memberNickname = memberNickname;
         this.memberAddress = memberAddress;
@@ -57,5 +62,8 @@ public class Member {
         this.memberHighestScore = memberHighestScore;
         this.memberCurrentScore = memberCurrentScore;
         this.memberLiked=memberLiked;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 }
