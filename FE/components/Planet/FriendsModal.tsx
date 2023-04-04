@@ -16,6 +16,7 @@ import { useSearchByNameAPI } from 'API/memberAPIs';
 import axios from 'axios';
 import { friendAPIUrls } from 'API/apiURLs';
 import { Button } from '@mui/material';
+import { tierDataList } from 'utils/tierDataList';
 
 const Modal = styled.div`
   position: absolute;
@@ -46,6 +47,9 @@ const Modal = styled.div`
   }
 `;
 
+const MemberDetail = styled.div`
+  display: flex;
+`;
 const FriendsModal = memo(function SomComponent() {
   const user = useRecoilValue(userAtom);
   const router = useRouter();
@@ -108,8 +112,22 @@ const FriendsModal = memo(function SomComponent() {
           >
             <img src={friend.memberImage} alt="" />
             <div>
-              <h3>{friend.memberNickname}</h3>
-              <p>{friend.memberTierName}</p>
+              <div>
+                <h3>{friend.memberNickname}</h3>
+                <MemberDetail>
+                  <h6>{friend.memberTierName}</h6>
+                  <img
+                    src={tierDataList.get(friend.memberTierName)}
+                    alt="member tier"
+                    id="member-tier-icon"
+                    style={{
+                      width: '25px',
+                      height: '25px',
+                      marginLeft: '10px',
+                    }}
+                  />
+                </MemberDetail>
+              </div>
               {ff[friend.memberId] === 'not' ? (
                 <Button
                   color="success"
@@ -143,7 +161,15 @@ const FriendsModal = memo(function SomComponent() {
           <img src={friend.memberImage} alt="" />
           <div>
             <h2>{friend.memberNickname}</h2>
-            <h6>{friend.memberTierName}</h6>
+            <MemberDetail>
+              <h6>{friend.memberTierName}</h6>
+              <img
+                src={tierDataList.get(friend.memberTierName)}
+                alt="member tier"
+                id="member-tier-icon"
+                style={{ width: '25px', height: '25px', marginLeft: '10px' }}
+              />
+            </MemberDetail>
           </div>
           <Divider />
         </div>

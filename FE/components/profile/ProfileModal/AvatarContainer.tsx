@@ -87,7 +87,11 @@ function AvatarContainer() {
         )}
       </Container>
       {!isEdit ? (
-        <Button variant="contained" onClick={() => setIsEdit(true)}>
+        <Button
+          color="info"
+          variant="contained"
+          onClick={() => setIsEdit(true)}
+        >
           <span>수정</span>
         </Button>
       ) : (

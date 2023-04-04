@@ -7,7 +7,8 @@ import dayjs from 'dayjs';
 import { usePlanetContract } from '@components/contracts/planetToken';
 import userAtom from 'store/userAtom';
 import { useMobile } from '@hooks/useMobile';
-import { PlanetDetail } from './PlanetCard.styles';
+import { MetaData, PlanetDetail, PlanetInfo } from './PlanetCard.styles';
+import { Button } from '@mui/material';
 
 function PlanetCard() {
   const planetContract = usePlanetContract();
@@ -31,8 +32,8 @@ function PlanetCard() {
   };
 
   return (
-    <PlanetDetail >
-      <div className="planet-info">
+    <PlanetDetail>
+      <PlanetInfo>
         <div>
           <p>{adj}</p>
           <h2>{title}</h2>
@@ -41,20 +42,24 @@ function PlanetCard() {
           <img src={GETH.src} alt="GETH" />
           <p>{+planet?.planetPrice * 10 ** -18} GETH</p>
         </div>
-      </div>
+      </PlanetInfo>
 
-      <div className="meta-data">
+      <MetaData>
         <p>
           등록 날짜: {dayjs(+planet?.createdAt * 1000).format('YYYY-MM-DD')}
         </p>
 
         {me?.memberAddress.toLocaleUpperCase() !=
         planet?.userAddress.toLocaleUpperCase() ? (
-          <button onClick={purchasePlanet}>즉시구매</button>
+          <Button variant="contained" color="success" onClick={purchasePlanet}>
+            <span style={{ color: '#fff' }}>즉시구매</span>
+          </Button>
         ) : (
-          <button onClick={discardForSale}>판매 취소</button>
+          <Button variant="contained" color="error" onClick={discardForSale}>
+            <span style={{ color: '#fff' }}>판매취소</span>
+          </Button>
         )}
-      </div>
+      </MetaData>
     </PlanetDetail>
   );
 }
