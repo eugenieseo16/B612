@@ -21,6 +21,8 @@ public class PlanetRequestDto {
     @Min(value = 1, message = "행성에 좋아요 누른 사용자의 시퀀스 넘버를 다시 확인해주세요.")
     int planetLikeMemberId;
 
+
+
     //토글 방식으로 할거라서 이미 좋아요가 된 상태에서 한번 더 오면 삭제시킴
 
     @Builder
