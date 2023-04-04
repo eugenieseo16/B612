@@ -7,8 +7,8 @@ const Modal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 30%;
-  height: 30%;
-  background-color: #30cc5c;
+  height: 20%;
+  background-color: #e57373;
   opacity: 0.7;
   border: none;
   border-radius: 3rem;
@@ -25,7 +25,8 @@ const Modal = styled.div`
 //   padding: 3rem;
 // `;
 const Button = styled.button`
-  background-color: #e4ee55;
+  background-color: #20d638;
+
   border: none;
   border-radius: 10px;
   padding: 1rem;
@@ -33,18 +34,18 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const TetrisModal = memo(function SomeComponent() {
+const AppleGameModal = memo(function SomeComponent() {
   const handleRedirect = () => {
-    window.open('https://jstris.jezevec10.com/?langSwitch=ko', '_blank');
+    window.open('https://www.gamesaien.com/game/fruit_box_a/', '_blank');
   };
 
   return (
     <Modal>
       <Button onClick={handleRedirect}>
-        <h3>테트리스 게임하러 이동!</h3>
+        <h3>사과 게임하러 이동!</h3>
       </Button>
     </Modal>
   );
 });
 
-export default TetrisModal;
+export default AppleGameModal;

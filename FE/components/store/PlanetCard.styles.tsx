@@ -5,84 +5,20 @@ export const PlanetDetail = styled.div`
   bottom: 2rem;
   left: 2rem;
   z-index: 99;
-
+  padding: 1rem;
   background: rgba(174, 197, 255, 0.7);
   box-shadow: 0px 0px 15px 7px #aec5ff;
-
   border-radius: 2rem;
+  min-width: 25rem;
 
-    .planet-name {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      h2 {
-        margin-left: 10px;
-      }
-    }
-    .planet-detail {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .planet-price {
-        display: flex;
-        align-items: center;
-        img {
-          width: 30px;
-          margin-right: 5px;
-          border-radius: 50%;
-        }
-      }
-    }
-    .planet-owner {
-      display: flex;
-      align-items: center;
-      padding-top: 5px;
-      img {
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        margin-right: 1rem;
-      }
-      #member-tier-icon {
-        width: 20px;
-        height: 20px;
-        margin-left: 10px;
-      }
-    }
-
-    .for-sale-button {
-      display: flex;
-      justify-content: end;
-      margin-top: 1rem;
-    }
-
-    .meta-data {
-      display: flex;
-      align-items: center;
-      img {
-        width: 30px;
-        margin-right: 5px;
-        border-radius: 50%;
-      }
-    }
-  }
-  .meta-data {
+  .planet-price {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 2rem;
-
-    button {
+    gap: 0.5rem;
+    img {
+      width: 2rem;
       height: 2rem;
-      width: 8rem;
-
-      font-size: 1.2rem;
-      color: #252530;
-
-      border: none;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
     }
   }
 
@@ -101,31 +37,26 @@ export const PlanetDetail = styled.div`
         font-size: 1rem;
       }
     }
-    .meta-data {
-      padding: 0.5rem;
-      p {
-        font-size: 0.8rem;
-      }
-      button {
-        display: none;
-      }
-    }
+  }
+`;
 
+export const PlanetInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+`;
+
+export const MetaData = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: 500px) {
+    padding: 0.5rem;
+    p {
+      font-size: 0.8rem;
+    }
     button {
-      height: 2rem;
-      width: 8rem;
-
-      font-size: 1.2rem;
-      color: #252530;
-
-      border: none;
-      border-radius: 1rem;
-      background: rgba(255, 255, 255, 0.7);
-    }
-
-    #goerli-ethereum {
-      width: 30px;
-      margin-right: 5px;
+      display: none;
     }
   }
 `;
