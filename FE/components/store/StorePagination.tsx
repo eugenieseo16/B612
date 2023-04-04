@@ -9,7 +9,7 @@ function StorePagination() {
   const storeType = useRecoilValue(onSaleTypeAtom);
   const onSalePlanets = useRecoilValue(onSalePlanetsAtom);
   const onSaleFlowers = useRecoilValue(onSaleFlowersAtom);
-  
+
   const [storeIndex, setStoreIndex] = useRecoilState(storeIndexAtom);
 
   const changePage = (e: any, page: number) => {
@@ -26,8 +26,9 @@ function StorePagination() {
       size={'large'}
       sx={{
         position: 'absolute',
-        bottom: '1rem',
-        right: '1rem',
+        bottom: '150px',
+        right: '50%',
+        transform: 'translate(50%,-50%)',
         zIndex: 9999,
       }}
     />

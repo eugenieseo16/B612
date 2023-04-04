@@ -45,7 +45,7 @@ function Flowers() {
 export default Flowers;
 
 function Flower({ data }: { data: IFlower }) {
-  const { scene } = useGLTF(FLOWERS_LIST[+data.flowerType % 10]);
+  const { scene } = useGLTF(FLOWERS_LIST[+data.flowerType % 12]);
   const clone = SkeletonUtils.clone(scene);
   useEffect(() => {
     clone.traverse(node => (node.castShadow = true));

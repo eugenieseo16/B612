@@ -16,12 +16,14 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
-import onSaleFlowersAtom from 'store/store/onSaleFlowersAtom';
+
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';
 import onSaleTypeAtom from 'store/store/onSaleTypeAtom';
+import storeIndexAtom from 'store/store/storeIndexAtom';
 
 function StorePage() {
   const planetContract = usePlanetContract();
+  const { index } = useRecoilValue(storeIndexAtom);
 
   const setOnSalePlanets = useSetRecoilState(onSalePlanetsAtom);
   const storeType = useRecoilValue(onSaleTypeAtom);
@@ -51,7 +53,9 @@ function StorePage() {
             enablePan={false}
           />
           <LayoutCamera
-            animate={{ x: 0, y: 0, z: 6, rotateX: 0, rotateY: 0, rotateZ: 0 }}
+            key={index}
+            animate={{ x: 0, y: 0, z: 10, rotateX: 0, rotateY: 0, rotateZ: 0 }}
+            position={[0, 0, 10]}
           />
           <ambientLight />
           {storeType === 'planet' ? <OnSalePlanets /> : <RandomBox />}
