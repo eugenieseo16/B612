@@ -3,11 +3,14 @@ package com.god.b612.service;
 import com.god.b612.dto.PlanetRequestDto;
 import com.god.b612.dto.PlanetResponseDto;
 import com.god.b612.dto.PlanetResponseDtoForRank;
+import com.god.b612.repository.PlanetMakeDto;
 
 import java.util.List;
 
 public interface PlanetService {
-//    PlanetResponseDto RegistPlanet(PlanetRequestDto planetRequestDto);
+    PlanetResponseDto selectPlanet(int planetId);
+
+    PlanetResponseDto RegistPlanet(PlanetMakeDto planetMakeDto);
     //행성 좋아요 생성 및 삭제
     boolean createAndDeleteLike(int planetId, int memberId);
 
