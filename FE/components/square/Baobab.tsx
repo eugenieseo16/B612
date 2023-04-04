@@ -3,30 +3,31 @@ import React, { useRef, useState } from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 import Modal from '@mui/material/Modal';
-import TetrisModal from './TetrisModal';
 import { Html } from '@react-three/drei';
+import BaobabModal from './BaobabModal';
 
-const Tetris = () => {
-  const model = useLoader(GLTFLoader, './tetris/tetris.glb');
+const Baobab = () => {
+  const model = useLoader(GLTFLoader, './baobab/baobab.glb');
   const objectRef = useRef<THREE.Object3D>(null);
 
-  const [openTetris, setOpenTetris] = useState(false);
-  const handleOpenTetris = () => setOpenTetris(true);
-  const handleCloseTetris = () => setOpenTetris(false);
+  const [openBaobab, setOpenBaobab] = useState(false);
+  const handleOpenBaobab = () => setOpenBaobab(true);
+  const handleCloseBaobab = () => setOpenBaobab(false);
 
   return (
     <>
       <object3D ref={objectRef}>
         <primitive
           object={model.scene}
-          position={[-20, 0, -45]}
-          onClick={handleOpenTetris}
+          position={[70, 0, -5]}
+          scale={[1.8, 1.5, 1.5]}
+          onClick={handleOpenBaobab}
         />
       </object3D>
       <Html>
-        {openTetris && (
-          <Modal open={openTetris} onClose={handleCloseTetris}>
-            <TetrisModal />
+        {openBaobab && (
+          <Modal open={openBaobab} onClose={handleCloseBaobab}>
+            <BaobabModal />
           </Modal>
         )}
       </Html>
@@ -34,7 +35,7 @@ const Tetris = () => {
   );
 };
 
-export default Tetris;
+export default Baobab;
 
 // https://jstris.jezevec10.com/?langSwitch=ko
 // scale={[0.5, 1, 0.5]}
