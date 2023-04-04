@@ -29,11 +29,25 @@ public class Planet {
     @JoinColumn(referencedColumnName = "member_id", name = "planet_member_id")
     private Member planetMemberId;
 
+    boolean onSale;
+
+    String createdAt;
+
+    String planetName;
+
+    int planetType;
+
+
+
     @Builder
-    public Planet(int planetNftId, int planetLikesCount, Member planetMemberId) {
+    public Planet(int planetNftId, int planetLikesCount, Member planetMemberId, boolean onSale, String createdAt,int planetType, String planetName) {
         this.planetNftId = planetNftId;
         this.planetLikesCount = planetLikesCount;
         this.planetMemberId = planetMemberId;
+        this.onSale=onSale;
+        this.createdAt=createdAt;
+        this.planetType=planetType;
+        this.planetName=planetName;
     }
 
 }

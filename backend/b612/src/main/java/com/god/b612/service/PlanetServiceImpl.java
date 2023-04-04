@@ -1,5 +1,6 @@
 package com.god.b612.service;
 
+import com.god.b612.dto.PlanetRequestDto;
 import com.god.b612.dto.PlanetResponseDto;
 import com.god.b612.dto.PlanetResponseDtoForRank;
 import com.god.b612.entity.Like;
@@ -34,6 +35,11 @@ public class PlanetServiceImpl implements PlanetService {
     private final LikeRepository likeRepository;
     @Autowired
     private TierRepository tierRepository;
+
+//    @Override
+//    public PlanetResponseDto RegistPlanet(PlanetRequestDto planetRequestDto){
+//        Planet planet=planet.
+//    }
 
     //행성 좋아요 생성 및 삭제
     @Override
