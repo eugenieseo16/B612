@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -41,11 +42,12 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findMemberByMemberAddress(memberAddress);
 
         if (member == null) {
-            String[] tmp = memberCustomRepository.makeRandomNickName();
+            Map<String, Object> tmp = memberCustomRepository.makeRandomNickName();
             member = Member.builder()
                     .memberAddress(memberAddress)
-                    .memberNickname(tmp[0])
-                    .memberImage(tmp[1])
+                    .memberNickname((String) tmp.get("nickname"))
+                    .memberImage((String) tmp.get("image"))
+                    .memberCharacter((int) tmp.get("character"))
                     .memberTierId(tierRepository.findTierByTierId(1))
                     .memberCurrentScore(0)
                     .memberHighestScore(0)

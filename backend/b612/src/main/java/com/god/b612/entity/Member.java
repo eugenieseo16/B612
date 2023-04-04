@@ -29,6 +29,8 @@ public class Member {
 
     private String memberImage;
 
+    private int memberCharacter;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -48,7 +50,7 @@ public class Member {
     private int memberLiked;
 
     @Builder
-    public Member(int memberId, String memberNickname, String memberAddress, String memberImage, Tier memberTierId, int memberHighestScore, int memberCurrentScore,int memberLiked) {
+    public Member(int memberId, String memberNickname, int memberCharacter, String memberAddress, String memberImage, Tier memberTierId, int memberHighestScore, int memberCurrentScore,int memberLiked) {
         this.memberId = memberId;
         this.memberNickname = memberNickname;
         this.memberAddress = memberAddress;
@@ -56,6 +58,7 @@ public class Member {
         this.memberTierId = memberTierId;
         this.memberHighestScore = memberHighestScore;
         this.memberCurrentScore = memberCurrentScore;
-        this.memberLiked=memberLiked;
+        this.memberLiked = memberLiked;
+        this.memberCharacter = memberCharacter;
     }
 }
