@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
+
 import userAtom from 'store/userAtom';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import type { Message } from './index';
