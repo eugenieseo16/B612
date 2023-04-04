@@ -6,14 +6,9 @@ import Modal from '@mui/material/Modal';
 import PlanetModel from '@components/Planet/PlanetModel';
 import PlanetDetailCard from '@components/Planet/PlanetDetail';
 import BlueGlowingButton from '@components/common/BlueGlowingButton';
-import PinkGlowingButton from '@components/common/PinkGlowingButton';
 import YellowGlowingButton from '@components/common/YellowGlowingButton';
 
-import {
-  CertificateModal,
-  FriendsModal,
-  PlanetsModal,
-} from '@components/Planet/index';
+import { CertificateModal, FriendsModal } from '@components/Planet/index';
 
 function Planet() {
   const FloatingButtons = styled.div`
@@ -34,10 +29,6 @@ function Planet() {
   const handleOpenCertificate = () => setOpenCertificate(true);
   const handleCloseCertificate = () => setOpenCertificate(false);
 
-  const [openPlanets, setOpenPlanets] = useState(false);
-  const handleOpenPlanets = () => setOpenPlanets(true);
-  const handleClosePlanets = () => setOpenPlanets(false);
-
   return (
     <>
       <PlanetModel></PlanetModel>
@@ -51,9 +42,6 @@ function Planet() {
         <div className="floating-button-items" onClick={handleOpenCertificate}>
           <YellowGlowingButton icon={'certificate'} />
         </div>
-        <div className="floating-button-items" onClick={handleOpenPlanets}>
-          <PinkGlowingButton icon={'planet'} />
-        </div>
       </FloatingButtons>
 
       {/* 친구 목록 조회 */}
@@ -64,11 +52,6 @@ function Planet() {
       {/* 인증서 발급 */}
       <Modal open={openCertificate} onClose={handleCloseCertificate}>
         <CertificateModal />
-      </Modal>
-
-      {/* 보유 행성 조회 */}
-      <Modal open={openPlanets} onClose={handleClosePlanets}>
-        <PlanetsModal />
       </Modal>
     </>
   );

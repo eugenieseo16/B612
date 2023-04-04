@@ -15,21 +15,17 @@ import styled from '@emotion/styled';
 
 const vec = new Vector3();
 
-function Rig() {
-  return useFrame(({ camera, mouse }) => {
-    vec.set(mouse.x * 2, mouse.y * 2, camera.position.z);
-    camera.position.lerp(vec, 0.005);
-    camera.lookAt(0, 0, 0);
-  });
-}
-
 function Square(props: any) {
-  const { scene } = useGLTF('/planet/square_preview.glb');
+  const { scene } = useGLTF(
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680596386/square.glb'
+  );
   return <primitive object={scene} {...props} />;
 }
 
 function Rocket(props: any) {
-  const { scene } = useGLTF('/rocket/rocket.glb');
+  const { scene } = useGLTF(
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680596386/rocket.glb'
+  );
   return <primitive object={scene} {...props} />;
 }
 
@@ -117,7 +113,6 @@ export default function App() {
         position={[5.5, 1.5, 0]}
         onClick={() => router.push(`/planet/${myRandomPlanetId}`)}
       />
-      <Rig />
     </Canvas>
   );
 }
