@@ -6,7 +6,6 @@ import com.god.b612.dto.FlowerResponseDto;
 import com.god.b612.dto.PlantRequestDto;
 import com.god.b612.entity.Flower;
 import com.god.b612.entity.Member;
-import com.god.b612.entity.Planet;
 import com.god.b612.entity.PlantedFlower;
 import com.god.b612.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -82,6 +81,9 @@ public class FlowerServiceImpl implements FlowerService {
                     .flowerNftId(flowerId)
                     .flowerOwnerId(flower.getFlowerOwnerId())
                     .flowerPlanted(false)
+                    .flowerType(flower.getFlowerType())
+                    .createdAt(flower.getCreatedAt())
+                    .onSale(flower.isOnSale())
                     .build();
 
             flowerRepository.save(flower);
@@ -137,6 +139,9 @@ public class FlowerServiceImpl implements FlowerService {
                 .flowerNftId(flower.getFlowerNftId())
                 .flowerOwnerId(member)
                 .flowerPlanted(false)
+                .flowerType(flower.getFlowerType())
+                .onSale(flower.isOnSale())
+                .createdAt(flower.getCreatedAt())
                 .build();
 
         flowerRepository.save(flower);
