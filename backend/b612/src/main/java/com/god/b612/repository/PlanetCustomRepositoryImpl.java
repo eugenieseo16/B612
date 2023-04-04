@@ -41,6 +41,11 @@ public class PlanetCustomRepositoryImpl implements PlanetCustomRepository {
                     .memberTierName(planet.getPlanetMemberId().getMemberTierId().getTierName())
                     .rank(rank)
                     .memberLiked(planet.getPlanetMemberId().getMemberLiked())
+                    .onSale(planet.isOnSale())
+                    .createdAt(planet.getCreatedAt())
+                    .planetName(planet.getPlanetName())
+                    .planetType(planet.getPlanetType())
+                    .memberImage(planet.getPlanetMemberId().getMemberImage())
                     .build();
 
         } else {
@@ -48,6 +53,10 @@ public class PlanetCustomRepositoryImpl implements PlanetCustomRepository {
                     .planetNftId(planet.getPlanetNftId())
                     .planetLikeCount(planet.getPlanetLikesCount())
                     .rank(rank)
+                    .onSale(planet.isOnSale())
+                    .createdAt(planet.getCreatedAt())
+                    .planetName(planet.getPlanetName())
+                    .planetType(planet.getPlanetType())
                     .build();
         }
         return planetResponseDto;
@@ -66,12 +75,21 @@ public class PlanetCustomRepositoryImpl implements PlanetCustomRepository {
                     .memberCurrentScore(planet.getPlanetMemberId().getMemberCurrentScore())
                     .memberTierName(planet.getPlanetMemberId().getMemberTierId().getTierName())
                     .memberLiked(planet.getPlanetMemberId().getMemberLiked())
+                    .onSale(planet.isOnSale())
+                    .createdAt(planet.getCreatedAt())
+                    .planetName(planet.getPlanetName())
+                    .planetType(planet.getPlanetType())
+                    .memberImage(planet.getPlanetMemberId().getMemberImage())
                     .build();
 
         } else {
             planetResponseDto = PlanetResponseDto.builder()
                     .planetNftId(planet.getPlanetNftId())
                     .planetLikeCount(planet.getPlanetLikesCount())
+                    .onSale(planet.isOnSale())
+                    .createdAt(planet.getCreatedAt())
+                    .planetName(planet.getPlanetName())
+                    .planetType(planet.getPlanetType())
                     .build();
         }
 
