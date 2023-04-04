@@ -17,44 +17,15 @@ import {
 } from 'recoil';
 import selectedFlowerAtom from 'store/garden/selectedFlowerAtom';
 import gardenIndexAtom from 'store/garden/gardenIndexAtom';
+import { useMyInventory } from 'API/flowerAPIs';
 
 // HTMLDivElement, HTMLMotionProps<'div'>;
 // const MY_FLOWERS = [0, 1, 2, 1, 1, 1, 1];
 
-const FAKE_FLOWERS: IFlower[] = [
-  {
-    createdAt: '',
-    onSale: false,
-    roseColor: '',
-    roseTokenId: '21sda',
-    roseType: 1,
-    userAddress: '',
-  },
-  {
-    createdAt: '',
-    onSale: false,
-    roseColor: '',
-    roseTokenId: '123asasd',
-    roseType: 2,
-    userAddress: '',
-  },
-  {
-    createdAt: '',
-    onSale: false,
-    roseColor: '',
-    roseTokenId: '12ssdffhgs',
-    roseType: 3,
-    userAddress: '',
-  },
-];
-const MY_FLOWERS_MAP = [
-  { type: 0, count: 1 },
-  { type: 1, count: 4 },
-  { type: 2, count: 1 },
-];
 const FLOWER_IMG = [marioFlower, glowFlower, dinosour];
 
 function FlowersModal({ user }: { user: IUser | null }) {
+  const inventory = useMyInventory(user?.memberId);
   const [selected, setSelected] = useRecoilState(selectedFlowerAtom);
   const setGardenIndex = useSetRecoilState(gardenIndexAtom);
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
@@ -70,25 +41,25 @@ function FlowersModal({ user }: { user: IUser | null }) {
           gap: '1.5rem',
         }}
       >
-        {FAKE_FLOWERS.map((flower: IFlower, i) => (
+        {inventory.map((flower: IFlower) => (
           <motion.div
             animate={{
               boxShadow: simpleShadow,
               opacity:
-                flower.roseTokenId === selected?.roseTokenId ? '1' : '0.6',
+                flower.flowerNftId === selected?.flowerNftId ? '1' : '0.6',
             }}
             onClick={() => setSelected(flower)}
-            key={i}
+            key={flower.flowerNftId}
           >
             <FlowerImgContainer>
               <img src={FLOWER_IMG[1].src} alt="" />
               <div>
-                <h6>꽃 종류 입니다아아아 #{flower.roseType}</h6>
+                <h6>꽃 종류 입니다아아아 #{flower.flowerType}</h6>
                 <div>
                   <Button
                     onClick={() => setGardenIndex(1)}
                     variant="contained"
-                    disabled={flower.roseTokenId !== selected?.roseTokenId}
+                    disabled={flower.flowerNftId !== selected?.flowerNftId}
                   >
                     <span>심기</span>
                   </Button>
