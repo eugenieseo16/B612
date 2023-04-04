@@ -4,7 +4,7 @@ import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
-import CertificateModal from '@components/Planet/CertificateModal';
+import TetrisModal from './TetrisModal';
 import { Modal } from '@mui/material';
 
 // import Modal from '@mui/material/Modal';
@@ -55,7 +55,7 @@ const directionOffset = ({
 
 const AvatarFinn = () => {
   const { forward, backward, left, right, shift } = UseInput();
-  const model = useGLTF('./avatar_finn/foureyes.glb');
+  const model = useGLTF('./avatars/foureyes.glb');
   let pos = [0, 0, 0];
 
   const { actions } = useAnimations(model.animations, model.scene);
@@ -245,7 +245,7 @@ const AvatarFinn = () => {
       <Html>
         {showModal && (
           <Modal open={showModal} onClose={handleClose}>
-            <CertificateModal />
+            <TetrisModal />
           </Modal>
         )}
       </Html>

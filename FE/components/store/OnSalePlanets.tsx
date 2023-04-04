@@ -10,7 +10,8 @@ import storeAnimateAtom from 'store/store/storeAnimateAtom';
 
 function OnSalePlanets() {
   const onSalePlanets = useRecoilValue(onSalePlanetsAtom);
-  const { index, page } = useRecoilValue(storeIndexAtom);
+  const { index } = useRecoilValue(storeIndexAtom);
+  const page = Math.floor(index / 5);
   const curPlanetsLength =
     onSalePlanets.length - page * 5 > 4 ? 5 : onSalePlanets.length - page * 5;
 

@@ -8,7 +8,7 @@ import {
   useSetRecoilState,
 } from 'recoil';
 import userAtom from 'store/userAtom';
-import roomIndexAtom from 'store/profile/roomIndexAtom';
+import roomIndexAtom from 'store/profile/roomIndexAtom';  
 import { Modal } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import styled from '@emotion/styled';
@@ -92,7 +92,7 @@ function UserProfile() {
         >
           <RecoilBridge>
             {/* <ambientLight intensity={0.1} /> */}
-            <MyCamera router={router} />
+            <MyCamera router={router} userId={userId} />
             <Room />
             <Garden />
           </RecoilBridge>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Stats } from '@react-three/drei';
-import Chatting from '@components/Chat/Chatting';
+import Chatting from '@components/chatting/Chatting';
+import styled from '@emotion/styled';
 
 import {
   Lights,
@@ -12,19 +13,38 @@ import {
   Tetris2,
 } from '@components/square/index';
 
-function Square() {
-  const styles = {
-    container: {
-      width: '100%',
-      height: '100vh',
-    },
-  } as const;
+const SquareContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+`;
 
+const ChattingContainer = styled.div`
+  position: absolute;
+  top: 10%;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 20%;
+  height: 30%;
+`;
+
+function Square() {
   // 개발중일때 , true 상태관리와 helper를 키고,끌수 있도록 함
   const testing = true;
 
+  function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    e.stopPropagation();
+    // ChattingContainer에서 발생한 키보드 이벤트 처리
+    console.log('keydown event in ChattingContainer');
+  }
+
+  function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
+    e.stopPropagation();
+    // ChattingContainer에서 발생한 마우스 스크롤 이벤트 처리
+    console.log('wheel event in ChattingContainer');
+  }
+
   return (
-    <div style={styles.container}>
+    <SquareContainer>
       <Canvas
         style={{ backgroundImage: `url("/sky.png")`, backgroundSize: 'cover' }}
         shadows
@@ -47,7 +67,11 @@ function Square() {
         <Lights />
         <AvatarFinn />
       </Canvas>
-    </div>
+
+      <ChattingContainer onKeyDown={handleKeyDown} onWheel={handleWheel}>
+        <Chatting />
+      </ChattingContainer>
+    </SquareContainer>
   );
 }
 

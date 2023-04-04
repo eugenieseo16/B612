@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setTimeout(() => {
       setImgsLoaded(true);
-    }, 2000);
+    }, 1);
   }, []);
 
   return (

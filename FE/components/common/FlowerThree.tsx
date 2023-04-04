@@ -6,20 +6,15 @@ import {
   useGLTF,
 } from '@react-three/drei';
 import React, { useEffect, useRef } from 'react';
+import { useRecoilValue } from 'recoil';
+import selectedFlowerAtom from 'store/garden/selectedFlowerAtom';
+import { Box3, Vector3 } from 'three';
 import { degToRad } from 'three/src/math/MathUtils';
+import { FLOWERS_LIST } from 'utils/flowerDataList';
 
-const GLTF_URL = [
-  'https://res.cloudinary.com/dohkkln9r/image/upload/v1679551338/ly46ooskkuxo1cfpm7di.glb',
-  'https://res.cloudinary.com/dohkkln9r/image/upload/v1679551338/ly46ooskkuxo1cfpm7di.glb',
-  'https://res.cloudinary.com/dohkkln9r/image/upload/v1679551338/ly46ooskkuxo1cfpm7di.glb',
-];
-
-function FlowerThree({ type }: { type: number }) {
+function FlowerThree() {
+  const flower = useRecoilValue(selectedFlowerAtom);
   const ref = useRef();
-  const grass = useGLTF('/grass/scene.gltf');
-  useEffect(() => {
-    grass.scene.traverse(node => (node.receiveShadow = true));
-  }, [grass]);
 
   return (
     <>
@@ -34,29 +29,43 @@ function FlowerThree({ type }: { type: number }) {
       />
       <Environment background files={'/sky.hdr'} />
 
-      <group scale={3}>
-        <primitive object={grass.scene} />
-      </group>
+      <mesh receiveShadow rotation={[degToRad(-90), 0, 0]}>
+        <planeGeometry args={[10, 10]} />
+        <meshNormalMaterial />
+      </mesh>
 
-      {type >= 0 && <Flower type={type} />}
+      {flower && <Flower />}
     </>
   );
 }
 
 export default FlowerThree;
 
-function Flower({ type }: { type: number }) {
-  const flower = useGLTF(GLTF_URL[type]);
+function Flower() {
+  const flower = useRecoilValue(selectedFlowerAtom);
+
+  const { scene } = useGLTF(FLOWERS_LIST[flower!.roseType]);
+
+  const bbox = new Box3().setFromObject(scene);
+  const center = bbox.getCenter(new Vector3());
+  const size = bbox.getSize(new Vector3());
+
+  const maxAxis = Math.max(size.x, size.y, size.z);
+  scene.scale.multiplyScalar(5 / maxAxis);
+  bbox.setFromObject(scene);
+  bbox.getCenter(center);
+  bbox.getSize(size);
+  scene.position.copy(center).multiplyScalar(-1);
 
   useEffect(() => {
-    flower.scene.traverse(node => {
+    scene.traverse(node => {
       node.castShadow = true;
     });
-  }, [flower]);
+  }, [scene]);
 
   return (
     <Center top>
-      <primitive object={flower.scene} />
+      <primitive object={scene} />
     </Center>
   );
 }

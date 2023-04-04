@@ -21,6 +21,7 @@ function PlanetDetailCard() {
       .setForSalePlanetToken(planet.planetTokenId, '2000000000000000000')
       .send({ from: me?.memberAddress });
   };
+
   return (
     <PlanetCard>
       <div className="detail-container">
