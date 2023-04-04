@@ -41,10 +41,6 @@ const Home: NextPage = () => {
   const handleOpenCertificate = () => setOpenCertificate(true);
   const handleCloseCertificate = () => setOpenCertificate(false);
 
-  const [openPlanets, setOpenPlanets] = useState(false);
-  const handleOpenPlanets = () => setOpenPlanets(true);
-  const handleClosePlanets = () => setOpenPlanets(false);
-
   return (
     <div style={{ paddingTop: '4rem' }}>
       {!Boolean(user) ? (
@@ -63,9 +59,6 @@ const Home: NextPage = () => {
         <div className="floating-button-items" onClick={handleOpenCertificate}>
           <YellowGlowingButton icon={'certificate'} />
         </div>
-        <div className="floating-button-items" onClick={handleOpenPlanets}>
-          <PinkGlowingButton icon={'planet'} />
-        </div>
       </FloatingButtons>
 
       {/* 친구 목록 조회 */}
@@ -76,11 +69,6 @@ const Home: NextPage = () => {
       {/* 인증서 발급 */}
       <Modal open={openCertificate} onClose={handleCloseCertificate}>
         <CertificateModal />
-      </Modal>
-
-      {/* 보유 행성 조회 */}
-      <Modal open={openPlanets} onClose={handleClosePlanets}>
-        <PlanetsModal />
       </Modal>
     </div>
   );

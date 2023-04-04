@@ -5,7 +5,9 @@ import styled from '@emotion/styled';
 import router from 'next/router';
 
 function Model(props: any) {
-  const { scene } = useGLTF('/planet/square_preview.glb');
+  const { scene } = useGLTF(
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680596386/square.glb'
+  );
   return <primitive object={scene} {...props} />;
 }
 
