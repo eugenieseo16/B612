@@ -2,6 +2,7 @@ package com.god.b612.controller;
 
 import com.god.b612.dto.*;
 import com.god.b612.model.BaseResponseBody;
+import com.god.b612.repository.PlanetMakeDto;
 import com.god.b612.service.FlowerService;
 import com.god.b612.service.PlanetService;
 import io.swagger.annotations.Api;
@@ -26,6 +27,59 @@ public class PlanetController {
 
     @Autowired
     private final FlowerService flowerService;
+
+
+    @Transactional
+    @ApiOperation(value = "행성을 생성한다.", notes = "행성을 생성한다.")
+    @PostMapping("/regist")
+    public ResponseEntity<BaseResponseBody> registPlanet(@RequestBody PlanetMakeDto planetMakeDto) {
+        PlanetResponseDto planetResponseDto=planetService.RegistPlanet(planetMakeDto);
+        if(planetResponseDto==null){
+            BaseResponseBody baseResponseBody =
+                    BaseResponseBody.builder()
+                            .message("fail")
+                            .statusCode(400)
+                            .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+        else{
+            BaseResponseBody baseResponseBody =
+                    BaseResponseBody.builder()
+                            .message("success")
+                            .statusCode(200)
+                            .responseData(planetResponseDto)
+                            .build();
+
+            return ResponseEntity.status(200).body(baseResponseBody);
+        }
+    }
+
+    @Transactional
+    @ApiOperation(value = "행성을 조회한다.", notes = "행성을 조회한다.")
+    @GetMapping("/select/{planetId}")
+    public ResponseEntity<BaseResponseBody> selectPlanet(@PathVariable("planetId")int planetId) {
+        PlanetResponseDto planetResponseDto=planetService.selectPlanet(planetId);
+        if(planetResponseDto==null){
+            BaseResponseBody baseResponseBody =
+                    BaseResponseBody.builder()
+                            .message("fail")
+                            .statusCode(400)
+                            .build();
+
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+        else{
+            BaseResponseBody baseResponseBody =
+                    BaseResponseBody.builder()
+                            .message("success")
+                            .statusCode(200)
+                            .responseData(planetResponseDto)
+                            .build();
+
+            return ResponseEntity.status(200).body(baseResponseBody);
+        }
+    }
 
 
     @Transactional

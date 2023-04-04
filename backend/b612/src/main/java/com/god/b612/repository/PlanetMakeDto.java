@@ -1,7 +1,11 @@
 package com.god.b612.repository;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class PlanetMakeDto {
 
     int planetNftId;

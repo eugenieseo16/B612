@@ -36,10 +36,33 @@ public class PlanetServiceImpl implements PlanetService {
     @Autowired
     private TierRepository tierRepository;
 
-//    @Override
-//    public PlanetResponseDto RegistPlanet(PlanetRequestDto planetRequestDto){
-//        Planet planet=planet.
-//    }
+    @Override
+    public PlanetResponseDto RegistPlanet(PlanetMakeDto planetMakeDto){
+        Member member=memberRepository.findMemberByMemberId(planetMakeDto.getOwnerMemberId());
+        if (member==null){
+            return null;
+        }
+        Planet planet=Planet.builder()
+                .planetName(planetMakeDto.getPlanetName())
+                .planetType(planetMakeDto.getPlanetType())
+                .planetMemberId(member)
+                .planetLikesCount(planetMakeDto.getPlanetLikesCount())
+                .planetNftId(planetMakeDto.getPlanetNftId())
+                .createdAt(planetMakeDto.getCreatedAt())
+                .onSale(planetMakeDto.isOnSale())
+                .build();
+
+        planetRepository.save(planet);
+
+        return planetCustomRepository.makeDto(planet);
+
+    }
+
+    @Override
+    public PlanetResponseDto selectPlanet(int planetId){
+        Planet planet=planetRepository.findTopByPlanetNftId(planetId);
+        return planetCustomRepository.makeDto(planet);
+    }
 
     //행성 좋아요 생성 및 삭제
     @Override
@@ -47,7 +70,7 @@ public class PlanetServiceImpl implements PlanetService {
         Planet planet = planetRepository.findTopByPlanetNftId(planetId);
 
         if (planet == null) {
-            planet = planetCustomRepository.createPlanet(planetId);
+            return false;
         }
 
         Member member = memberRepository.findMemberByMemberId(memberId);
@@ -89,6 +112,10 @@ public class PlanetServiceImpl implements PlanetService {
                     .planetNftId(planet.getPlanetNftId())
                     .planetLikesCount(planetLike)
                     .planetMemberId(planet.getPlanetMemberId())
+                    .onSale(false)
+                    .createdAt(planet.getCreatedAt())
+                    .planetName(planet.getPlanetName())
+                    .planetType(planet.getPlanetType())
                     .build();
 
             planetRepository.save(planet);
@@ -124,6 +151,10 @@ public class PlanetServiceImpl implements PlanetService {
                     .planetNftId(planet.getPlanetNftId())
                     .planetLikesCount(planet.getPlanetLikesCount() - 1)
                     .planetMemberId(planet.getPlanetMemberId())
+                    .onSale(false)
+                    .createdAt(planet.getCreatedAt())
+                    .planetName(planet.getPlanetName())
+                    .planetType(planet.getPlanetType())
                     .build();
 
             planetRepository.save(planet);
@@ -202,7 +233,7 @@ public class PlanetServiceImpl implements PlanetService {
         Planet planet = planetRepository.findTopByPlanetNftId(planetId);
 
         if (planet == null) {
-            planet = planetCustomRepository.createPlanet(planetId);
+            return null;
         }
 
         if (member == null) {
@@ -232,6 +263,10 @@ public class PlanetServiceImpl implements PlanetService {
                 .planetNftId(planetId)
                 .planetLikesCount(planet.getPlanetLikesCount())
                 .planetMemberId(member)
+                .onSale(false)
+                .createdAt(planet.getCreatedAt())
+                .planetName(planet.getPlanetName())
+                .planetType(planet.getPlanetType())
                 .build();
 
         planetRepository.save(planet);
