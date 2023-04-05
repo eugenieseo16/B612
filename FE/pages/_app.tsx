@@ -14,6 +14,8 @@ import { PLANETS_LIST } from 'utils/utils';
 import { useMobile } from '@hooks/useMobile';
 import MobileNav from '@components/common/MobileNav';
 import Notification from '@components/common/Notification';
+import Head from 'next/head';
+import { FLOWERS_LIST } from 'utils/flowerDataList';
 React.useLayoutEffect = React.useEffect;
 
 declare global {
@@ -31,6 +33,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   PLANETS_LIST.forEach(planet => {
     useGLTF.preload(planet);
   });
+  FLOWERS_LIST.forEach(flower => {
+    useGLTF.preload(flower);
+  });
 
   const Background = styled.div`
     background-image: url('https://ifh.cc/g/HXB7pP.jpg');
@@ -45,7 +50,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setTimeout(() => {
       setImgsLoaded(true);
-    }, 1);
+    }, 2000);
   }, []);
 
   return (
@@ -57,6 +62,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
           {imgsLoaded ? (
             <AnimatePresence mode="wait">
+              <Head>
+                <title>b612.shop</title>
+              </Head>
               <motion.div
                 style={{ minHeight: 'calc(100vh)' }}
                 key={router.route}

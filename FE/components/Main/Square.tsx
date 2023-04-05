@@ -1,57 +1,29 @@
-import React, { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Html, Stats, useGLTF } from '@react-three/drei';
-import styled from '@emotion/styled';
-import router from 'next/router';
+import { Center, useGLTF } from '@react-three/drei';
+import React from 'react';
+import { Box3, Vector3 } from 'three';
 
-function Model(props: any) {
+function Square() {
   const { scene } = useGLTF(
     'https://res.cloudinary.com/dohkkln9r/image/upload/v1680596386/square.glb'
   );
-  return <primitive object={scene} {...props} />;
-}
+  const bbox = new Box3().setFromObject(scene);
+  const center = bbox.getCenter(new Vector3());
+  const size = bbox.getSize(new Vector3());
 
-const Torus = (props: JSX.IntrinsicElements['mesh']) => {
-  const groupRef = useRef<any>();
+  const maxAxis = Math.max(size.x, size.y, size.z);
+  scene.scale.multiplyScalar(10 / maxAxis);
+  bbox.setFromObject(scene);
+  bbox.getCenter(center);
+  bbox.getSize(size);
+  scene.position.copy(center).multiplyScalar(-1);
 
   return (
-    <group ref={groupRef}>
-      <mesh {...props}>
-        <Model
-          scale={[0.03, 0.03, 0.03]}
-          onClick={() => router.push(`/square`)}
-        />
-
-        <Html>
-          <FloatingTag className="label">
-            <p>광장으로 이동</p>
-          </FloatingTag>
-        </Html>
-      </mesh>
-    </group>
-  );
-};
-
-function Rocket() {
-  return (
-    <>
-      <pointLight position={[5, 5, 5]} />
-      <Torus position={[2, 0, 0]} onClick={() => router.push(`/square`)} />
-    </>
+    <Center position={[0, -1, 0]}>
+      <group>
+        <primitive object={scene} />
+      </group>
+    </Center>
   );
 }
 
-export default Rocket;
-
-const FloatingTag = styled.div`
-  width: 200px;
-
-  background-color: pink;
-  border-radius: 3rem;
-  height: 2rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-`;
+export default Square;

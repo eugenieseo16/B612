@@ -1,8 +1,7 @@
 import { Center, useGLTF, useAnimations } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
 import { Box3, LoopOnce, Vector3 } from 'three';
-import { useEffect, useRef, useState } from 'react';
-import { useFlowerContract } from '@components/contracts/roseToken';
+import { useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import boxAnimateAtom from 'store/store/boxAnimateAtom';
 
