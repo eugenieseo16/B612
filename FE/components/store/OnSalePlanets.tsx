@@ -1,4 +1,4 @@
-import { Center, PresentationControls, useGLTF } from '@react-three/drei';
+import { Center, useGLTF } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';
@@ -22,19 +22,7 @@ function OnSalePlanets() {
           (Math.PI * 2 * (i - (index % curPlanetsLength))) / curPlanetsLength;
         if (i > curPlanetsLength - 1) return;
 
-        return (
-          <Planet key={i} data={onSalePlanets[i + page * 5]} deg={deg} />
-          // <motion.mesh
-          //   key={i}
-          //   animate={{ x: 10 * Math.sin(deg), z: 10 * Math.cos(deg) - 8 }}
-          //   transition={{ duration: 0.4, ease: 'linear' }}
-          // >
-          //   <sphereGeometry />
-          //   <meshStandardMaterial
-          //     color={`#${planet.planetColor.slice(0, 6)}`}
-          //   />
-          // </motion.mesh>
-        );
+        return <Planet key={i} data={onSalePlanets[i + page * 5]} deg={deg} />;
       })}
     </>
   );
@@ -42,7 +30,7 @@ function OnSalePlanets() {
 
 export default OnSalePlanets;
 
-const Planet = ({ data, deg }: any) => {
+const Planet = ({ data, deg }: { data: IPlanet; deg: number }) => {
   const scene = useGLTF(PLANETS_LIST[+data.planetType]);
   const clone = SkeletonUtils.clone(scene.scene);
   const setAnimate = useSetRecoilState(storeAnimateAtom);

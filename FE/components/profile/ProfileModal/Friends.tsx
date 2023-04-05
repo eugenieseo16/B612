@@ -6,7 +6,6 @@ import {
   ListItemText,
 } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
-import defaultImg from 'assets/imgs/cryptoPunk1.png';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 import { useRouter } from 'next/router';
@@ -30,7 +29,7 @@ function Friends() {
             }}
           >
             {friends?.responseData.map((user: IUser) => (
-              <ListItem key={user?.memberAddress}>  
+              <ListItem key={user?.memberAddress}>
                 <ListItemAvatar
                   sx={{ cursor: 'pointer' }}
                   onClick={() => router.push(`/profile/${user.memberId}`)}

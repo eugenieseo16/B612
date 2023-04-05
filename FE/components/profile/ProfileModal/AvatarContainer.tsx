@@ -4,7 +4,6 @@ import { Avatar, Input } from '@mui/material';
 import left from '../../../assets/imgs/buttonIcons/chevron-left.svg';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { colors } from 'styles/colors';
 import userAtom from 'store/userAtom';
 import { changeNickNameAPI } from 'API/memberAPIs';
 import DoneIcon from '@mui/icons-material/Done';

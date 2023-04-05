@@ -31,3 +31,13 @@ export const useUserById = (memberId?: number | string | string[]) => {
   });
   return data?.responseData;
 };
+
+export const useFlowersById = (memberId?: number | string) => {
+  const { data } = useQuery(`user/${memberId}/flowers`, () => {
+    if (!memberId) return;
+    return fetch(`${memberAPIUrls.userByIdUrl}/${memberId}/flowers`).then(res =>
+      res.json()
+    );
+  });
+  return data?.responseData;
+};

@@ -200,3 +200,17 @@ span {
   font-family: 'Pixel';
   src: url('../assets/fonts/pixelFont.woff');
 }
+::-webkit-scrollbar {
+  width: 8px; /* 스크롤바의 너비 */
+}
+
+::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #4a5980; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(74, 89, 128, 0.2); /*스크롤바 뒷 배경 색상*/
+}

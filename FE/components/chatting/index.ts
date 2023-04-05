@@ -17,7 +17,6 @@ const ChatContainer = styled.div`
   background-color: #000000;
   opacity: 0.7;
   width: 100%;
-  height: 30vh;
 `;
 
 const ChatHeader = styled.header`
@@ -32,6 +31,7 @@ const ChatBody = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  height: 30vh;
   overflow-y: scroll;
   overflow-x: hidden;
 
@@ -104,6 +104,8 @@ const ChatButton = styled.button`
   border-radius: 5px;
   background-color: #ffffff;
   color: #000;
+  width: 20%;
+
   cursor: pointer;
 `;
 

@@ -4,6 +4,9 @@ import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
+import { useRecoilState } from 'recoil';
+import { positionAtom } from 'store/square/positionAtom';
+// import { AvatarPosition } from '@components/avatar/AvatarPosition';
 
 import { Modal } from '@mui/material';
 import {
@@ -30,6 +33,7 @@ let rotateQuaternion = new THREE.Quaternion();
 let cameraTarget = new THREE.Vector3();
 
 const AvatarFinn = () => {
+  const [avatarPosition, setAvatarPosition] = useRecoilState(positionAtom);
   const { forward, backward, left, right, shift } = UseInput();
   const model = useGLTF('./avatars/foureyes.glb');
   let pos = [0, 0, 0];
@@ -148,8 +152,8 @@ const AvatarFinn = () => {
     ) {
       // calculate towards camera direction
       let angleYCameraDirection = Math.atan2(
-        camera.position.x - model.scene.position.x,
-        camera.position.z - model.scene.position.z
+        camera.position.x - avatarPosition.x,
+        camera.position.z - avatarPosition.z
       );
 
       // diagonal movement angle offset
@@ -181,22 +185,27 @@ const AvatarFinn = () => {
       const moveZ = walkDirection.z * velocity * delta;
 
       // Check if the new position is within the allowed area
-      const newPosition = model.scene.position.clone();
-      newPosition.x += moveX;
-      newPosition.z += moveZ;
+      const newPosition = {
+        x: avatarPosition.x + moveX,
+        z: avatarPosition.z + moveZ,
+      };
       if (isInAllowedArea(newPosition.x, newPosition.z)) {
-        model.scene.position.x += moveX;
-        model.scene.position.z += moveZ;
-        pos = [model.scene.position.x, 0, model.scene.position.z];
+        setAvatarPosition(newPosition);
+        pos = [avatarPosition.x, 0, avatarPosition.z];
         updateCameraTarget(moveX, moveZ);
       }
     }
   });
   console.log(cameraTarget);
 
+  useEffect(() => {
+    model.scene.position.x = avatarPosition.x;
+    model.scene.position.z = avatarPosition.z;
+  }, [avatarPosition.x, avatarPosition.z]);
+
   return (
     <>
-      <primitive object={model.scene} />;
+      <primitive object={model.scene} />;{/* <AvatarPosition /> */}
       <Html>
         {showTetrisModal && (
           <Modal open={showTetrisModal} onClose={handleTetrisClose}>
@@ -218,6 +227,7 @@ const AvatarFinn = () => {
           </Modal>
         )}
       </Html>
+      {/* <AvatarPosition /> */}
     </>
   );
 };
