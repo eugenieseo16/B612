@@ -5,6 +5,7 @@ interface IUser {
   memberNickname: string;
   memberTierName: string;
   memberId: number;
+  memberCharacter: number;
   eth: number;
   isApproved?: boolean;
   planets: IPlanet[];

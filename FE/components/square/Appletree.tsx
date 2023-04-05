@@ -19,7 +19,7 @@ type GLTFResult = GLTF & {
 
 export function AppleTreeModel(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF(
-    '/apple_tree/apple_tree.glb'
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680669902/apple_tree.glb'
   ) as GLTFResult;
   const objectRef = useRef<THREE.Object3D>(null);
 

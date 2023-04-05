@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Stats } from '@react-three/drei';
 import styled from '@emotion/styled';
-
+import { positionAtom } from 'store/square/positionAtom';
 import {
   Lights,
   Ground,
   Tetris,
   AppleTreeModel,
-  AvatarFinn,
+  Avatar,
   Tetris2,
   Baobab,
   ChatBox,
 } from '@components/square/index';
 
 import { AvatarPosition } from '@components/avatar/AvatarPosition';
+import { useRecoilCallback } from 'recoil';
 
 const SquareContainer = styled.div`
   width: 100%;
@@ -31,7 +32,7 @@ const ChattingContainer = styled.div`
 
 function Square() {
   // 개발중일때 , true 상태관리와 helper를 키고,끌수 있도록 함
-  const testing = true;
+  const testing = false;
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     e.stopPropagation();
@@ -44,6 +45,15 @@ function Square() {
     // ChattingContainer에서 발생한 마우스 스크롤 이벤트 처리
     console.log('wheel event in ChattingContainer');
   }
+  const resetPosition = useRecoilCallback(({ set }) => () => {
+    set(positionAtom, { x: 0, z: 0 });
+  });
+
+  useEffect(() => {
+    return () => {
+      resetPosition();
+    };
+  }, []);
 
   return (
     <SquareContainer>
@@ -64,7 +74,7 @@ function Square() {
         <Tetris2 />
         <AppleTreeModel position={[14, 0, -45]} />
         <Lights />
-        <AvatarFinn />
+        <Avatar />
         <Baobab />
       </Canvas>
 
