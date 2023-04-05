@@ -13,6 +13,7 @@ import { useGLTF } from '@react-three/drei';
 import { PLANETS_LIST } from 'utils/utils';
 import { useMobile } from '@hooks/useMobile';
 import MobileNav from '@components/common/MobileNav';
+import Notification from '@components/common/Notification';
 React.useLayoutEffect = React.useEffect;
 
 declare global {
@@ -51,7 +52,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
+          <Notification />
           <UserController />
+
           {imgsLoaded ? (
             <AnimatePresence mode="wait">
               <motion.div
