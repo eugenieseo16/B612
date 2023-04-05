@@ -17,6 +17,7 @@ import { PlanetRankingAPI } from 'API/rankingAPIs';
 import { useRouter } from 'next/router';
 import { usePlanetContract } from '@components/contracts/planetToken';
 import { useEffect, useState } from 'react';
+import { planetDataList } from 'utils/planetDataList';
 
 export default function BasicTable() {
   const data = PlanetRankingAPI();
@@ -26,18 +27,19 @@ export default function BasicTable() {
   const planetContract = usePlanetContract();
   const [planetDetail, setPlanetDetail] = useState(null);
 
-  const planetId = 1;
-  useEffect(() => {
-    if (!planetId) return;
-    planetContract?.methods
-      .b612AddressMap(planetId)
-      .call()
-      .then((data: any) => {
-        setPlanetDetail(data);
-      });
-  }, [planetContract, planetId]);
+  console.log(data);
+  // const planetId = 1;
+  // useEffect(() => {
+  //   if (!planetId) return;
+  //   planetContract?.methods
+  //     .b612AddressMap(planetId)
+  //     .call()
+  //     .then((data: any) => {
+  //       setPlanetDetail(data);
+  //     });
+  // }, [planetContract, planetId]);
 
-  console.log();
+  // console.log(planetDetail);
 
   return (
     <Container>
@@ -80,8 +82,9 @@ export default function BasicTable() {
                   <Link href={`/planet/${planet.planetNftId}`} id="link-item">
                     <div className="planet-item">
                       {/* Web3로 받아와야함 */}
-                      <img src={planet.planetImage} alt="" />
-                      <h4>{planet.planetName}</h4>
+                      <img src={planetDataList.get(planet.planetType)} alt="" />
+                      <h4>{planetDataList.get(planet.planetType)}</h4>
+                      {/* <h4>{planet.planetName}</h4> */}
                     </div>
                   </Link>
                 </TableCell>
