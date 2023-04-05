@@ -14,6 +14,8 @@ import {
   ChatBox,
 } from '@components/square/index';
 
+import { AvatarPosition } from '@components/avatar/AvatarPosition';
+
 const SquareContainer = styled.div`
   width: 100%;
   height: 100vh;
@@ -69,6 +71,7 @@ function Square() {
       <ChattingContainer onKeyDown={handleKeyDown} onWheel={handleWheel}>
         <ChatBox />
       </ChattingContainer>
+      <AvatarPosition />
     </SquareContainer>
   );
 }

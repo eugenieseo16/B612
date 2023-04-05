@@ -29,7 +29,6 @@ const ChatBox: React.FC = () => {
 
     ws.onopen = () => {
       console.log('WebSocket connected');
-      ws.send(JSON.stringify({ type: 'requestSessionID' }));
 
       // 페이지에 처음 접속했을 때 환영 문구 보내기
       const welcomeMessage: Message = {
@@ -43,13 +42,7 @@ const ChatBox: React.FC = () => {
     // WebSocket으로 메시지가 오면 목록에 추가
     ws.onmessage = evt => {
       const message: Message = JSON.parse(evt.data);
-
-      if (message.type === 'sessionID') {
-        const sessionID = message.sessionID;
-        console.log('Session ID:', sessionID);
-      } else {
-        setMessages(prevMessages => [...prevMessages, message]);
-      }
+      setMessages(prevMessages => [...prevMessages, message]);
     };
 
     // WebSocket 객체와의 연결 해제
