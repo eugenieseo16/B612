@@ -4,6 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
 import { usePlanetContract } from './contracts/planetToken';
 import { useFlowerContract } from './contracts/roseToken';
+import { apiBaseUrl } from 'API/apiURLs';
 
 function UserController() {
   const setUser = useSetRecoilState(userAtom);
@@ -35,6 +36,17 @@ function UserController() {
       planets = await planetContract?.methods
         .getPlanetTokens(memberAddress)
         .call();
+
+      // planets.forEach((planet: IPlanet) => {
+      //   axios.post(`${apiBaseUrl}/planet/regist`, {
+      //     createdAt: planet.createdAt,
+      //     onSale: planet.onSale,
+      //     ownerMemberId: data.responseData.memberId,
+      //     planetName: planet.planetName,
+      //     planetNftId: planet.planetTokenId,
+      //     planetType: planet.planetType,
+      //   });
+      // });
 
       const eth = (
         parseInt(
