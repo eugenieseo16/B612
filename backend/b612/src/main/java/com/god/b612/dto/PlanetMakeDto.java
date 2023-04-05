@@ -1,4 +1,4 @@
-package com.god.b612.repository;
+package com.god.b612.dto;
 
 import lombok.Builder;
 import lombok.Getter;
