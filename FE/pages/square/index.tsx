@@ -8,7 +8,7 @@ import {
   Ground,
   Tetris,
   AppleTreeModel,
-  AvatarFinn,
+  Avatar,
   Tetris2,
   Baobab,
   ChatBox,
@@ -31,7 +31,7 @@ const ChattingContainer = styled.div`
 
 function Square() {
   // 개발중일때 , true 상태관리와 helper를 키고,끌수 있도록 함
-  const testing = true;
+  const testing = false;
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     e.stopPropagation();
@@ -64,7 +64,7 @@ function Square() {
         <Tetris2 />
         <AppleTreeModel position={[14, 0, -45]} />
         <Lights />
-        <AvatarFinn />
+        <Avatar />
         <Baobab />
       </Canvas>
 

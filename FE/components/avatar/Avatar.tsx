@@ -4,8 +4,9 @@ import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { positionAtom } from 'store/square/positionAtom';
+import userAtom from 'store/userAtom';
 // import { AvatarPosition } from '@components/avatar/AvatarPosition';
 
 import { Modal } from '@mui/material';
@@ -20,6 +21,7 @@ import {
   isTetrisModalArea,
   isAppleModalArea,
   isBaobabModalArea,
+  AvatarCharacter,
 } from '@components/avatar/index';
 
 // eslint-disable-next-line prefer-const
@@ -32,10 +34,12 @@ let rotateQuaternion = new THREE.Quaternion();
 // 카메라의 타겟을 저장하는 변수
 let cameraTarget = new THREE.Vector3();
 
-const AvatarFinn = () => {
+const Avatar = () => {
   const [avatarPosition, setAvatarPosition] = useRecoilState(positionAtom);
   const { forward, backward, left, right, shift } = UseInput();
-  const model = useGLTF('./avatars/foureyes.glb');
+  const user = useRecoilValue(userAtom);
+  const memberCharacterIndex = user?.memberCharacter ?? 0;
+  const model = useGLTF(AvatarCharacter[memberCharacterIndex]);
   let pos = [0, 0, 0];
 
   const { actions } = useAnimations(model.animations, model.scene);
@@ -232,7 +236,7 @@ const AvatarFinn = () => {
   );
 };
 
-export default AvatarFinn;
+export default Avatar;
 
 // 3D 모델링을 담당하는 AvatarModel 컴포넌트,
 // 애니메이션을 담당하는 AvatarAnimation 컴포넌트,
