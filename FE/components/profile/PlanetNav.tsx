@@ -40,6 +40,8 @@ function PlanetNav() {
   };
   return (
     <Pagination
+      hideNextButton
+      hidePrevButton
       count={totalLength}
       variant="outlined"
       color="secondary"
@@ -55,6 +57,7 @@ function PlanetNav() {
         background: rgba(colors.purple, 0.8),
         padding: '1rem',
         borderRadius: '1rem',
+        display: planets.length > 0 ? 'flex' : 'none',
       }}
     />
   );
