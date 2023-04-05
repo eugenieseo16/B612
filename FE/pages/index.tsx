@@ -4,25 +4,17 @@ import type { NextPage } from 'next';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
-import ModelCanvas from '@components/Main/ModelCanvas';
 import TestCanvas from '@components/Main/TestCanvas';
 
 import Modal from '@mui/material/Modal';
 
-import PlanetModel from '@components/Planet/PlanetModel';
-import PlanetDetailCard from '@components/Planet/PlanetDetail';
 import BlueGlowingButton from '@components/common/BlueGlowingButton';
-import PinkGlowingButton from '@components/common/PinkGlowingButton';
 import YellowGlowingButton from '@components/common/YellowGlowingButton';
 
-import {
-  CertificateModal,
-  FriendsModal,
-  PlanetsModal,
-} from '@components/Planet/index';
+import { CertificateModal, FriendsModal } from '@components/Planet/index';
+import { Canvas } from '@react-three/fiber';
 
 const Home: NextPage = () => {
-  const user = useRecoilValue(userAtom);
   const FloatingButtons = styled.div`
     position: fixed;
     bottom: 3rem;
@@ -41,19 +33,16 @@ const Home: NextPage = () => {
   const handleOpenCertificate = () => setOpenCertificate(true);
   const handleCloseCertificate = () => setOpenCertificate(false);
 
-  const [openPlanets, setOpenPlanets] = useState(false);
-  const handleOpenPlanets = () => setOpenPlanets(true);
-  const handleClosePlanets = () => setOpenPlanets(false);
-
   return (
     <div style={{ paddingTop: '4rem' }}>
-      {!Boolean(user) ? (
+      {/* {!Boolean(user) ? (
         <></>
       ) : (
         <h3>{user?.memberNickname + '님, 환영해요!'}</h3>
-      )}
-
-      <TestCanvas />
+      )} */}
+      <Canvas style={{ width: '100vw', height: 'calc(100vh - 4rem)' }}>
+        <TestCanvas />
+      </Canvas>
 
       <FloatingButtons>
         <div className="floating-button-items" onClick={handleOpenFriends}>
@@ -62,9 +51,6 @@ const Home: NextPage = () => {
 
         <div className="floating-button-items" onClick={handleOpenCertificate}>
           <YellowGlowingButton icon={'certificate'} />
-        </div>
-        <div className="floating-button-items" onClick={handleOpenPlanets}>
-          <PinkGlowingButton icon={'planet'} />
         </div>
       </FloatingButtons>
 
@@ -76,11 +62,6 @@ const Home: NextPage = () => {
       {/* 인증서 발급 */}
       <Modal open={openCertificate} onClose={handleCloseCertificate}>
         <CertificateModal />
-      </Modal>
-
-      {/* 보유 행성 조회 */}
-      <Modal open={openPlanets} onClose={handleClosePlanets}>
-        <PlanetsModal />
       </Modal>
     </div>
   );

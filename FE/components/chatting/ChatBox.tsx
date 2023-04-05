@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 
 import { useRecoilValue } from 'recoil';
+
 import userAtom from 'store/userAtom';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import type { Message } from './index';
@@ -34,7 +35,7 @@ const ChatBox: React.FC = () => {
         content: '환영합니다!',
         timestamp: Date.now(),
         sentBy: 'server',
-        memberNickname: '머무르다',
+        memberNickname: 'B612',
       };
       setMessages(prevMessages => [...prevMessages, welcomeMessage]);
     };
@@ -141,7 +142,7 @@ const ChatBox: React.FC = () => {
               onChange={handleInput}
               onKeyDown={handleKeyPress}
             />
-            <ChatButton onClick={sendMessage}>Send</ChatButton>
+            <ChatButton onClick={sendMessage}>보내기</ChatButton>
           </ChatInputContainer>
         </div>
       )}

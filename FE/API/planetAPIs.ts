@@ -45,3 +45,11 @@ export const usePlanetOwnerAPI = (memberAddress: any) => {
   );
   return response?.responseData;
 };
+
+// 행성 정보
+export const usePlanetDetailAPI = (planetId: any) => {
+  const response = useMyQuery(
+    `${planetAPIUrls.getPlanetDetailAPIUrl}/${planetId}`
+  );
+  return response?.responseData;
+};

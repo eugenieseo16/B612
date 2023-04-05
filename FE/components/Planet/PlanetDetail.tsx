@@ -7,11 +7,11 @@ import userAtom from 'store/userAtom';
 import { PlanetDetail } from './PlanetDetailEmotion';
 
 import dayjs from 'dayjs';
-import Goerli from '../../assets/imgs/goerli-eth.png';
+// import Goerli from '../../assets/imgs/goerli-eth.png';
 
 import { usePlanetContract } from '@components/contracts/planetToken';
 import { planetNameParser } from 'utils/planetUtil';
-import { usePlanetOwnerAPI } from 'API/planetAPIs';
+import { usePlanetDetailAPI, usePlanetOwnerAPI } from 'API/planetAPIs';
 import { tierDataList } from 'utils/tierDataList';
 
 import Button from '@mui/material/Button';
@@ -37,8 +37,11 @@ function PlanetDetailCard() {
   const [memberAddress, setMemberAddress] = useState(null);
   const [isOnSale, setIsOnSale] = useState(null);
 
+  // DB데이터
   const ownerData = usePlanetOwnerAPI(memberAddress);
+  const planetData = usePlanetDetailAPI(planetId);
 
+  // 솔리디티 데이터
   useEffect(() => {
     if (!planetId) return;
     planetContract?.methods
@@ -67,8 +70,10 @@ function PlanetDetailCard() {
 
   const handleSale = () => {
     setOpen(false);
+
+    const planetPrice = (+desiredAmount * 10 ** 18).toString();
     planetContract?.methods
-      .setForSalePlanetToken(planetId, desiredAmount)
+      .setForSalePlanetToken(planetId, planetPrice)
       .send({ from: user?.memberAddress });
   };
 
@@ -126,8 +131,7 @@ function PlanetDetailCard() {
           </div> */}
         </div>
 
-        {ownerData?.memberAddress.toLowerCase() ===
-        user?.memberAddress.toLowerCase() ? (
+        {user?.memberId === ownerData?.memberId ? (
           // 본인 소유 행성일 때
           <div className="for-sale-button">
             {isOnSale === false ? (
