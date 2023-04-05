@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Stats } from '@react-three/drei';
 import styled from '@emotion/styled';
-
+import { positionAtom } from 'store/square/positionAtom';
 import {
   Lights,
   Ground,
@@ -15,6 +15,7 @@ import {
 } from '@components/square/index';
 
 import { AvatarPosition } from '@components/avatar/AvatarPosition';
+import { useRecoilCallback } from 'recoil';
 
 const SquareContainer = styled.div`
   width: 100%;
@@ -44,6 +45,15 @@ function Square() {
     // ChattingContainer에서 발생한 마우스 스크롤 이벤트 처리
     console.log('wheel event in ChattingContainer');
   }
+  const resetPosition = useRecoilCallback(({ set }) => () => {
+    set(positionAtom, { x: 0, z: 0 });
+  });
+
+  useEffect(() => {
+    return () => {
+      resetPosition();
+    };
+  }, []);
 
   return (
     <SquareContainer>
