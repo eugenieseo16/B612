@@ -205,8 +205,7 @@ const AvatarFinn = () => {
 
   return (
     <>
-      <primitive object={model.scene} />;
-      <AvatarPosition />
+      <primitive object={model.scene} />;{/* <AvatarPosition /> */}
       <Html>
         {showTetrisModal && (
           <Modal open={showTetrisModal} onClose={handleTetrisClose}>
