@@ -1,13 +1,13 @@
 import { Center, useGLTF, useAnimations } from '@react-three/drei';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
-import { Box3, Vector3 } from 'three';
+import { Box3, Group, Vector3 } from 'three';
 import { degToRad } from 'three/src/math/MathUtils';
 import { useRef, useEffect } from 'react';
 
 function Garden() {
-  const ref = useRef<any>();
-  const [roomIndex, setRoomIndex] = useRecoilState(roomIndexAtom);
+  const ref = useRef<Group>(null);
+  const setRoomIndex = useSetRecoilState(roomIndexAtom);
   const { scene, animations } = useGLTF(
     'https://res.cloudinary.com/dohkkln9r/image/upload/v1680591020/bouquet.glb'
   );
@@ -25,7 +25,7 @@ function Garden() {
 
   useEffect(() => {
     actions[names[0]]?.play();
-  }, [actions]);
+  }, [actions, names]);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import GlowingButton from '@components/common/GlowingButton';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import onSaleTypeAtom from 'store/store/onSaleTypeAtom';
 
 function StoreNav() {

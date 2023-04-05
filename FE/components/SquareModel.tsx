@@ -1,8 +1,9 @@
 import React from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, PrimitiveProps } from '@react-three/fiber';
 import { useGLTF, Stage, PresentationControls } from '@react-three/drei';
 
-function Model(props: any) {
+type Props = Omit<PrimitiveProps, 'object'>;
+function Model(props: Props) {
   const { scene } = useGLTF('/planet/square_preview.glb');
   return <primitive object={scene} {...props} />;
 }

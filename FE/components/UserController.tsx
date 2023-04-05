@@ -63,7 +63,7 @@ function UserController() {
         10 ** -18
       ).toFixed(4);
 
-      const chainData: any[] = await flowerContract?.methods
+      const chainData: IRose[] = await flowerContract?.methods
         .getRoseTokens(memberAddress)
         .call();
 
@@ -71,7 +71,7 @@ function UserController() {
         data: { responseData: allFlowers },
       } = await axios.get(`https://j8a208.p.ssafy.io/api/member/${id}/flowers`);
       const allFlowersMap = allFlowers?.map(
-        (flower: any) => flower.flowerNftId
+        (flower: IRose) => flower.flowerNftId
       );
 
       const filteredData = chainData?.filter(

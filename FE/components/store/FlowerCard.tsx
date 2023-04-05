@@ -1,5 +1,5 @@
 import GETH from '../../assets/imgs/goerli-eth.png';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 import { MetaData, PlanetDetail, PlanetInfo } from './PlanetCard.styles';
 import { Button } from '@mui/material';
@@ -18,7 +18,7 @@ function FlowerCard() {
   const me = useRecoilValue(userAtom);
   const [boxAnimate, setBoxAnimate] = useRecoilState(boxAnimateAtom);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useRecoilState(loadingAtom);
+  const [{ loading }, setLoading] = useRecoilState(loadingAtom);
 
   const mintingFlower = async () => {
     if (loading) return;
@@ -52,7 +52,7 @@ function FlowerCard() {
 
   useEffect(() => {
     setBoxAnimate(false);
-  }, []);
+  }, [setBoxAnimate]);
 
   return (
     <>

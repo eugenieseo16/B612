@@ -2,17 +2,13 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';
 import storeIndexAtom from 'store/store/storeIndexAtom';
 import Pagination from '@mui/material/Pagination';
-import onSaleTypeAtom from 'store/store/onSaleTypeAtom';
-import onSaleFlowersAtom from 'store/store/onSaleFlowersAtom';
 
 function StorePagination() {
-  const storeType = useRecoilValue(onSaleTypeAtom);
   const onSalePlanets = useRecoilValue(onSalePlanetsAtom);
-  const onSaleFlowers = useRecoilValue(onSaleFlowersAtom);
 
   const [storeIndex, setStoreIndex] = useRecoilState(storeIndexAtom);
 
-  const changePage = (e: any, page: number) => {
+  const changePage = (e: React.ChangeEvent<unknown>, page: number) => {
     setStoreIndex({ index: page - 1, page: storeIndex.page });
   };
 
