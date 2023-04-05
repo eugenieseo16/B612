@@ -2,11 +2,44 @@ import React, { useState, useEffect } from 'react';
 import { positionAtom } from 'store/square/positionAtom';
 import type { Position } from 'store/square/positionAtom';
 import { useRecoilValue } from 'recoil';
+import userAtom from 'store/userAtom';
+
+import { useGLTF } from '@react-three/drei';
+
+import { AvatarCharacter } from './index';
+import { useLoader } from '@react-three/fiber';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
+type OtherAvatarProps = {
+  type: string;
+  sessionId: string;
+  memberCharacter: number;
+  x: number;
+  z: number;
+};
+
+const OtherAvatar = ({
+  type,
+  sessionId,
+  memberCharacter,
+  x,
+  z,
+}: OtherAvatarProps) => {
+  const { scene } = useGLTF(AvatarCharacter[memberCharacter]);
+
+  return <primitive object={scene.clone()} position={[x, 0, z]} />;
+};
 
 export const AvatarPosition: React.FC = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const sessionIdRef = React.useRef<string | null>(null); // sessionId 초기값을 null로 지정
   const position = useRecoilValue(positionAtom);
+  const user = useRecoilValue(userAtom);
+  const memberCharacterIndex = user?.memberCharacter ?? 1;
+
+  const [otherPositions, setOtherPositions] = useState<
+    Record<string, Position>
+  >({});
 
   useEffect(() => {
     // 웹소켓 객체 생성 및 서버와 연결
@@ -21,6 +54,15 @@ export const AvatarPosition: React.FC = () => {
       if (!sessionIdRef.current) {
         // sessionIdRef가 초기화되지 않은 경우에만 업데이트
         sessionIdRef.current = evt.data;
+      }
+      // 다른 유저의 정보 받기
+      const data = evt.data;
+      if (data.sessionId !== sessionIdRef.current) {
+        console.log('e다른유저', data);
+        setOtherPositions(prevPositions => ({
+          ...prevPositions,
+          [data.sessionId]: { x: data.x, z: data.z },
+        }));
       }
     };
 
@@ -45,7 +87,7 @@ export const AvatarPosition: React.FC = () => {
     const message = {
       type: 'move',
       sessionId: sessionIdRef.current,
-      memberCharacter: 3,
+      memberCharacter: memberCharacterIndex,
       x: position.x,
       z: position.z,
     };
@@ -62,5 +104,18 @@ export const AvatarPosition: React.FC = () => {
     }
   }, [socket, position]);
 
-  return null;
+  return (
+    <>
+      {Object.entries(otherPositions).map(([sessionId, position]) => (
+        <OtherAvatar
+          type="move"
+          key={sessionId}
+          sessionId={sessionId}
+          memberCharacter={memberCharacterIndex}
+          x={position.x}
+          z={position.z}
+        />
+      ))}
+    </>
+  );
 };
