@@ -70,7 +70,6 @@ function UserProfile() {
         position: 'relative',
       }}
     >
-      {/* <PlanetController userAddress={userData?.responseData?.memberAddress} /> */}
       {roomIndex !== 1 && <RoomNav />}
 
       {roomIndex === 2 && (

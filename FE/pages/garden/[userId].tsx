@@ -3,7 +3,6 @@ import Garden from '@components/garden/Garden';
 import GardenNav from '@components/garden/GardenNav';
 import { Canvas } from '@react-three/fiber';
 import { useUserById } from 'API/memberAPIs';
-import { MotionCanvas } from 'framer-motion-3d';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import {

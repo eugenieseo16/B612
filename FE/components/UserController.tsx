@@ -25,6 +25,7 @@ function UserController() {
           memberAddress,
         }
       );
+      const id = data.responseData.memberId;
       const planetContractAddress =
         '0xeab8b1e0cd0de0c9e07928d8d8c9aab166ae983e';
       let isApproved = false;
@@ -37,16 +38,19 @@ function UserController() {
         .getPlanetTokens(memberAddress)
         .call();
 
-      // planets.forEach((planet: IPlanet) => {
-      //   axios.post(`${apiBaseUrl}/planet/regist`, {
-      //     createdAt: planet.createdAt,
-      //     onSale: planet.onSale,
-      //     ownerMemberId: data.responseData.memberId,
-      //     planetName: planet.planetName,
-      //     planetNftId: planet.planetTokenId,
-      //     planetType: planet.planetType,
-      //   });
-      // });
+      const newPlanets = planets?.map((planet: IPlanet) => ({
+        createdAt: planet.createdAt,
+        onSale: planet.onSale,
+        ownerMemberId: id,
+        planetLikesCount: 0,
+        planetName: planet.planetName,
+        planetNftId: planet.planetTokenId,
+        planetType: planet.planetType,
+      }));
+      if (newPlanets)
+        axios.post(`${apiBaseUrl}/member/reload/${id}`, newPlanets, {
+          headers: { 'Content-Type': 'application/json' },
+        });
 
       const eth = (
         parseInt(
@@ -59,18 +63,15 @@ function UserController() {
         10 ** -18
       ).toFixed(4);
 
-      const chainData: any[] = await flowerContract?.methods
+      const chainData: IRose[] = await flowerContract?.methods
         .getRoseTokens(memberAddress)
         .call();
 
-      console.log('채인데이터', chainData);
       const {
         data: { responseData: allFlowers },
-      } = await axios.get(
-        `https://j8a208.p.ssafy.io/api/member/${data.responseData.memberId}/flowers`
-      );
+      } = await axios.get(`https://j8a208.p.ssafy.io/api/member/${id}/flowers`);
       const allFlowersMap = allFlowers?.map(
-        (flower: any) => flower.flowerNftId
+        (flower: IRose) => flower.flowerNftId
       );
 
       const filteredData = chainData?.filter(

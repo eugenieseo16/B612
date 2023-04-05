@@ -43,7 +43,7 @@ function Rocket() {
       actions[names[0]]?.play();
       setTimeout(() => {
         actions[names[0]]?.startAt(800);
-      }, 800);
+      }, 1200);
       setTimeout(() => {
         router.push(`/profile/${randomUserId}`);
       }, 800);
@@ -51,34 +51,33 @@ function Rocket() {
   }, [animate]);
 
   return (
-    <Center
-      onClick={() => {
-        router.push(`/profile/${randomUserId}`);
-        setAnimate(true);
-      }}
-      position={[-6, 3, -5]}
-      rotation={[0, 0, degToRad(-45)]}
-      ref={ref}
-    >
-      <group>
-        <primitive object={scene} />
-        <Html position={[0, -1, 0]}>
-          <div
-            style={{
-              width: '10rem',
-              backgroundColor: colors.purple,
-              padding: '1rem',
-              borderRadius: '1rem',
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <p style={{ color: '#fff' }}>놀러가기</p>
-            <span></span>
-          </div>
-        </Html>
-      </group>
-    </Center>
+    <>
+      <Center position={[-8, 3, -5]} rotation={[0, 0, degToRad(-45)]} ref={ref}>
+        <group>
+          <primitive object={scene} />
+        </group>
+      </Center>
+      <Html position={[-8, 3, -5]}>
+        <div
+          onClick={() => {
+            router.push(`/profile/${randomUserId}`);
+            setAnimate(true);
+          }}
+          style={{
+            cursor: 'pointer',
+            width: '10rem',
+            backgroundColor: colors.purple,
+            padding: '1rem',
+            borderRadius: '1rem',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <p style={{ color: '#fff' }}>우주여행🚀</p>
+          <span></span>
+        </div>
+      </Html>
+    </>
   );
 }
 

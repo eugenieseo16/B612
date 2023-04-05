@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import boxAnimateAtom from 'store/store/boxAnimateAtom';
 
 const RandomBox = () => {
+  // eslint-disable-next-line
   const ref = useRef<any>(null);
   const { scene, animations } = useGLTF(
     'https://res.cloudinary.com/dohkkln9r/image/upload/v1680502259/box.glb'
@@ -27,7 +28,7 @@ const RandomBox = () => {
   useEffect(() => {
     actions['Take 001']?.setDuration(1.5);
     actions['Take 001']?.setLoop(LoopOnce, 1);
-  }, []);
+  }, [actions]);
   useEffect(() => {
     if (animate) {
       actions['Take 001']?.play();
@@ -35,7 +36,7 @@ const RandomBox = () => {
         actions['Take 001']?.startAt(800);
       }, 1200);
     }
-  }, [animate]);
+  }, [animate, actions]);
   return (
     <motion.group
       ref={ref}

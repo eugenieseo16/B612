@@ -1,4 +1,4 @@
-import { Center, PresentationControls, useGLTF } from '@react-three/drei';
+import { Center, useGLTF } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import onSalePlanetsAtom from 'store/store/onSalePlanetsAtom';
@@ -30,7 +30,7 @@ function OnSalePlanets() {
 
 export default OnSalePlanets;
 
-const Planet = ({ data, deg }: any) => {
+const Planet = ({ data, deg }: { data: IPlanet; deg: number }) => {
   const scene = useGLTF(PLANETS_LIST[+data.planetType]);
   const clone = SkeletonUtils.clone(scene.scene);
   const setAnimate = useSetRecoilState(storeAnimateAtom);

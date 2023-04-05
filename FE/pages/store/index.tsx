@@ -1,8 +1,6 @@
 import { usePlanetContract } from '@components/contracts/planetToken';
-import { useFlowerContract } from '@components/contracts/roseToken';
 import FlowerCard from '@components/store/FlowerCard';
 import RandomBox from '@components/store/OnSaleFlowers';
-import OnSaleFlowers from '@components/store/OnSaleFlowers';
 import OnSalePlanets from '@components/store/OnSalePlanets';
 import PlanetCard from '@components/store/PlanetCard';
 import StoreNav from '@components/store/StoreNav';

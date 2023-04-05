@@ -27,7 +27,12 @@ function FlowerThree() {
         minDistance={10}
         maxPolarAngle={degToRad(60)}
       />
-      <Environment background files={'/sky.hdr'} />
+      <Environment
+        background
+        files={
+          'https://res.cloudinary.com/dohkkln9r/raw/upload/v1680684947/zojcr6dnjg5yj0yldwsp.hdr'
+        }
+      />
 
       {/* <mesh receiveShadow rotation={[degToRad(-90), 0, 0]}>
         <planeGeometry args={[10, 10]} />

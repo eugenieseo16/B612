@@ -15,7 +15,6 @@ import { CertificateModal, FriendsModal } from '@components/Planet/index';
 import { Canvas } from '@react-three/fiber';
 
 const Home: NextPage = () => {
-  const user = useRecoilValue(userAtom);
   const FloatingButtons = styled.div`
     position: fixed;
     bottom: 3rem;

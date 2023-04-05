@@ -36,3 +36,9 @@ interface IFlower {
   flowerLocationY: number;
   flowerLocationZ: number;
 }
+interface IRose extends IFlower {
+  createdAt: string;
+  roseTokenId: string;
+  roseType: string;
+  onSale: string;
+}
