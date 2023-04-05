@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import loadingAtom from 'store/loadingAtom';
 import Button from '@mui/material/Button';
+import { rgba } from 'emotion-rgba';
+import { colors } from 'styles/colors';
 
 function Notification() {
   const [{ loading, type, message }, setLoading] = useRecoilState(loadingAtom);
@@ -35,7 +37,7 @@ const Container = styled(motion.div)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: tomato;
+  background-color: ${rgba(colors.orange, 0.8)};
   /* width: 20rem; */
   padding: 2rem;
   border-radius: 1rem;

@@ -1,22 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Html, Stats, useGLTF } from '@react-three/drei';
-import styled from '@emotion/styled';
-import router, { useRouter } from 'next/router';
-import { useMyRandomPlanetAPI } from 'API/planetAPIs';
-import userAtom from 'store/userAtom';
-import { useRecoilValue } from 'recoil';
-import { PLANETS_LIST } from 'utils/utils';
 import { usePlanetContract } from '@components/contracts/planetToken';
+import { useMyRandomPlanetAPI } from 'API/planetAPIs';
+import { useRecoilValue } from 'recoil';
+import { useState, useEffect } from 'react';
+import userAtom from 'store/userAtom';
+import { useGLTF } from '@react-three/drei';
+import { PLANETS_LIST } from 'utils/utils';
+import { Box3, Vector3 } from 'three';
 
-function Model(props: any) {
+export default function Planet() {
   // 내 행성 랜덤 id 가져오기
   const user = useRecoilValue(userAtom);
   const myRandomPlanetId = useMyRandomPlanetAPI(
-    user?.memberId === undefined ? 1 : user?.memberId
+    user?.memberId === undefined ? -1 : user?.memberId
   );
+
   const planetContract = usePlanetContract();
   const [planetDetail, setPlanetDetail] = useState(null);
+
+  console.log(myRandomPlanetId);
 
   useEffect(() => {
     if (!myRandomPlanetId) return;
@@ -30,75 +31,22 @@ function Model(props: any) {
 
   const { scene } = useGLTF(PLANETS_LIST[planetDetail || 1]);
 
-  return <primitive object={scene} {...props} />;
-}
+  //3D 모델링 리사이즈
+  const bbox = new Box3().setFromObject(scene);
+  const center = bbox.getCenter(new Vector3());
+  const size = bbox.getSize(new Vector3());
 
-const Torus = (props: JSX.IntrinsicElements['mesh']) => {
-  const groupRef = useRef<any>();
-
-  useFrame(() => {
-    groupRef.current.rotation.x += 0.005;
-    groupRef.current.rotation.y += 0.005;
-  });
-
-  const router = useRouter();
-  const user = useRecoilValue(userAtom);
-
-  // 나의 랜덤 행성 id
-  const myRandomPlanetId = useMyRandomPlanetAPI(
-    user?.memberId === undefined ? 1 : user?.memberId
-  );
+  const maxAxis = Math.max(size.x, size.y, size.z);
+  scene.scale.multiplyScalar(4.5 / maxAxis);
+  bbox.setFromObject(scene);
+  bbox.getCenter(center);
+  bbox.getSize(size);
+  scene.position.copy(center).multiplyScalar(-1);
+  scene.position.y -= size.y * 0.5;
 
   return (
-    <group ref={groupRef}>
-      <mesh {...props}>
-        <Model
-          // position={[6, 1, 0]}
-          scale={[0.005, 0.005, 0.005]}
-          onClick={() => router.push(`/planet/${myRandomPlanetId}`)}
-        />
-        {/* <torusGeometry args={[1, 0.2, 12, 36]} />
-        <meshStandardMaterial color={'red'} /> */}
-        <Html>
-          <FloatingTag className="label">
-            <p>내 행성 가꾸기</p>
-          </FloatingTag>
-        </Html>
-      </mesh>
+    <group>
+      <primitive object={scene} />
     </group>
   );
-};
-function Rocket() {
-  const router = useRouter();
-  const user = useRecoilValue(userAtom);
-
-  // 나의 랜덤 행성 id
-  const myRandomPlanetId = useMyRandomPlanetAPI(
-    user?.memberId === undefined ? 1 : user?.memberId
-  );
-
-  return (
-    <>
-      <pointLight position={[5, 5, 5]} />
-      <Torus
-        position={[2, 0, 0]}
-        onClick={() => router.push(`/planet/${myRandomPlanetId}`)}
-      />
-    </>
-  );
 }
-
-export default Rocket;
-
-const FloatingTag = styled.div`
-  width: 200px;
-
-  background-color: pink;
-  border-radius: 3rem;
-  height: 2rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-`;
