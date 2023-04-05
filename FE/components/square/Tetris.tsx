@@ -7,7 +7,10 @@ import TetrisModal from './TetrisModal';
 import { Html } from '@react-three/drei';
 
 const Tetris = () => {
-  const model = useLoader(GLTFLoader, './tetris/tetris.glb');
+  const model = useLoader(
+    GLTFLoader,
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680669902/tetris.glb'
+  );
   const objectRef = useRef<THREE.Object3D>(null);
 
   const [openTetris, setOpenTetris] = useState(false);

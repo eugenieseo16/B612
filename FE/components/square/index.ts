@@ -3,7 +3,7 @@ import Ground from '@components/square/Ground';
 import Tetris from '@components/square/Tetris';
 import TetrisModal from '@components/square/TetrisModal';
 import { AppleTreeModel } from '@components/square/Appletree';
-import AvatarFinn from '@components/avatar/AvatarFinn';
+import Avatar from '@components/avatar/Avatar';
 import Tetris2 from '@components/square/Tetris2';
 import ChatBox from '@components/chatting/ChatBox';
 import BaobabModal from './BaobabModal';
@@ -15,7 +15,7 @@ export {
   Ground,
   Tetris,
   AppleTreeModel,
-  AvatarFinn,
+  Avatar,
   Tetris2,
   ChatBox,
   BaobabModal,
