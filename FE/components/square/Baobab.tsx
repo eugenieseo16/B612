@@ -7,7 +7,10 @@ import { Html } from '@react-three/drei';
 import BaobabModal from './BaobabModal';
 
 const Baobab = () => {
-  const model = useLoader(GLTFLoader, './baobab/baobab.glb');
+  const model = useLoader(
+    GLTFLoader,
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680669902/baobab.glb'
+  );
   const objectRef = useRef<THREE.Object3D>(null);
 
   const [openBaobab, setOpenBaobab] = useState(false);
