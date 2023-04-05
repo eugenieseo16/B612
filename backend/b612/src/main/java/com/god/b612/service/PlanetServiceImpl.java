@@ -1,6 +1,7 @@
 package com.god.b612.service;
 
-import com.god.b612.dto.PlanetRequestDto;
+import com.god.b612.dto.MemberResponseDto;
+import com.god.b612.dto.PlanetMakeDto;
 import com.god.b612.dto.PlanetResponseDto;
 import com.god.b612.dto.PlanetResponseDtoForRank;
 import com.god.b612.entity.Like;
@@ -58,6 +59,7 @@ public class PlanetServiceImpl implements PlanetService {
 
     }
 
+
     @Override
     public PlanetResponseDto selectPlanet(int planetId){
         Planet planet=planetRepository.findTopByPlanetNftId(planetId);
@@ -102,6 +104,7 @@ public class PlanetServiceImpl implements PlanetService {
                         .memberImage(planetOwner.getMemberImage())
                         .memberAddress(planetOwner.getMemberAddress())
                         .memberLiked(memberLike)
+                        .memberCharacter(planetOwner.getMemberCharacter())
                         .build();
 
                 memberRepository.save(planetOwner);
@@ -142,6 +145,7 @@ public class PlanetServiceImpl implements PlanetService {
                         .memberImage(planetOwner.getMemberImage())
                         .memberAddress(planetOwner.getMemberAddress())
                         .memberLiked(memberLike)
+                        .memberCharacter(planetOwner.getMemberCharacter())
                         .build();
 
                 memberRepository.save(planetOwner);
@@ -253,6 +257,7 @@ public class PlanetServiceImpl implements PlanetService {
                     .memberImage(pastOwner.getMemberImage())
                     .memberAddress(pastOwner.getMemberAddress())
                     .memberLiked(pastOwner.getMemberLiked() - planet.getPlanetLikesCount())
+                    .memberCharacter(pastOwner.getMemberCharacter())
                     .build();
 
             memberRepository.save(pastOwner);
@@ -308,6 +313,7 @@ public class PlanetServiceImpl implements PlanetService {
                 .memberImage(planetOwner.getMemberImage())
                 .memberAddress(planetOwner.getMemberAddress())
                 .memberLiked(planetOwner.getMemberLiked() + planet.getPlanetLikesCount())
+                .memberCharacter(planetOwner.getMemberCharacter())
                 .build();
 
         memberRepository.save(planetOwner);
