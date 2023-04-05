@@ -4,8 +4,9 @@ import { Html, useAnimations, useGLTF } from '@react-three/drei';
 import { UseInput } from '@components/square/UseInput';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { positionAtom } from 'store/square/positionAtom';
+// import { AvatarPosition } from '@components/avatar/AvatarPosition';
 
 import { Modal } from '@mui/material';
 import {
@@ -19,7 +20,6 @@ import {
   isTetrisModalArea,
   isAppleModalArea,
   isBaobabModalArea,
-  AvatarPosition,
 } from '@components/avatar/index';
 
 // eslint-disable-next-line prefer-const
@@ -205,8 +205,7 @@ const AvatarFinn = () => {
 
   return (
     <>
-      <primitive object={model.scene} />;
-      <AvatarPosition />
+      <primitive object={model.scene} />;{/* <AvatarPosition /> */}
       <Html>
         {showTetrisModal && (
           <Modal open={showTetrisModal} onClose={handleTetrisClose}>
@@ -228,6 +227,7 @@ const AvatarFinn = () => {
           </Modal>
         )}
       </Html>
+      {/* <AvatarPosition /> */}
     </>
   );
 };
