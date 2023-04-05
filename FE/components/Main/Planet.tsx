@@ -3,50 +3,37 @@ import { useMyRandomPlanetAPI } from 'API/planetAPIs';
 import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 import userAtom from 'store/userAtom';
-import { useGLTF } from '@react-three/drei';
+import { Center, Html, useGLTF } from '@react-three/drei';
 import { PLANETS_LIST } from 'utils/utils';
 import { Box3, Vector3 } from 'three';
+import { planetNameParser } from 'utils/planetUtil';
+import { colors } from 'styles/colors';
+import PlanetById from './PlanetById';
 
 export default function Planet() {
   // 내 행성 랜덤 id 가져오기
   const user = useRecoilValue(userAtom);
+  const planetContract = usePlanetContract();
+  const [planetDetail, setPlanetDetail] = useState<IPlanet | null>(null);
+
   const myRandomPlanetId = useMyRandomPlanetAPI(
     user?.memberId === undefined ? -1 : user?.memberId
   );
 
-  const planetContract = usePlanetContract();
-  const [planetDetail, setPlanetDetail] = useState(null);
-
-  console.log(myRandomPlanetId);
+  const getRandom = (max: number) => {
+    return Math.floor(Math.random() * max);
+  };
 
   useEffect(() => {
-    if (!myRandomPlanetId) return;
-    planetContract?.methods
-      .b612AddressMap(myRandomPlanetId)
-      .call()
-      .then((data: any) => {
-        setPlanetDetail(data?.planetType);
-      });
+    if (!planetContract) return;
+    (async function () {
+      const totalSupply = await planetContract?.methods.totalSupply().call();
+      const planetData = await planetContract?.methods
+        .b612AddressMap(getRandom(totalSupply) + 1)
+        .call();
+      setPlanetDetail(planetData);
+    })();
   }, [planetContract, myRandomPlanetId]);
 
-  const { scene } = useGLTF(PLANETS_LIST[planetDetail || 1]);
-
-  //3D 모델링 리사이즈
-  const bbox = new Box3().setFromObject(scene);
-  const center = bbox.getCenter(new Vector3());
-  const size = bbox.getSize(new Vector3());
-
-  const maxAxis = Math.max(size.x, size.y, size.z);
-  scene.scale.multiplyScalar(4.5 / maxAxis);
-  bbox.setFromObject(scene);
-  bbox.getCenter(center);
-  bbox.getSize(size);
-  scene.position.copy(center).multiplyScalar(-1);
-  scene.position.y -= size.y * 0.5;
-
-  return (
-    <group>
-      <primitive object={scene} />
-    </group>
-  );
+  return <>{planetDetail ? <PlanetById planet={planetDetail} /> : null}</>;
 }

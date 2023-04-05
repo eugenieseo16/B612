@@ -1,4 +1,4 @@
-import { useGLTF } from '@react-three/drei';
+import { Center, useGLTF } from '@react-three/drei';
 import React from 'react';
 import { Box3, Vector3 } from 'three';
 
@@ -11,17 +11,18 @@ function Square() {
   const size = bbox.getSize(new Vector3());
 
   const maxAxis = Math.max(size.x, size.y, size.z);
-  scene.scale.multiplyScalar(4.5 / maxAxis);
+  scene.scale.multiplyScalar(10 / maxAxis);
   bbox.setFromObject(scene);
   bbox.getCenter(center);
   bbox.getSize(size);
   scene.position.copy(center).multiplyScalar(-1);
-  scene.position.y -= size.y * 0.5;
 
   return (
-    <group>
-      <primitive object={scene} />
-    </group>
+    <Center position={[0, -1, 0]}>
+      <group>
+        <primitive object={scene} />
+      </group>
+    </Center>
   );
 }
 

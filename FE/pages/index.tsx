@@ -12,6 +12,7 @@ import BlueGlowingButton from '@components/common/BlueGlowingButton';
 import YellowGlowingButton from '@components/common/YellowGlowingButton';
 
 import { CertificateModal, FriendsModal } from '@components/Planet/index';
+import { Canvas } from '@react-three/fiber';
 
 const Home: NextPage = () => {
   const user = useRecoilValue(userAtom);
@@ -35,13 +36,14 @@ const Home: NextPage = () => {
 
   return (
     <div style={{ paddingTop: '4rem' }}>
-      {!Boolean(user) ? (
+      {/* {!Boolean(user) ? (
         <></>
       ) : (
         <h3>{user?.memberNickname + '님, 환영해요!'}</h3>
-      )}
-
-      <TestCanvas />
+      )} */}
+      <Canvas style={{ width: '100vw', height: 'calc(100vh - 4rem)' }}>
+        <TestCanvas />
+      </Canvas>
 
       <FloatingButtons>
         <div className="floating-button-items" onClick={handleOpenFriends}>
