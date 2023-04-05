@@ -64,6 +64,23 @@ public class MemberController {
         }
     }
 
+    @ApiOperation(value = "유저의 보유 행성을 갱신한다.", notes = "유저가 행성을 팔거나 사면 좋아요 숫자나 티어 등이 수정됨")
+    @PostMapping("/reload/{memberId}")
+    public ResponseEntity<?> reloadMember(@RequestBody @Valid @ApiParam(value = "회원이 가진 행성정보를 리스트로 줘라", required = true) List<PlanetMakeDto> planetMakeDtos, @PathVariable("memberId") int memberId) {
+        MemberResponseDto memberResponseDto=memberService.reloadUser(planetMakeDtos,memberId);
+        BaseResponseBody baseResponseBody;
+        if(memberResponseDto==null){
+            baseResponseBody = BaseResponseBody.builder().message("fail").statusCode(400).build();
+            return ResponseEntity.status(400).body(baseResponseBody);
+        }
+        else{
+            baseResponseBody = BaseResponseBody.builder().message("success").statusCode(200).responseData(memberResponseDto).build();
+            return ResponseEntity.status(200).body(baseResponseBody);
+        }
+    }
+
+
+
     @ApiOperation(value = "회원을 회원 번호로 조회한다.", notes = "회원번호를 입력하면 회원정보로 응답한다.")
     @GetMapping("/{memberId}")
     public ResponseEntity<?> findUser(@ApiParam(value = "회원 primary Key", example = "0") @PathVariable("memberId") int memberId) {

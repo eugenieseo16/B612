@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.Map;
 
 @Repository
@@ -90,6 +89,7 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
                 .memberHighestScore(foundMember.getMemberHighestScore())
                 .memberCurrentScore(foundMember.getMemberCurrentScore())
                 .memberLiked(foundMember.getMemberLiked())
+                .memberCharacter(foundMember.getMemberCharacter())
                 .build();
         memberRepository.save(changedMember);
         return true;
@@ -122,9 +122,26 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
                 .memberCurrentScore(member.getMemberCurrentScore())
                 .memberImage(member.getMemberImage())
                 .memberLiked(member.getMemberLiked())
+                .memberCharacter(member.getMemberCharacter())
                 .build();
 
         return memberResponseDtoForRank;
+    }
+
+    @Override
+    public MemberResponseDto makeMemberDto(Member member) {
+        MemberResponseDto memberResponseDto=MemberResponseDto.builder()
+                .memberId(member.getMemberId())
+                .memberAddress(member.getMemberAddress())
+                .memberNickname(member.getMemberNickname())
+                .memberTierName(member.getMemberTierId().getTierName())
+                .memberCurrentScore(member.getMemberCurrentScore())
+                .memberImage(member.getMemberImage())
+                .memberLiked(member.getMemberLiked())
+                .memberCharacter(member.getMemberCharacter())
+                .build();
+
+        return memberResponseDto;
     }
 
 }

@@ -1,9 +1,8 @@
 package com.god.b612.service;
 
-import com.god.b612.dto.PlanetRequestDto;
 import com.god.b612.dto.PlanetResponseDto;
 import com.god.b612.dto.PlanetResponseDtoForRank;
-import com.god.b612.repository.PlanetMakeDto;
+import com.god.b612.dto.PlanetMakeDto;
 
 import java.util.List;
 

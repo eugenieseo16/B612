@@ -22,8 +22,10 @@ public class MemberResponseDtoForRank {
 
     private int memberLiked;
 
+    private int memberCharacter;
+
     @Builder
-    public MemberResponseDtoForRank(int memberId, String memberAddress, String memberNickname, String memberImage, String memberTierName, int memberCurrentScore, int rank,int memberLiked) {
+    public MemberResponseDtoForRank(int memberId, String memberAddress, String memberNickname, String memberImage, String memberTierName, int memberCurrentScore, int rank,int memberLiked,int memberCharacter) {
         this.memberId = memberId;
         this.memberAddress = memberAddress;
         this.memberNickname = memberNickname;
@@ -32,5 +34,6 @@ public class MemberResponseDtoForRank {
         this.memberCurrentScore = memberCurrentScore;
         this.rank = rank;
         this.memberLiked=memberLiked;
+        this.memberCharacter=memberCharacter;
     }
 }

@@ -2,7 +2,7 @@ package com.god.b612.controller;
 
 import com.god.b612.dto.*;
 import com.god.b612.model.BaseResponseBody;
-import com.god.b612.repository.PlanetMakeDto;
+import com.god.b612.dto.PlanetMakeDto;
 import com.god.b612.service.FlowerService;
 import com.god.b612.service.PlanetService;
 import io.swagger.annotations.Api;
@@ -54,6 +54,7 @@ public class PlanetController {
             return ResponseEntity.status(200).body(baseResponseBody);
         }
     }
+
 
     @Transactional
     @ApiOperation(value = "행성을 조회한다.", notes = "행성을 조회한다.")
