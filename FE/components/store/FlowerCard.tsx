@@ -5,23 +5,49 @@ import { MetaData, PlanetDetail, PlanetInfo } from './PlanetCard.styles';
 import { Button } from '@mui/material';
 import { useFlowerContract } from '@components/contracts/roseToken';
 import boxAnimateAtom from 'store/store/boxAnimateAtom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+import loadingAtom from 'store/loadingAtom';
 
 function FlowerCard() {
   const flowerContract = useFlowerContract();
   const me = useRecoilValue(userAtom);
   const [boxAnimate, setBoxAnimate] = useRecoilState(boxAnimateAtom);
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useRecoilState(loadingAtom);
 
-  // const mintingFlower = () => {
-  //   planetContract?.methods.purchasePlanetToken(planet?.planetTokenId).send({
-  //     from: me?.memberAddress,
-  //     value: planet.planetPrice,
-  //   });
-  // };
-  const mintingFlower = () => {
+  const mintingFlower = async () => {
+    if (loading) return;
+    if (!me) {
+      setOpen(true);
+      return;
+    }
+    setLoading({ loading: true, type: 'flower' });
+
     if (boxAnimate) return;
-    flowerContract?.methods.mintRoseToken().send({ from: me?.memberAddress });
+    try {
+      await flowerContract?.methods
+        .mintRoseToken()
+        .send({ from: me?.memberAddress });
+    } catch (e) {
+      setLoading({
+        loading: false,
+        type: 'flower',
+        message: '꽃 구매를 실패하였습니다.',
+      });
+
+      return;
+    }
     setBoxAnimate(true);
+    setLoading({
+      loading: false,
+      type: 'flower',
+      message: '꽃 구매를 성공하였습니다.',
+    });
   };
 
   useEffect(() => {
@@ -30,6 +56,8 @@ function FlowerCard() {
 
   return (
     <>
+      <LoginAlert openState={[open, setOpen]} />
+
       <PlanetDetail>
         <PlanetInfo>
           <div>
@@ -42,14 +70,20 @@ function FlowerCard() {
         </PlanetInfo>
 
         <MetaData>
-          <Button
-            disabled={boxAnimate}
-            variant="contained"
-            color="success"
-            onClick={mintingFlower}
-          >
-            <span style={{ color: '#fff' }}>즉시구매</span>
-          </Button>
+          {loading ? (
+            <Button disabled variant="contained">
+              <span style={{ color: '#fff' }}>계약채결중</span>
+            </Button>
+          ) : (
+            <Button
+              disabled={boxAnimate}
+              variant="contained"
+              color="success"
+              onClick={mintingFlower}
+            >
+              <span style={{ color: '#fff' }}>즉시구매</span>
+            </Button>
+          )}
         </MetaData>
       </PlanetDetail>
     </>
@@ -57,3 +91,44 @@ function FlowerCard() {
 }
 
 export default FlowerCard;
+
+export const LoginAlert = ({
+  openState,
+}: {
+  openState: [boolean, Function];
+}) => {
+  const [open, setOpen] = openState;
+  return (
+    <Collapse
+      in={open}
+      sx={{
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        zIndex: 99,
+        width: '50%',
+        transform: 'translate(-50%,-50%)',
+      }}
+    >
+      <Alert
+        variant="filled"
+        severity="error"
+        action={
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        }
+        sx={{ mb: 2 }}
+      >
+        로그인한 후에 이용 해 주세요🍭
+      </Alert>
+    </Collapse>
+  );
+};

@@ -21,7 +21,13 @@ function MyProfileModal() {
       <p>보유 코인 : {me?.eth} GoerliETH</p>
       <div>
         <span>충전하러 가기 </span>
-        <a>https://goerlifaucet.com/</a>
+        <a
+          style={{ color: 'rgb(255,0,0)' }}
+          href="https://goerlifaucet.com/"
+          target="_blank"
+        >
+          https://goerlifaucet.com/
+        </a>
       </div>
       <Approval />
       <RequestedList />
