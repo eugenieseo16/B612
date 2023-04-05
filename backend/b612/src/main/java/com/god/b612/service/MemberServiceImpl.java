@@ -2,8 +2,9 @@ package com.god.b612.service;
 
 import com.god.b612.dto.MemberResponseDto;
 import com.god.b612.dto.MemberResponseDtoForRank;
-import com.god.b612.dto.PlanetResponseDto;
+import com.god.b612.dto.PlanetMakeDto;
 import com.god.b612.entity.Member;
+import com.god.b612.entity.Planet;
 import com.god.b612.repository.MemberCustomRepository;
 import com.god.b612.repository.MemberRepository;
 import com.god.b612.repository.PlanetRepository;
@@ -52,6 +53,7 @@ public class MemberServiceImpl implements MemberService {
                     .memberCurrentScore(0)
                     .memberHighestScore(0)
                     .memberLiked(0)
+                    .memberCharacter((int)(Math.random()*10))
                     .build();
 
             memberRepository.save(member);
@@ -63,6 +65,94 @@ public class MemberServiceImpl implements MemberService {
         }
         MemberResponseDto memberResponseDto = memberCustomRepository.createMemberResponseDtoByEntity(member);
         return memberResponseDto;
+    }
+
+    @Override
+    public MemberResponseDto reloadUser(List<PlanetMakeDto> planetMakeDtos,int memberId){
+        Member member=memberRepository.findMemberByMemberId(memberId);
+        if(member==null){
+            return null;
+        }
+        int score=planetMakeDtos.size();
+        int memberLike=0;
+
+        for(PlanetMakeDto planetMakeDto:planetMakeDtos){
+            if(planetRepository.findTopByPlanetNftId(planetMakeDto.getPlanetNftId())==null){
+                //플래닛이 기존에 없었으면 생성한다( like ==0)
+                Planet planet=Planet.builder()
+                        .planetName(planetMakeDto.getPlanetName())
+                        .planetType(planetMakeDto.getPlanetType())
+                        .planetMemberId(member)
+                        .planetLikesCount(0)
+                        .planetNftId(planetMakeDto.getPlanetNftId())
+                        .createdAt(planetMakeDto.getCreatedAt())
+                        .onSale(planetMakeDto.isOnSale())
+                        .build();
+
+                planetRepository.save(planet);
+            }
+            else{
+                Planet planet=Planet.builder()
+                        .planetName(planetMakeDto.getPlanetName())
+                        .planetType(planetMakeDto.getPlanetType())
+                        .planetMemberId(member)
+                        .planetLikesCount(planetMakeDto.getPlanetLikesCount())
+                        .planetNftId(planetMakeDto.getPlanetNftId())
+                        .createdAt(planetMakeDto.getCreatedAt())
+                        .onSale(planetMakeDto.isOnSale())
+                        .build();
+
+                memberLike+=planet.getPlanetLikesCount();
+
+                planetRepository.save(planet);
+            }
+        }
+        if(score>member.getMemberHighestScore()){
+            int memberTier=1;
+
+            if(score>=7){
+                memberTier=5;
+            }
+            else if(score>=5){
+                memberTier=4;
+            }
+            else if(score>=3){
+                memberTier=3;
+            }
+            else if(score>=1){
+                memberTier=2;
+            }
+
+
+            member=Member.builder()
+                    .memberId(memberId)
+                    .memberNickname(member.getMemberNickname())
+                    .memberAddress(member.getMemberAddress())
+                    .memberCurrentScore(score)
+                    .memberHighestScore(score)
+                    .memberImage(member.getMemberImage())
+                    .memberTierId(tierRepository.findTierByTierId(memberTier))
+                    .memberLiked(memberLike)
+                    .memberCharacter(member.getMemberCharacter())
+                    .build();
+        }
+        else{
+            member=Member.builder()
+                    .memberId(memberId)
+                    .memberNickname(member.getMemberNickname())
+                    .memberAddress(member.getMemberAddress())
+                    .memberCurrentScore(score)
+                    .memberHighestScore(member.getMemberHighestScore())
+                    .memberImage(member.getMemberImage())
+                    .memberTierId(member.getMemberTierId())
+                    .memberLiked(memberLike)
+                    .memberCharacter(member.getMemberCharacter())
+                    .build();
+        }
+
+        memberRepository.save(member);
+
+        return memberCustomRepository.makeMemberDto(member);
     }
 
     @Override
@@ -109,6 +199,7 @@ public class MemberServiceImpl implements MemberService {
                 .memberImage(member.getMemberImage())
                 .memberTierId(member.getMemberTierId())
                 .memberLiked(member.getMemberLiked())
+                .memberCharacter(member.getMemberCharacter())
                 .build();
 
         memberRepository.save(member);

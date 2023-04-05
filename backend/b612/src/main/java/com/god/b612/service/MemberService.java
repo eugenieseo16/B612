@@ -2,12 +2,15 @@ package com.god.b612.service;
 
 import com.god.b612.dto.MemberResponseDto;
 import com.god.b612.dto.MemberResponseDtoForRank;
+import com.god.b612.dto.PlanetMakeDto;
 import com.god.b612.dto.PlanetResponseDto;
 
 import java.util.List;
 
 public interface MemberService {
     public MemberResponseDto membersLoginOrRegist(String memberAddress);
+
+    MemberResponseDto reloadUser(List<PlanetMakeDto> planetMakeDtos,int memberId);
 
     public MemberResponseDto memberSelectById(int memberId);
 
