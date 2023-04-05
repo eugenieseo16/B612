@@ -4,22 +4,14 @@ import type { NextPage } from 'next';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
-import ModelCanvas from '@components/Main/ModelCanvas';
 import TestCanvas from '@components/Main/TestCanvas';
 
 import Modal from '@mui/material/Modal';
 
-import PlanetModel from '@components/Planet/PlanetModel';
-import PlanetDetailCard from '@components/Planet/PlanetDetail';
 import BlueGlowingButton from '@components/common/BlueGlowingButton';
-import PinkGlowingButton from '@components/common/PinkGlowingButton';
 import YellowGlowingButton from '@components/common/YellowGlowingButton';
 
-import {
-  CertificateModal,
-  FriendsModal,
-  PlanetsModal,
-} from '@components/Planet/index';
+import { CertificateModal, FriendsModal } from '@components/Planet/index';
 
 const Home: NextPage = () => {
   const user = useRecoilValue(userAtom);
