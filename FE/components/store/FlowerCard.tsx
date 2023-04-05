@@ -26,7 +26,7 @@ function FlowerCard() {
       setOpen(true);
       return;
     }
-    setLoading(true);
+    setLoading({ loading: true, type: 'flower' });
 
     if (boxAnimate) return;
     try {
@@ -34,11 +34,20 @@ function FlowerCard() {
         .mintRoseToken()
         .send({ from: me?.memberAddress });
     } catch (e) {
-      setLoading(false);
+      setLoading({
+        loading: false,
+        type: 'flower',
+        message: '꽃 구매를 실패하였습니다.',
+      });
+
       return;
     }
     setBoxAnimate(true);
-    setLoading(false);
+    setLoading({
+      loading: false,
+      type: 'flower',
+      message: '꽃 구매를 성공하였습니다.',
+    });
   };
 
   useEffect(() => {

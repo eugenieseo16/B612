@@ -20,7 +20,7 @@ function PlanetCard() {
   const [adj, title] = planetNameParser(planet?.planetName);
   const me = useRecoilValue(userAtom);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useRecoilState(loadingAtom);
+  const [{ loading }, setLoading] = useRecoilState(loadingAtom);
 
   const purchasePlanet = async () => {
     if (loading) return;
@@ -28,7 +28,8 @@ function PlanetCard() {
       setOpen(true);
       return;
     }
-    setLoading(true);
+    setLoading({ loading: true, type: 'purchase planet' });
+
     try {
       await planetContract?.methods
         .purchasePlanetToken(planet?.planetTokenId)
@@ -38,10 +39,19 @@ function PlanetCard() {
         });
     } catch (error) {
       console.log('예러예러', error);
-      setLoading(false);
+      setLoading({
+        loading: false,
+        type: 'purchase planet',
+        message: '행성 구매를 실패했습니다',
+      });
+
       return;
     }
-    setLoading(false);
+    setLoading({
+      loading: false,
+      type: 'purchase planet',
+      message: '행성을 구매했습니다',
+    });
   };
   const discardForSale = async () => {
     if (loading) return;
@@ -49,16 +59,25 @@ function PlanetCard() {
       setOpen(true);
       return;
     }
-    setLoading(true);
+    setLoading({ loading: true, type: 'discard planet' });
+
     try {
       await planetContract?.methods
         .discardForSalePlanetToken(planet?.planetTokenId)
         .send({ from: me?.memberAddress });
     } catch (error) {
-      setLoading(false);
+      setLoading({
+        loading: false,
+        type: 'discard planet',
+        message: '계약이 중단되었습니다',
+      });
       return;
     }
-    setLoading(false);
+    setLoading({
+      loading: false,
+      type: 'discard planet',
+      message: '행성판매를 취소했습니다',
+    });
   };
 
   return (

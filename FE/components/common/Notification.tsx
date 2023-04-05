@@ -3,17 +3,26 @@ import { motion } from 'framer-motion';
 import styled from '@emotion/styled';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import loadingAtom from 'store/loadingAtom';
+import Button from '@mui/material/Button';
 
 function Notification() {
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useRecoilState(loadingAtom);
-  useEffect(() => {
-    if (loading) return;
-    setOpen(true);
-  }, [loading]);
+  const [{ loading, type, message }, setLoading] = useRecoilState(loadingAtom);
+
   return (
-    <Container animate={{ opacity: 0, display: 'none' }}>
-      Notification
+    <Container
+      animate={{
+        opacity: !loading && type !== 'none' ? 1 : 0,
+        display: !loading && type !== 'none' ? 'flex' : 'none',
+      }}
+    >
+      <h2>{message ? message : type}</h2>
+      <Button
+        variant="contained"
+        color="success"
+        onClick={() => setLoading({ loading, type: 'none' })}
+      >
+        <span style={{ color: '#fff' }}>확인</span>
+      </Button>
     </Container>
   );
 }
@@ -30,4 +39,6 @@ const Container = styled(motion.div)`
   /* width: 20rem; */
   padding: 2rem;
   border-radius: 1rem;
+  flex-direction: column;
+  gap: 1rem;
 `;
