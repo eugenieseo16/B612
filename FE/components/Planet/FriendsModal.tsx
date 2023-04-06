@@ -10,14 +10,13 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
-import Divider from '@mui/material/Divider';
 import { useRouter } from 'next/router';
 import { useSearchByNameAPI } from 'API/memberAPIs';
-import axios from 'axios';
-import { friendAPIUrls } from 'API/apiURLs';
+
 import { Button, Modal } from '@mui/material';
 import { tierDataList } from 'utils/tierDataList';
 import mainModalAtom from 'store/main/mainModalAtom';
+import { useEffect } from 'react';
 
 const FriendsModal = memo(function SomComponent() {
   const user = useRecoilValue(userAtom);
@@ -29,6 +28,7 @@ const FriendsModal = memo(function SomComponent() {
   const [modalOpen, setModalOpen] = useRecoilState(mainModalAtom);
 
   const ff: any = {};
+  const [buttons, setButtons] = useState({});
   searchResults?.responseData?.forEach((friend: IUser) => {
     ff[friend.memberId] = 'not';
   });
@@ -37,16 +37,17 @@ const FriendsModal = memo(function SomComponent() {
     (friend: IUser) => (ff[friend.memberId] = 'friend')
   );
   unresponse?.forEach((friend: IUser) => (ff[friend.memberId] = 'requested'));
-
   const addFriend = (friendResponseMemberId: number) => {
+    console.log(friendResponseMemberId);
+    ff[friendResponseMemberId] = 'requested';
     // axios.post(friendAPIUrls.requestFriendAPIUrl, {
     //   friendRequestMemberId: user?.memberId,
     //   friendResponseMemberId,
     // });
-    console.log(friendResponseMemberId);
-    ff[friendResponseMemberId] = 'requested';
   };
-
+  useEffect(() => {
+    console.log('HELLO');
+  }, [ff]);
   return (
     <Modal
       open={modalOpen.friend}
@@ -107,13 +108,7 @@ const FriendsModal = memo(function SomComponent() {
               </div>
               <div>
                 {ff[friend.memberId] === 'not' ? (
-                  <Button
-                    color="success"
-                    variant="contained"
-                    onClick={() => addFriend(friend.memberId)}
-                  >
-                    <span style={{ color: '#fff' }}>친구추가</span>
-                  </Button>
+                  <FriendButton addFriend={addFriend} friend={friend} />
                 ) : (
                   <Button
                     disabled
@@ -157,6 +152,34 @@ const FriendsModal = memo(function SomComponent() {
 });
 
 export default FriendsModal;
+
+const FriendButton = ({ addFriend, friend }: any) => {
+  const [click, setClick] = useState(true);
+  return (
+    <>
+      {click ? (
+        <Button
+          color="success"
+          variant="contained"
+          onClick={() => {
+            setClick(false);
+            addFriend(friend.memberId);
+          }}
+        >
+          <span style={{ color: '#fff' }}>친구추가</span>
+        </Button>
+      ) : (
+        <Button
+          disabled
+          variant="contained"
+          onClick={() => addFriend(friend.memberId)}
+        >
+          <span style={{ color: 'grey' }}>수락대기중</span>
+        </Button>
+      )}
+    </>
+  );
+};
 
 const StyledModal = styled.div`
   position: absolute;
