@@ -9,14 +9,14 @@ function Garden() {
   const ref = useRef<Group>(null);
   const setRoomIndex = useSetRecoilState(roomIndexAtom);
   const { scene, animations } = useGLTF(
-    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680591020/bouquet.glb'
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680768854/ngqsexatoexhsazzjfuh.glb'
   );
   const bbox = new Box3().setFromObject(scene);
   const center = bbox.getCenter(new Vector3());
   const size = bbox.getSize(new Vector3());
 
   const maxAxis = Math.max(size.x, size.y, size.z);
-  scene.scale.multiplyScalar(15 / maxAxis);
+  scene.scale.multiplyScalar(20 / maxAxis);
   bbox.setFromObject(scene);
   bbox.getCenter(center);
   bbox.getSize(size);
@@ -31,7 +31,7 @@ function Garden() {
     <>
       <Center
         onClick={() => setRoomIndex(3)}
-        rotation={[degToRad(25), 0, 0]}
+        rotation={[degToRad(15), degToRad(135), 0]}
         position={[15, 5, -5]}
         ref={ref}
       >
