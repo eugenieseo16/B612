@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 
 import { PlanetDetail } from './PlanetDetailEmotion';
@@ -24,6 +24,7 @@ import { requestFriendAPI, useIsFriendAPI } from 'API/friendAPIs';
 import axios from 'axios';
 import styled from '@emotion/styled';
 import { colors } from 'styles/colors';
+import loadingAtom from 'store/loadingAtom';
 
 function PlanetDetailCard() {
   const user = useRecoilValue(userAtom);
@@ -31,15 +32,10 @@ function PlanetDetailCard() {
   const router = useRouter();
   const planetId = router.query?.planetId;
   const planetContract = usePlanetContract();
-  const [planetName, setPlanetName] = useState(null);
-  const [planetCreatedAt, setPlanetCreatedAt] = useState(null);
-  const [planetDetail, setPlanetDetail] = useState(null);
-  const [memberAddress, setMemberAddress] = useState(null);
-  const [isOnSale, setIsOnSale] = useState(null);
+  const [planetDetail, setPlanetDetail] = useState<IPlanet | null>(null);
 
   // DB데이터
-  const ownerData = usePlanetOwnerAPI(memberAddress);
-  const planetData = usePlanetDetailAPI(planetId);
+  const ownerData = usePlanetOwnerAPI(planetDetail?.userAddress);
 
   // 솔리디티 데이터
   useEffect(() => {
@@ -47,12 +43,8 @@ function PlanetDetailCard() {
     planetContract?.methods
       .b612AddressMap(planetId)
       .call()
-      .then((data: any) => {
+      .then((data: IPlanet) => {
         setPlanetDetail(data);
-        setPlanetName(data?.planetName);
-        setPlanetCreatedAt(data?.createdAt);
-        setMemberAddress(data?.userAddress);
-        setIsOnSale(data?.onSale);
       });
   }, [planetContract, planetId]);
 
@@ -61,6 +53,10 @@ function PlanetDetailCard() {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
+    if (!user?.isApproved) {
+      alert('프로필에서 판매권한을 수락해주세요');
+      return;
+    }
     setOpen(true);
   };
 
@@ -68,23 +64,64 @@ function PlanetDetailCard() {
     setOpen(false);
   };
 
-  const handleSale = () => {
+  const handleSale = async () => {
+    if (loading) {
+      alert('미완료된 계약이 있습니다');
+      return;
+    }
+    if (!user) {
+      alert('로그인 해주세요');
+      return;
+    }
+    setLoading({ loading: true, type: 'planet' });
+
     setOpen(false);
 
     const planetPrice = (+desiredAmount * 10 ** 18).toString();
-    planetContract?.methods
-      .setForSalePlanetToken(planetId, planetPrice)
-      .send({ from: user?.memberAddress });
+    try {
+      await planetContract?.methods
+        .setForSalePlanetToken(planetId, planetPrice)
+        .send({ from: user?.memberAddress });
+    } catch (e) {
+      setLoading({
+        loading: false,
+        type: 'flower',
+        message: '판매를 실패하였습니다.',
+      });
+      return;
+    }
+    setLoading({
+      loading: false,
+      type: 'flower',
+      message: '경매장 등록 완료',
+    });
   };
 
-  const handleDiscardSale = () => {
-    planetContract?.methods
-      .discardForSalePlanetToken(planetId)
-      .send({ from: user?.memberAddress });
+  const handleDiscardSale = async () => {
+    setLoading({ loading: true, type: 'flower' });
+
+    try {
+      await planetContract?.methods
+        .discardForSalePlanetToken(planetId)
+        .send({ from: user?.memberAddress });
+    } catch (e) {
+      setLoading({
+        loading: false,
+        type: 'flower',
+        message: '실패하였습니다.',
+      });
+      return;
+    }
+    setLoading({
+      loading: false,
+      type: 'flower',
+      message: '성공하였습니다.',
+    });
   };
 
   const [submit, setSubmit] = useState(false);
   const isFriend = useIsFriendAPI(user?.memberId, ownerData?.memberId);
+  const [{ loading }, setLoading] = useRecoilState(loadingAtom);
 
   const requestFriend = () => {
     if (submit) return;
@@ -92,7 +129,9 @@ function PlanetDetailCard() {
     requestFriendAPI(user?.memberId, ownerData?.memberId);
   };
 
-  const [adj, title] = planetNameParser(planetName || '');
+  const [adj, title] = planetNameParser(planetDetail?.planetName);
+
+  const handlePurchase = () => {};
 
   return (
     <PlanetDetail>
@@ -120,8 +159,8 @@ function PlanetDetailCard() {
           <div className="planet-date">
             <p>
               등록 날짜:
-              {planetCreatedAt
-                ? dayjs(planetCreatedAt * 1000).format('YYYY-MM-DD')
+              {planetDetail?.createdAt
+                ? dayjs(+planetDetail?.createdAt * 1000).format('YYYY-MM-DD')
                 : '0000-00-00'}
             </p>
           </div>
@@ -134,7 +173,7 @@ function PlanetDetailCard() {
         {user?.memberId === ownerData?.memberId ? (
           // 본인 소유 행성일 때
           <div className="for-sale-button">
-            {isOnSale === false ? (
+            {planetDetail?.onSale === false ? (
               <button onClick={handleClickOpen}>팔기</button>
             ) : (
               <button onClick={handleDiscardSale}>팔기 취소</button>
@@ -183,6 +222,9 @@ function PlanetDetailCard() {
                 친구
               </Button>
             ) : null}
+            {planetDetail?.onSale && (
+              <button onClick={handlePurchase}>구매</button>
+            )}
           </div>
         )}
       </div>

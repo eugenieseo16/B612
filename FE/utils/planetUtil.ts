@@ -1,5 +1,5 @@
-export const planetNameParser = (planetName: string) => {
-  if (!Boolean(planetName)) return ['', ''];
+export const planetNameParser = (planetName: string | null | undefined) => {
+  if (!planetName) return ['', ''];
   const length = planetName.split(' ').length;
   return [
     planetName
