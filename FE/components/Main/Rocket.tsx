@@ -7,8 +7,11 @@ import { Box3, LoopOnce, Vector3 } from 'three';
 import { degToRad } from 'three/src/math/MathUtils';
 import { useRef, useEffect, useState } from 'react';
 import { colors } from 'styles/colors';
+import { InnerHtml } from './PlanetById';
+import { useMobile } from '@hooks/useMobile';
 
 function Rocket() {
+  const isMobile = useMobile();
   const ref = useRef<any>();
   const router = useRouter();
   const user = useRecoilValue(userAtom);
@@ -27,6 +30,9 @@ function Rocket() {
   bbox.getCenter(center);
   bbox.getSize(size);
   scene.position.copy(center).multiplyScalar(-1);
+
+  const pos = !isMobile ? new Vector3(-8, 3, -5) : new Vector3(-3, 10, -5);
+  const htmlPos = !isMobile ? new Vector3(-8, 3, -5) : new Vector3(-7, 8, -5);
 
   // 랜덤 프로필 id
   const randomUserId = useRandomUserAPI(
@@ -52,30 +58,21 @@ function Rocket() {
 
   return (
     <>
-      <Center position={[-8, 3, -5]} rotation={[0, 0, degToRad(-45)]} ref={ref}>
+      <Center position={pos} rotation={[0, 0, degToRad(-45)]} ref={ref}>
         <group>
           <primitive object={scene} />
         </group>
       </Center>
-      <Html position={[-8, 3, -5]}>
-        <div
+      <Html position={htmlPos}>
+        <InnerHtml
           onClick={() => {
             router.push(`/profile/${randomUserId}`);
             setAnimate(true);
           }}
-          style={{
-            cursor: 'pointer',
-            width: '10rem',
-            backgroundColor: colors.purple,
-            padding: '1rem',
-            borderRadius: '1rem',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
         >
           <p style={{ color: '#fff' }}>우주여행🚀</p>
           <span></span>
-        </div>
+        </InnerHtml>
       </Html>
     </>
   );

@@ -1,7 +1,26 @@
 import React, { memo } from 'react';
 import styled from '@emotion/styled';
+import { Modal } from '@mui/material';
+import { useRecoilState } from 'recoil';
+import mainModalAtom from 'store/main/mainModalAtom';
 
-const Modal = styled.div`
+const CertificateModal = memo(function SomeComponent() {
+  const [{ certificate }, setModalOpen] = useRecoilState(mainModalAtom);
+
+  return (
+    <Modal
+      open={certificate}
+      onClose={() => setModalOpen({ certificate: false, friend: false })}
+    >
+      <StyledModal>
+        <div>Certificate</div>
+      </StyledModal>
+    </Modal>
+  );
+});
+
+export default CertificateModal;
+const StyledModal = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -13,13 +32,3 @@ const Modal = styled.div`
   border-radius: 30px;
   padding: 30px;
 `;
-
-const CertificateModal = memo(function SomeComponent() {
-  return (
-    <Modal>
-      <div>Certificate</div>
-    </Modal>
-  );
-});
-
-export default CertificateModal;

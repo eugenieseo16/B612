@@ -11,11 +11,17 @@ function UserController() {
   const planetContract = usePlanetContract();
   const flowerContract = useFlowerContract();
   useEffect(() => {
+    function sleep(ms: number) {
+      const wakeUpTime = Date.now() + ms;
+      while (Date.now() < wakeUpTime) {}
+    }
     // eslint-disable-next-line
     const handleAccount = async () => {
+      sleep(1000);
       const memberAddress = await window.ethereum?.selectedAddress;
 
-      if (!memberAddress || window.ethereum.networkVersion != 5) {
+      if (!memberAddress || window.ethereum.networkVersion != 11155111) {
+        console.log('리턴 잘 대나?');
         setUser(null);
         return;
       }
@@ -27,7 +33,7 @@ function UserController() {
       );
       const id = data.responseData.memberId;
       const planetContractAddress =
-        '0xeab8b1e0cd0de0c9e07928d8d8c9aab166ae983e';
+        '0x03DD8A0273a3ED1C15Dad07ec87f74861e6e355C';
       let isApproved = false;
 
       isApproved = await planetContract?.methods
@@ -99,7 +105,6 @@ function UserController() {
       window.ethereum?.removeListener('chainChanged', handleAccount);
     };
   }, [planetContract, flowerContract, setUser]);
-  console.log('USER CONTROLLER');
   return <></>;
 }
 
