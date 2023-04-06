@@ -77,15 +77,12 @@ const FriendsModal = memo(function SomComponent() {
         {searchResults?.responseData?.map((friend: IUser) => {
           if (ff[friend.memberId] === 'friend' || !search) return;
           return (
-            <StrangerItem
-              key={friend.memberId}
-              className="friend"
-            >
+            <StrangerItem key={friend.memberId} className="friend">
               <div
+                onClick={() => router.push(`/profile/${friend.memberId}`)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  onClick={() => router.push(`/profile/${friend.memberId}`)}
                 }}
               >
                 <img src={friend.memberImage} alt="" />
