@@ -1,5 +1,13 @@
+import styled from '@emotion/styled';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 interface BaobablistData {
   baobabArticleId: number;
@@ -27,11 +35,26 @@ const BaobabArticleList: React.FC = () => {
   };
   return (
     <div>
-      {baobabArticleLists.map((baobablistData: BaobablistData) => (
-        <div key={baobablistData.baobabArticleId}>
-          <div>{baobablistData.baobabArticleContent}</div>
-        </div>
-      ))}
+      <TableContainer>
+        <Table sx={{ minWidth: 650, width: '100%' }}>
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">
+                <p>바오밥나무 일지</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {baobabArticleLists.map((baobablistData: BaobablistData) => (
+              <TableRow key={baobablistData.baobabArticleId}>
+                <TableCell align="left">
+                  {baobablistData.baobabArticleContent}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };

@@ -16,19 +16,39 @@ const Modal = styled.div`
   border: none;
   border-radius: 30px;
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
+
+const Baobabcontainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Title = styled.div`
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+`;
+
 const queryClient = new QueryClient();
 const BaobabModal = memo(function SomeComponent() {
   return (
     <Modal>
-      <div>바오밥나무</div>
-
-      <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
-          <CreateBaobabArticle />
-        </RecoilRoot>
-        <BaobabArticleList />
-      </QueryClientProvider>
+      <Title>바오밥나무</Title>
+      <Baobabcontainer>
+        <QueryClientProvider client={queryClient}>
+          <RecoilRoot>
+            <CreateBaobabArticle />
+          </RecoilRoot>
+          <BaobabArticleList />
+        </QueryClientProvider>
+      </Baobabcontainer>
     </Modal>
   );
 });
