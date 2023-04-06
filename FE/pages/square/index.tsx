@@ -76,12 +76,12 @@ function Square() {
         <Lights />
         <Avatar />
         <Baobab />
+        <AvatarPosition />
       </Canvas>
 
       <ChattingContainer onKeyDown={handleKeyDown} onWheel={handleWheel}>
         <ChatBox />
       </ChattingContainer>
-      <AvatarPosition />
     </SquareContainer>
   );
 }
