@@ -11,17 +11,11 @@ function UserController() {
   const planetContract = usePlanetContract();
   const flowerContract = useFlowerContract();
   useEffect(() => {
-    function sleep(ms: number) {
-      const wakeUpTime = Date.now() + ms;
-      while (Date.now() < wakeUpTime) {}
-    }
     // eslint-disable-next-line
     const handleAccount = async () => {
-      sleep(1000);
       const memberAddress = await window.ethereum?.selectedAddress;
 
       if (!memberAddress || window.ethereum.networkVersion != 11155111) {
-        console.log('리턴 잘 대나?');
         setUser(null);
         return;
       }
@@ -31,6 +25,7 @@ function UserController() {
           memberAddress,
         }
       );
+
       const id = data.responseData.memberId;
       const planetContractAddress =
         '0x03DD8A0273a3ED1C15Dad07ec87f74861e6e355C';
@@ -97,7 +92,6 @@ function UserController() {
       setUser({ ...data.responseData, planets, isApproved, eth: +eth });
     };
 
-    handleAccount();
     window.ethereum?.on('accountsChanged', handleAccount);
     window.ethereum?.on('chainChanged', handleAccount);
     return () => {

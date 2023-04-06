@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
 
-import { useGLTF } from '@react-three/drei';
+import { useAnimations, useGLTF } from '@react-three/drei';
 
 import { AvatarCharacter } from './index';
 
@@ -27,7 +27,11 @@ export const OtherAvatar = ({
   const { scene } = useGLTF(AvatarCharacter[memberCharacter]);
   const clone = SkeletonUtils.clone(scene);
 
-  return <primitive object={clone} position={[x, 0, z]} />;
+  return (
+    <object3D>
+      <primitive object={clone} position={[x, 0, z]} />;
+    </object3D>
+  );
 };
 
 export const AvatarPosition: React.FC = () => {
@@ -35,7 +39,7 @@ export const AvatarPosition: React.FC = () => {
   const sessionIdRef = React.useRef<string | null>(null); // sessionId 초기값을 null로 지정
   const position = useRecoilValue(positionAtom);
   const user = useRecoilValue(userAtom);
-  const memberCharacterIndex = user?.memberCharacter ?? 1;
+  const memberCharacterIndex = user?.memberCharacter ?? 5;
 
   const [otherPositions, setOtherPositions] = useState<
     Record<string, Position>

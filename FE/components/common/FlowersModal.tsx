@@ -18,7 +18,7 @@ import {
 import selectedFlowerAtom from 'store/garden/selectedFlowerAtom';
 import gardenIndexAtom from 'store/garden/gardenIndexAtom';
 import { useMyInventory } from 'API/flowerAPIs';
-import { FLOWERS_NAMES } from 'utils/flowerDataList';
+import { FLOWERS_NAMES, FLOWERS_PIC_LIST } from 'utils/flowerDataList';
 
 // HTMLDivElement, HTMLMotionProps<'div'>;
 // const MY_FLOWERS = [0, 1, 2, 1, 1, 1, 1];
@@ -77,7 +77,7 @@ function FlowersModal({ user }: { user: IUser | null }) {
                 key={flower.flowerNftId}
               >
                 <FlowerImgContainer>
-                  <img src={FLOWER_IMG[1].src} alt="" />
+                  <img src={FLOWERS_PIC_LIST[flower.flowerType % 12]} alt="" />
                   <div>
                     <h6>#{FLOWERS_NAMES[flower.flowerType % 12]}</h6>
                     <div>

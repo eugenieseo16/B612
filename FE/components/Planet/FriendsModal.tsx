@@ -39,10 +39,12 @@ const FriendsModal = memo(function SomComponent() {
   unresponse?.forEach((friend: IUser) => (ff[friend.memberId] = 'requested'));
 
   const addFriend = (friendResponseMemberId: number) => {
-    axios.post(friendAPIUrls.requestFriendAPIUrl, {
-      friendRequestMemberId: user?.memberId,
-      friendResponseMemberId,
-    });
+    // axios.post(friendAPIUrls.requestFriendAPIUrl, {
+    //   friendRequestMemberId: user?.memberId,
+    //   friendResponseMemberId,
+    // });
+    console.log(friendResponseMemberId);
+    ff[friendResponseMemberId] = 'requested';
   };
 
   return (
