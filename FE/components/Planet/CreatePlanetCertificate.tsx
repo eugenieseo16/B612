@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Template from '../../assets/imgs/certifications/tier_certificate_template.png';
+import Template from '../../assets/imgs/certifications/planet_certificate_template.png';
 import SignaturePad from 'react-signature-canvas';
 import SignatureCanvas from 'react-signature-canvas';
 import { useRecoilValue } from 'recoil';
@@ -8,15 +8,18 @@ import userAtom from 'store/userAtom';
 
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
+import { useRouter } from 'next/router';
+import { usePlanetDetailAPI } from 'API/planetAPIs';
 
-// iCreateCertificate {
-//   signature: string
-// }
 function CreateCertificate() {
   const user = useRecoilValue(userAtom);
-
   const memberNickname = user?.memberNickname;
   const memberTier = user?.memberTierName;
+
+  const router = useRouter();
+  const planetId = router.query?.planetId;
+  const planetData = usePlanetDetailAPI(planetId);
+  const planetName = planetData?.planetName;
 
   const today = new Date();
   const year = today.getFullYear();
@@ -31,8 +34,12 @@ function CreateCertificate() {
   };
 
   const trim = () => {
-    const url = padRef.current?.getTrimmedCanvas().toDataURL('image/png');
-    if (url) setDataURL(url);
+    if (user?.memberId === planetData?.memberId) {
+      const url = padRef.current?.getTrimmedCanvas().toDataURL('image/png');
+      if (url) setDataURL(url);
+    } else {
+      alert('행성 소유자만이 인증서를 발급반을 수 있습니다.');
+    }
   };
 
   const onDownload = () => {
@@ -96,8 +103,8 @@ function CreateCertificate() {
           <div
             style={{
               position: 'absolute',
-              top: '500px',
-              left: '200px',
+              top: '450px',
+              right: '210px',
             }}
           >
             <img
@@ -105,15 +112,14 @@ function CreateCertificate() {
               alt=""
               style={{ filter: 'brightness(100%)', width: '100px' }}
             />
-            <div>test</div>
           </div>
 
           {/* 날짜 */}
           <div
             style={{
               position: 'absolute',
-              top: '530px',
-              right: '170px',
+              top: '460px',
+              left: '210px',
             }}
           >
             <h6 style={{ color: 'white' }}>
@@ -125,17 +131,15 @@ function CreateCertificate() {
           <div
             style={{
               position: 'absolute',
-              top: '280px',
+              top: '295px',
               right: '225px',
             }}
           >
-            <p
-              style={{ color: '#70cfdb', textAlign: 'center', padding: '10px' }}
-            >
+            <p style={{ color: 'white', textAlign: 'center', padding: '10px' }}>
               머무르다 B612에 따라 사용자 {memberNickname}가
             </p>
-            <p style={{ color: '#70cfdb', textAlign: 'center' }}>
-              {memberTier} 계급임을 증명합니다.
+            <p style={{ color: 'white', textAlign: 'center' }}>
+              {planetName}의 소유자임을 증명합니다.
             </p>
           </div>
         </div>

@@ -1,48 +1,21 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import userAtom from 'store/userAtom';
-
+import React from 'react';
 import styled from '@emotion/styled';
-import { Modal } from '@mui/material';
-import { useRecoilState } from 'recoil';
-import mainModalAtom from 'store/main/mainModalAtom';
+import planet_certificate from '../../assets/imgs/certifications/planet_certificate.png';
+import CreatePlanetCertificate from './CreatePlanetCertificate';
 
-import tier_certificate from '../../assets/imgs/certifications/tier_certificate.png';
-import kakao from '../../assets/imgs/certifications/shareButtons/kakao.png';
-import message from '../../assets/imgs/certifications/shareButtons/message.png';
-import download from '../../assets/imgs/certifications/shareButtons/download.png';
-
-import CreateCertificate from './CreateCertificate';
-
-const CertificateModal = memo(function SomeComponent() {
-  const [{ certificate }, setModalOpen] = useRecoilState(mainModalAtom);
-
+function ItemsModal() {
   return (
-    <Modal
-      open={certificate}
-      onClose={() => setModalOpen({ certificate: false, friend: false })}
-    >
-      <StyledModal>
-        <h3>인증서 발급하기</h3>
-        <p style={{ padding: '20px' }}>(인증서 발급 예시)</p>
-        <img src={tier_certificate.src} alt="" style={{ width: '70%' }} />
-
-        <CreateCertificate />
-        {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <ShareIcon
-            src={kakao.src}
-            alt=""
-            // onClick={shareToKatalk}
-          />
-          <ShareIcon src={message.src} alt="" />
-          <ShareIcon src={download.src} alt="" />
-        </div> */}
-      </StyledModal>
-    </Modal>
+    <StyledModal>
+      <h3>인증서 발급하기</h3>
+      <p style={{ padding: '20px' }}>(인증서 발급 예시)</p>
+      <img src={planet_certificate.src} alt="" style={{ width: '70%' }} />
+      <CreatePlanetCertificate />
+    </StyledModal>
   );
-});
+}
 
-export default CertificateModal;
+export default ItemsModal;
+
 const StyledModal = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,11 +36,4 @@ const StyledModal = styled.div`
   border: none;
   border-radius: 30px;
   padding: 30px;
-`;
-
-const ShareIcon = styled.img`
-  width: 7%;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  margin-top: 3rem;
 `;
