@@ -51,7 +51,7 @@ export const AvatarPosition: React.FC = () => {
 
     // 서버에서 데이터 수신 시 이벤트 핸들러
     ws.onmessage = evt => {
-      console.log('evt.data:', evt.data);
+      // console.log('evt.data:', evt.data);
       if (!sessionIdRef.current) {
         // sessionIdRef가 초기화되지 않은 경우에만 업데이트
         sessionIdRef.current = evt.data;
@@ -65,14 +65,14 @@ export const AvatarPosition: React.FC = () => {
       }
 
       if (data.sessionId !== sessionIdRef.current && data.type === 'move') {
-        setOtherPositions({
-          ...otherPositions,
+        setOtherPositions(prevPositions => ({
+          ...prevPositions,
           [data.sessionId]: {
             x: data.x,
             z: data.z,
             memberCharacter: data.memberCharacter,
           },
-        });
+        }));
       }
     };
 
@@ -103,7 +103,7 @@ export const AvatarPosition: React.FC = () => {
     };
     // 서버로 데이터 전송
     socket?.send(JSON.stringify(message));
-    console.log('메시지 전송 완료');
+    // console.log('메시지 전송 완료');
   };
 
   useEffect(() => {
@@ -112,8 +112,8 @@ export const AvatarPosition: React.FC = () => {
       sendPositionToServer(sessionIdRef.current, position, socket);
     }
   }, [socket, position]);
-  console.log('POS', otherPositions);
-  console.log('POS', Object.entries(otherPositions));
+  // console.log('POS', otherPositions);
+  // console.log('POS', Object.entries(otherPositions));
 
   return (
     <>
