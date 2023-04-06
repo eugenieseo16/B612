@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
 
 const handleNetwork = async () => {
-  const chainId = 11155111; // ssafy mainnet 주소
+  const chainId = 11155111; // 세폴리아 주소
   if (window.ethereum?.networkVersion !== chainId) {
     try {
       await window.ethereum.request({
@@ -53,7 +53,7 @@ function MetaMaskLogin() {
       await window.ethereum.request({
         method: 'eth_requestAccounts',
       });
-      return;
+      return false;
     }
     toast(
       <div
@@ -174,7 +174,7 @@ function MetaMaskLogin() {
   };
 
   const onClick = async () => {
-    await handleLogin();
+    const login = await handleLogin();
     await handleNetwork();
     await handleAccount();
   };

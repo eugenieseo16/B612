@@ -21,10 +21,10 @@ function PlanetNav() {
       hideNextButton
       hidePrevButton
       count={totalLength}
-      variant="outlined"
-      color="secondary"
       page={selectedPlanet + 1}
       onChange={changePage}
+      variant="outlined"
+      color="secondary"
       size={'large'}
       sx={{
         position: 'absolute',
