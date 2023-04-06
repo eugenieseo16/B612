@@ -36,6 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-
 ### Secret file ###
 application-secret.yml
+serviceAccountKey.json
