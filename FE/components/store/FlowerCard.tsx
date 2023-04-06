@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import loadingAtom from 'store/loadingAtom';
+import axios from 'axios';
 
 function FlowerCard() {
   const flowerContract = useFlowerContract();
@@ -26,6 +27,7 @@ function FlowerCard() {
       setOpen(true);
       return;
     }
+    setBoxAnimate(true);
     setLoading({ loading: true, type: 'flower' });
 
     if (boxAnimate) return;
@@ -42,11 +44,36 @@ function FlowerCard() {
 
       return;
     }
-    setBoxAnimate(true);
+    const chainData: IRose[] = await flowerContract?.methods
+      .getRoseTokens(me.memberAddress)
+      .call();
+
+    const {
+      data: { responseData: allFlowers },
+    } = await axios.get(
+      `https://j8a208.p.ssafy.io/api/member/${me.memberId}/flowers`
+    );
+    const allFlowersMap = allFlowers?.map(
+      (flower: IRose) => flower.flowerNftId
+    );
+
+    const filteredData = chainData?.filter(
+      flower => !allFlowersMap?.includes(+flower.roseTokenId)
+    );
+
+    filteredData?.forEach(flower => {
+      axios.post('https://j8a208.p.ssafy.io/api/flower', {
+        createdAt: flower.createdAt,
+        flowerNftId: flower.roseTokenId,
+        flowerType: +flower.roseType,
+        onSale: flower.onSale,
+        ownerMemberId: me.memberId,
+      });
+    });
     setLoading({
       loading: false,
       type: 'flower',
-      message: '꽃 구매를 성공하였습니다.',
+      message: '꽃 구매를 성공하였습니다. 정원으로 가보세요!',
     });
   };
 

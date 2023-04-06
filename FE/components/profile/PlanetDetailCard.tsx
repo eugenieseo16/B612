@@ -16,7 +16,7 @@ import { useMobile } from '@hooks/useMobile';
 import { Button } from '@mui/material';
 import roomIndexAtom from 'store/profile/roomIndexAtom';
 
-function PlanetDetailCard() {
+function PlanetDetailCard({ isMe }: { isMe: boolean }) {
   const router = useRouter();
   const index = useRecoilValue(roomIndexAtom);
   const planets = useRecoilValue(planetAtom);
@@ -72,7 +72,7 @@ function PlanetDetailCard() {
                       display: 'flex',
                     }}
                   >
-                    {planet.planetName}
+                    {planet?.planetName}
                   </span>
                 }
               >
@@ -91,13 +91,15 @@ function PlanetDetailCard() {
           transition={{ delay: 0.8, duration: 0.5 }}
         >
           <h1 style={{ color: '#BCF0FA' }}>보유행성이 없습니다</h1>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => router.push('/store')}
-          >
-            <span style={{ color: '#fff' }}>구매하러 가기</span>
-          </Button>
+          {isMe && (
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => router.push('/store')}
+            >
+              <span style={{ color: '#fff' }}>구매하러 가기</span>
+            </Button>
+          )}
         </NoPlanets>
       )}
     </>
@@ -135,6 +137,11 @@ const NoPlanets = styled(motion.div)`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  @media (max-width: 500px) {
+    h1 {
+      font-size: 1.2rem;
+    }
+  }
 `;
 
 // export const PlanetCard = styled.div`

@@ -3,11 +3,7 @@ import { useMyRandomPlanetAPI } from 'API/planetAPIs';
 import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 import userAtom from 'store/userAtom';
-import { Center, Html, useGLTF } from '@react-three/drei';
-import { PLANETS_LIST } from 'utils/utils';
-import { Box3, Vector3 } from 'three';
-import { planetNameParser } from 'utils/planetUtil';
-import { colors } from 'styles/colors';
+
 import PlanetById from './PlanetById';
 
 export default function Planet() {
