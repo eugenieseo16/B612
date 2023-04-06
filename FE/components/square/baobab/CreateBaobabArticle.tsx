@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { TextField } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import styled from '@emotion/styled';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 import userAtom from 'store/userAtom';
 
-const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 16px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-`;
-
-const PostFormTitle = styled.header`
+const StyledGrid = styled(Grid)`
   padding: 1rem;
 `;
 
-const SubmitButton = styled.button`
-  padding: 1rem;
+const StyledTextField = styled(TextField)`
+  margin: 1rem;
+`;
+
+const StyledButton = styled(Button)`
+  margin: 0.5 rem;
 `;
 
 const createPost = async (data: {
@@ -84,28 +80,30 @@ const CreateBaobabArticle = () => {
     // console.log('wheel event in ChattingContainer');
   }
   return (
-    <FormContainer onKeyDown={handleKeyDown} onWheel={handleWheel}>
-      <PostFormTitle>글 작성</PostFormTitle>
+    <div onKeyDown={handleKeyDown} onWheel={handleWheel}>
       <form onSubmit={handleSubmit}>
-        <TextField
-          required
-          fullWidth
-          multiline
-          rows={10}
-          label={user ? '글을 남겨주세요' : '로그인이 필요합니다.'}
-          variant="outlined"
-          placeholder={
-            user ? '글을 남겨주세요' : '로그인 후에 글을 작성할 수 있습니다.'
-          }
-          value={content}
-          onChange={event => setContent(event.target.value)}
-        />
-        <SubmitButton type="submit">
-          {createPostMutation.isLoading ? '작성 중...' : '작성하기'}
-        </SubmitButton>
+        <h4>바오밥나무에 낙서하기</h4>
+        <StyledGrid container spacing={2}>
+          <Grid item xs={9}>
+            <StyledTextField
+              required
+              placeholder={
+                user
+                  ? '글을 남겨주세요'
+                  : '로그인 후에 글을 작성할 수 있습니다.'
+              }
+              value={content}
+              onChange={event => setContent(event.target.value)}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <StyledButton fullWidth type="submit" variant="contained">
+              낙서
+            </StyledButton>
+          </Grid>
+        </StyledGrid>
       </form>
-    </FormContainer>
+    </div>
   );
 };
-
 export default CreateBaobabArticle;
