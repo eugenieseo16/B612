@@ -13,6 +13,7 @@ function UserController() {
   useEffect(() => {
     // eslint-disable-next-line
     const handleAccount = async () => {
+      await setTimeout(() => {}, 1000);
       const memberAddress = await window.ethereum?.selectedAddress;
 
       if (!memberAddress || window.ethereum.networkVersion != 11155111) {

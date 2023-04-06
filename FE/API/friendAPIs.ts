@@ -11,7 +11,7 @@ export const useFriendAPI = (memberId?: number) => {
     if (!memberId) return { responseData: [] };
     return fetch(url).then(res => res.json());
   });
-  return userData?.responseData;
+  return userData;
 };
 
 export const useIsFriendAPI = (requestId?: number, responseId?: number) => {
