@@ -16,6 +16,7 @@ import MobileNav from '@components/common/MobileNav';
 import Notification from '@components/common/Notification';
 import Head from 'next/head';
 import { FLOWERS_LIST } from 'utils/flowerDataList';
+import { titleDataList } from 'utils/titleDataList';
 React.useLayoutEffect = React.useEffect;
 
 declare global {
@@ -28,6 +29,9 @@ const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isMobile = useMobile();
+
+  const title = router.pathname.split('/');
+  const titleTag = titleDataList.get(title[1]);
 
   useGLTF.preload('/little-prince.glb');
   PLANETS_LIST.forEach(planet => {
@@ -63,7 +67,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           {imgsLoaded ? (
             <AnimatePresence mode="wait">
               <Head>
-                <title>b612.shop</title>
+                <title>{titleTag}</title>
               </Head>
               <motion.div
                 style={{ minHeight: 'calc(100vh)' }}
