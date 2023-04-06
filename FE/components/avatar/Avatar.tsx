@@ -58,8 +58,9 @@ const Avatar = () => {
 
   const updateCameraTarget = (moveX: number, moveZ: number) => {
     // move camera
-    camera.position.x += moveX;
-    camera.position.z += moveZ;
+    const cameraSpeed = 2; // 카메라 이동 속도를 조정합니다.
+    camera.position.x += moveX / cameraSpeed;
+    camera.position.z += moveZ / cameraSpeed;
 
     // update camera target
     cameraTarget.x = model.scene.position.x;
