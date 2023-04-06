@@ -871,7 +871,8 @@ export const usePlanetContract = () => {
   const [contract, setContract] = useState<any>();
   useEffect(() => {
     let web3 = new Web3(web3Provider);
-    if (window.ethereum) web3 = new Web3(window.ethereum);
+    if (window.ethereum && window.ethereum?.networkVersion == 11155111)
+      web3 = new Web3(window.ethereum);
     const temp: any = new web3.eth.Contract(planetTokenAbi, planetTokenAddress);
     setContract(temp);
   }, []);

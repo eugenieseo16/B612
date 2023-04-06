@@ -238,7 +238,7 @@ function PlanetDetailCard() {
           ) : (
             // 타인 소유 행성일 때
             <div className="friend-request-button">
-              {isFriend === 'notRequest' && !submit ? (
+              {!user ? null : isFriend === 'notRequest' && !submit ? (
                 <FriendButton onClick={requestFriend}>친구신청</FriendButton>
               ) : isFriend === 'notAccepted' || submit ? (
                 <FriendButton disabled style={{ background: 'grey' }}>
