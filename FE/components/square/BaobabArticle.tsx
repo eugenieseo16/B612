@@ -51,8 +51,13 @@ const BaobabArticle = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!user?.memberAddress) {
+    if (!user) {
       alert('로그인 후에 글을 작성할 수 있습니다.');
+      return;
+    }
+
+    if (!memberAddress) {
+      alert('회원 주소를 찾을 수 없습니다.');
       return;
     }
 
