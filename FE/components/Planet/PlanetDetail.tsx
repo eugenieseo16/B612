@@ -13,7 +13,7 @@ import { usePlanetContract } from '@components/contracts/planetToken';
 import { planetNameParser } from 'utils/planetUtil';
 import { usePlanetOwnerAPI } from 'API/planetAPIs';
 import { tierDataList } from 'utils/tierDataList';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Button from '@mui/material/Button';
@@ -23,7 +23,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { requestFriendAPI, useIsFriendAPI } from 'API/friendAPIs';
-import axios from 'axios';
 import styled from '@emotion/styled';
 import { colors } from 'styles/colors';
 import loadingAtom from 'store/loadingAtom';
@@ -104,6 +103,7 @@ function PlanetDetailCard() {
       alert('로그인 해주세요');
       return;
     }
+
     setLoading({ loading: true, type: 'planet' });
 
     setOpen(false);
@@ -166,7 +166,6 @@ function PlanetDetailCard() {
 
   return (
     <>
-      <ToastContainer />
       <PlanetDetail>
         {/* Same as */}
         <div className="detail-container">
