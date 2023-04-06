@@ -80,12 +80,12 @@ const FriendsModal = memo(function SomComponent() {
             <StrangerItem
               key={friend.memberId}
               className="friend"
-              onClick={() => router.push(`/profile/${friend.memberId}`)}
             >
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
+                  onClick={() => router.push(`/profile/${friend.memberId}`)}
                 }}
               >
                 <img src={friend.memberImage} alt="" />
