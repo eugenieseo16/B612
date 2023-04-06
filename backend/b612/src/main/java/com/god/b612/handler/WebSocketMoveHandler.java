@@ -1,9 +1,12 @@
 package com.god.b612.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.god.b612.controller.MemberController;
 import com.god.b612.dto.MemberMoveEvent;
 import com.god.b612.entity.Member;
 import com.god.b612.repository.MemberRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -18,10 +21,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 public class WebSocketMoveHandler extends TextWebSocketHandler {
     private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();  //List를 전달할때 원본이 아닌 복사본을 만들어서 전달, 순회할 때 락이 필요 없어서 속도면에서 매우 빠름
+
+    private final Logger logger = LoggerFactory.getLogger(WebSocketMoveHandler.class);
+
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println("새로운 포지션: " + message.getPayload());
+//        System.out.println("새로운 포지션: " + message.getPayload());
         MemberMoveEvent moveEvent = objectMapper.readValue(message.getPayload(), MemberMoveEvent.class);
         broadcast(moveEvent);  //세션에 연결돼있는 다른 사용자들에게 전달
     }
@@ -30,7 +36,7 @@ public class WebSocketMoveHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
-        System.out.println("새로운 WebSocket 연결: " + session.getId());
+        logger.info("새로운 WebSocket 연결: " + session.getId());
 //        for(WebSocketSession x : sessions) {
 //            System.out.println("세션 아이디" + x.getId());
 //        }
@@ -42,7 +48,7 @@ public class WebSocketMoveHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         sessions.remove(session);
-        System.out.println("WebSocket 연결 종료" + session.getId());
+        logger.info("WebSocket 연결 종료" + session.getId());
     }
 
     private void broadcast(MemberMoveEvent memberMoveEvent) throws IOException {
