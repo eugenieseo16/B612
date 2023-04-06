@@ -16,6 +16,7 @@ function UserController() {
       const memberAddress = await window.ethereum?.selectedAddress;
 
       if (!memberAddress || window.ethereum.networkVersion != 11155111) {
+        console.log('리턴 잘 대나?');
         setUser(null);
         return;
       }
@@ -99,7 +100,6 @@ function UserController() {
       window.ethereum?.removeListener('chainChanged', handleAccount);
     };
   }, [planetContract, flowerContract, setUser]);
-  console.log('USER CONTROLLER');
   return <></>;
 }
 

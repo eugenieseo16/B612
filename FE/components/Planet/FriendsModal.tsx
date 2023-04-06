@@ -22,6 +22,7 @@ import mainModalAtom from 'store/main/mainModalAtom';
 const FriendsModal = memo(function SomComponent() {
   const user = useRecoilValue(userAtom);
   const router = useRouter();
+  // 로그인 안했을 때 에러
   const data = useFriendAPI(user?.memberId);
   const unresponse = useUnresponseFriend(user?.memberId);
   const [search, setSearch] = useState('');
@@ -33,9 +34,7 @@ const FriendsModal = memo(function SomComponent() {
     ff[friend.memberId] = 'not';
   });
 
-  data?.responseData?.forEach(
-    (friend: IUser) => (ff[friend.memberId] = 'friend')
-  );
+  data?.forEach((friend: IUser) => (ff[friend.memberId] = 'friend'));
   unresponse?.forEach((friend: IUser) => (ff[friend.memberId] = 'requested'));
 
   const addFriend = (friendResponseMemberId: number) => {
@@ -128,7 +127,7 @@ const FriendsModal = memo(function SomComponent() {
         })}
         {/* 친구 목록 */}
         <h2 style={{ marginTop: '2rem' }}>친구 목록</h2>
-        {data?.responseData?.map((friend: IUser) => (
+        {data?.map((friend: IUser) => (
           <ProfileItem
             key={friend.memberId}
             className="friend"

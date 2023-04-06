@@ -5,11 +5,13 @@ import axios from 'axios';
 import { useMyQuery } from '../hooks/useMyQuery';
 
 export const useFriendAPI = (memberId?: number) => {
-  const response = useMyQuery(
-    `${friendAPIUrls.getFriendsAPIUrl}/${memberId}?page=0&size=100`
-  );
-  if (!memberId) return null;
-  return response;
+  const url = `${friendAPIUrls.getFriendsAPIUrl}/${memberId}?page=0&size=100`;
+
+  const { data: userData } = useQuery(url, async () => {
+    if (!memberId) return { responseData: [] };
+    return fetch(url).then(res => res.json());
+  });
+  return userData?.responseData;
 };
 
 export const useIsFriendAPI = (requestId?: number, responseId?: number) => {
