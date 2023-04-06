@@ -54,7 +54,7 @@ export const Container = styled.div`
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        margin-left: 20px;
+        margin-left: 10px;
       }
     }
   }

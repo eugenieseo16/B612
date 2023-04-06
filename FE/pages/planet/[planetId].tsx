@@ -1,77 +1,91 @@
-import React, { useState } from 'react';
 import styled from '@emotion/styled';
-
-import Modal from '@mui/material/Modal';
-
 import PlanetModel from '@components/Planet/PlanetModel';
+import { CertificateModal, FriendsModal } from '@components/Planet/index';
 import PlanetDetailCard from '@components/Planet/PlanetDetail';
-import BlueGlowingButton from '@components/common/BlueGlowingButton';
-import PinkGlowingButton from '@components/common/PinkGlowingButton';
-import YellowGlowingButton from '@components/common/YellowGlowingButton';
+import { Canvas } from '@react-three/fiber';
+import { useMobile } from '@hooks/useMobile';
+import MainNav from '@components/Main/MainNav';
+import { dividerClasses } from '@mui/material';
 
-import {
-  CertificateModal,
-  FriendsModal,
-  PlanetsModal,
-} from '@components/Planet/index';
+import like from '../../assets/imgs/buttonIcons/heart.svg';
+import dislike from '../../assets/imgs/buttonIcons/heart-filled.svg';
+import { likePlanetAPI, useIsLikedPlanetAPI } from 'API/planetAPIs';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import userAtom from 'store/userAtom';
+import { useRouter } from 'next/router';
+import hoverdAtom from 'store/planet/hoverdAtom';
+import selectedAtom from 'store/planet/selectedAtom';
+import { StyledLikeButton } from '@components/Planet/PlanetModelEmotion';
+import { Html } from '@react-three/drei';
+import { useEffect } from 'react';
 
 function Planet() {
-  const FloatingButtons = styled.div`
-    position: fixed;
-    bottom: 3rem;
-    right: 3rem;
-
-    .floating-button-items {
-      padding: 1rem 0rem;
-    }
-  `;
-
-  const [openFriends, setOpenFriends] = useState(false);
-  const handleOpenFriends = () => setOpenFriends(true);
-  const handleCloseFriends = () => setOpenFriends(false);
-
-  const [openCertificate, setOpenCertificate] = useState(false);
-  const handleOpenCertificate = () => setOpenCertificate(true);
-  const handleCloseCertificate = () => setOpenCertificate(false);
-
-  const [openPlanets, setOpenPlanets] = useState(false);
-  const handleOpenPlanets = () => setOpenPlanets(true);
-  const handleClosePlanets = () => setOpenPlanets(false);
+  const { query } = useRouter();
+  const me = useRecoilValue(userAtom);
+  const isMobile = useMobile();
 
   return (
-    <>
-      <PlanetModel></PlanetModel>
+    <Container>
+      <Canvas
+        style={{
+          width: '100vw',
+          height: !isMobile ? 'calc(100vh - 4rem)' : '100vh',
+        }}
+      >
+        <PlanetModel />
+        {me && query.planetId && (
+          <LikeButton me={me} planetId={+query.planetId} />
+        )}
+      </Canvas>
 
-      <PlanetDetailCard></PlanetDetailCard>
-      <FloatingButtons>
-        <div className="floating-button-items" onClick={handleOpenFriends}>
-          <BlueGlowingButton icon={'friend'} />
-        </div>
+      <PlanetDetailCard />
 
-        <div className="floating-button-items" onClick={handleOpenCertificate}>
-          <YellowGlowingButton icon={'certificate'} />
-        </div>
-        <div className="floating-button-items" onClick={handleOpenPlanets}>
-          <PinkGlowingButton icon={'planet'} />
-        </div>
-      </FloatingButtons>
-
+      <MainNav />
       {/* 친구 목록 조회 */}
-      <Modal open={openFriends} onClose={handleCloseFriends}>
-        <FriendsModal />
-      </Modal>
-
+      <FriendsModal />
       {/* 인증서 발급 */}
-      <Modal open={openCertificate} onClose={handleCloseCertificate}>
-        <CertificateModal />
-      </Modal>
-
-      {/* 보유 행성 조회 */}
-      <Modal open={openPlanets} onClose={handleClosePlanets}>
-        <PlanetsModal />
-      </Modal>
-    </>
+      <CertificateModal />
+    </Container>
   );
 }
 
 export default Planet;
+
+const LikeButton = ({ planetId, me }: { planetId: number; me: IUser }) => {
+  const [selected, setSelected] = useRecoilState(selectedAtom);
+
+  const isLiked = useIsLikedPlanetAPI(me.memberId, +planetId);
+
+  useEffect(() => {
+    setSelected(isLiked);
+  }, [isLiked, setSelected]);
+
+  const likeButton = () => {
+    if (!me || !planetId) return;
+    setSelected(!selected);
+
+    likePlanetAPI({
+      planetLikeMemberId: me?.memberId,
+      planetNftId: planetId,
+    });
+  };
+
+  return (
+    <Html position={[0, 3, 0]}>
+      <StyledLikeButton>
+        {selected ? (
+          <img src={dislike.src} alt="" onClick={likeButton} />
+        ) : (
+          <img src={like.src} alt="" onClick={likeButton} />
+        )}
+      </StyledLikeButton>
+    </Html>
+  );
+};
+
+const Container = styled.div`
+  padding-top: 4rem;
+  @media (max-width: 500px) {
+    padding-top: 0;
+  }
+`;
