@@ -11,9 +11,13 @@ function UserController() {
   const planetContract = usePlanetContract();
   const flowerContract = useFlowerContract();
   useEffect(() => {
+    function sleep(ms: number) {
+      const wakeUpTime = Date.now() + ms;
+      while (Date.now() < wakeUpTime) {}
+    }
     // eslint-disable-next-line
     const handleAccount = async () => {
-      await setTimeout(() => {}, 1000);
+      sleep(1000);
       const memberAddress = await window.ethereum?.selectedAddress;
 
       if (!memberAddress || window.ethereum.networkVersion != 11155111) {
