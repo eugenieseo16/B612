@@ -7,8 +7,6 @@ import userAtom from 'store/userAtom';
 import { useGLTF } from '@react-three/drei';
 
 import { AvatarCharacter } from './index';
-import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 type OtherAvatarProps = {
   type: string;
@@ -18,16 +16,16 @@ type OtherAvatarProps = {
   z: number;
 };
 
-const OtherAvatar = ({
+export const OtherAvatar = ({
   type,
   sessionId,
   memberCharacter,
   x,
   z,
 }: OtherAvatarProps) => {
-  const { scene } = useGLTF(AvatarCharacter[memberCharacter]);
+  const models = useGLTF(AvatarCharacter[memberCharacter]);
 
-  return <primitive object={scene.clone()} position={[x, 0, z]} />;
+  return <primitive object={models.scene.clone()} position={[x, 0, z]} />;
 };
 
 export const AvatarPosition: React.FC = () => {
@@ -51,17 +49,22 @@ export const AvatarPosition: React.FC = () => {
 
     // 서버에서 데이터 수신 시 이벤트 핸들러
     ws.onmessage = evt => {
+      console.log('evt.data:', evt.data);
       if (!sessionIdRef.current) {
         // sessionIdRef가 초기화되지 않은 경우에만 업데이트
         sessionIdRef.current = evt.data;
       }
       // 다른 유저의 정보 받기
       const data = evt.data;
-      if (data.sessionId !== sessionIdRef.current) {
-        console.log('e다른유저', data);
+
+      if (data.sessionId !== sessionIdRef.current && data.type === 'move') {
         setOtherPositions(prevPositions => ({
           ...prevPositions,
-          [data.sessionId]: { x: data.x, z: data.z },
+          [data.sessionId]: {
+            x: data.x,
+            z: data.z,
+            memberCharacter: data.memberCharacter,
+          },
         }));
       }
     };
@@ -94,7 +97,6 @@ export const AvatarPosition: React.FC = () => {
     // 서버로 데이터 전송
     socket?.send(JSON.stringify(message));
     console.log('메시지 전송 완료');
-    console.log(message);
   };
 
   useEffect(() => {
