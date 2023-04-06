@@ -6,8 +6,8 @@ import { AppleTreeModel } from '@components/square/Appletree';
 import Avatar from '@components/avatar/Avatar';
 import Tetris2 from '@components/square/Tetris2';
 import ChatBox from '@components/chatting/ChatBox';
-import BaobabModal from './BaobabModal';
-import Baobab from './Baobab';
+import BaobabModal from './baobab/BaobabModal';
+import Baobab from './baobab/Baobab';
 import AppleGameModal from './AppleGameModal';
 
 export {

@@ -32,8 +32,8 @@ const createPost = async (data: {
   );
 };
 
-const BaobabArticle = () => {
-  const user = useRecoilValue(userAtom);
+const CreateBaobabArticle = () => {
+  const [user, setUser] = useRecoilState(userAtom);
   const [content, setContent] = useState<string>('');
 
   const memberAddress = user?.memberAddress;
@@ -51,13 +51,8 @@ const BaobabArticle = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!user) {
-      alert('로그인 후에 글을 작성할 수 있습니다.');
-      return;
-    }
-
     if (!memberAddress) {
-      alert('회원 주소를 찾을 수 없습니다.');
+      alert('로그인을 해주세요.');
       return;
     }
 
@@ -76,6 +71,7 @@ const BaobabArticle = () => {
       console.error(error);
     }
   };
+
   function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     e.stopPropagation();
     // ChattingContainer에서 발생한 키보드 이벤트 처리
@@ -98,7 +94,9 @@ const BaobabArticle = () => {
           rows={10}
           label={user ? '글을 남겨주세요' : '로그인이 필요합니다.'}
           variant="outlined"
-          placeholder={user ? '' : '로그인 후에 글을 작성할 수 있습니다.'}
+          placeholder={
+            user ? '글을 남겨주세요' : '로그인 후에 글을 작성할 수 있습니다.'
+          }
           value={content}
           onChange={event => setContent(event.target.value)}
         />
@@ -110,4 +108,4 @@ const BaobabArticle = () => {
   );
 };
 
-export default BaobabArticle;
+export default CreateBaobabArticle;

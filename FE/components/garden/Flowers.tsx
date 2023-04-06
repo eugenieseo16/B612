@@ -13,8 +13,9 @@ import { colors } from 'styles/colors';
 import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
 import { apiBaseUrl } from 'API/apiURLs';
+import userAtom from 'store/userAtom';
 
-function Flowers() {
+function Flowers({ isMe }: { isMe: boolean }) {
   const [hover, setHover] = useState(-1);
   const flowersList = useRecoilValue(plantedFlowersAtom);
   return (
@@ -24,6 +25,7 @@ function Flowers() {
           key={data.flowerNftId}
           data={data}
           hoverState={[hover, setHover]}
+          isMe={isMe}
         />
       ))}
     </>
@@ -35,9 +37,11 @@ export default Flowers;
 function Flower({
   data,
   hoverState,
+  isMe,
 }: {
   data: IFlower;
   hoverState: [number, Function];
+  isMe: boolean;
 }) {
   const [flowersList, setFlowerList] = useRecoilState(plantedFlowersAtom);
 
@@ -85,40 +89,42 @@ function Flower({
     >
       <Center top>
         <primitive object={clone} />
-        <Html position={[1, 0, 0]}>
-          <motion.div
-            animate={{
-              opacity: hover === +data.flowerNftId ? 1 : 0,
-              display: hover === +data.flowerNftId ? 'flex' : 'none',
-            }}
-            style={{
-              padding: '1rem',
-              width: '20rem',
-              display: 'flex',
-              flexDirection: 'column',
-              borderRadius: '1rem',
-              boxShadow: simpleShadow,
-              background: rgba(colors.purple, 0.7),
-              gap: '1rem',
-            }}
-          >
-            <ClearIcon
-              fontSize="large"
-              onClick={() => setHover(-1)}
-              sx={{
-                position: 'absolute',
-                top: 4,
-                right: 4,
-                color: '#d32f2f',
-                cursor: 'pointer',
+        {isMe && (
+          <Html position={[1, 0, 0]}>
+            <motion.div
+              animate={{
+                opacity: hover === +data.flowerNftId ? 1 : 0,
+                display: hover === +data.flowerNftId ? 'flex' : 'none',
               }}
-            />
-            <h3>{FLOWERS_NAMES[data.flowerType % 12]}</h3>
-            <Button onClick={handleDig} variant="contained" color="error">
-              <p style={{ color: '#fff' }}>파버리기</p>
-            </Button>
-          </motion.div>
-        </Html>
+              style={{
+                padding: '1rem',
+                width: '20rem',
+                display: 'flex',
+                flexDirection: 'column',
+                borderRadius: '1rem',
+                boxShadow: simpleShadow,
+                background: rgba(colors.purple, 0.7),
+                gap: '1rem',
+              }}
+            >
+              <ClearIcon
+                fontSize="large"
+                onClick={() => setHover(-1)}
+                sx={{
+                  position: 'absolute',
+                  top: 4,
+                  right: 4,
+                  color: '#d32f2f',
+                  cursor: 'pointer',
+                }}
+              />
+              <h3>{FLOWERS_NAMES[data.flowerType % 12]}</h3>
+              <Button onClick={handleDig} variant="contained" color="error">
+                <p style={{ color: '#fff' }}>파버리기</p>
+              </Button>
+            </motion.div>
+          </Html>
+        )}
       </Center>
     </group>
   );

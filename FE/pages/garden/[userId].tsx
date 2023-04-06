@@ -65,7 +65,7 @@ function GardenPage() {
       >
         <RecoilBridge>
           <Garden />
-          <Flowers />
+          <Flowers isMe={isMe} />
           <SelectPanel />
         </RecoilBridge>
       </Canvas>
