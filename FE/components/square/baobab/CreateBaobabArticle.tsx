@@ -1,25 +1,47 @@
-import React, { useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { TextField } from '@mui/material';
+import React, { SyntheticEvent, useState } from 'react';
+import {
+  Button,
+  Grid,
+  TextField,
+  Snackbar,
+  Alert,
+  SnackbarCloseReason,
+} from '@mui/material';
 import styled from '@emotion/styled';
 import { useMutation } from 'react-query';
 import axios from 'axios';
-import userAtom from 'store/userAtom';
 
-const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 16px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+interface CreateBaobabArticleProps {
+  onArticleCreated: () => void;
+}
+const StyledForm = styled.form`
+  width: 100%;
+  margin-bottom: 2rem;
 `;
 
-const PostFormTitle = styled.header`
+const StyledGrid = styled(Grid)`
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   padding: 1rem;
+  width: 100%;
 `;
 
-const SubmitButton = styled.button`
-  padding: 1rem;
+const StyledTextField = styled(TextField)`
+  margin: 0.5rem 1rem;
+  height: 100%;
+  width: 100%;
+`;
+
+const StyledButton = styled(Button)`
+  margin: 1rem;
+
+  width: 80%;
+
+  background-color: #57cd0d;
+  color: white;
+  &:hover {
+    background-color: #0dcd10;
+  }
 `;
 
 const createPost = async (data: {
@@ -32,29 +54,38 @@ const createPost = async (data: {
   );
 };
 
-const CreateBaobabArticle = () => {
-  const [user, setUser] = useRecoilState(userAtom);
+const CreateBaobabArticle = (props: CreateBaobabArticleProps) => {
   const [content, setContent] = useState<string>('');
 
-  const memberAddress = user?.memberAddress;
-  console.log(user);
+  const memberAddress = '0x800fc0CaCd21C3EC9D65b637ab9AfBaa2bC47EEC';
+
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>(
+    'success'
+  );
+  const [snackbarMessage, setSnackbarMessage] = useState<string>('');
 
   const createPostMutation = useMutation(createPost, {
     onSuccess: () => {
-      alert('글 작성 완료.');
+      setSnackbarSeverity('success');
+      setSnackbarMessage('글 작성 완료.');
+      setSnackbarOpen(true);
+      props.onArticleCreated(); // 글 작성이 완료되면 부모 컴포넌트에 알립니다.
     },
     onError: () => {
-      alert('글 작성에 실패하였습니다.');
+      setSnackbarSeverity('error');
+      setSnackbarMessage('글 작성에 실패');
+      setSnackbarOpen(true);
     },
   });
+  const handleSnackbarClose = (
+    event: React.SyntheticEvent<Element, Event> | Event
+  ) => {
+    setSnackbarOpen(false);
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (!memberAddress) {
-      alert('로그인을 해주세요.');
-      return;
-    }
 
     if (!content) {
       alert('글 내용을 입력해주세요.');
@@ -64,7 +95,7 @@ const CreateBaobabArticle = () => {
     try {
       await createPostMutation.mutateAsync({
         baobabArticleContent: content,
-        memberAddress,
+        memberAddress: memberAddress,
       });
       setContent('');
     } catch (error) {
@@ -74,38 +105,46 @@ const CreateBaobabArticle = () => {
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     e.stopPropagation();
-    // ChattingContainer에서 발생한 키보드 이벤트 처리
-    // console.log('keydown event in ChattingContainer');
   }
 
   function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
     e.stopPropagation();
-    // ChattingContainer에서 발생한 마우스 스크롤 이벤트 처리
-    // console.log('wheel event in ChattingContainer');
   }
   return (
-    <FormContainer onKeyDown={handleKeyDown} onWheel={handleWheel}>
-      <PostFormTitle>글 작성</PostFormTitle>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          required
-          fullWidth
-          multiline
-          rows={10}
-          label={user ? '글을 남겨주세요' : '로그인이 필요합니다.'}
-          variant="outlined"
-          placeholder={
-            user ? '글을 남겨주세요' : '로그인 후에 글을 작성할 수 있습니다.'
-          }
-          value={content}
-          onChange={event => setContent(event.target.value)}
-        />
-        <SubmitButton type="submit">
-          {createPostMutation.isLoading ? '작성 중...' : '작성하기'}
-        </SubmitButton>
-      </form>
-    </FormContainer>
+    <div onKeyDown={handleKeyDown} onWheel={handleWheel}>
+      <StyledForm onSubmit={handleSubmit}>
+        <p>바오밥나무에 낙서하기</p>
+        <StyledGrid container spacing={4}>
+          <Grid xs={9}>
+            <StyledTextField
+              required
+              placeholder="글을 남겨주세요"
+              value={content}
+              onChange={event => setContent(event.target.value)}
+            />
+          </Grid>
+          <Grid xs={3}>
+            <StyledButton fullWidth type="submit" variant="contained">
+              낙서
+            </StyledButton>
+          </Grid>
+        </StyledGrid>
+      </StyledForm>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={1000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </div>
   );
 };
-
 export default CreateBaobabArticle;
