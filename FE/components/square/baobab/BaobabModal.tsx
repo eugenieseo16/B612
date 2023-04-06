@@ -1,8 +1,9 @@
 import React, { memo } from 'react';
 import styled from '@emotion/styled';
-import BaobabArticle from './BaobabArticle';
+import CreateBaobabArticle from './CreateBaobabArticle';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import BaobabArticleList from './BaobabArticleList';
 
 const Modal = styled.div`
   position: absolute;
@@ -24,8 +25,9 @@ const BaobabModal = memo(function SomeComponent() {
 
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
-          <BaobabArticle />
+          <CreateBaobabArticle />
         </RecoilRoot>
+        <BaobabArticleList />
       </QueryClientProvider>
     </Modal>
   );
