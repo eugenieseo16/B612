@@ -75,6 +75,7 @@ function FlowerCard() {
       type: 'flower',
       message: '꽃 구매를 성공하였습니다. 정원으로 가보세요!',
     });
+    setBoxAnimate(false);
   };
 
   useEffect(() => {
