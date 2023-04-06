@@ -8,6 +8,11 @@ import { usePlanetContract } from './contracts/planetToken';
 import { useFlowerContract } from './contracts/roseToken';
 import axios from 'axios';
 import { apiBaseUrl } from 'API/apiURLs';
+import Button from '@mui/material/Button';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
 
 const handleNetwork = async () => {
   const chainId = 11155111; // ssafy mainnet 주소
@@ -41,23 +46,57 @@ const handleNetwork = async () => {
   }
 };
 
-const handleLogin = async () => {
-  if (window.ethereum) {
-    await window.ethereum.request({
-      method: 'eth_requestAccounts',
-    });
-  } else {
-    alert('Install Metamask!');
-    window.open('https://metamask.io/download/', 'blank');
-  }
-};
-
-export const handleMetamaskLogin = () => {
-  handleNetwork();
-  handleLogin();
-};
-
 function MetaMaskLogin() {
+  const router = useRouter();
+  const handleLogin = async () => {
+    if (window.ethereum) {
+      await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+      return;
+    }
+    toast(
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          alignItems: 'center',
+        }}
+      >
+        <p>메타마스크를 설치해 주세요</p>
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <Button
+            variant="contained"
+            color="info"
+            onClick={() => router.push(`/tutorial`)}
+          >
+            <span style={{ color: '#fff' }}>튜토리얼</span>
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() =>
+              window.open('https://metamask.io/download/', 'blank')
+            }
+          >
+            <span style={{ color: '#fff' }}>설치하기</span>
+          </Button>
+        </div>
+      </div>,
+      {
+        icon: null,
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      }
+    );
+  };
   const handleAccount = async () => {
     const memberAddress = await window.ethereum?.selectedAddress;
 
@@ -135,26 +174,24 @@ function MetaMaskLogin() {
   };
 
   const onClick = async () => {
-    if (!window.ethereum) {
-      alert('Install Metamask!');
-      window.open('https://metamask.io/download/', 'blank');
-      return;
-    }
-    handleNetwork();
-    handleAccount();
+    await handleLogin();
+    await handleNetwork();
+    await handleAccount();
   };
   const planetContract = usePlanetContract();
   const flowerContract = useFlowerContract();
   const [account, setAccount] = useRecoilState(userAtom);
 
   return (
-    <LoginButton onClick={onClick} disabled={Boolean(account)}>
-      <img
-        src="https://cdn.iconscout.com/icon/free/png-256/metamask-2728406-2261817.png"
-        alt="metamask login"
-      />
-      <h4>LOGIN</h4>
-    </LoginButton>
+    <>
+      <LoginButton onClick={onClick} disabled={Boolean(account)}>
+        <img
+          src="https://cdn.iconscout.com/icon/free/png-256/metamask-2728406-2261817.png"
+          alt="metamask login"
+        />
+        <h4>LOGIN</h4>
+      </LoginButton>
+    </>
   );
 }
 
