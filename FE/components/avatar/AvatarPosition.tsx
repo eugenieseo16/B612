@@ -3,6 +3,7 @@ import { positionAtom } from 'store/square/positionAtom';
 import type { Position } from 'store/square/positionAtom';
 import { useRecoilValue } from 'recoil';
 import userAtom from 'store/userAtom';
+import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
 
 import { useGLTF } from '@react-three/drei';
 
@@ -23,9 +24,10 @@ export const OtherAvatar = ({
   x,
   z,
 }: OtherAvatarProps) => {
-  const models = useGLTF(AvatarCharacter[memberCharacter]);
+  const { scene } = useGLTF(AvatarCharacter[memberCharacter]);
+  const clone = SkeletonUtils.clone(scene);
 
-  return <primitive object={models.scene.clone()} position={[x, 0, z]} />;
+  return <primitive object={clone} position={[x, 0, z]} />;
 };
 
 export const AvatarPosition: React.FC = () => {
@@ -55,17 +57,22 @@ export const AvatarPosition: React.FC = () => {
         sessionIdRef.current = evt.data;
       }
       // 다른 유저의 정보 받기
-      const data = evt.data;
+      let data = evt.data;
+      try {
+        data = JSON.parse(evt.data);
+      } catch (e) {
+        return;
+      }
 
       if (data.sessionId !== sessionIdRef.current && data.type === 'move') {
-        setOtherPositions(prevPositions => ({
-          ...prevPositions,
+        setOtherPositions({
+          ...otherPositions,
           [data.sessionId]: {
             x: data.x,
             z: data.z,
             memberCharacter: data.memberCharacter,
           },
-        }));
+        });
       }
     };
 
@@ -105,6 +112,8 @@ export const AvatarPosition: React.FC = () => {
       sendPositionToServer(sessionIdRef.current, position, socket);
     }
   }, [socket, position]);
+  console.log('POS', otherPositions);
+  console.log('POS', Object.entries(otherPositions));
 
   return (
     <>

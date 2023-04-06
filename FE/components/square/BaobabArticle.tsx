@@ -51,13 +51,8 @@ const BaobabArticle = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!user) {
+    if (!user?.memberAddress) {
       alert('로그인 후에 글을 작성할 수 있습니다.');
-      return;
-    }
-
-    if (!memberAddress) {
-      alert('회원 주소를 찾을 수 없습니다.');
       return;
     }
 
@@ -76,9 +71,19 @@ const BaobabArticle = () => {
       console.error(error);
     }
   };
+  function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    e.stopPropagation();
+    // ChattingContainer에서 발생한 키보드 이벤트 처리
+    // console.log('keydown event in ChattingContainer');
+  }
 
+  function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
+    e.stopPropagation();
+    // ChattingContainer에서 발생한 마우스 스크롤 이벤트 처리
+    // console.log('wheel event in ChattingContainer');
+  }
   return (
-    <FormContainer>
+    <FormContainer onKeyDown={handleKeyDown} onWheel={handleWheel}>
       <PostFormTitle>글 작성</PostFormTitle>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -86,12 +91,13 @@ const BaobabArticle = () => {
           fullWidth
           multiline
           rows={10}
-          label="글 작성"
+          label={user ? '글을 남겨주세요' : '로그인이 필요합니다.'}
           variant="outlined"
+          placeholder={user ? '' : '로그인 후에 글을 작성할 수 있습니다.'}
           value={content}
           onChange={event => setContent(event.target.value)}
         />
-        <SubmitButton type="submit" disabled={!user || !memberAddress}>
+        <SubmitButton type="submit">
           {createPostMutation.isLoading ? '작성 중...' : '작성하기'}
         </SubmitButton>
       </form>
