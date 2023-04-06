@@ -17,6 +17,7 @@ import Notification from '@components/common/Notification';
 import Head from 'next/head';
 import { FLOWERS_LIST } from 'utils/flowerDataList';
 import { titleDataList } from 'utils/titleDataList';
+import { ToastContainer } from 'react-toastify';
 React.useLayoutEffect = React.useEffect;
 
 declare global {
@@ -59,6 +60,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <ToastContainer />
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           <Notification />
