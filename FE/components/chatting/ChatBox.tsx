@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 
 import { useRecoilValue } from 'recoil';
+
 import userAtom from 'store/userAtom';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import type { Message } from './index';
@@ -31,10 +32,10 @@ const ChatBox: React.FC = () => {
 
       // 페이지에 처음 접속했을 때 환영 문구 보내기
       const welcomeMessage: Message = {
-        content: '환영합니다!',
+        content: '환영합니다!  방향키 : w,a,s,d  달리기: shift',
         timestamp: Date.now(),
         sentBy: 'server',
-        memberNickname: '머무르다',
+        memberNickname: 'B612',
       };
       setMessages(prevMessages => [...prevMessages, welcomeMessage]);
     };
@@ -141,7 +142,7 @@ const ChatBox: React.FC = () => {
               onChange={handleInput}
               onKeyDown={handleKeyPress}
             />
-            <ChatButton onClick={sendMessage}>Send</ChatButton>
+            <ChatButton onClick={sendMessage}>보내기</ChatButton>
           </ChatInputContainer>
         </div>
       )}

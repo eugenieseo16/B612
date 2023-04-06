@@ -27,12 +27,17 @@ function FlowerThree() {
         minDistance={10}
         maxPolarAngle={degToRad(60)}
       />
-      <Environment background files={'/sky.hdr'} />
+      <Environment
+        background
+        files={
+          'https://res.cloudinary.com/dohkkln9r/raw/upload/v1680684947/zojcr6dnjg5yj0yldwsp.hdr'
+        }
+      />
 
-      <mesh receiveShadow rotation={[degToRad(-90), 0, 0]}>
+      {/* <mesh receiveShadow rotation={[degToRad(-90), 0, 0]}>
         <planeGeometry args={[10, 10]} />
         <meshNormalMaterial />
-      </mesh>
+      </mesh> */}
 
       {flower && <Flower />}
     </>
@@ -44,7 +49,9 @@ export default FlowerThree;
 function Flower() {
   const flower = useRecoilValue(selectedFlowerAtom);
 
-  const { scene } = useGLTF(FLOWERS_LIST[flower!.roseType]);
+  const { scene } = useGLTF(
+    FLOWERS_LIST[flower?.flowerType ? flower?.flowerType % 12 : 0]
+  );
 
   const bbox = new Box3().setFromObject(scene);
   const center = bbox.getCenter(new Vector3());

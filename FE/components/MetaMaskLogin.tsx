@@ -6,7 +6,7 @@ import Web3 from 'web3';
 import { LoginButton } from '../components/MetaMaskLoginEmotion';
 
 const handleNetwork = async () => {
-  const chainId = 5; // ssafy mainnet 주소
+  const chainId = 11155111; // ssafy mainnet 주소
   if (window.ethereum?.networkVersion !== chainId) {
     try {
       await window.ethereum.request({
@@ -21,14 +21,14 @@ const handleNetwork = async () => {
           method: 'wallet_addEthereumChain',
           params: [
             {
-              chainName: 'Goerli TestNet',
+              chainName: '세폴리아',
               chainId: Web3.utils.toHex(chainId),
               nativeCurrency: {
-                name: 'ssafy_coin',
+                name: 'ETH',
                 decimals: 18,
-                symbol: 'GoerliETH',
+                symbol: 'ETH',
               },
-              rpcUrls: ['https://goerli.infura.io/v3/'],
+              rpcUrls: ['https://sepolia.infura.io/v3/'],
             },
           ],
         });

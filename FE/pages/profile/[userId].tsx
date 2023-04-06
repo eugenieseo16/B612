@@ -8,7 +8,7 @@ import {
   useSetRecoilState,
 } from 'recoil';
 import userAtom from 'store/userAtom';
-import roomIndexAtom from 'store/profile/roomIndexAtom';  
+import roomIndexAtom from 'store/profile/roomIndexAtom';
 import { Modal } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import styled from '@emotion/styled';
@@ -70,12 +70,11 @@ function UserProfile() {
         position: 'relative',
       }}
     >
-      {/* <PlanetController userAddress={userData?.responseData?.memberAddress} /> */}
       {roomIndex !== 1 && <RoomNav />}
 
-      {planetDetail !== -1 && roomIndex === 2 && (
+      {roomIndex === 2 && (
         <>
-          <PlanetDetailCard />
+          <PlanetDetailCard isMe={isMe} />
           <PlanetNav />
         </>
       )}

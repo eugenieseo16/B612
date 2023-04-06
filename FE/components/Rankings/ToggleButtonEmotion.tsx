@@ -10,13 +10,14 @@ export const ButtonContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
 
-  height: 5rem;
+  /* height: 5rem; */
   width: 21rem;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  padding: 8px 0px;
   button {
     border: none;
   }

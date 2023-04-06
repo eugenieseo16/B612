@@ -3,7 +3,10 @@ import React from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 const Ground = () => {
-  const model = useLoader(GLTFLoader, './ground/ground.glb');
+  const model = useLoader(
+    GLTFLoader,
+    'https://res.cloudinary.com/dohkkln9r/image/upload/v1680669905/ground.glb'
+  );
 
   return (
     <object3D>
