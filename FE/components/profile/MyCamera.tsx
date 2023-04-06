@@ -5,12 +5,8 @@ import { useRecoilValue } from 'recoil';
 import React, { useEffect } from 'react';
 
 import roomIndexAtom from 'store/profile/roomIndexAtom';
-const CAMERA_POS = [
-  { x: 0, y: 10, z: 60 },
-  { x: -17, y: 5, z: 4 },
-  { x: 0, y: 25, z: 30 },
-  { x: 20, y: 15, z: 5 }, //
-];
+import { useMobile } from '@hooks/useMobile';
+
 const CAMERA_ANGLE = [
   {
     rotateX: 0,
@@ -37,6 +33,13 @@ const CAMERA_ANGLE = [
 ];
 // eslint-disable-next-line
 function MyChildCamera({ router, userId }: { router: any; userId: any }) {
+  const isMobile = useMobile();
+  const CAMERA_POS = [
+    { x: 0, y: 10, z: 60 },
+    { x: -17, y: 5, z: 4 },
+    { x: 0, y: 25, z: 30 },
+    { x: 20, y: 15, z: 5 }, //
+  ];
   const ref = useRef();
   const [isAnimate, setIsAnimate] = useState(true);
   const roomIndex = useRecoilValue(roomIndexAtom);
@@ -52,18 +55,13 @@ function MyChildCamera({ router, userId }: { router: any; userId: any }) {
     };
   }, [roomIndex, router]);
 
-  // useFrame(({ camera }) => {
-  //   camera.lookAt(0, 25, -30);
-  //   console.log(camera.rotation);
-  // });
-  console.log(roomIndex, isAnimate);
   return (
     <>
       {!isAnimate && (roomIndex === 2 || roomIndex === 0) && (
         <OrbitControls
           enabled={roomIndex === 2 || roomIndex === 0}
           minDistance={10}
-          maxDistance={80}
+          maxDistance={!isMobile ? 80 : 200}
           enablePan={false}
           target={[
             0,
