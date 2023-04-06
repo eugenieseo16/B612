@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import styled from '@emotion/styled';
 import CreateBaobabArticle from './CreateBaobabArticle';
 import { RecoilRoot } from 'recoil';
@@ -10,7 +10,7 @@ const Modal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70%;
+  width: 60%;
   height: 70%;
   background-color: #fdfcf3;
   border: none;
@@ -23,11 +23,13 @@ const Modal = styled.div`
 
 const Baobabcontainer = styled.div`
   position: relative;
-  width: 100%;
+  margin: 2rem;
+  padding: 1rem;
+  width: 60%;
   height: 80%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const Title = styled.div`
@@ -38,21 +40,26 @@ const Title = styled.div`
 
 const queryClient = new QueryClient();
 const BaobabModal = memo(function SomeComponent() {
+  const [refresh, setRefresh] = useState(false);
+
+  const handleArticleCreated = () => {
+    setRefresh(!refresh);
+  };
+
   return (
     <Modal>
       <Title>바오밥나무</Title>
       <Baobabcontainer>
         <QueryClientProvider client={queryClient}>
           <RecoilRoot>
-            <CreateBaobabArticle />
+            <CreateBaobabArticle onArticleCreated={handleArticleCreated} />
           </RecoilRoot>
-          <BaobabArticleList />
+          <BaobabArticleList refresh={refresh} />
         </QueryClientProvider>
       </Baobabcontainer>
     </Modal>
   );
 });
-
 export default BaobabModal;
 
 // 바오밥나무에 글 작성	POST	api/baobab
