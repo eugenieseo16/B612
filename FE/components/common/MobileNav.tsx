@@ -50,7 +50,9 @@ export default function MobileNav() {
 
     setMe({ ...data.responseData, planets, isApproved, eth: +eth });
   };
-
+  const routes = ['/', '/square', '/store', `/profile`];
+  const v = router.route.split('/')[1];
+  const vv = v == 'store' ? 2 : v == 'profile' ? 3 : v == 'square' ? 1 : 0;
   return (
     <>
       <Paper
@@ -59,25 +61,20 @@ export default function MobileNav() {
       >
         <BottomNavigation
           showLabels
-          value={value}
+          value={vv}
           onChange={(event, newValue) => {
+            if (newValue == 3) {
+              handleAuth();
+              return;
+            }
+            router.push(routes[newValue]);
             setValue(newValue);
           }}
         >
+          <BottomNavigationAction icon={<HomeIcon />} />
+          <BottomNavigationAction icon={<StarsIcon />} />
+          <BottomNavigationAction icon={<LocalGroceryStoreIcon />} />
           <BottomNavigationAction
-            onClick={() => router.push('/')}
-            icon={<HomeIcon />}
-          />
-          <BottomNavigationAction
-            onClick={() => router.push('/')}
-            icon={<StarsIcon />}
-          />
-          <BottomNavigationAction
-            onClick={() => router.push('/store')}
-            icon={<LocalGroceryStoreIcon />}
-          />
-          <BottomNavigationAction
-            onClick={handleAuth}
             icon={
               <Avatar
                 src={me?.memberImage ? me?.memberImage : ''}

@@ -8,7 +8,7 @@ import roomIndexAtom from 'store/profile/roomIndexAtom';
 const CAMERA_POS = [
   { x: 0, y: 10, z: 60 },
   { x: -17, y: 5, z: 4 },
-  { x: 0, y: 25, z: 0 },
+  { x: 0, y: 25, z: 30 },
   { x: 20, y: 15, z: 5 }, //
 ];
 const CAMERA_ANGLE = [

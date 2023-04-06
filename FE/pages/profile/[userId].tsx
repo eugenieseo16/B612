@@ -74,7 +74,7 @@ function UserProfile() {
 
       {roomIndex === 2 && (
         <>
-          <PlanetDetailCard />
+          <PlanetDetailCard isMe={isMe} />
           <PlanetNav />
         </>
       )}

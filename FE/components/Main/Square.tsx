@@ -3,8 +3,11 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { colors } from 'styles/colors';
 import { Box3, Vector3 } from 'three';
+import { InnerHtml } from './PlanetById';
+import { useMobile } from '@hooks/useMobile';
 
 function Square() {
+  const isMobile = useMobile();
   const router = useRouter();
   const { scene } = useGLTF(
     'https://res.cloudinary.com/dohkkln9r/image/upload/v1680596386/square.glb'
@@ -19,29 +22,20 @@ function Square() {
   bbox.getCenter(center);
   bbox.getSize(size);
   scene.position.copy(center).multiplyScalar(-1);
+  const pos = !isMobile ? new Vector3(0, -1, 0) : new Vector3(0, -5, 0);
+  const htmlPos = !isMobile ? new Vector3(3, -1, 0) : new Vector3(-3, -7, 0);
 
   return (
     <>
-      <Center position={[0, -1, 0]}>
+      <Center position={pos}>
         <group>
           <primitive object={scene} />
         </group>
       </Center>
-      <Html position={[4, -1, 0]}>
-        <div
-          onClick={() => router.push('/square')}
-          style={{
-            cursor: 'pointer',
-            width: '12rem',
-            backgroundColor: colors.purple,
-            padding: '1rem',
-            borderRadius: '1rem',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
+      <Html position={htmlPos}>
+        <InnerHtml onClick={() => router.push('/square')}>
           <p style={{ color: '#fff' }}>광장에 놀러가기🍹</p>
-        </div>
+        </InnerHtml>
       </Html>
     </>
   );
