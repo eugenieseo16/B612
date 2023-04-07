@@ -12,7 +12,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 const StyledPagination = styled(Pagination)`
-  margin-top: 16px;
+  margin-top: 1rem;
   display: flex;
   justify-content: center;
   .MuiPaginationItem-root.Mui-selected {
@@ -53,7 +53,7 @@ const BaobabArticleList: React.FC<BaobabArticleListProps> = ({ refresh }) => {
     const res = await axios.get(
       `https://j8a208.p.ssafy.io/api/baobab/list?size=5&page=${page - 1}`
     );
-    console.log('fdfdsfdsf', res.data.responseData.content);
+
     setBaobabArticleLists(res.data.responseData.content);
     setTotalPages(res.data.responseData.totalPages);
   };
@@ -61,7 +61,7 @@ const BaobabArticleList: React.FC<BaobabArticleListProps> = ({ refresh }) => {
   return (
     <div>
       <TableContainer>
-        <Table sx={{ minWidth: 650, width: '100%' }}>
+        <Table sx={{ width: '100%' }}>
           <TableHead>
             <p>바오밥나무 일지</p>
           </TableHead>

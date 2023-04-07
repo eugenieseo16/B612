@@ -24,6 +24,7 @@ const StyledGrid = styled(Grid)`
   margin-bottom: 0.5rem;
   padding: 1rem;
   width: 100%;
+  align-items: center;
 `;
 
 const StyledTextField = styled(TextField)`
@@ -112,10 +113,10 @@ const CreateBaobabArticle = (props: CreateBaobabArticleProps) => {
   }
   return (
     <div onKeyDown={handleKeyDown} onWheel={handleWheel}>
+      <p>바오밥나무에 낙서하기</p>
       <StyledForm onSubmit={handleSubmit}>
-        <p>바오밥나무에 낙서하기</p>
-        <StyledGrid container spacing={4}>
-          <Grid xs={9}>
+        <StyledGrid container>
+          <Grid xs={8}>
             <StyledTextField
               required
               placeholder="글을 남겨주세요"
@@ -123,6 +124,7 @@ const CreateBaobabArticle = (props: CreateBaobabArticleProps) => {
               onChange={event => setContent(event.target.value)}
             />
           </Grid>
+          <Grid xs={1}></Grid>
           <Grid xs={3}>
             <StyledButton fullWidth type="submit" variant="contained">
               낙서
