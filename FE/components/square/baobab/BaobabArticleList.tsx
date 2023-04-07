@@ -17,9 +17,9 @@ const StyledPagination = styled(Pagination)`
   justify-content: center;
   .MuiPaginationItem-root.Mui-selected {
     color: white;
-    background-color: green;
+    background-color: #4a5980;
     &:hover {
-      background-color: darkgreen;
+      background-color: #574a80;
     }
   }
 `;
@@ -75,15 +75,15 @@ const BaobabArticleList: React.FC<BaobabArticleListProps> = ({ refresh }) => {
             ))}
           </TableBody>
         </Table>
+        <Stack spacing={2}>
+          <StyledPagination
+            count={totalPages}
+            page={page}
+            onChange={handleChange}
+            color="primary"
+          />
+        </Stack>
       </TableContainer>
-      <Stack spacing={2}>
-        <StyledPagination
-          count={totalPages}
-          page={page}
-          onChange={handleChange}
-          color="primary"
-        />
-      </Stack>
     </div>
   );
 };

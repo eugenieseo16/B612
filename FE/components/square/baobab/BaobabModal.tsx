@@ -4,22 +4,8 @@ import CreateBaobabArticle from './CreateBaobabArticle';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import BaobabArticleList from './BaobabArticleList';
-
-const Modal = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50%;
-  height: 60%;
-  background-color: #fdfcf3;
-  border: none;
-  border-radius: 30px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+import { Dialog, DialogTitle, IconButton, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Baobabcontainer = styled.div`
   position: relative;
@@ -29,26 +15,48 @@ const Baobabcontainer = styled.div`
   height: 80%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 `;
-
-const Title = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
+const BaobabTitle = styled.div`
+  margin: 2rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
 `;
 
 const queryClient = new QueryClient();
 const BaobabModal = memo(function SomeComponent() {
   const [refresh, setRefresh] = useState(false);
 
+  const [open, setOpen] = useState(true);
+
   const handleArticleCreated = () => {
     setRefresh(!refresh);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Modal>
-      <Title>바오밥나무</Title>
+    <Dialog open={open} fullWidth maxWidth="md" sx={{ borderRadius: '3rem' }}>
+      <BaobabTitle>
+        <h2>바오밥나무</h2>
+      </BaobabTitle>
+      <DialogTitle>
+        <IconButton
+          edge="end"
+          color="inherit"
+          onClick={handleClose}
+          aria-label="close"
+          sx={{
+            position: 'absolute',
+            right: '1rem',
+            top: '1rem',
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
       <Baobabcontainer>
         <QueryClientProvider client={queryClient}>
           <RecoilRoot>
@@ -57,13 +65,7 @@ const BaobabModal = memo(function SomeComponent() {
           <BaobabArticleList refresh={refresh} />
         </QueryClientProvider>
       </Baobabcontainer>
-    </Modal>
+    </Dialog>
   );
 });
 export default BaobabModal;
-
-// 바오밥나무에 글 작성	POST	api/baobab
-// 바오밥나무 글 1개 조회	GET	api/baobab/detail/{baobabArticleId}
-// 바오밥나무 글 최신순 조회- 페이징	GET	api/baobab/list
-// 바오밥나무 글 수정	PUT	api/baobab
-// 바오밥나무 글 삭제	DELETE	api/baobab/{baobabArticleId}
