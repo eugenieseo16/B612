@@ -8,7 +8,7 @@ export const FLOWERS_LIST = [
   'https://res.cloudinary.com/dohkkln9r/image/upload/v1680591017/palmtree.glb',
   'https://res.cloudinary.com/dohkkln9r/image/upload/v1679551338/f1.glb',
   'https://res.cloudinary.com/dohkkln9r/image/upload/v1680355648/f2.glb',
-  'https://res.cloudinary.com/dohkkln9r/image/upload/v1680591018/happy_flower.glb',
+  'https://res.cloudinary.com/dohkkln9r/image/upload/v1680826562/flowers/sew1hwtntwwnanpmjkme.glb',
   'https://res.cloudinary.com/dohkkln9r/image/upload/v1680680280/flowers/master_sword.glb',
   'https://res.cloudinary.com/dohkkln9r/image/upload/v1680679781/flowers/rose_bouquet.glb',
 ];
