@@ -2,7 +2,8 @@ import type { NextPage } from 'next';
 
 import TestCanvas from '@components/Main/TestCanvas';
 
-import { CertificateModal, FriendsModal } from '@components/Planet/index';
+import { FriendsModal } from '@components/Planet/index';
+import CertificateModal from '@components/Main/CertificateModal';
 import { Canvas } from '@react-three/fiber';
 import MainNav from '@components/Main/MainNav';
 import styled from '@emotion/styled';
