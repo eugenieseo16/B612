@@ -28,8 +28,12 @@ function CreateCertificate() {
   };
 
   const trim = () => {
-    const url = padRef.current?.getTrimmedCanvas().toDataURL('image/png');
-    if (url) setDataURL(url);
+    if (user?.memberId === undefined) {
+      alert('티어 인증서 발급을 위해 로그인이 필요합니다.');
+    } else {
+      const url = padRef.current?.getTrimmedCanvas().toDataURL('image/png');
+      if (url) setDataURL(url);
+    }
   };
 
   const onDownload = () => {
