@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import PlanetModel from '@components/Planet/PlanetModel';
-import { CertificateModal, FriendsModal } from '@components/Planet/index';
+import { FriendsModal } from '@components/Planet/index';
+
+import PlanetCertificateModal from '@components/Planet/PlanetCertificateModal';
 import PlanetDetailCard from '@components/Planet/PlanetDetail';
 import { Canvas } from '@react-three/fiber';
 import { useMobile } from '@hooks/useMobile';
@@ -44,7 +46,7 @@ function Planet() {
       {/* 친구 목록 조회 */}
       <FriendsModal />
       {/* 인증서 발급 */}
-      <CertificateModal />
+      <PlanetCertificateModal />
     </Container>
   );
 }
