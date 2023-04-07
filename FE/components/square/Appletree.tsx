@@ -4,7 +4,7 @@ import { Html, useGLTF } from '@react-three/drei';
 import { GLTF } from 'three-stdlib';
 import { Object3D } from 'three';
 import { Modal } from '@mui/material';
-import { CertificateModal } from '@components/Planet';
+import AppleGameModal from './AppleGameModal';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -70,7 +70,7 @@ export function AppleTreeModel(props: JSX.IntrinsicElements['group']) {
       <Html>
         {openCertificate && (
           <Modal open={openCertificate} onClose={handleCloseCertificate}>
-            <CertificateModal />
+            <AppleGameModal />
           </Modal>
         )}
       </Html>
