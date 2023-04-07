@@ -11,7 +11,7 @@ function Approval() {
     if (!me) return;
     planetContract.methods
       .setApprovalForAll(
-        '0xeab8b1e0cd0de0c9e07928d8d8c9aab166ae983e',
+        '0x03DD8A0273a3ED1C15Dad07ec87f74861e6e355C',
         !me?.isApproved
       )
       .send({ from: me?.memberAddress });

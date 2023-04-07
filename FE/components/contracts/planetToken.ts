@@ -62,144 +62,6 @@ const planetTokenAbi: AbiItem[] = [
     type: 'event',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-    ],
-    name: 'approve',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_planetTokenId',
-        type: 'uint256',
-      },
-    ],
-    name: 'discardForSalePlanetToken',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'mintPlanetToken',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_planetTokenId',
-        type: 'uint256',
-      },
-    ],
-    name: 'purchasePlanetToken',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-    ],
-    name: 'safeTransferFrom',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes',
-      },
-    ],
-    name: 'safeTransferFrom',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'operator',
-        type: 'address',
-      },
-      {
-        internalType: 'bool',
-        name: 'approved',
-        type: 'bool',
-      },
-    ],
-    name: 'setApprovalForAll',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_planetTokenId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_price',
-        type: 'uint256',
-      },
-    ],
-    name: 'setForSalePlanetToken',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     anonymous: false,
     inputs: [
       {
@@ -225,12 +87,20 @@ const planetTokenAbi: AbiItem[] = [
     type: 'event',
   },
   {
+    anonymous: false,
     inputs: [
       {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
+        indexed: false,
+        internalType: 'string',
+        name: 'status',
+        type: 'string',
       },
+    ],
+    name: 'returnResult',
+    type: 'event',
+  },
+  {
+    inputs: [
       {
         internalType: 'address',
         name: 'to',
@@ -242,7 +112,7 @@ const planetTokenAbi: AbiItem[] = [
         type: 'uint256',
       },
     ],
-    name: 'transferFrom',
+    name: 'approve',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -318,6 +188,25 @@ const planetTokenAbi: AbiItem[] = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_planetTokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'discardForSalePlanetToken',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -405,7 +294,7 @@ const planetTokenAbi: AbiItem[] = [
             type: 'bool',
           },
         ],
-        internalType: 'struct MintPlanetToken.PlanetTokenData[]',
+        internalType: 'struct PlanetToken.PlanetTokenData[]',
         name: '',
         type: 'tuple[]',
       },
@@ -477,7 +366,7 @@ const planetTokenAbi: AbiItem[] = [
             type: 'uint256',
           },
         ],
-        internalType: 'struct MintPlanetToken.PlanetSalesLog[]',
+        internalType: 'struct PlanetToken.PlanetSalesLog[]',
         name: '',
         type: 'tuple[]',
       },
@@ -557,7 +446,7 @@ const planetTokenAbi: AbiItem[] = [
             type: 'bool',
           },
         ],
-        internalType: 'struct MintPlanetToken.PlanetTokenData[]',
+        internalType: 'struct PlanetToken.PlanetTokenData[]',
         name: '',
         type: 'tuple[]',
       },
@@ -587,6 +476,13 @@ const planetTokenAbi: AbiItem[] = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'mintPlanetToken',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -720,6 +616,118 @@ const planetTokenAbi: AbiItem[] = [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: '_planetTokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'purchasePlanetToken',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'safeTransferFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bytes',
+        name: 'data',
+        type: 'bytes',
+      },
+    ],
+    name: 'safeTransferFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        internalType: 'bool',
+        name: 'approved',
+        type: 'bool',
+      },
+    ],
+    name: 'setApprovalForAll',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_planetTokenId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_price',
+        type: 'uint256',
+      },
+    ],
+    name: 'setForSalePlanetToken',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'bytes4',
         name: 'interfaceId',
         type: 'bytes4',
@@ -824,9 +832,32 @@ const planetTokenAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'transferFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ];
 
-const planetTokenAddress = '0xEab8B1e0CD0dE0c9E07928d8d8C9aab166Ae983e';
+const planetTokenAddress = '0x03DD8A0273a3ED1C15Dad07ec87f74861e6e355C';
 
 export const usePlanetTokenContract = () => {
   const web3 = useWeb3();
@@ -835,12 +866,13 @@ export const usePlanetTokenContract = () => {
 };
 export const usePlanetContract = () => {
   const provider =
-    'https://maximum-dark-knowledge.ethereum-goerli.discover.quiknode.pro/36a08a142a57e427d958da89026ad9adbb135ad0/';
+    'https://lively-still-grass.ethereum-sepolia.discover.quiknode.pro/5474ef6df02aa3ac87fd5d092c7ea59303ff2d26/';
   const web3Provider = new Web3.providers.HttpProvider(provider);
   const [contract, setContract] = useState<any>();
   useEffect(() => {
     let web3 = new Web3(web3Provider);
-    if (window.ethereum) web3 = new Web3(window.ethereum);
+    if (window.ethereum && window.ethereum?.networkVersion == 11155111)
+      web3 = new Web3(window.ethereum);
     const temp: any = new web3.eth.Contract(planetTokenAbi, planetTokenAddress);
     setContract(temp);
   }, []);
@@ -848,7 +880,7 @@ export const usePlanetContract = () => {
 };
 export const myWeb3 = () => {
   const provider =
-    'https://maximum-dark-knowledge.ethereum-goerli.discover.quiknode.pro/36a08a142a57e427d958da89026ad9adbb135ad0/';
+    'https://lively-still-grass.ethereum-sepolia.discover.quiknode.pro/5474ef6df02aa3ac87fd5d092c7ea59303ff2d26/';
   const web3Provider = new Web3.providers.HttpProvider(provider);
   return new Web3(web3Provider);
 };

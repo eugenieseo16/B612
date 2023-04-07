@@ -15,10 +15,10 @@ function StorePagination() {
   return (
     <Pagination
       count={onSalePlanets.length}
-      variant="outlined"
-      color="secondary"
       page={storeIndex.index + 1}
       onChange={changePage}
+      variant="outlined"
+      color="secondary"
       size={'large'}
       sx={{
         position: 'absolute',

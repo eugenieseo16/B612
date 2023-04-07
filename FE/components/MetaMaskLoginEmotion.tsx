@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const LoginButton = styled.button`
+  cursor: pointer;
   background-color: rgb(255, 255, 255, 1);
   border: none;
   border-radius: 1.5rem;

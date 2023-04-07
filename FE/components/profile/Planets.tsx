@@ -19,9 +19,9 @@ function Planets({
   // const [planetPage, setPlanetPage] = planetPageState;
   const [planets, setPlanets] = planetsState;
   const [selectedIndex, setIndex] = selectedState;
-  const planetPage = selectedIndex < 0 ? 0 : Math.floor(selectedIndex / 5);
   const planetContract = usePlanetContract();
-  // console.log('PAGE', page, planetPage);
+
+  const planetPage = selectedIndex < 0 ? 0 : Math.floor(selectedIndex / 5);
   const curPlanetsLength =
     planets?.length - planetPage * 5 > 4 ? 5 : planets?.length - planetPage * 5;
 
@@ -39,11 +39,15 @@ function Planets({
       });
   }, [planetContract, memberAddress]);
 
+  // console.log('현재 플래닛 길이', curPlanetsLength); 이건 맞고
+  // console.log('행성 페이지', planetPage);
+
   return (
     <>
       <group>
         {planets?.map((planet: any, i: number) => {
           if (i > curPlanetsLength - 1) return;
+
           return (
             <Planet
               selectedState={selectedState}
@@ -105,8 +109,7 @@ function Planet({
 
   useEffect(() => {
     if (roomIndex !== 2) setSelected(-1);
-    else setSelected(0);
-  }, [roomIndex, setSelected]);
+  }, [roomIndex]);
 
   return (
     <React.Fragment>

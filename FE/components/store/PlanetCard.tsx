@@ -21,8 +21,9 @@ function PlanetCard() {
   const me = useRecoilValue(userAtom);
   const [open, setOpen] = useState(false);
   const [{ loading }, setLoading] = useRecoilState(loadingAtom);
-
   const purchasePlanet = async () => {
+    console.log(planet);
+    console.log(planetContract);
     if (loading) return;
     if (!me) {
       setOpen(true);

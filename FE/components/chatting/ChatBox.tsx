@@ -32,7 +32,7 @@ const ChatBox: React.FC = () => {
 
       // 페이지에 처음 접속했을 때 환영 문구 보내기
       const welcomeMessage: Message = {
-        content: '환영합니다!',
+        content: '환영합니다!  방향키 : w,a,s,d  달리기: shift',
         timestamp: Date.now(),
         sentBy: 'server',
         memberNickname: 'B612',

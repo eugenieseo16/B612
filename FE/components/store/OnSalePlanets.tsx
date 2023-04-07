@@ -31,6 +31,7 @@ function OnSalePlanets() {
 export default OnSalePlanets;
 
 const Planet = ({ data, deg }: { data: IPlanet; deg: number }) => {
+  console.log(data);
   const scene = useGLTF(PLANETS_LIST[+data.planetType]);
   const clone = SkeletonUtils.clone(scene.scene);
   const setAnimate = useSetRecoilState(storeAnimateAtom);

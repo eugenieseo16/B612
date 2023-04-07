@@ -7,11 +7,18 @@ import CertificateModal from '@components/Main/CertificateModal';
 import { Canvas } from '@react-three/fiber';
 import MainNav from '@components/Main/MainNav';
 import styled from '@emotion/styled';
+import { useMobile } from '@hooks/useMobile';
 
 const Home: NextPage = () => {
+  const isMobile = useMobile();
   return (
     <Container>
-      <Canvas style={{ width: '100vw', height: 'calc(100vh - 4rem)' }}>
+      <Canvas
+        style={{
+          width: '100vw',
+          height: !isMobile ? 'calc(100vh - 4rem)' : '100vh',
+        }}
+      >
         <TestCanvas />
       </Canvas>
 

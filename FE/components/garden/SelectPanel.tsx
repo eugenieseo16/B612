@@ -1,6 +1,6 @@
 import { Center, useGLTF } from '@react-three/drei';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import selectedFlowerAtom from 'store/garden/selectedFlowerAtom';
 import { Box3, Vector3 } from 'three';
@@ -40,7 +40,6 @@ function SelectPanel() {
 export default SelectPanel;
 
 function SelectedPreview({ data, pos }: { data: IFlower; pos: Vector3 }) {
-  const [mousePos, setMousePos] = useState();
   const [{ show }, setHold] = useRecoilState(plantButtonAtom);
   const { scene } = useGLTF(FLOWERS_LIST[+data.flowerType % 12]);
   const clone = SkeletonUtils.clone(scene);
@@ -65,10 +64,7 @@ function SelectedPreview({ data, pos }: { data: IFlower; pos: Vector3 }) {
     // <group position={[(index % 3) * 5 - 4, 0.6, Math.floor(index / 3) * 5 - 5]}>
     <motion.group
       position={pos}
-      onPointerDown={e => {
-        console.log(e);
-        setHold({ show, hold: true });
-      }}
+      onPointerDown={() => setHold({ show, hold: true })}
     >
       <Center top>
         <primitive object={clone} />
