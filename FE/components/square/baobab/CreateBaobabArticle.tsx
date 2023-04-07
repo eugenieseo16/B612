@@ -38,10 +38,10 @@ const StyledButton = styled(Button)`
 
   width: 80%;
 
-  background-color: #57cd0d;
+  background-color: #4a5980;
   color: white;
   &:hover {
-    background-color: #0dcd10;
+    background-color: #574a80;
   }
 `;
 
