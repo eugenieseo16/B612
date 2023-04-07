@@ -29,7 +29,7 @@ function PlanetNav() {
       sx={{
         position: 'absolute',
         bottom: '5rem',
-        right: '50%',
+        right: '50%' ,
         transform: 'translate(50%,50%)',
         zIndex: 9999,
         background: rgba(colors.purple, 0.8),
