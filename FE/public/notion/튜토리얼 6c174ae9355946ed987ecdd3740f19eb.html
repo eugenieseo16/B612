@@ -1,0 +1,725 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>튜토리얼</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="6c174ae9-3559-46ed-987e-cdd3740f19eb" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">😼</span></div><h1 class="page-title">튜토리얼</h1></header><div class="page-body"><p id="9257fb5e-5a4c-45f0-aaa0-fb9acb3edddd" class="">머무르다에 오신 것을 환영합니다!</p><p id="077a34a4-242f-4ee0-9441-7475cd3c8971" class="">
+</p><p id="4a0b7825-f230-49c0-a0e4-368b41867660" class="">Install 버튼을 클릭해 메타마스크를 다운로드 합니다.</p><figure id="3d46eacf-2e6c-48d8-a979-b88e24c7bc97" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled.png"><img style="width:1292px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled.png"/></a></figure><p id="c81e7eb1-beeb-4a1e-bf93-fff71249d8cf" class="">
+</p><p id="84bcca31-f23d-4056-9e11-d6fdcbaaccff" class="">
+</p><p id="cd464334-dd40-408e-b165-48e00c9786b6" class="">
+</p><p id="947c1a7c-4c08-4e0d-bd17-9e97a4f61e92" class="">
+</p><p id="3199cb08-4d0b-4b31-a0d8-63b5a838d4b5" class="">
+</p><figure id="369c91e3-1c82-4ad6-90c6-03a788bb9982" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%201.png"><img style="width:1180px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%201.png"/></a></figure><p id="ccab9fb8-a2f8-4656-81b9-21b20b15f2b4" class="">“확장 프로그램 추가” 버튼을 누르고, 설치가 다 되기를 기다립니다.</p><p id="cce2c95c-9d2c-4219-bb7c-d570d3400b84" class="">
+</p><p id="97c6db2e-685c-49fa-a48c-bede40bc64a8" class="">
+</p><p id="d5e26307-0b3b-4ac1-9cae-5c720e5966b0" class="">
+</p><p id="88a4c3c6-d9e6-47bb-8209-a6b2d93b204e" class="">
+</p><p id="e6d50210-6749-4843-828b-d772a7026d0a" class="">
+</p><figure id="4a3c542b-8882-4286-a90c-d4107d2351ad" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%202.png"><img style="width:1275px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%202.png"/></a></figure><p id="43fcbbc1-455b-468b-b932-35cb145b1546" class="">“새 지갑 생성” 버튼을 눌러줍니다.</p><p id="a1b1791d-14ba-4efa-af94-67149c1bc386" class="">
+</p><p id="ab53bc35-49a7-4d8c-9bb6-123582416c5a" class="">
+</p><p id="63b4fbf1-6838-4ef5-9da5-348c913944ff" class="">
+</p><figure id="89a31beb-77d9-44ec-a93c-7047aae6b697" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%203.png"><img style="width:782px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%203.png"/></a></figure><p id="69798cb9-5a12-405b-916b-d0012a3ec321" class="">동의를 해도 되고 안 해도 됩니다.</p><p id="06036815-4956-4214-a3f9-a2fb7349b81a" class="">
+</p><p id="b02375c3-5340-41ce-9e3e-5a1d026d4eb8" class="">
+</p><figure id="1205b3d4-3616-431f-8cab-552c37f1401b" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%204.png"><img style="width:1285px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%204.png"/></a></figure><p id="292d0532-cd52-48d6-851f-cc925d6fbf37" class="">비밀번호를 입력하고, 동의 한 후 지갑을 생성합니다. </p><p id="c476aa7d-bff2-45ee-bc9e-7c3974fa2c12" class="">
+</p><p id="c5b26e0f-de29-49ba-8ee7-2bd3e5c71748" class="">
+</p><p id="a513f214-ae44-429f-b52d-c33c106e4b7e" class="">
+</p><p id="d84145de-6b3e-4ac5-b3cd-16b7ffa42bc8" class="">
+</p><figure id="0caa75f3-c24c-4ba5-8232-2c43f150553d" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%205.png"><img style="width:1268px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%205.png"/></a></figure><p id="91a883ba-5791-4355-8bb3-26f2197f7396" class="">나중에 다른 기기에서 metamask를 사용할 때를 대비해, 지갑을 보호하기를 권장합니다.</p><p id="85848a34-e5c4-4de8-a26c-aca7bb6a38a0" class="">하지만, 나중에 알림을 눌러도 괜찮습니다. </p><p id="3c0ab724-a32a-4a8a-acdb-e15a48a981f6" class="">
+</p><p id="b7d717c5-ff99-4060-b069-5319b0b1b957" class="">
+</p><p id="35e40608-2195-4d8b-868f-c850c73bb480" class="">
+</p><figure id="e41350ef-f426-449d-b3fd-dedecdec853c" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%206.png"><img style="width:1264px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%206.png"/></a></figure><p id="34f943fb-3695-4b66-8a52-590f83c9491b" class="">지갑 생성에 성공했다면, 다시 머무르다 홈페이지로 돌아옵니다.</p><p id="39f293db-7e0e-479d-9fa3-15a82c596c68" class="">
+</p><p id="2838ddfa-69e0-4992-934f-17970d3b273b" class="">
+</p><p id="1d7d9e3a-2775-4b35-98c8-0ff73433a045" class="">
+</p><p id="d94b6e3f-b112-47e5-9913-aac1811f5d1a" class="">
+</p><figure id="29784a9e-25ba-472f-8403-6ab02431392a" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%207.png"><img style="width:1098px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%207.png"/></a></figure><p id="0541242b-85f7-471d-b338-dd3358fcaebf" class="">로그인 버튼을 누르고, MetaMask 지갑을 선택하고 “다음” 버튼을 누릅니다.</p><p id="f079fb78-131a-4181-867c-952b50f15575" class="">
+</p><p id="e1d9e0e8-9da3-40a3-bcee-e56730f9efbf" class="">
+</p><p id="7db3d3c4-72c7-454d-bf7a-1941b45e695e" class="">
+</p><figure id="786d3f9b-80c1-4046-8c64-ddbbf8df1e14" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%208.png"><img style="width:986px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%208.png"/></a></figure><p id="240e2b6e-4ad0-44a5-9bad-a80d5ec6a21f" class="">“연결” 버튼을 누릅니다.</p><p id="d8b47dd3-9841-43f8-a4bb-7fba6f8dcbdf" class="">
+</p><p id="daf0db28-2706-4b75-af29-03cdf5b2826c" class="">
+</p><p id="0ad92510-3440-4291-8be4-2b29a07a4508" class="">
+</p><p id="1a69c582-6b8c-4e20-be65-c973431bf2bf" class="">
+</p><figure id="9d10bc08-d240-4f9a-a0ef-63763ccaae5a" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%209.png"><img style="width:987px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%209.png"/></a></figure><p id="dce122d2-4bfa-4a13-a196-6876514d9ea9" class="">“네트워크 전환” 버튼을 누릅니다.</p><p id="7698a5ba-2973-4064-8a30-accbd36da16f" class="">
+</p><p id="a97ee59e-1c06-4a66-9a5c-cf35ecd65e3d" class="">
+</p><figure id="c73b1807-f834-4adf-abba-99720b5605d6" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2010.png"><img style="width:1016px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2010.png"/></a></figure><p id="000ca8ad-1ec9-472a-9ea7-cbf5dd3e1b84" class="">로그인에 성공했습니다.</p><p id="cd294766-90b7-4ebb-923a-85fae0bf5492" class="">
+</p><p id="6e7b85f8-64d8-40ab-a18f-7d4cf7d770da" class="">
+</p><p id="db609591-3f1c-4f10-b13d-92f3a8bc6c43" class="">
+</p><p id="20ec1ddd-f7cd-41da-ab2f-449dee91e1b1" class="">
+</p><h2 id="b671a7d0-b697-40cd-993e-18aa2e6f8352" class="">무료로 코인 받기</h2><p id="43215ae3-08f4-4fdd-936a-14875ce16cb6" class="">
+</p><figure id="4dbae3c2-eadd-4a1a-b7dd-fb30b315b027" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2011.png"><img style="width:1518px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2011.png"/></a></figure><p id="38d095f9-1ea9-45e9-a782-97b47716b366" class=""><a href="https://sepoliafaucet.com/">https://sepoliafaucet.com/</a> 에 접속합니다.</p><p id="7775be8f-d547-4771-8d87-ed9b062736fa" class="">
+</p><p id="5597b4b5-c693-4dd5-bbe5-6009fd8b6a5b" class="">
+</p><figure id="c327f698-d93b-4cbc-af55-381e02bd362c" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2012.png"><img style="width:1541px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2012.png"/></a></figure><p id="34bc63f5-56c0-4805-aa00-96b085cef702" class="">회원 가입 후 로그인 합니다.</p><p id="8c7d1c86-4779-4441-a91c-6ab298615b27" class="">
+</p><p id="40807d7e-41ed-41f8-ad80-cf4a2dadd8b3" class="">
+</p><p id="2e8e2e4f-6dab-4a71-9bf9-aa5c366701d1" class="">
+</p><figure id="870e869f-1149-49f0-ae11-b1251fa4cb1e" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2013.png"><img style="width:1240px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2013.png"/></a></figure><p id="52a378e4-dd3c-43ed-b8d2-8633e5209f65" class="">확장 프로그램에서 MetaMask를 클릭해 열어줍니다.</p><p id="01ab6f25-4a4a-4efb-ab2a-458f322cb361" class="">
+</p><p id="a7ab0dfd-605d-47c5-a507-824fbcf04f6f" class="">
+</p><figure id="a4d16088-ec91-44a6-aa8e-b0c0cd2e7fd6" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2014.png"><img style="width:1217px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2014.png"/></a></figure><p id="92b675d3-13f0-4465-8aeb-1eeac4888254" class="">“클립보드에 복사” 버튼을 눌러 지갑의 주소를 복사합니다.</p><p id="e94d5fe3-86ce-4e34-8a7b-213c5254d970" class="">
+</p><p id="e3ea1633-920f-4c75-9741-7e976537496b" class="">
+</p><p id="ebb7f389-10d8-4c09-a741-fbfb4fb582f8" class="">
+</p><p id="bc1defc3-508b-42dd-a244-f1e469b3c340" class="">
+</p><figure id="5b3f89ae-22e3-4c06-8ea7-43d27f4d8369" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2015.png"><img style="width:930px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2015.png"/></a></figure><p id="8dcf9ea9-ef61-4632-9ddb-80d743a07967" class="">1번에 복사한 주소를 붙여넣은 후,</p><p id="03628e5d-de3e-4468-bd82-50039cef1531" class="">2번 CAPTCHA를 풉니다</p><p id="10161b6e-5ee9-48f9-8c8b-1f28323547e3" class="">그 후 3번 버튼을 눌러 코인을 받습니다.</p><p id="0a8b202a-d9bf-4952-acae-2aa2c2bcd4d8" class="">
+</p><p id="1061b13d-150a-4dd7-9822-0f062425c235" class="">
+</p><p id="3a8bd4ee-a6f1-439c-9914-e5d82e6c7ce8" class="">
+</p><p id="5bf8dbf1-21e4-4a55-b322-696b64663f10" class="">
+</p><figure id="d9ba2402-f3e3-4c5b-a041-de1101b16341" class="image"><a href="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2016.png"><img style="width:1832px" src="%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF%206c174ae9355946ed987ecdd3740f19eb/Untitled%2016.png"/></a></figure><p id="aeb4dfcd-649f-4897-9121-4fa3a4c4f381" class="">코인을 성공적으로 받았습니다.</p></div></article></body></html>

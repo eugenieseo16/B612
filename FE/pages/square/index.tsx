@@ -37,13 +37,11 @@ function Square() {
   function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     e.stopPropagation();
     // ChattingContainer에서 발생한 키보드 이벤트 처리
-    // console.log('keydown event in ChattingContainer');
   }
 
   function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
     e.stopPropagation();
     // ChattingContainer에서 발생한 마우스 스크롤 이벤트 처리
-    // console.log('wheel event in ChattingContainer');
   }
   const resetPosition = useRecoilCallback(({ set }) => () => {
     set(positionAtom, { x: 0, z: 0 });
