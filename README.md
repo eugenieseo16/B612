@@ -1,7 +1,3 @@
-# README
-
-상태: Not started
-
 # 머무르다 (find your b612)
 
 <img src="README_assets/199c6e1bd3767e189418d4379a90f0ac64fd62df.png" width="50%">
