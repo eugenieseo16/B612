@@ -4,7 +4,7 @@
 
 # 머무르다 (find your b612)
 
-![headerLogo.png](README_assets/199c6e1bd3767e189418d4379a90f0ac64fd62df.png)
+<img src="README_assets/199c6e1bd3767e189418d4379a90f0ac64fd62df.png" width="50%">
 
 ## 프로젝트 소개
 
@@ -16,24 +16,14 @@
 
 ### 팀원 소개
 
-| https://github.com/v7153623 | - 팀장
-
-- 백엔드 |
-  | --- | --- |
-  | https://github.com/IRyeong | - Solidity
-- 백엔드 |
-  | https://github.com/PrimeJin | - CI/CD
-- 백엔드 |
-
-| https://github.com/hi6724 | - Solidity
-
-- Web3.js
-- 프론트엔드 |
-  | --- | --- |
-  | https://github.com/yjohbjects | - Three.js
-- 프론트엔드 |
-  | https://github.com/eugenieseo16 | - 웹소켓
-- 프론트엔드 |
+| 팀원 | 역할 |
+| --- | --- |
+| [v7153623](https://github.com/v7153623) | - 팀장- 백엔드 |
+| [IRyeong](https://github.com/IRyeong) | - Solidity- 백엔드 |
+| [PrimeJin](https://github.com/PrimeJin) | - CI/CD- 백엔드 |
+| [hi6724](https://github.com/hi6724) | - Solidity- Web3.js- 프론트엔드 |
+| [yjohbjects](https://github.com/yjohbjects) | - Three.js- 프론트엔드 |
+| [eugenieseo16](https://github.com/eugenieseo16) | - 웹소켓- 프론트엔드 |
 
 ## 기획 배경
 
